@@ -1,11 +1,57 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Linkedin, Github } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
+import { createClient } from '@/utils/supabase/client'; // Adjust path to your client.ts
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const supabase = createClient();
+
+      const { data, error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message
+          }
+        ]);
+
+      if (error) throw error;
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
        <SectionHeader title="CONTACT." subtitle="Get In Touch" />
@@ -18,23 +64,71 @@ export default function ContactPage() {
                Offen für Projekte und Rollen, in denen ich Business-Anforderungen in durchdachte UX/UI-Konzepte übersetze und mit modernen Tools wie Next.js, Supabase und Vercel umsetze.
             </p>
 
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
                <div className="grid md:grid-cols-2 gap-6">
                  <div>
                     <label htmlFor="contact-name" className="block font-mono text-xs uppercase text-gray-500 mb-2">Name</label>
-                    <input id="contact-name" type="text" autoComplete="name" className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500" placeholder="Ihr Name" />
+                    <input
+                      id="contact-name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500"
+                      placeholder="Ihr Name"
+                    />
                  </div>
                  <div>
                     <label htmlFor="contact-email" className="block font-mono text-xs uppercase text-gray-500 mb-2">Email</label>
-                    <input id="contact-email" type="email" autoComplete="email" className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500" placeholder="ihre@email.com" />
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500"
+                      placeholder="ihre@email.com"
+                    />
                  </div>
                </div>
                <div>
                   <label htmlFor="contact-message" className="block font-mono text-xs uppercase text-gray-500 mb-2">Nachricht</label>
-                  <textarea id="contact-message" rows={6} className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500" placeholder="Lassen Sie uns sprechen..."></textarea>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={6}
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500"
+                    placeholder="Lassen Sie uns sprechen..."
+                  ></textarea>
                </div>
+
+               {submitStatus === 'success' && (
+                 <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-green-800 dark:text-green-200 font-mono text-sm">
+                   Nachricht erfolgreich gesendet!
+                 </div>
+               )}
+
+               {submitStatus === 'error' && (
+                 <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-800 dark:text-red-200 font-mono text-sm">
+                   Fehler beim Senden. Bitte versuchen Sie es erneut.
+                 </div>
+               )}
+
                <div className="flex justify-end">
-                 <Button className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 px-8">Nachricht senden</Button>
+                 <Button
+                   type="submit"
+                   disabled={isSubmitting}
+                   className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 px-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                 >
+                   {isSubmitting ? 'Wird gesendet...' : 'Nachricht senden'}
+                 </Button>
                </div>
             </form>
 
