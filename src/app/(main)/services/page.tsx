@@ -12,27 +12,27 @@ export default function ServicesPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
 
-        <BentoCard className="md:col-span-12 lg:col-span-8 bg-[#E5E5E5] dark:bg-[#E2E2E2] !text-black min-h-[400px]" title="Von der Idee zum Go-Live">
+        <BentoCard className="md:col-span-12 lg:col-span-8 bg-zinc-200 dark:bg-zinc-900 min-h-[400px]" title="Von der Idee zum Go-Live">
            <div className="mt-6 grid md:grid-cols-2 gap-12">
              <div className="flex flex-col justify-between">
-                <p className="text-lg font-medium leading-relaxed mb-8">
-                  Ich begleite digitale Produkte ganzheitlich: <strong>Business-Anforderungen verstehen</strong>, in UX/UI übersetzen, das Branding mitdenken und mit modernem Stack wie Next.js, Supabase und Vercel umsetzen – bis zum Deployment.
+                <p className="text-lg font-medium leading-relaxed mb-8 text-zinc-800 dark:text-zinc-200">
+                  Ich begleite digitale Produkte ganzheitlich: <strong className="text-zinc-900 dark:text-white">Business-Anforderungen verstehen</strong>, in UX/UI übersetzen, das Branding mitdenken und mit modernem Stack wie Next.js, Supabase und Vercel umsetzen – bis zum Deployment.
                 </p>
 
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-black/5">
-                    <ClipboardList className="text-black" size={20} />
-                    <span className="font-mono text-sm font-bold">Requirements → UX/UI → Code</span>
+                  <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-white/5 rounded-lg border border-black/5 dark:border-white/10">
+                    <ClipboardList className="text-zinc-900 dark:text-zinc-100" size={20} />
+                    <span className="font-mono text-sm font-bold text-zinc-900 dark:text-zinc-100">Requirements → UX/UI → Code</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-black/5">
-                    <Rocket className="text-black" size={20} />
-                    <span className="font-mono text-sm font-bold">Planung → Entwicklung → Deployment</span>
+                  <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-white/5 rounded-lg border border-black/5 dark:border-white/10">
+                    <Rocket className="text-zinc-900 dark:text-zinc-100" size={20} />
+                    <span className="font-mono text-sm font-bold text-zinc-900 dark:text-zinc-100">Planung → Entwicklung → Deployment</span>
                   </div>
                 </div>
              </div>
 
-             <div className="bg-white rounded-xl p-6 border border-black/5 shadow-sm">
-                <h4 className="font-mono text-xs uppercase tracking-widest mb-6 font-bold text-gray-500">Value Add</h4>
+             <div className="bg-white dark:bg-[#111] rounded-xl p-6 border border-black/5 dark:border-white/10 shadow-sm dark:shadow-none">
+                <h4 className="font-mono text-xs uppercase tracking-widest mb-6 font-bold text-gray-500 dark:text-gray-400">Value Add</h4>
                 <ul className="space-y-4">
                   {[
                     "Requirements Engineering & Stakeholder-Kommunikation",
@@ -40,14 +40,14 @@ export default function ServicesPage() {
                     "Frontend-Entwicklung mit Next.js & Supabase",
                     "CI/CD, Vercel Deployment & Monitoring"
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm">
-                      <div className="mt-1 min-w-[16px] h-4 rounded-full bg-black text-white flex items-center justify-center text-[10px] font-mono">&#10003;</div>
+                    <li key={i} className="flex items-start gap-3 text-sm text-zinc-800 dark:text-zinc-200">
+                      <div className="mt-1 min-w-[16px] h-4 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center text-[10px] font-mono">&#10003;</div>
                       {item}
                     </li>
                   ))}
                 </ul>
-                <div className="mt-8 pt-6 border-t border-gray-100">
-                  <Button to="/contact" className="w-full bg-black text-white hover:bg-gray-800 border-transparent">
+                <div className="mt-8 pt-6 border-t border-gray-100 dark:border-white/10">
+                  <Button to="/contact" className="w-full bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 border-transparent">
                     Verfügbarkeit prüfen
                   </Button>
                 </div>
