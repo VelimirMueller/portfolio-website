@@ -18,7 +18,7 @@ export const Button = ({
   onClick,
   external = false
 }: ButtonProps) => {
-  const baseStyle = "inline-flex items-center justify-center font-mono text-xs md:text-sm font-bold tracking-tight transition-all duration-200 rounded-full px-6 py-3 border";
+  const baseStyle = "inline-flex items-center justify-center font-mono text-xs md:text-sm font-bold tracking-tight transition-all duration-200 rounded-full px-6 py-3 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2";
 
   const variants = {
     primary: "bg-black text-white border-transparent hover:bg-gray-800 dark:bg-white dark:text-black dark:border-white dark:hover:bg-gray-200 hover:scale-[1.02]",

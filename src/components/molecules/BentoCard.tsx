@@ -18,11 +18,7 @@ export const BentoCard = ({
   icon: Icon,
   noPadding = false
 }: BentoCardProps) => (
-  <div className={`bento-card bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-[1.5rem] overflow-hidden relative flex flex-col group shadow-sm dark:shadow-none ${className}`}>
-
-    {/* Inner Highlight Border for depth */}
-    <div className="absolute inset-0 rounded-[1.5rem] border border-white/50 dark:border-white/5 pointer-events-none z-20"></div>
-
+  <div className={`bento-card bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-[1.5rem] overflow-hidden relative flex flex-col group shadow-sm dark:shadow-none ring-1 ring-inset ring-white/50 dark:ring-white/5 ${className}`}>
     {(title || subtitle || Icon) && (
       <div className="p-6 pb-2 relative z-10">
         <div className="flex justify-between items-start">
