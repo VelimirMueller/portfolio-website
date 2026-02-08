@@ -6,16 +6,20 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   className?: string;
   to?: string;
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   external?: boolean;
+  disabled?: boolean;
 }
 
 export const Button = ({
   children,
   variant = 'primary',
   className = '',
+  disabled = false,
   to = '',
   onClick,
+  type = 'button',
   external = false
 }: ButtonProps) => {
   const baseStyle = "inline-flex items-center justify-center font-mono text-xs md:text-sm font-bold tracking-tight transition-all duration-200 rounded-full px-6 py-3 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2";
@@ -45,7 +49,7 @@ export const Button = ({
   }
 
   return (
-    <button onClick={onClick} className={combinedClassName}>
+    <button onClick={onClick} type={type} disabled={disabled} className={combinedClassName}>
       {children}
     </button>
   );
