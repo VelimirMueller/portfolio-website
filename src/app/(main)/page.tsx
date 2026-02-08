@@ -1,90 +1,106 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Zap, TrendingUp, ShieldCheck, Activity, Layers, Code2, Database, Layout, Terminal, Box, Globe } from 'lucide-react';
+import { ArrowRight, Play, Code2, Database, Layout, Terminal, Box, Globe } from 'lucide-react';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { Button } from '@/components/atoms/Button';
 
-const ImpactMetrics = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const metrics = [
-    {
-      value: "500%",
-      label: "Produktivität",
-      sub: "durch Microservices",
-      icon: TrendingUp,
-      tag: "Architecture"
-    },
-    {
-      value: "100",
-      label: "Lighthouse",
-      sub: "Performance Score",
-      icon: Zap,
-      tag: "Web Vitals"
-    },
-    {
-      value: "100%",
-      label: "Type Safety",
-      sub: "Strict Coverage",
-      icon: ShieldCheck,
-      tag: "Quality"
-    },
-    {
-      value: "<100ms",
-      label: "Interaction",
-      sub: "INP Metric",
-      icon: Activity,
-      tag: "UX"
-    }
-  ];
+const DashboardPromoVideo = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % metrics.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [metrics.length]);
+    const container = containerRef.current;
+    if (!container) return;
 
-  const current = metrics[activeIndex];
-  const Icon = current.icon;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  const handlePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!isLoaded) {
+      video.load();
+      video.addEventListener('loadeddata', () => {
+        setIsLoaded(true);
+        video.play();
+        setIsPlaying(true);
+      }, { once: true });
+      return;
+    }
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
-    <BentoCard className="md:col-span-3 lg:col-span-4 bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none">
-       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+    <BentoCard className="md:col-span-3 lg:col-span-4 bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none p-0">
+      <div ref={containerRef} className="relative w-full h-full min-h-[320px]">
+        {isInView && (
+          <video
+            ref={videoRef}
+            className="absolute inset-0 w-full h-full object-cover rounded-[1.5rem]"
+            width={1280}
+            height={720}
+            muted
+            loop
+            playsInline
+            preload="none"
+            onLoadedData={() => setIsLoaded(true)}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+          >
+            <source src="/dashboard-promo.mp4" type="video/mp4" />
+          </video>
+        )}
 
-      <div className="relative z-10 flex flex-col h-full justify-between p-2">
-        <div className="flex justify-between items-start">
-           <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-white dark:bg-black border border-black/5 dark:border-white/10 backdrop-blur-sm">
-             <Layers size={10} className="text-brand-600 dark:text-brand-500"/>
-             <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">{current.tag}</span>
-           </div>
-           <div className="w-10 h-10 rounded-lg bg-white dark:bg-black border border-black/5 dark:border-white/10 flex items-center justify-center shadow-sm">
-              <Icon size={20} className="text-black dark:text-white transition-all duration-300 transform group-hover:scale-110" />
-           </div>
-        </div>
-
-        <div className="text-center py-4">
-           <div key={activeIndex} className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-             <div className="text-5xl md:text-6xl lg:text-7xl font-mono font-bold tracking-tighter leading-none text-black dark:text-white">
-                {current.value}
-             </div>
-             <p className="font-mono text-sm uppercase tracking-widest font-bold text-gray-500 dark:text-gray-400 mt-4">{current.label}</p>
-             <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 font-medium">{current.sub}</p>
-           </div>
-        </div>
-
-        <div className="flex justify-center gap-1.5 pb-2">
-           {metrics.map((_, i) => (
-             <div key={i} className="h-1 rounded-full bg-black/5 dark:bg-white/10 w-8 overflow-hidden">
-                <div
-                  className={`h-full bg-brand-600 dark:bg-brand-500 transition-all duration-[4000ms] ease-linear ${i === activeIndex ? 'w-full' : 'w-0'}`}
-                  style={{ transitionProperty: 'width' }}
-                ></div>
-             </div>
-           ))}
-        </div>
+        {/* Play/pause overlay - always visible, acts as placeholder before load */}
+        <button
+          onClick={handlePlay}
+          className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 hover:bg-black/20 transition-colors cursor-pointer group/play focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 rounded-[1.5rem]"
+          aria-label={isPlaying ? 'Pause dashboard demo video' : 'Play dashboard demo video'}
+        >
+          {!isPlaying && (
+            <div className="flex flex-col items-center gap-4">
+              {/* Placeholder background when not loaded */}
+              {!isLoaded && (
+                <div className="absolute inset-0 bg-zinc-100 dark:bg-zinc-900 rounded-[1.5rem]">
+                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+                </div>
+              )}
+              <div className="relative z-10 flex flex-col items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-white/90 dark:bg-black/80 flex items-center justify-center shadow-xl border border-white/20 group-hover/play:scale-110 transition-transform">
+                  <Play size={24} className="text-black dark:text-white ml-1" aria-hidden="true" />
+                </div>
+                {!isLoaded && (
+                  <div className="text-center">
+                    <p className="font-mono text-sm font-bold text-black dark:text-white">Dashboard Demo</p>
+                    <p className="text-xs text-gray-500 mt-1">Click to play</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </button>
       </div>
     </BentoCard>
   );
@@ -106,8 +122,8 @@ const TechStackGrid = () => {
         {stacks.map((item, i) => (
           <div key={i} className="flex flex-col p-3 rounded-lg bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border hover:border-brand-500/30 dark:hover:border-brand-500/30 transition-colors group">
             <div className="flex items-center justify-between mb-2">
-              <item.icon size={16} className="text-light-sub dark:text-dark-sub group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors"/>
-              <span className="text-[9px] font-mono text-gray-400 uppercase">{item.cat}</span>
+              <item.icon size={16} className="text-light-sub dark:text-dark-sub group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors" aria-hidden="true"/>
+              <span className="text-[9px] font-mono text-gray-500 dark:text-gray-400 uppercase">{item.cat}</span>
             </div>
             <span className="text-sm font-bold text-light-text dark:text-dark-text group-hover:translate-x-1 transition-transform">{item.label}</span>
           </div>
@@ -134,7 +150,7 @@ export default function HomePage() {
 
         <BentoCard className="md:col-span-6 lg:col-span-8 min-h-[450px] bg-white dark:bg-[#121214] border-light-border dark:border-dark-border justify-between relative overflow-hidden">
           <div className="absolute inset-0 opacity-20 bg-noise pointer-events-none"></div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/5 rounded-full -mr-20 -mt-20 pointer-events-none hidden md:block md:blur-3xl"></div>
 
           <div className="relative z-10 flex flex-col h-full justify-between">
             <div>
@@ -151,10 +167,10 @@ export default function HomePage() {
               </h1>
 
               <div className="flex items-center gap-4 mb-8">
-                 <div className="h-0.5 w-12 bg-brand-600 dark:bg-brand-500"></div>
-                 <h2 className="font-mono text-sm md:text-lg text-light-sub dark:text-dark-sub uppercase tracking-widest font-medium">
+                 <div className="h-0.5 w-12 bg-brand-600 dark:bg-brand-500" aria-hidden="true"></div>
+                 <p className="font-mono text-sm md:text-lg text-light-sub dark:text-dark-sub uppercase tracking-widest font-medium">
                     Senior Frontend Engineer
-                 </h2>
+                 </p>
               </div>
 
               <p className="text-gray-600 dark:text-gray-400 max-w-lg leading-relaxed text-sm md:text-base border-l-2 border-light-border dark:border-dark-border pl-4">
@@ -169,13 +185,13 @@ export default function HomePage() {
           </div>
         </BentoCard>
 
-        <ImpactMetrics />
+        <DashboardPromoVideo />
 
         <TechStackGrid />
 
         <BentoCard className="md:col-span-6 lg:col-span-5 bg-white dark:bg-[#121214]" subtitle="The Person">
            <div className="h-full flex flex-col justify-center relative">
-             <div className="absolute top-0 right-0 text-9xl font-serif italic text-black/5 dark:text-white/5 -z-10 translate-x-4 -translate-y-4 font-bold">VM</div>
+             <div className="absolute top-0 right-0 text-9xl font-serif italic text-black/5 dark:text-white/5 -z-10 translate-x-4 -translate-y-4 font-bold" aria-hidden="true">VM</div>
              <div className="font-mono text-sm text-gray-600 dark:text-gray-300 leading-relaxed z-10">
                <span className="text-4xl float-left mr-3 mt-[-15px] font-serif font-bold text-brand-600 dark:text-brand-500">&ldquo;</span>
                Gutes Frontend beginnt nicht beim Code, sondern beim Verstehen des Business. Ich analysiere Anforderungen, übersetze sie in UX/UI-Konzepte, die zur Marke passen, und plane das Projekt von der Idee bis zum Deployment. Mein Ziel: <strong className="text-light-text dark:text-dark-text">Nahtloser Prozess mit modernen Tools.</strong>
@@ -199,7 +215,7 @@ export default function HomePage() {
                </p>
              </div>
              <Link href="/services" className="inline-flex items-center gap-2 text-xs font-mono font-bold text-light-text dark:text-dark-text border-b border-gray-300 dark:border-gray-700 pb-1 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-500 transition-all w-fit group">
-                Alle Leistungen <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                Alle Leistungen <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
              </Link>
            </div>
         </BentoCard>

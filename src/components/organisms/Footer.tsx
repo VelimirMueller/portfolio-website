@@ -25,14 +25,14 @@ export const Footer = () => (
       <div>
         <h4 className="text-xs font-mono uppercase text-gray-500 mb-4 tracking-widest">Connect</h4>
         <div className="flex gap-4">
-          <a href="https://www.linkedin.com/in/velimir-müller-07b460175" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white dark:bg-[#111] border border-black/5 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:border-black/20 dark:hover:border-white/30 transition-all">
-            <Linkedin size={18} />
+          <a href="https://www.linkedin.com/in/velimir-müller-07b460175" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" className="w-10 h-10 rounded-full bg-white dark:bg-[#111] border border-black/5 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:border-black/20 dark:hover:border-white/30 transition-all focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2">
+            <Linkedin size={18} aria-hidden="true" />
           </a>
-          <a href="https://github.com/VelimirMueller" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white dark:bg-[#111] border border-black/5 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:border-black/20 dark:hover:border-white/30 transition-all">
-            <Github size={18} />
+          <a href="https://github.com/VelimirMueller" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" className="w-10 h-10 rounded-full bg-white dark:bg-[#111] border border-black/5 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:border-black/20 dark:hover:border-white/30 transition-all focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2">
+            <Github size={18} aria-hidden="true" />
           </a>
-          <a href="mailto:velimir.mueller@googlemail.com" className="w-10 h-10 rounded-full bg-white dark:bg-[#111] border border-black/5 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:border-black/20 dark:hover:border-white/30 transition-all">
-            <Mail size={18} />
+          <a href="mailto:velimir.mueller@googlemail.com" aria-label="Send email" className="w-10 h-10 rounded-full bg-white dark:bg-[#111] border border-black/5 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:border-black/20 dark:hover:border-white/30 transition-all focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2">
+            <Mail size={18} aria-hidden="true" />
           </a>
         </div>
       </div>

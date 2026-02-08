@@ -36,20 +36,21 @@ const Card = ({ children, className = "" }: { children: React.ReactNode, classNa
   </div>
 );
 
-const IconButton = ({ icon: Icon, active = false, onClick }: { icon: React.ElementType, active?: boolean, onClick?: () => void }) => (
-  <button onClick={onClick} className={`p-3 rounded-xl transition-all group ${active ? 'bg-blue-600/20 text-blue-400' : 'hover:bg-[#222] text-gray-500'}`}>
-    <Icon size={20} className={active ? 'text-blue-400' : 'text-gray-500 group-hover:text-white'} />
+const IconButton = ({ icon: Icon, active = false, onClick, label }: { icon: React.ElementType, active?: boolean, onClick?: () => void, label?: string }) => (
+  <button onClick={onClick} aria-label={label} className={`p-3 rounded-xl transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${active ? 'bg-blue-600/20 text-blue-400' : 'hover:bg-[#222] text-gray-500'}`}>
+    <Icon size={20} className={active ? 'text-blue-400' : 'text-gray-500 group-hover:text-white'} aria-hidden="true" />
   </button>
 );
 
 const NavItem = ({ icon: Icon, label, id, activeId, onClick }: { icon: React.ElementType, label: string, id: string, activeId: string, onClick: (id: string) => void }) => (
-  <div
+  <button
     onClick={() => onClick(id)}
-    className={`flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-all ${activeId === id ? 'bg-blue-600/10 text-blue-400' : 'text-gray-500 hover:bg-[#1a1a1a] hover:text-white'}`}
+    aria-current={activeId === id ? 'page' : undefined}
+    className={`flex items-center gap-4 px-4 py-3 rounded-xl w-full text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${activeId === id ? 'bg-blue-600/10 text-blue-400' : 'text-gray-500 hover:bg-[#1a1a1a] hover:text-white'}`}
   >
-    <Icon size={20} />
+    <Icon size={20} aria-hidden="true" />
     <span className="font-medium text-sm">{label}</span>
-  </div>
+  </button>
 );
 
 const Badge = ({ children, color = "blue" }: { children: React.ReactNode, color?: "blue" | "green" | "purple" | "orange" | "red" }) => {
@@ -70,7 +71,7 @@ const Badge = ({ children, color = "blue" }: { children: React.ReactNode, color?
 // --- Custom Charts ---
 
 const BarChart = () => (
-  <div className="flex items-end justify-between h-32 gap-2 mt-4">
+  <div className="flex items-end justify-between h-32 gap-2 mt-4" role="img" aria-label="Bar chart showing leads per day of week">
     {[40, 65, 45, 80, 55, 70, 30].map((h, i) => (
       <div key={i} className="flex flex-col items-center gap-2 group w-full">
         <div className="relative w-full rounded-t-lg bg-[#222] group-hover:bg-[#333] h-full overflow-hidden transition-all">
@@ -89,7 +90,7 @@ const BarChart = () => (
 
 const WaveLineChart = ({ color = "#818cf8" }: { color?: string }) => (
   <div className="relative h-32 w-full mt-4 overflow-hidden">
-    <svg viewBox="0 0 300 100" className="w-full h-full" preserveAspectRatio="none">
+    <svg viewBox="0 0 300 100" className="w-full h-full" preserveAspectRatio="none" role="img" aria-label="Line chart showing traffic trend">
       <defs>
         <linearGradient id={`gradient-${color.replace('#', '')}`} x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor={color} stopOpacity="0.5" />
@@ -113,7 +114,7 @@ const WaveLineChart = ({ color = "#818cf8" }: { color?: string }) => (
 
 const DonutChart = () => (
   <div className="relative w-32 h-32 mx-auto mt-4">
-    <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+    <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36" role="img" aria-label="Donut chart showing 75% of monthly goal reached">
       <path
         className="text-[#222]"
         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
@@ -149,7 +150,7 @@ const DashboardView = () => (
                   <h3 className="text-lg font-bold text-white">Lead Velocity</h3>
                   <p className="text-xs text-gray-500">Neue Leads pro Tag</p>
                 </div>
-                <select className="bg-[#222] border-none text-[10px] text-white rounded px-2 py-1 outline-none">
+                <select aria-label="Time period for lead velocity" className="bg-[#222] border-none text-[10px] text-white rounded px-2 py-1 outline-none">
                   <option>Woche</option>
                 </select>
             </div>
@@ -179,7 +180,7 @@ const DashboardView = () => (
                   <h3 className="text-lg font-bold text-white">Monatsziel</h3>
                   <p className="text-xs text-gray-500">Umsatz vs Ziel</p>
                 </div>
-                <select className="bg-[#222] border-none text-[10px] text-white rounded px-2 py-1 outline-none">
+                <select aria-label="Time period for monthly goal" className="bg-[#222] border-none text-[10px] text-white rounded px-2 py-1 outline-none">
                   <option>Heute</option>
                 </select>
             </div>
@@ -236,7 +237,7 @@ const DashboardView = () => (
                           <div className="text-xs font-bold text-white">{item.value}</div>
                           <div className="text-[10px] text-gray-500">{item.status}</div>
                         </div>
-                        <button className="p-2 hover:bg-[#222] rounded-lg text-gray-500"><MoreHorizontal size={16}/></button>
+                        <button className="p-2 hover:bg-[#222] rounded-lg text-gray-500" aria-label="More options"><MoreHorizontal size={16} aria-hidden="true"/></button>
                     </div>
                   </div>
                 ))}
@@ -294,12 +295,12 @@ const LeadsView = () => (
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-[#222] text-xs text-gray-500 uppercase font-mono bg-[#161616]">
-              <th className="px-6 py-4 font-medium">Lead Name</th>
-              <th className="px-6 py-4 font-medium">Company</th>
-              <th className="px-6 py-4 font-medium">Status</th>
-              <th className="px-6 py-4 font-medium">Value</th>
-              <th className="px-6 py-4 font-medium">Last Contact</th>
-              <th className="px-6 py-4 font-medium text-right">Action</th>
+              <th scope="col" className="px-6 py-4 font-medium">Lead Name</th>
+              <th scope="col" className="px-6 py-4 font-medium">Company</th>
+              <th scope="col" className="px-6 py-4 font-medium">Status</th>
+              <th scope="col" className="px-6 py-4 font-medium">Value</th>
+              <th scope="col" className="px-6 py-4 font-medium">Last Contact</th>
+              <th scope="col" className="px-6 py-4 font-medium text-right">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#222]">
@@ -329,8 +330,8 @@ const LeadsView = () => (
                 <td className="px-6 py-4 text-sm font-mono text-white">{lead.value}</td>
                 <td className="px-6 py-4 text-xs text-gray-500">{lead.last}</td>
                 <td className="px-6 py-4 text-right">
-                  <button className="p-2 hover:bg-[#333] rounded-lg text-gray-500 hover:text-white transition-colors">
-                    <MoreHorizontal size={16} />
+                  <button className="p-2 hover:bg-[#333] rounded-lg text-gray-500 hover:text-white transition-colors" aria-label="More options">
+                    <MoreHorizontal size={16} aria-hidden="true" />
                   </button>
                 </td>
               </tr>
@@ -372,7 +373,7 @@ const ContentView = () => (
           <Card className="p-4 cursor-grab active:cursor-grabbing hover:border-gray-600">
              <div className="flex justify-between mb-3">
                <span className="text-[10px] text-blue-400 border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 rounded">Blog</span>
-               <MoreHorizontal size={14} className="text-gray-600"/>
+               <MoreHorizontal size={14} className="text-gray-600" aria-hidden="true"/>
              </div>
              <h4 className="font-bold text-white text-sm mb-2">Comparison: Vue vs React in 2025</h4>
              <p className="text-xs text-gray-500 mb-4">Technical deep dive into the new signals architecture.</p>
@@ -383,7 +384,7 @@ const ContentView = () => (
           <Card className="p-4 cursor-grab active:cursor-grabbing hover:border-gray-600">
              <div className="flex justify-between mb-3">
                <span className="text-[10px] text-purple-400 border border-purple-500/20 bg-purple-500/10 px-2 py-0.5 rounded">LinkedIn</span>
-               <MoreHorizontal size={14} className="text-gray-600"/>
+               <MoreHorizontal size={14} className="text-gray-600" aria-hidden="true"/>
              </div>
              <h4 className="font-bold text-white text-sm mb-2">My workspace setup 2025</h4>
              <p className="text-xs text-gray-500 mb-4">Photo carousel with gear breakdown.</p>
@@ -403,7 +404,7 @@ const ContentView = () => (
           <Card className="p-4 border-blue-500/30">
              <div className="flex justify-between mb-3">
                <span className="text-[10px] text-orange-400 border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 rounded">Newsletter</span>
-               <MoreHorizontal size={14} className="text-gray-600"/>
+               <MoreHorizontal size={14} className="text-gray-600" aria-hidden="true"/>
              </div>
              <h4 className="font-bold text-white text-sm mb-2">Q3 Agency Update</h4>
              <div className="w-full bg-[#222] h-1 rounded-full mb-4 overflow-hidden">
@@ -506,7 +507,7 @@ const AnalyticsView = () => (
           </div>
           <div className="flex items-center justify-center h-48">
              <div className="relative w-32 h-32">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36" role="img" aria-label="Device distribution: 60% Mobile, 25% Desktop, 15% Tablet">
                   <path className="text-[#222]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="6"/>
                   <path className="text-blue-500" strokeDasharray="60, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="6"/>
                   <path className="text-purple-500" strokeDasharray="25, 100" strokeDashoffset="-60" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="6"/>
@@ -575,24 +576,24 @@ const SettingsView = () => (
                 <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 border-4 border-[#111] relative">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Velimir" alt="Avatar" className="w-full h-full rounded-full" />
-                   <button className="absolute bottom-0 right-0 p-1.5 bg-blue-600 rounded-full text-white border-2 border-[#111]">
-                      <Edit3 size={12} />
+                   <button className="absolute bottom-0 right-0 p-1.5 bg-blue-600 rounded-full text-white border-2 border-[#111]" aria-label="Change profile picture">
+                      <Edit3 size={12} aria-hidden="true" />
                    </button>
                 </div>
                 <div className="space-y-3 flex-1">
                    <div className="grid grid-cols-2 gap-4">
                       <div>
-                         <label className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">First Name</label>
-                         <input type="text" defaultValue="Velimir" className="w-full bg-[#050505] border border-[#222] rounded px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none" readOnly />
+                         <label htmlFor="settings-firstname" className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">First Name</label>
+                         <input id="settings-firstname" type="text" defaultValue="Velimir" className="w-full bg-[#050505] border border-[#222] rounded px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none" readOnly />
                       </div>
                       <div>
-                         <label className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">Last Name</label>
-                         <input type="text" defaultValue="Müller" className="w-full bg-[#050505] border border-[#222] rounded px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none" readOnly />
+                         <label htmlFor="settings-lastname" className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">Last Name</label>
+                         <input id="settings-lastname" type="text" defaultValue="Müller" className="w-full bg-[#050505] border border-[#222] rounded px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none" readOnly />
                       </div>
                    </div>
                    <div>
-                       <label className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">Role</label>
-                       <input type="text" defaultValue="Senior Administrator" className="w-full bg-[#050505] border border-[#222] rounded px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none" readOnly />
+                       <label htmlFor="settings-role" className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">Role</label>
+                       <input id="settings-role" type="text" defaultValue="Senior Administrator" className="w-full bg-[#050505] border border-[#222] rounded px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none" readOnly />
                    </div>
                 </div>
              </div>
@@ -603,30 +604,30 @@ const SettingsView = () => (
              <div className="space-y-6">
                 <div className="flex items-center justify-between">
                    <div>
-                      <div className="text-sm font-bold text-white">Dark Mode</div>
+                      <div className="text-sm font-bold text-white" id="toggle-darkmode">Dark Mode</div>
                       <div className="text-xs text-gray-500">System default is active</div>
                    </div>
-                   <div className="w-12 h-6 bg-blue-600 rounded-full relative cursor-pointer">
-                      <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></div>
-                   </div>
+                   <button role="switch" aria-checked="true" aria-labelledby="toggle-darkmode" className="w-12 h-6 bg-blue-600 rounded-full relative cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                      <span className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></span>
+                   </button>
                 </div>
                 <div className="flex items-center justify-between">
                    <div>
-                      <div className="text-sm font-bold text-white">Email Notifications</div>
+                      <div className="text-sm font-bold text-white" id="toggle-email">Email Notifications</div>
                       <div className="text-xs text-gray-500">Receive weekly digests</div>
                    </div>
-                   <div className="w-12 h-6 bg-[#222] rounded-full relative cursor-pointer border border-[#333]">
-                      <div className="absolute left-1 top-1 w-4 h-4 bg-gray-500 rounded-full shadow-sm"></div>
-                   </div>
+                   <button role="switch" aria-checked="false" aria-labelledby="toggle-email" className="w-12 h-6 bg-[#222] rounded-full relative cursor-pointer border border-[#333] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                      <span className="absolute left-1 top-1 w-4 h-4 bg-gray-500 rounded-full shadow-sm"></span>
+                   </button>
                 </div>
                 <div className="flex items-center justify-between">
                    <div>
-                      <div className="text-sm font-bold text-white">Public Profile</div>
+                      <div className="text-sm font-bold text-white" id="toggle-public">Public Profile</div>
                       <div className="text-xs text-gray-500">Visible to search engines</div>
                    </div>
-                   <div className="w-12 h-6 bg-blue-600 rounded-full relative cursor-pointer">
-                      <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></div>
-                   </div>
+                   <button role="switch" aria-checked="true" aria-labelledby="toggle-public" className="w-12 h-6 bg-blue-600 rounded-full relative cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                      <span className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></span>
+                   </button>
                 </div>
              </div>
           </Card>
@@ -666,7 +667,7 @@ export default function DashboardDemoPage() {
     <div className="flex h-screen bg-[#050505] text-[#E2E2E2] font-sans overflow-hidden">
 
       {/* --- Sidebar --- */}
-      <aside className="w-20 md:w-64 flex-shrink-0 border-r border-[#222] hidden md:flex flex-col justify-between p-4">
+      <aside aria-label="Dashboard sidebar navigation" className="w-20 md:w-64 flex-shrink-0 border-r border-[#222] hidden md:flex flex-col justify-between p-4">
         <div>
           <div className="flex items-center gap-3 px-4 mb-12 mt-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white">
@@ -710,12 +711,13 @@ export default function DashboardDemoPage() {
 
         <header className="h-20 border-b border-[#222] flex items-center justify-between px-8 bg-[#050505]/80 backdrop-blur z-20 shrink-0">
            <div className="flex items-center gap-4 md:w-96">
-              <div className="md:hidden p-2 text-gray-400"><MoreHorizontal /></div>
+              <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu"><MoreHorizontal aria-hidden="true" /></button>
 
               <div className="relative w-full hidden md:block">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" size={18} aria-hidden="true" />
                   <input
-                    type="text"
+                    type="search"
+                    aria-label={`Search in ${getHeaderTitle()}`}
                     placeholder={`Search in ${getHeaderTitle()}...`}
                     className="w-full bg-[#111] border border-[#222] rounded-full py-2.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
                   />
@@ -728,7 +730,7 @@ export default function DashboardDemoPage() {
                    <LogOut size={14}/> Exit
                  </Link>
               </div>
-              <IconButton icon={Bell} />
+              <IconButton icon={Bell} label="Notifications" />
               <div className="flex items-center gap-3 pl-6 border-l border-[#222]">
                  <div className="w-9 h-9 rounded-full bg-gradient-to-r from-gray-700 to-gray-600 border-2 border-[#222] relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

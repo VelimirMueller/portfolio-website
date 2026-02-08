@@ -61,7 +61,7 @@ export const Navigation = () => {
                   }`}
                 >
                   {item.label}
-                  {item.children && <ChevronDown size={12} className="opacity-50 group-hover:opacity-100 transition-opacity" />}
+                  {item.children && <ChevronDown size={12} className="opacity-50 group-hover:opacity-100 transition-opacity" aria-hidden="true" />}
                 </Link>
 
                 {item.children && (
@@ -91,7 +91,7 @@ export const Navigation = () => {
               className="w-9 h-9 flex items-center justify-center rounded-full text-light-sub dark:text-dark-sub hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               aria-label="Toggle Theme"
             >
-              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+              {theme === 'dark' ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
             </button>
             <Button to="/contact" variant="primary" className="!px-5 !py-2 !text-xs !h-9 bg-brand-600 hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-gray-200 border-none shadow-lg shadow-brand-500/20 dark:shadow-white/10">
               Kontakt
@@ -102,21 +102,22 @@ export const Navigation = () => {
             <button
                 onClick={toggleTheme}
                 className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
-              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
             </button>
-            <button onClick={() => setIsOpen(true)} className="p-3 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full">
-              <Menu size={20} />
+            <button onClick={() => setIsOpen(true)} className="p-3 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full" aria-label="Open navigation menu">
+              <Menu size={20} aria-hidden="true" />
             </button>
           </div>
         </div>
       </nav>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-[60] flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
+        <div role="dialog" aria-modal="true" aria-label="Navigation menu" className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-[60] flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
           <div className="flex justify-end mb-8">
-            <button onClick={() => setIsOpen(false)} className="p-2 bg-white dark:bg-[#121214] rounded-full text-black dark:text-white border border-light-border dark:border-dark-border">
-              <X size={24} />
+            <button onClick={() => setIsOpen(false)} className="p-2 bg-white dark:bg-[#121214] rounded-full text-black dark:text-white border border-light-border dark:border-dark-border" aria-label="Close navigation menu">
+              <X size={24} aria-hidden="true" />
             </button>
           </div>
           <div className="flex flex-col gap-2">
@@ -138,7 +139,7 @@ export const Navigation = () => {
                             href={child.path}
                             className="py-3 text-sm font-mono text-light-sub dark:text-dark-sub hover:text-black dark:hover:text-white flex items-center gap-2"
                          >
-                            <div className="w-1 h-1 rounded-full bg-gray-400 dark:bg-gray-600"></div>
+                            <div className="w-1 h-1 rounded-full bg-gray-400 dark:bg-gray-600" aria-hidden="true"></div>
                             {child.label}
                          </Link>
                       ))}

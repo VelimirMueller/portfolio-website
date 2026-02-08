@@ -11,7 +11,7 @@ export default function ContactPage() {
        <SectionHeader title="CONTACT." subtitle="Get In Touch" />
 
        <div className="bg-white dark:bg-[#111] p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full -mr-32 -mt-32 pointer-events-none hidden md:block md:blur-3xl"></div>
 
           <div className="relative z-10">
             <p className="text-xl text-black dark:text-white mb-8 font-mono">
@@ -21,17 +21,17 @@ export default function ContactPage() {
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                <div className="grid md:grid-cols-2 gap-6">
                  <div>
-                    <label className="block font-mono text-xs uppercase text-gray-500 mb-2">Name</label>
-                    <input type="text" className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm" placeholder="Ihr Name" />
+                    <label htmlFor="contact-name" className="block font-mono text-xs uppercase text-gray-500 mb-2">Name</label>
+                    <input id="contact-name" type="text" autoComplete="name" className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500" placeholder="Ihr Name" />
                  </div>
                  <div>
-                    <label className="block font-mono text-xs uppercase text-gray-500 mb-2">Email</label>
-                    <input type="email" className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm" placeholder="ihre@email.com" />
+                    <label htmlFor="contact-email" className="block font-mono text-xs uppercase text-gray-500 mb-2">Email</label>
+                    <input id="contact-email" type="email" autoComplete="email" className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500" placeholder="ihre@email.com" />
                  </div>
                </div>
                <div>
-                  <label className="block font-mono text-xs uppercase text-gray-500 mb-2">Nachricht</label>
-                  <textarea rows={6} className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm" placeholder="Lassen Sie uns sprechen..."></textarea>
+                  <label htmlFor="contact-message" className="block font-mono text-xs uppercase text-gray-500 mb-2">Nachricht</label>
+                  <textarea id="contact-message" rows={6} className="w-full bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500" placeholder="Lassen Sie uns sprechen..."></textarea>
                </div>
                <div className="flex justify-end">
                  <Button className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 px-8">Nachricht senden</Button>
