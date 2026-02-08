@@ -14,7 +14,7 @@ export default function AboutPage() {
         <BentoCard className="lg:col-span-8 bg-white dark:bg-[#111] min-h-[400px]" title="Summary">
            <div className="prose dark:prose-invert prose-lg max-w-none mt-4">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                 Ich bin <span className="text-black dark:text-white font-bold">Senior Frontend Engineer</span> mit über 7 Jahren Erfahrung (inkl. Ausbildung). Mein Fokus liegt auf dem gesamten Produktprozess – von der Anforderungsanalyse bis zum Deployment.
+                 Ich bin <span className="text-black dark:text-white font-bold">Senior Frontend Engineer</span> mit langjähriger Erfahrung im Product Engineering. Mein Fokus liegt auf dem gesamten Produktprozess – von der Anforderungsanalyse bis zum Deployment.
               </p>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                  Ich verstehe Requirements Engineering als Grundlage jedes erfolgreichen Projekts: Business-Anforderungen erfassen, in UX/UI-Konzepte übersetzen und dabei das Branding als integralen Bestandteil des Prozesses behandeln.
@@ -26,7 +26,7 @@ export default function AboutPage() {
 
            <div className="mt-8 pt-8 border-t border-black/5 dark:border-white/5 grid grid-cols-3 gap-4">
               <div>
-                 <div className="text-2xl font-mono font-bold text-black dark:text-white">7+</div>
+                 <div className="text-2xl font-mono font-bold text-black dark:text-white">9+</div>
                  <div className="text-xs text-gray-500 uppercase tracking-widest">Jahre Erfahrung</div>
               </div>
               <div>
