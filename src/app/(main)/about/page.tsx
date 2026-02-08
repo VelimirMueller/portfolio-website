@@ -76,12 +76,13 @@ export default function AboutPage() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">Senior Frontend Engineer</h3>
+                        <h3 className="font-bold text-black dark:text-white text-lg">Senior Software Engineer - Frontend</h3>
                         <span className="text-xs font-mono text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-900/20 px-2 py-0.5 rounded">Current</span>
                       </div>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">GALVANY</div>
                       <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">Feb 2025 - Present</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        End-to-End Projektverantwortung: Requirements Engineering, UX/UI-Design, Frontend-Entwicklung mit Next.js und Deployment via Vercel & Supabase.
+                        End-to-End Produktentwicklung mit React und Vue.js. UX-Design in Figma, AWS-Infrastruktur (S3, CloudFront), Testing mit Vitest und Playwright.
                       </p>
                   </div>
               </div>
@@ -92,12 +93,13 @@ export default function AboutPage() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">Frontend Engineer</h3>
+                        <h3 className="font-bold text-black dark:text-white text-lg">Software Engineer - Frontend</h3>
                         <span className="text-xs font-mono text-gray-500">Enterprise SaaS</span>
                       </div>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">DEMOS plan GmbH</div>
                       <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">Oct 2021 - Jan 2025</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        Architekturkonzepte für komplexe Web-Apps, interaktive Maps, Testing-Strategien, UX-Optimierung und Mentoring.
+                        Vue 2/3 Architektur, interaktive Maps mit OpenLayers, State Management mit VueX/Pinia, Unit- und Komponententests mit Jest/Vitest, Mentoring.
                       </p>
                   </div>
               </div>
@@ -108,12 +110,29 @@ export default function AboutPage() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">Freelance & Training</h3>
-                        <span className="text-xs font-mono text-gray-500">Foundation</span>
+                        <h3 className="font-bold text-black dark:text-white text-lg">Web Developer</h3>
+                        <span className="text-xs font-mono text-gray-500">Freelance</span>
                       </div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">2017 - 2021</time>
+                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">Feb 2019 - Jun 2020</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        Freelance Web Development, IT-Ausbildung, erste Erfahrungen mit Kundenanforderungen und eigenständiger Projektplanung.
+                        Erstellung und Wartung von WordPress-Instanzen mit WooCommerce-Webshops – von der Planung bis zum Deployment.
+                      </p>
+                  </div>
+              </div>
+
+              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
+                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+                  </div>
+                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                      <div className="flex justify-between items-center mb-1">
+                        <h3 className="font-bold text-black dark:text-white text-lg">Specialist</h3>
+                        <span className="text-xs font-mono text-gray-500">E-Commerce</span>
+                      </div>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">Zalando SE</div>
+                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">Apr 2017 - Mar 2019</time>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">
+                        Specialist bei Zalando SE im Bereich E-Commerce.
                       </p>
                   </div>
               </div>
