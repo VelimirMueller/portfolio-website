@@ -144,13 +144,19 @@ const TechStackGrid = () => {
 
 export default function HomePage() {
   return (
-    <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
+    <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto relative">
+      {/* Animated Gradient Background - Top Third Only */}
+      <div className="fixed top-0 left-0 w-[100vw] h-[33vh] overflow-hidden pointer-events-none -z-10">
+        {/* Main gradient orbs */}
+        <div className="absolute top-0 right-[10%] w-[300px] h-[300px] rounded-full opacity-[0.04] dark:opacity-[0.02] blur-3xl animate-gradient-slow bg-gradient-to-br from-purple-400 via-purple-500 to-purple-600"></div>
+        <div className="absolute top-0 left-[10%] w-[250px] h-[250px] rounded-full opacity-[0.04] dark:opacity-[0.02] blur-3xl animate-gradient-slower bg-gradient-to-tr from-cyan-400 via-cyan-500 to-blue-500"></div>
+        <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[200px] h-[200px] rounded-full opacity-[0.03] dark:opacity-[0.015] blur-3xl animate-gradient-reverse bg-gradient-to-r from-violet-400 to-indigo-500"></div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4 auto-rows-min">
 
         <BentoCard className="md:col-span-6 lg:col-span-8 min-h-[450px] bg-white dark:bg-[#121214] border-light-border dark:border-dark-border justify-between relative overflow-hidden">
           <div className="absolute inset-0 opacity-20 bg-noise pointer-events-none"></div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/5 rounded-full -mr-20 -mt-20 pointer-events-none hidden md:block md:blur-3xl"></div>
 
           <div className="relative z-10 flex flex-col h-full justify-between">
             <div>

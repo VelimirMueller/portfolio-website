@@ -49,7 +49,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-light-bg dark:bg-dark-bg`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>

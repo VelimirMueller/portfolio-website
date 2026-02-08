@@ -42,6 +42,12 @@ const config: Config = {
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
         'shimmer': 'shimmer 2s ease-in-out infinite',
         'draw-line': 'draw-line 1.5s ease-out both',
+        // New gradient animations
+        'gradient-slow': 'gradient-slow 15s ease-in-out infinite',
+        'gradient-slower': 'gradient-slower 20s ease-in-out infinite',
+        'gradient-reverse': 'gradient-reverse 12s ease-in-out infinite',
+        'float': 'float 8s ease-in-out infinite',
+        'float-delayed': 'float-delayed 10s ease-in-out infinite 2s',
       },
       keyframes: {
         'fade-in-up': {
@@ -67,6 +73,61 @@ const config: Config = {
         'draw-line': {
           '0%': { strokeDashoffset: '1' },
           '100%': { strokeDashoffset: '0' },
+        },
+        // New gradient keyframes
+        'gradient-slow': {
+          '0%, 100%': {
+            transform: 'translate(0, 0) scale(1)',
+            opacity: '0.3',
+          },
+          '33%': {
+            transform: 'translate(30px, -30px) scale(1.1)',
+            opacity: '0.4',
+          },
+          '66%': {
+            transform: 'translate(-20px, 20px) scale(0.9)',
+            opacity: '0.25',
+          },
+        },
+        'gradient-slower': {
+          '0%, 100%': {
+            transform: 'translate(0, 0) scale(1) rotate(0deg)',
+            opacity: '0.3',
+          },
+          '50%': {
+            transform: 'translate(-40px, -40px) scale(1.15) rotate(10deg)',
+            opacity: '0.35',
+          },
+        },
+        'gradient-reverse': {
+          '0%, 100%': {
+            transform: 'translate(-50%, -50%) scale(1)',
+            opacity: '0.2',
+          },
+          '50%': {
+            transform: 'translate(-50%, -50%) scale(1.2)',
+            opacity: '0.3',
+          },
+        },
+        'float': {
+          '0%, 100%': {
+            transform: 'translateY(0px)',
+            opacity: '0.25',
+          },
+          '50%': {
+            transform: 'translateY(-20px)',
+            opacity: '0.35',
+          },
+        },
+        'float-delayed': {
+          '0%, 100%': {
+            transform: 'translateY(0px) translateX(0px)',
+            opacity: '0.2',
+          },
+          '50%': {
+            transform: 'translateY(15px) translateX(-15px)',
+            opacity: '0.3',
+          },
         },
       },
       backgroundImage: {
