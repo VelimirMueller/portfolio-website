@@ -150,7 +150,7 @@ export const Navigation = () => {
               href="/contact"
               className="group p-4 border-b border-light-border dark:border-dark-border hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             >
-              <div className="text-3xl font-mono font-bold text-light-text dark:text-dark-text mb-1 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">// Kontakt</div>
+              <div className="text-3xl font-mono font-bold text-light-text dark:text-dark-text mb-1 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">{"// Kontakt"}</div>
               <div className="text-gray-500 text-xs font-mono uppercase tracking-widest">Get in touch</div>
             </Link>
           </div>
