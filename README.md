@@ -1,7 +1,7 @@
 ```
 velimir-portfolio
 =================
-Senior Frontend Engineer -- Portfolio & Services
+Senior Frontend Engineer / Product Engineer -- Portfolio & Services
 ```
 
 <br>
