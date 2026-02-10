@@ -6,11 +6,14 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/atoms/Button';
 import { useTheme } from '@/components/theme/ThemeProvider';
+import { useLanguage } from '@/components/language/LanguageProvider';
+import { LanguageToggle } from '@/components/atoms/LanguageToggle';
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '/';
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLanguage();
 
   const isActive = (path: string) => {
     if (path === '/') return pathname === '/';
@@ -22,22 +25,22 @@ export const Navigation = () => {
   }, [pathname]);
 
   const navItems = [
-    { path: '/', label: 'Start', mobileLabel: '// Start', mobileDesc: 'Home & Overview' },
+    { path: '/', label: t('nav.home'), mobileLabel: `// ${t('nav.home')}`, mobileDesc: t('nav.homeDesc') },
     {
       path: '/services',
-      label: 'Leistungen',
-      mobileLabel: '// Leistungen',
-      mobileDesc: 'Product Engineering',
+      label: t('nav.services'),
+      mobileLabel: `// ${t('nav.services')}`,
+      mobileDesc: t('nav.servicesDesc'),
       children: [
-        { path: '/services/requirements-engineering', label: 'Requirements Engineering' },
-        { path: '/services/ux-ui-branding', label: 'UX/UI & Branding' },
-        { path: '/services/frontend-development', label: 'Frontend Development' },
-        { path: '/services/project-delivery', label: 'Projektplanung' },
-        { path: '/services/modern-stack', label: 'Modern Stack' },
+        { path: '/services/requirements-engineering', label: t('nav.children.requirementsEngineering') },
+        { path: '/services/ux-ui-branding', label: t('nav.children.uxUiBranding') },
+        { path: '/services/frontend-development', label: t('nav.children.frontendDevelopment') },
+        { path: '/services/project-delivery', label: t('nav.children.projectDelivery') },
+        { path: '/services/modern-stack', label: t('nav.children.modernStack') },
       ]
     },
-    { path: '/projects', label: 'Projekte', mobileLabel: '// Projekte', mobileDesc: 'Case Studies' },
-    { path: '/about', label: 'Über mich', mobileLabel: '// Über mich', mobileDesc: 'Bio & Experience' },
+    { path: '/projects', label: t('nav.projects'), mobileLabel: `// ${t('nav.projects')}`, mobileDesc: t('nav.projectsDesc') },
+    { path: '/about', label: t('nav.about'), mobileLabel: `// ${t('nav.about')}`, mobileDesc: t('nav.aboutDesc') },
   ];
 
   return (
@@ -86,19 +89,21 @@ export const Navigation = () => {
           </div>
 
           <div className="pl-1 pr-1.5 hidden md:flex items-center gap-2">
+            <LanguageToggle />
             <button
               onClick={toggleTheme}
               className="w-9 h-9 flex items-center justify-center rounded-full text-light-sub dark:text-dark-sub hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-              aria-label="Toggle Theme"
+              aria-label={t('nav.toggleTheme')}
             >
               {theme === 'dark' ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
             </button>
             <Button to="/contact" variant="primary" className="!px-5 !py-2 !text-xs !h-9 bg-brand-600 hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-gray-200 border-none shadow-lg shadow-brand-500/20 dark:shadow-white/10">
-              Kontakt
+              {t('nav.contact')}
             </Button>
           </div>
 
           <div className="flex items-center gap-2 md:hidden pl-2">
+            <LanguageToggle />
             <button
                 onClick={toggleTheme}
                 className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
@@ -106,7 +111,7 @@ export const Navigation = () => {
               >
               {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
             </button>
-            <button onClick={() => setIsOpen(true)} className="p-3 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full" aria-label="Open navigation menu">
+            <button onClick={() => setIsOpen(true)} className="p-3 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full" aria-label={t('nav.openMenu')}>
               <Menu size={20} aria-hidden="true" />
             </button>
           </div>
@@ -116,7 +121,7 @@ export const Navigation = () => {
       {isOpen && (
         <div role="dialog" aria-modal="true" aria-label="Navigation menu" className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-[60] flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
           <div className="flex justify-end mb-8">
-            <button onClick={() => setIsOpen(false)} className="p-2 bg-white dark:bg-[#121214] rounded-full text-black dark:text-white border border-light-border dark:border-dark-border" aria-label="Close navigation menu">
+            <button onClick={() => setIsOpen(false)} className="p-2 bg-white dark:bg-[#121214] rounded-full text-black dark:text-white border border-light-border dark:border-dark-border" aria-label={t('nav.closeMenu')}>
               <X size={24} aria-hidden="true" />
             </button>
           </div>
@@ -151,8 +156,8 @@ export const Navigation = () => {
               href="/contact"
               className="group p-4 border-b border-light-border dark:border-dark-border hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             >
-              <div className="text-3xl font-mono font-bold text-light-text dark:text-dark-text mb-1 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">{"// Kontakt"}</div>
-              <div className="text-gray-500 text-xs font-mono uppercase tracking-widest">Get in touch</div>
+              <div className="text-3xl font-mono font-bold text-light-text dark:text-dark-text mb-1 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">{`// ${t('nav.contact')}`}</div>
+              <div className="text-gray-500 text-xs font-mono uppercase tracking-widest">{t('nav.contactDesc')}</div>
             </Link>
           </div>
         </div>

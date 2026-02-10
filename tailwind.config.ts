@@ -42,12 +42,18 @@ const config: Config = {
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
         'shimmer': 'shimmer 2s ease-in-out infinite',
         'draw-line': 'draw-line 1.5s ease-out both',
-        // New gradient animations
+        // Legacy gradient animations (kept for compatibility)
         'gradient-slow': 'gradient-slow 15s ease-in-out infinite',
         'gradient-slower': 'gradient-slower 20s ease-in-out infinite',
         'gradient-reverse': 'gradient-reverse 12s ease-in-out infinite',
         'float': 'float 8s ease-in-out infinite',
         'float-delayed': 'float-delayed 10s ease-in-out infinite 2s',
+        // Stripe-style flowing gradient animations
+        'stripe-1': 'stripe-flow-1 18s ease-in-out infinite',
+        'stripe-2': 'stripe-flow-2 22s ease-in-out infinite',
+        'stripe-3': 'stripe-flow-3 25s ease-in-out infinite',
+        'stripe-4': 'stripe-flow-4 20s ease-in-out infinite',
+        'stripe-5': 'stripe-flow-5 28s ease-in-out infinite',
       },
       keyframes: {
         'fade-in-up': {
@@ -74,60 +80,65 @@ const config: Config = {
           '0%': { strokeDashoffset: '1' },
           '100%': { strokeDashoffset: '0' },
         },
-        // New gradient keyframes
+        // Legacy gradient keyframes
         'gradient-slow': {
-          '0%, 100%': {
-            transform: 'translate(0, 0) scale(1)',
-            opacity: '0.3',
-          },
-          '33%': {
-            transform: 'translate(30px, -30px) scale(1.1)',
-            opacity: '0.4',
-          },
-          '66%': {
-            transform: 'translate(-20px, 20px) scale(0.9)',
-            opacity: '0.25',
-          },
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)', opacity: '0.3' },
+          '33%': { transform: 'translate(30px, -30px) scale(1.1)', opacity: '0.4' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)', opacity: '0.25' },
         },
         'gradient-slower': {
-          '0%, 100%': {
-            transform: 'translate(0, 0) scale(1) rotate(0deg)',
-            opacity: '0.3',
-          },
-          '50%': {
-            transform: 'translate(-40px, -40px) scale(1.15) rotate(10deg)',
-            opacity: '0.35',
-          },
+          '0%, 100%': { transform: 'translate(0, 0) scale(1) rotate(0deg)', opacity: '0.3' },
+          '50%': { transform: 'translate(-40px, -40px) scale(1.15) rotate(10deg)', opacity: '0.35' },
         },
         'gradient-reverse': {
-          '0%, 100%': {
-            transform: 'translate(-50%, -50%) scale(1)',
-            opacity: '0.2',
-          },
-          '50%': {
-            transform: 'translate(-50%, -50%) scale(1.2)',
-            opacity: '0.3',
-          },
+          '0%, 100%': { transform: 'translate(-50%, -50%) scale(1)', opacity: '0.2' },
+          '50%': { transform: 'translate(-50%, -50%) scale(1.2)', opacity: '0.3' },
         },
         'float': {
-          '0%, 100%': {
-            transform: 'translateY(0px)',
-            opacity: '0.25',
-          },
-          '50%': {
-            transform: 'translateY(-20px)',
-            opacity: '0.35',
-          },
+          '0%, 100%': { transform: 'translateY(0px)', opacity: '0.25' },
+          '50%': { transform: 'translateY(-20px)', opacity: '0.35' },
         },
         'float-delayed': {
-          '0%, 100%': {
-            transform: 'translateY(0px) translateX(0px)',
-            opacity: '0.2',
-          },
-          '50%': {
-            transform: 'translateY(15px) translateX(-15px)',
-            opacity: '0.3',
-          },
+          '0%, 100%': { transform: 'translateY(0px) translateX(0px)', opacity: '0.2' },
+          '50%': { transform: 'translateY(15px) translateX(-15px)', opacity: '0.3' },
+        },
+        // Stripe-style flowing gradient keyframes – high dynamics, opacity handled on element
+        'stripe-flow-1': {
+          '0%':   { transform: 'translate(0%, 0%) scale(1) rotate(0deg)' },
+          '15%':  { transform: 'translate(25%, -30%) scale(1.25) rotate(8deg)' },
+          '35%':  { transform: 'translate(-15%, 20%) scale(0.8) rotate(-5deg)' },
+          '55%':  { transform: 'translate(30%, 10%) scale(1.35) rotate(12deg)' },
+          '75%':  { transform: 'translate(-20%, -25%) scale(0.9) rotate(-8deg)' },
+          '100%': { transform: 'translate(0%, 0%) scale(1) rotate(0deg)' },
+        },
+        'stripe-flow-2': {
+          '0%':   { transform: 'translate(0%, 0%) rotate(0deg) scale(1)' },
+          '20%':  { transform: 'translate(-30%, 25%) rotate(15deg) scale(1.3)' },
+          '45%':  { transform: 'translate(20%, -15%) rotate(-10deg) scale(0.75)' },
+          '70%':  { transform: 'translate(10%, 30%) rotate(12deg) scale(1.2)' },
+          '100%': { transform: 'translate(0%, 0%) rotate(0deg) scale(1)' },
+        },
+        'stripe-flow-3': {
+          '0%':   { transform: 'translate(0%, 0%) scale(1) rotate(0deg)' },
+          '25%':  { transform: 'translate(35%, -35%) scale(0.7) rotate(-12deg)' },
+          '50%':  { transform: 'translate(-25%, 15%) scale(1.4) rotate(8deg)' },
+          '75%':  { transform: 'translate(15%, -20%) scale(0.85) rotate(-6deg)' },
+          '100%': { transform: 'translate(0%, 0%) scale(1) rotate(0deg)' },
+        },
+        'stripe-flow-4': {
+          '0%':   { transform: 'translate(0%, 0%) rotate(0deg) scale(1)' },
+          '20%':  { transform: 'translate(-20%, -30%) rotate(-12deg) scale(1.3)' },
+          '50%':  { transform: 'translate(25%, 20%) rotate(10deg) scale(0.75)' },
+          '80%':  { transform: 'translate(-15%, 10%) rotate(-6deg) scale(1.15)' },
+          '100%': { transform: 'translate(0%, 0%) rotate(0deg) scale(1)' },
+        },
+        'stripe-flow-5': {
+          '0%':   { transform: 'translate(0%, 0%) scale(0.9) rotate(0deg)' },
+          '20%':  { transform: 'translate(30%, -20%) scale(1.3) rotate(15deg)' },
+          '40%':  { transform: 'translate(-20%, 30%) scale(0.8) rotate(-10deg)' },
+          '65%':  { transform: 'translate(-25%, -15%) scale(1.35) rotate(8deg)' },
+          '85%':  { transform: 'translate(15%, 10%) scale(0.85) rotate(-5deg)' },
+          '100%': { transform: 'translate(0%, 0%) scale(0.9) rotate(0deg)' },
         },
       },
       backgroundImage: {

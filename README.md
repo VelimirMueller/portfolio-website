@@ -98,6 +98,72 @@ Open [localhost:3000](http://localhost:3000).
 | `npm run test:watch` | Jest in watch mode |
 | `npm run test:coverage` | Jest with coverage report |
 | `npm run type-check` | TypeScript type check (no emit) |
+| `npm run storybook` | Start Storybook dev server on port 6006 |
+| `npm run build-storybook` | Build static Storybook site |
+| `npm run test:visual` | Run Playwright visual regression tests against Storybook |
+| `npm run test:e2e` | Run Playwright E2E tests against the app |
+
+<br>
+
+## Storybook
+
+Component library and visual documentation using [Storybook 8](https://storybook.js.org/).
+
+```bash
+npm run storybook
+```
+
+Open [localhost:6006](http://localhost:6006). Components are organized by Atomic Design:
+
+- **Atoms** -- Button, CodeBlock, LanguageToggle
+- **Molecules** -- BentoCard, SectionHeader
+- **Organisms** -- Navigation, Footer
+
+Features: autodocs, controls panel, dark/light mode toolbar toggle, responsive viewport presets, accessibility audit panel (a11y).
+
+### Visual Regression Testing
+
+Uses Playwright to screenshot every Storybook story and compare against baselines.
+
+```bash
+# Generate baseline screenshots (first run)
+npm run test:visual -- --update-snapshots
+
+# Run regression comparison
+npm run test:visual
+```
+
+Config: `playwright-storybook.config.ts` | Tests: `e2e/storybook-visual.spec.ts`
+
+<br>
+
+## E2E Testing
+
+End-to-end tests using [Playwright](https://playwright.dev/) against the production build. Covers all pages, navigation, theme/language toggle, contact form, service detail pages, project demos, and 404 handling.
+
+```bash
+# Run all E2E tests (builds app automatically)
+npm run test:e2e
+
+# Run specific test file
+npm run test:e2e -- --grep "Navigation"
+```
+
+Config: `playwright.config.ts` | Tests: `e2e/app.spec.ts`
+
+<br>
+
+## CI
+
+GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and PR to `main`:
+
+| Job | What it does |
+|:----|:-------------|
+| **Lint & Type Check** | ESLint + `tsc --noEmit` |
+| **Unit Tests** | Jest with coverage |
+| **Build** | Next.js production build |
+| **Storybook Build** | Verifies all stories compile |
+| **E2E Tests** | Playwright against production build (after Build passes) |
 
 <br>
 

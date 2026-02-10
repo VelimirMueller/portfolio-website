@@ -16,6 +16,8 @@ import {
   TrendingUp,
   CheckCircle2,
   MoreHorizontal,
+  Menu,
+  X,
   Plus,
   ArrowUpRight,
   Check,
@@ -740,6 +742,7 @@ const TeamView = () => (
 
 export default function ProjectPlannerPage() {
   const [activeView, setActiveView] = useState('overview');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
 
   const renderView = () => {
@@ -766,7 +769,8 @@ export default function ProjectPlannerPage() {
     <div className="flex h-screen bg-[#050505] text-[#E2E2E2] font-sans overflow-hidden">
 
       {/* --- Sidebar --- */}
-      <aside aria-label="Project planner sidebar navigation" className="w-20 md:w-64 flex-shrink-0 border-r border-[#222] hidden md:flex flex-col justify-between p-4">
+      {sidebarOpen && <div className="fixed inset-0 bg-black/60 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
+      <aside aria-label="Project planner sidebar navigation" className={`${sidebarOpen ? 'flex fixed inset-y-0 left-0 z-40 w-64' : 'hidden'} md:flex md:relative md:w-64 flex-shrink-0 border-r border-[#222] flex-col justify-between p-4 bg-[#050505]`}>
         <div>
           <div className="flex items-center gap-3 px-4 mb-10 mt-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center font-bold text-white">
@@ -776,10 +780,10 @@ export default function ProjectPlannerPage() {
           </div>
 
           <div className="space-y-2">
-            <NavItem icon={LayoutDashboard} label="Overview" id="overview" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={KanbanSquare} label="Board" id="board" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={GanttChart} label="Timeline" id="timeline" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={Users} label="Team" id="team" activeId={activeView} onClick={setActiveView} />
+            <NavItem icon={LayoutDashboard} label="Overview" id="overview" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={KanbanSquare} label="Board" id="board" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={GanttChart} label="Timeline" id="timeline" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={Users} label="Team" id="team" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
           </div>
 
           {/* Project Info */}
@@ -822,7 +826,7 @@ export default function ProjectPlannerPage() {
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
         <header className="h-16 border-b border-[#222] flex items-center justify-between px-6 bg-[#050505]/80 backdrop-blur z-20 shrink-0">
           <div className="flex items-center gap-4 md:w-80">
-            <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu"><MoreHorizontal aria-hidden="true" /></button>
+            <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu" onClick={() => setSidebarOpen(o => !o)}>{sidebarOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
             <div className="relative w-full hidden md:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" size={16} aria-hidden="true" />
               <input

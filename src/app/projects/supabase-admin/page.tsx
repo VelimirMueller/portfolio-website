@@ -15,6 +15,8 @@ import {
   ChevronRight,
   Plus,
   MoreHorizontal,
+  Menu,
+  X,
   Check,
   Copy,
   Key,
@@ -36,7 +38,6 @@ import {
   Filter,
   RefreshCw,
   Terminal,
-  X,
   CheckCircle2,
   AlertCircle,
   Clock,
@@ -727,6 +728,7 @@ const AuthView = () => (
 
 export default function SupabaseAdminPage() {
   const [activeView, setActiveView] = useState('overview');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
 
   const renderView = () => {
@@ -744,7 +746,8 @@ export default function SupabaseAdminPage() {
     <div className="flex h-screen bg-[#070b10] text-[#E2E2E2] font-sans overflow-hidden">
 
       {/* --- Sidebar --- */}
-      <aside aria-label="Supabase admin sidebar navigation" className="w-20 md:w-56 flex-shrink-0 border-r border-[#1e2d3d] hidden md:flex flex-col justify-between p-4 bg-[#0a0f14]">
+      {sidebarOpen && <div className="fixed inset-0 bg-black/60 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
+      <aside aria-label="Supabase admin sidebar navigation" className={`${sidebarOpen ? 'flex fixed inset-y-0 left-0 z-40 w-56' : 'hidden'} md:flex md:relative md:w-56 flex-shrink-0 border-r border-[#1e2d3d] flex-col justify-between p-4 bg-[#0a0f14]`}>
         <div>
           <div className="flex items-center gap-3 px-3 mb-10 mt-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center font-bold text-white text-lg">
@@ -754,11 +757,11 @@ export default function SupabaseAdminPage() {
           </div>
 
           <div className="space-y-1">
-            <NavItem icon={Home} label="Overview" id="overview" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={Table2} label="Schema & Tables" id="schema" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={Database} label="Data Browser" id="data" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={Zap} label="API Builder" id="api" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={Shield} label="Auth & Security" id="auth" activeId={activeView} onClick={setActiveView} />
+            <NavItem icon={Home} label="Overview" id="overview" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={Table2} label="Schema & Tables" id="schema" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={Database} label="Data Browser" id="data" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={Zap} label="API Builder" id="api" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={Shield} label="Auth & Security" id="auth" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
           </div>
         </div>
 
@@ -789,7 +792,7 @@ export default function SupabaseAdminPage() {
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
         <header className="h-14 border-b border-[#1e2d3d] flex items-center justify-between px-6 bg-[#070b10]/80 backdrop-blur z-20 shrink-0">
           <div className="flex items-center gap-3">
-            <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu"><MoreHorizontal aria-hidden="true" /></button>
+            <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu" onClick={() => setSidebarOpen(o => !o)}>{sidebarOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
             <div className="relative hidden md:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" size={14} aria-hidden="true" />
               <input

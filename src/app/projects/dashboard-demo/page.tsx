@@ -15,6 +15,8 @@ import {
   TrendingDown,
   CheckCircle2,
   MoreHorizontal,
+  Menu,
+  X,
   Mail,
   Filter,
   Plus,
@@ -1279,6 +1281,7 @@ const CRMNotificationDropdown = ({ open, onClose }: { open: boolean; onClose: ()
 
 export default function DashboardDemoPage() {
   const [activeView, setActiveView] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
 
   const renderView = () => {
@@ -1307,7 +1310,8 @@ export default function DashboardDemoPage() {
     <div className="flex h-screen bg-[#050505] text-[#E2E2E2] font-sans overflow-hidden">
 
       {/* --- Sidebar --- */}
-      <aside aria-label="Dashboard sidebar navigation" className="w-20 md:w-64 flex-shrink-0 border-r border-[#222] hidden md:flex flex-col justify-between p-4">
+      {sidebarOpen && <div className="fixed inset-0 bg-black/60 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
+      <aside aria-label="Dashboard sidebar navigation" className={`${sidebarOpen ? 'flex fixed inset-y-0 left-0 z-40 w-64' : 'hidden'} md:flex md:relative md:w-64 flex-shrink-0 border-r border-[#222] flex-col justify-between p-4 bg-[#050505]`}>
         <div>
           <div className="flex items-center gap-3 px-4 mb-12 mt-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white">
@@ -1317,11 +1321,11 @@ export default function DashboardDemoPage() {
           </div>
 
           <div className="space-y-2">
-            <NavItem icon={LayoutDashboard} label="Dashboard" id="dashboard" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={Users} label="Pipeline" id="pipeline" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={Workflow} label="Workflows" id="workflows" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={BarChart3} label="Analytics" id="analytics" activeId={activeView} onClick={setActiveView} />
-            <NavItem icon={Settings} label="Settings" id="settings" activeId={activeView} onClick={setActiveView} />
+            <NavItem icon={LayoutDashboard} label="Dashboard" id="dashboard" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={Users} label="Pipeline" id="pipeline" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={Workflow} label="Workflows" id="workflows" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={BarChart3} label="Analytics" id="analytics" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
+            <NavItem icon={Settings} label="Settings" id="settings" activeId={activeView} onClick={(id) => { setActiveView(id); setSidebarOpen(false); }} />
           </div>
         </div>
 
@@ -1351,7 +1355,7 @@ export default function DashboardDemoPage() {
 
         <header className="h-20 border-b border-[#222] flex items-center justify-between px-8 bg-[#050505]/80 backdrop-blur z-20 shrink-0">
           <div className="flex items-center gap-4 md:w-96">
-            <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu"><MoreHorizontal aria-hidden="true" /></button>
+            <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu" onClick={() => setSidebarOpen(o => !o)}>{sidebarOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
 
             <div className="relative w-full hidden md:block">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" size={18} aria-hidden="true" />

@@ -1,41 +1,46 @@
+'use client';
+
 import React from 'react';
 import { Terminal } from 'lucide-react';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
+import { useLanguage } from '@/components/language/LanguageProvider';
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
-      <SectionHeader title="PROFILE." subtitle="Velimir Müller" />
+      <SectionHeader title={t('about.title')} subtitle={t('about.subtitle')} />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
         {/* Bio Text */}
-        <BentoCard className="lg:col-span-8 bg-white dark:bg-[#111] min-h-[400px]" title="Summary">
+        <BentoCard className="lg:col-span-8 bg-white dark:bg-[#111] min-h-[400px]" title={t('about.summary')}>
            <div className="prose dark:prose-invert prose-lg max-w-none mt-4">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                 Ich bin <span className="text-black dark:text-white font-bold">Senior Frontend Engineer</span> mit langjähriger Erfahrung im Product Engineering. Mein Fokus liegt auf dem gesamten Produktprozess – von der Anforderungsanalyse bis zum Deployment.
+                 {t('about.bio1')} <span className="text-black dark:text-white font-bold">{t('about.bio1Bold')}</span> {t('about.bio1After')}
               </p>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                 Ich verstehe Requirements Engineering als Grundlage jedes erfolgreichen Projekts: Business-Anforderungen erfassen, in UX/UI-Konzepte übersetzen und dabei das Branding als integralen Bestandteil des Prozesses behandeln.
+                 {t('about.bio2')}
               </p>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                 Ich plane und begleite Projekte ganzheitlich – von der Idee bis zum Go-Live – mit modernem Stack wie Next.js, Supabase, Vercel und CI/CD-Pipelines. Claude AI nutze ich als Produktivitätswerkzeug im Entwicklungsalltag.
+                 {t('about.bio3')}
               </p>
            </div>
 
            <div className="mt-8 pt-8 border-t border-black/5 dark:border-white/5 grid grid-cols-3 gap-4">
               <div>
                  <div className="text-2xl font-mono font-bold text-black dark:text-white">9+</div>
-                 <div className="text-xs text-gray-500 uppercase tracking-widest">Jahre Erfahrung</div>
+                 <div className="text-xs text-gray-500 uppercase tracking-widest">{t('about.yearsExp')}</div>
               </div>
               <div>
                  <div className="text-2xl font-mono font-bold text-black dark:text-white">E2E</div>
-                 <div className="text-xs text-gray-500 uppercase tracking-widest">Req → Deployment</div>
+                 <div className="text-xs text-gray-500 uppercase tracking-widest">{t('about.reqDeploy')}</div>
               </div>
               <div>
                  <div className="text-2xl font-mono font-bold text-black dark:text-white">UX</div>
-                 <div className="text-xs text-gray-500 uppercase tracking-widest">UI & Branding</div>
+                 <div className="text-xs text-gray-500 uppercase tracking-widest">{t('about.uiBranding')}</div>
               </div>
            </div>
         </BentoCard>
@@ -67,7 +72,7 @@ export default function AboutPage() {
         </BentoCard>
 
         {/* Timeline */}
-        <BentoCard className="lg:col-span-12 bg-white dark:bg-[#111]" title="Experience Log">
+        <BentoCard className="lg:col-span-12 bg-white dark:bg-[#111]" title={t('about.experienceLog')}>
            <div className="mt-8 space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-black/10 dark:before:via-white/10 before:to-transparent">
 
               <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
@@ -76,13 +81,16 @@ export default function AboutPage() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">Senior Software Engineer - Frontend</h3>
-                        <span className="text-xs font-mono text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-900/20 px-2 py-0.5 rounded">Current</span>
+                        <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp1.title')}</h3>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-mono text-gray-500">{t('about.exp1.tag')}</span>
+                          <span className="text-xs font-mono text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-900/20 px-2 py-0.5 rounded">{t('about.current')}</span>
+                        </div>
                       </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">GALVANY</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">Feb 2025 - Present</time>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp1.company')}</div>
+                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp1.date')}</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        End-to-End Produktentwicklung mit React und Vue.js. UX-Design in Figma, AWS-Infrastruktur (S3, CloudFront), Testing mit Vitest und Playwright.
+                        {t('about.exp1.desc')}
                       </p>
                   </div>
               </div>
@@ -93,13 +101,13 @@ export default function AboutPage() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">Software Engineer - Frontend</h3>
-                        <span className="text-xs font-mono text-gray-500">Enterprise SaaS</span>
+                        <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp2.title')}</h3>
+                        <span className="text-xs font-mono text-gray-500">{t('about.exp2.tag')}</span>
                       </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">DEMOS plan GmbH</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">Oct 2021 - Jan 2025</time>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp2.company')}</div>
+                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp2.date')}</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        Vue 2/3 Architektur, interaktive Maps mit OpenLayers, State Management mit VueX/Pinia, Unit- und Komponententests mit Jest/Vitest, Mentoring.
+                        {t('about.exp2.desc')}
                       </p>
                   </div>
               </div>
@@ -110,12 +118,12 @@ export default function AboutPage() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">Web Developer</h3>
-                        <span className="text-xs font-mono text-gray-500">Freelance</span>
+                        <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp3.title')}</h3>
+                        <span className="text-xs font-mono text-gray-500">{t('about.exp3.tag')}</span>
                       </div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">Feb 2019 - Jun 2020</time>
+                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp3.date')}</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        Erstellung und Wartung von WordPress-Instanzen mit WooCommerce-Webshops – von der Planung bis zum Deployment.
+                        {t('about.exp3.desc')}
                       </p>
                   </div>
               </div>
@@ -126,13 +134,13 @@ export default function AboutPage() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">Specialist</h3>
-                        <span className="text-xs font-mono text-gray-500">E-Commerce</span>
+                        <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp4.title')}</h3>
+                        <span className="text-xs font-mono text-gray-500">{t('about.exp4.tag')}</span>
                       </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">Zalando SE</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">Apr 2017 - Mar 2019</time>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp4.company')}</div>
+                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp4.date')}</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        Specialist bei Zalando SE im Bereich E-Commerce.
+                        {t('about.exp4.desc')}
                       </p>
                   </div>
               </div>

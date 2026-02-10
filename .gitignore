@@ -37,3 +37,10 @@ next-env.d.ts
 .env.local
 .claude
 .swc
+
+# storybook
+storybook-static
+
+# playwright
+test-results/
+playwright-report/
