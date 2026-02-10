@@ -163,7 +163,7 @@ const PlannerNotificationDropdown = ({ open, onClose }: { open: boolean; onClose
   return (
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="absolute top-full right-0 mt-2 w-80 bg-[#111] border border-[#222] rounded-2xl shadow-2xl shadow-black/50 z-50 animate-fade-in-up overflow-hidden">
+      <div className="fixed left-4 right-4 top-16 sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-80 bg-[#111] border border-[#222] rounded-2xl shadow-2xl shadow-black/50 z-50 animate-fade-in-up overflow-hidden">
         <div className="px-4 py-3 border-b border-[#222] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-white">Notifications</span>

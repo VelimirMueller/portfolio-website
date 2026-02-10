@@ -182,7 +182,7 @@ const NotificationDropdown = ({ open, onClose }: { open: boolean; onClose: () =>
   return (
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="absolute top-full right-0 mt-2 w-80 bg-[#0d1117] border border-[#1e2d3d] rounded-xl shadow-2xl shadow-black/50 z-50 animate-fade-in-up overflow-hidden">
+      <div className="fixed left-4 right-4 top-14 sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-80 bg-[#0d1117] border border-[#1e2d3d] rounded-xl shadow-2xl shadow-black/50 z-50 animate-fade-in-up overflow-hidden">
         <div className="flex items-center justify-between px-4 py-3 border-b border-[#1e2d3d]">
           <span className="text-xs font-bold text-white">Notifications</span>
           <span className="text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">{NOTIFICATIONS.filter(n => !n.read).length} new</span>
