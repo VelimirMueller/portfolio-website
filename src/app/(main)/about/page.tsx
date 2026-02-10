@@ -88,9 +88,9 @@ export default function AboutPage() {
                       <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp1.title')}</h3>
-                        <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
+                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp1.title')}</h3>
+                        <div className="flex items-center gap-2 shrink-0">
                           <span className="text-xs font-mono text-gray-500">{t('about.exp1.tag')}</span>
                           <span className="text-xs font-mono text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-900/20 px-2 py-0.5 rounded">{t('about.current')}</span>
                         </div>
@@ -108,9 +108,9 @@ export default function AboutPage() {
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp2.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500">{t('about.exp2.tag')}</span>
+                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
+                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp2.title')}</h3>
+                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp2.tag')}</span>
                       </div>
                       <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp2.company')}</div>
                       <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp2.date')}</time>
@@ -125,9 +125,9 @@ export default function AboutPage() {
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp3.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500">{t('about.exp3.tag')}</span>
+                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
+                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp3.title')}</h3>
+                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp3.tag')}</span>
                       </div>
                       <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp3.company')}</div>
                       <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp3.date')}</time>
@@ -142,9 +142,9 @@ export default function AboutPage() {
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex justify-between items-center mb-1">
-                        <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp4.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500">{t('about.exp4.tag')}</span>
+                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
+                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp4.title')}</h3>
+                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp4.tag')}</span>
                       </div>
                       <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp4.company')}</div>
                       <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp4.date')}</time>
