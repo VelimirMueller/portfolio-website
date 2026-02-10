@@ -121,6 +121,7 @@ export default function AboutPage() {
                         <h3 className="font-bold text-black dark:text-white text-lg">{t('about.exp3.title')}</h3>
                         <span className="text-xs font-mono text-gray-500">{t('about.exp3.tag')}</span>
                       </div>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp3.company')}</div>
                       <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp3.date')}</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
                         {t('about.exp3.desc')}
