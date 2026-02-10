@@ -1,0 +1,328 @@
+{
+  "nav": {
+    "home": "Home",
+    "homeDesc": "Home & Overview",
+    "services": "Services",
+    "servicesDesc": "Product Engineering",
+    "projects": "Projects",
+    "projectsDesc": "Case Studies",
+    "about": "About",
+    "aboutDesc": "Bio & Experience",
+    "contact": "Contact",
+    "contactDesc": "Get in touch",
+    "toggleTheme": "Toggle theme",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "children": {
+      "requirementsEngineering": "Requirements Engineering",
+      "uxUiBranding": "UX/UI & Branding",
+      "frontendDevelopment": "Frontend Development",
+      "projectDelivery": "Project Delivery",
+      "modernStack": "Modern Stack"
+    }
+  },
+  "home": {
+    "badge": "Available for Projects",
+    "subtitle": "Senior Frontend Engineer",
+    "subtitleSecondary": "Product Engineer",
+    "description": "I translate business requirements into well-thought-out UX/UI concepts and implement them with a modern stack. From requirements analysis to branding to deployment – everything from a single source.",
+    "ctaProjects": "View Projects",
+    "ctaContact": "Contact",
+    "techDna": "Engineering DNA",
+    "systemStatus": "System Status",
+    "operational": "Operational",
+    "dashboardDemo": "Dashboard Demo",
+    "clickToPlay": "Click to play",
+    "thePerson": "The Person",
+    "personQuote": "Good frontend doesn't start with code, but with understanding the business. I analyze requirements, translate them into UX/UI concepts that match the brand, and plan the project from idea to deployment. My goal:",
+    "personQuoteHighlight": "Seamless process with modern tools.",
+    "personName": "Velimir Müller",
+    "personRole": "Frontend Engineer",
+    "servicesLabel": "Services",
+    "servicesTitle": "End-to-End",
+    "servicesDesc": "From requirements engineering to UX/UI design to deployment with Next.js, Supabase, and Vercel.",
+    "allServices": "All Services"
+  },
+  "services": {
+    "title": "OFFER.",
+    "subtitle": "End-to-End Engineering",
+    "heroTitle": "From Idea to Go-Live",
+    "heroDesc": "I accompany digital products holistically:",
+    "heroDescBold": "Understanding business requirements",
+    "heroDescAfter": ", translating into UX/UI, thinking about branding, and implementing with a modern stack like Next.js, Supabase, and Vercel – all the way to deployment.",
+    "pipeline1": "Requirements → UX/UI → Code",
+    "pipeline2": "Planning → Development → Deployment",
+    "valueAdd": "Value Add",
+    "valueItems": [
+      "Requirements Engineering & Stakeholder Communication",
+      "UX/UI Design as Part of Brand Identity",
+      "Frontend Development with Next.js & Supabase",
+      "CI/CD, Vercel Deployment & Monitoring"
+    ],
+    "checkAvailability": "Check Availability",
+    "detailTitle": "Services in Detail",
+    "serviceNames": {
+      "requirementsEngineering": "Requirements Engineering",
+      "uxUiBranding": "UX/UI & Branding",
+      "frontendDevelopment": "Frontend Development",
+      "projectDelivery": "Project Planning & Delivery",
+      "modernStack": "Modern Stack"
+    }
+  },
+  "serviceDetail": {
+    "challenges": "Challenges",
+    "approach": "Approach",
+    "techStack": "Tech Stack",
+    "interested": "Interested?",
+    "interestedDesc": "Let's have a no-obligation conversation about how I can strengthen your product team.",
+    "requirements-engineering": {
+      "title": "Requirements Engineering",
+      "subtitle": "Understanding Business",
+      "description": "Good frontend doesn't start with code, but with understanding the business. I capture stakeholder requirements, analyze business processes, and translate them into clearly defined, actionable specifications.",
+      "problems": [
+        "Unclear or contradictory requirements from stakeholders",
+        "Features are built but don't solve the actual problem",
+        "Missing documentation leads to scope creep",
+        "Communication gaps between business and development"
+      ],
+      "process": [
+        { "title": "Stakeholder Interviews", "desc": "Structured conversations to capture business goals." },
+        { "title": "Requirements Analysis", "desc": "User stories, acceptance criteria, and prioritization." },
+        { "title": "Feasibility Check", "desc": "Technical assessment and effort estimation." },
+        { "title": "Specification", "desc": "Documented requirements as a foundation for design and development." }
+      ],
+      "tech": ["User Stories", "Stakeholder Mapping", "Figma", "Notion", "Claude AI"],
+      "cta": "Start Requirements Analysis"
+    },
+    "ux-ui-branding": {
+      "title": "UX/UI & Branding",
+      "subtitle": "Design as Brand Message",
+      "description": "UX/UI design is more than pretty screens – it's an integral part of brand identity. I translate business requirements into visual concepts that match the brand and convince users.",
+      "problems": [
+        "Inconsistent brand perception across digital touchpoints",
+        "Design without understanding underlying business goals",
+        "Disconnect between brand identity and user interface",
+        "Missing design systems for scalable products"
+      ],
+      "process": [
+        { "title": "Brand Analysis", "desc": "Understanding brand identity and translating it into design principles." },
+        { "title": "UX Conception", "desc": "Wireframes and user flows based on requirements." },
+        { "title": "UI Design", "desc": "High-fidelity designs in Figma, consistent with the brand." },
+        { "title": "Design System", "desc": "Scalable component library as single source of truth." }
+      ],
+      "tech": ["Figma", "Design Tokens", "Tailwind CSS", "Radix UI", "Storybook"],
+      "cta": "Discuss UX/UI Project"
+    },
+    "frontend-development": {
+      "title": "Frontend Development",
+      "subtitle": "Modern Stack",
+      "description": "Technical implementation with Next.js, React, and TypeScript. I build performant, SEO-friendly, and maintainable frontends – based on previously developed requirements and UX/UI concepts.",
+      "problems": [
+        "Outdated technologies and lack of scalability",
+        "Performance issues due to large bundles",
+        "No clear architecture for growing projects",
+        "Insufficient test coverage and code quality"
+      ],
+      "process": [
+        { "title": "Architecture Setup", "desc": "Next.js App Router, component structure, and best practices." },
+        { "title": "Component Development", "desc": "Atomic design pattern with TypeScript and Tailwind." },
+        { "title": "Supabase Integration", "desc": "Backend connection with Supabase for auth, DB, and storage." },
+        { "title": "Testing & QA", "desc": "Automated tests with Jest, Playwright, and CI/CD." }
+      ],
+      "tech": ["Next.js", "React", "TypeScript", "Supabase", "Tailwind CSS"],
+      "cta": "Start Development"
+    },
+    "project-delivery": {
+      "title": "Project Planning & Delivery",
+      "subtitle": "Start to Deployment",
+      "description": "I plan and accompany projects holistically – from the first idea through development to go-live. With clear structure, realistic milestones, and modern deployment strategies.",
+      "problems": [
+        "Projects without a clear plan are constantly delayed",
+        "No defined process from requirements to deployment",
+        "Missing CI/CD pipeline for automated releases",
+        "No monitoring after launch"
+      ],
+      "process": [
+        { "title": "Project Planning", "desc": "Scope, milestones, and tech stack decisions." },
+        { "title": "Sprint Structure", "desc": "Iterative development with clear deliverables." },
+        { "title": "CI/CD Setup", "desc": "GitHub Actions, automated tests, and preview deployments." },
+        { "title": "Go-Live & Monitoring", "desc": "Vercel deployment, performance monitoring, and iteration." }
+      ],
+      "tech": ["GitHub Actions", "Vercel", "CI/CD", "Playwright", "Analytics"],
+      "cta": "Plan Project"
+    },
+    "modern-stack": {
+      "title": "Modern Stack",
+      "subtitle": "Supabase, Vercel & AI",
+      "description": "I rely on a modern, proven stack: Next.js as framework, Supabase as backend, Vercel as platform, and Claude AI as a productivity tool. All connected through CI/CD pipelines.",
+      "problems": [
+        "Outdated infrastructure with high maintenance costs",
+        "No automated deployment and testing",
+        "Missing backend solution for rapid prototypes",
+        "Manual, repetitive development work without AI support"
+      ],
+      "process": [
+        { "title": "Stack Assessment", "desc": "Evaluation of current tools and migration options." },
+        { "title": "Supabase Setup", "desc": "Auth, database, storage, and realtime features." },
+        { "title": "Vercel Deployment", "desc": "Preview deployments, edge functions, and analytics." },
+        { "title": "AI Integration", "desc": "Claude AI for code reviews, testing, and documentation." }
+      ],
+      "tech": ["Next.js", "Supabase", "Vercel", "Claude AI", "GitHub Actions"],
+      "cta": "Request Stack Consultation"
+    }
+  },
+  "projects": {
+    "title": "WORK.",
+    "subtitle": "Real Impact",
+    "interactiveDemos": "Interactive Demos",
+    "liveUiDemo": "Live UI Demo",
+    "launchDemo": "Launch Demo",
+    "dashboard": {
+      "title": "CRM Dashboard Interface",
+      "desc": "Interactive hyper-growth startup CRM with animated KPIs, sales pipeline, workflow automation, and revenue analytics. Modern dashboard design with custom charts (CSS/SVG only) and micro-interactions."
+    },
+    "planner": {
+      "title": "Project Planning Tool",
+      "desc": "Enterprise-grade project planning tool with phase-flow visualization, Kanban board, Gantt timeline, and team workload management. From research phase to launch – everything at a glance."
+    },
+    "supabaseAdmin": {
+      "title": "Supabase Admin Tool",
+      "desc": "Integrated database admin tool directly in the development environment. Schema management, data browser, REST API builder, and auth management – without leaving the workspace."
+    },
+    "enterprise": {
+      "title": "Enterprise Workflow Automation",
+      "desc": "Full project ownership: requirements analysis with stakeholders, UX/UI conception in Figma, frontend development, and deployment. Business requirements directly translated into scalable solutions.",
+      "metric": "Productivity Increase",
+      "role": "Lead / Owner",
+      "focus": "Architecture",
+      "cta": "Request Details"
+    },
+    "saas": {
+      "title": "SaaS Platform & Brand Identity",
+      "desc": "Holistic project planning: business requirements captured, UX/UI design developed as part of brand identity, frontend implemented with Next.js, and deployed via CI/CD pipelines.",
+      "checks": [
+        "Requirements Engineering with Stakeholders",
+        "UX/UI Conception & Branding",
+        "CI/CD Pipeline & Automated Testing",
+        "Deployment via Vercel"
+      ],
+      "cta": "Request Details"
+    }
+  },
+  "about": {
+    "title": "PROFILE.",
+    "subtitle": "Velimir Müller",
+    "summary": "Summary",
+    "bio1": "I am a",
+    "bio1Bold": "Senior Frontend Engineer & Product Engineer",
+    "bio1After": "with many years of experience in product engineering. My focus is on the entire product process – from requirements analysis to deployment.",
+    "bio2": "I see requirements engineering as the foundation of every successful project: capturing business requirements, translating them into UX/UI concepts, and treating branding as an integral part of the process.",
+    "bio3": "I plan and accompany projects holistically – from idea to go-live – with a modern stack like Next.js, Supabase, Vercel, and CI/CD pipelines. I use Claude AI as a productivity tool in my daily development work.",
+    "yearsExp": "Years Experience",
+    "reqDeploy": "Req → Deployment",
+    "uiBranding": "UI & Branding",
+    "experienceLog": "Experience Log",
+    "current": "Current",
+    "exp1": {
+      "title": "Senior Software Engineer - Frontend",
+      "tag": "Hyper-Growth Startup",
+      "company": "GALVANY",
+      "date": "Feb 2025 - Present",
+      "desc": "End-to-end product development with React and Vue.js. Feature Ownership & Product Discovery. UX design in Figma, AWS infrastructure (S3, CloudFront), testing with Vitest and Playwright."
+    },
+    "exp2": {
+      "title": "Software Engineer - Frontend",
+      "tag": "Enterprise SaaS",
+      "company": "DEMOS plan GmbH",
+      "date": "Oct 2021 - Jan 2025",
+      "desc": "Product ownership for core features. Vue 2/3 architecture, interactive maps with OpenLayers, state management with VueX/Pinia, unit and component tests with Jest/Vitest, mentoring."
+    },
+    "exp3": {
+      "title": "Web Developer",
+      "tag": "Freelance & Agency",
+      "date": "Feb 2019 - Jun 2020",
+      "desc": "Creation and maintenance of WordPress instances with WooCommerce webshops – from planning to deployment."
+    },
+    "exp4": {
+      "title": "Specialist",
+      "tag": "E-Commerce",
+      "company": "Zalando SE",
+      "date": "Apr 2017 - Mar 2019",
+      "desc": "Specialist at Zalando SE in the e-commerce division."
+    }
+  },
+  "contact": {
+    "title": "CONTACT.",
+    "subtitle": "Get In Touch",
+    "intro": "Open for projects and roles where I translate business requirements into well-thought-out UX/UI concepts and implement them with modern tools like Next.js, Supabase, and Vercel.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Let's talk...",
+    "submitButton": "Send Message",
+    "submitting": "Sending...",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Error sending message. Please try again.",
+    "emailLink": "Get in touch",
+    "linkedinLink": "Connect",
+    "githubLink": "View Code"
+  },
+  "footer": {
+    "tagline": "Senior Frontend Engineer.",
+    "taglineSecondary": "Product Engineer.",
+    "taglineDesc": "From business needs to UX/UI to deployment.",
+    "sitemap": "Sitemap",
+    "connect": "Connect",
+    "services": "Services",
+    "projects": "Projects",
+    "about": "About",
+    "imprint": "Imprint",
+    "privacy": "Privacy",
+    "builtWith": "Built with Next.js, Supabase & Vercel."
+  },
+  "imprint": {
+    "title": "IMPRINT.",
+    "subtitle": "Legal Notice",
+    "responsibleTitle": "Responsible",
+    "address": "Postal Address"
+  },
+  "privacy": {
+    "title": "PRIVACY.",
+    "subtitle": "Privacy Policy",
+    "s1Title": "1. Controller",
+    "s1Text": "Controller within the meaning of the General Data Protection Regulation (GDPR):",
+    "s2Title": "2. General Information",
+    "s2Text": "The protection of your personal data is important to me. Personal data is only processed on this website to the extent necessary and in accordance with the provisions of the General Data Protection Regulation (GDPR).\n\nPersonal data is any data that can be used to personally identify you.",
+    "s3Title": "3. Contact Form",
+    "s3Text": "When you contact me via the contact form, the information you provide will be processed and stored.",
+    "s3DataTitle": "Processed data:",
+    "s3Data": ["Name", "Email address", "Message"],
+    "s3Purpose": "Purpose of processing:",
+    "s3PurposeText": "Handling your inquiry and contacting you.",
+    "s3Legal": "Legal basis:",
+    "s3LegalText": "Processing is carried out in accordance with Art. 6(1)(b) GDPR (pre-contractual measures), as the inquiry is related to my professional activity.",
+    "s4Title": "4. Data Storage (Supabase)",
+    "s4Text": "The data submitted via the contact form is stored in a database provided by Supabase.",
+    "s4Provider": "Provider:",
+    "s4ProviderText": "Supabase, Inc., USA",
+    "s4Detail": "Supabase is used as a data processor. A data processing agreement exists in accordance with Art. 28 GDPR. Data transfer to a third country is based on EU Standard Contractual Clauses in accordance with Art. 46 GDPR.",
+    "s5Title": "5. Storage Duration",
+    "s5Text": "The data submitted via the contact form will only be stored for as long as is necessary to process the inquiry or as long as statutory retention obligations exist. After that, the data will be deleted.",
+    "s6Title": "6. Your Rights",
+    "s6Text": "You have the right at any time to:",
+    "s6Rights": [
+      "Access your stored personal data (Art. 15 GDPR)",
+      "Rectification of inaccurate data (Art. 16 GDPR)",
+      "Erasure of your data (Art. 17 GDPR)",
+      "Restriction of processing (Art. 18 GDPR)",
+      "Object to processing (Art. 21 GDPR)"
+    ],
+    "s6Contact": "To exercise your rights, an informal notification by email is sufficient.",
+    "s7Title": "7. Right to Lodge a Complaint",
+    "s7Text": "You have the right to lodge a complaint with a data protection supervisory authority. The responsible authority is usually the data protection authority of your federal state.",
+    "s8Title": "8. SSL Encryption",
+    "s8Text": "For security reasons, this website uses SSL or TLS encryption to protect transmitted data."
+  }
+}

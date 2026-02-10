@@ -1,18 +1,24 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Cpu, Check, LayoutDashboard, ArrowRight, KanbanSquare, Database } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { BentoCard } from '@/components/molecules/BentoCard';
+import { useLanguage, useTranslationArray } from '@/components/language/LanguageProvider';
 
 export default function ProjectsPage() {
+  const { t } = useLanguage();
+  const saasChecks = useTranslationArray('projects.saas.checks');
+
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
-      <SectionHeader title="WORK." subtitle="Real Impact" />
+      <SectionHeader title={t('projects.title')} subtitle={t('projects.subtitle')} />
 
       {/* --- FEATURED DEMOS --- */}
       <div className="mb-16 space-y-6">
-         <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">Interactive Demos</h3>
+         <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
 
          {/* CRM Dashboard */}
          <Link href="/projects/dashboard-demo" className="block group">
@@ -21,14 +27,14 @@ export default function ProjectsPage() {
                  <div className="flex-1">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-mono mb-4 border border-blue-500/20">
                        <LayoutDashboard size={12} />
-                       <span>Live UI Demo</span>
+                       <span>{t('projects.liveUiDemo')}</span>
                     </div>
-                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">CRM Dashboard Interface</h2>
+                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.dashboard.title')}</h2>
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-                       Interaktives Hyper-Growth Startup CRM mit animierten KPIs, Sales Pipeline, Workflow-Automatisierung und Revenue Analytics. Modernes Dashboard-Design mit Custom Charts (CSS/SVG only) und Micro-Interactions.
+                       {t('projects.dashboard.desc')}
                     </p>
                     <div className="flex items-center text-blue-600 dark:text-blue-400 font-mono text-xs font-bold group-hover:translate-x-2 transition-transform">
-                       Launch Demo <ArrowRight size={14} className="ml-2" />
+                       {t('projects.launchDemo')} <ArrowRight size={14} className="ml-2" />
                     </div>
                  </div>
 
@@ -50,14 +56,14 @@ export default function ProjectsPage() {
                  <div className="flex-1">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-[10px] font-mono mb-4 border border-cyan-500/20">
                        <KanbanSquare size={12} />
-                       <span>Live UI Demo</span>
+                       <span>{t('projects.liveUiDemo')}</span>
                     </div>
-                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">Project Planning Tool</h2>
+                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.planner.title')}</h2>
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-                       Enterprise-Grade Projektplanungs-Tool mit Phase-Flow Visualisierung, Kanban Board, Gantt-Timeline und Team-Workload-Management. Von der Research-Phase bis zum Launch – alles auf einen Blick.
+                       {t('projects.planner.desc')}
                     </p>
                     <div className="flex items-center text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold group-hover:translate-x-2 transition-transform">
-                       Launch Demo <ArrowRight size={14} className="ml-2" />
+                       {t('projects.launchDemo')} <ArrowRight size={14} className="ml-2" />
                     </div>
                  </div>
 
@@ -93,14 +99,14 @@ export default function ProjectsPage() {
                  <div className="flex-1">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono mb-4 border border-emerald-500/20">
                        <Database size={12} />
-                       <span>Live UI Demo</span>
+                       <span>{t('projects.liveUiDemo')}</span>
                     </div>
-                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">Supabase Admin Tool</h2>
+                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.supabaseAdmin.title')}</h2>
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-                       Integriertes Datenbank-Admin-Tool direkt in der Entwicklungsumgebung. Schema-Management, Data Browser, REST-API-Builder und Auth-Verwaltung – ohne den Workspace zu verlassen.
+                       {t('projects.supabaseAdmin.desc')}
                     </p>
                     <div className="flex items-center text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold group-hover:translate-x-2 transition-transform">
-                       Launch Demo <ArrowRight size={14} className="ml-2" />
+                       {t('projects.launchDemo')} <ArrowRight size={14} className="ml-2" />
                     </div>
                  </div>
 
@@ -133,17 +139,17 @@ export default function ProjectsPage() {
                     <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 text-[10px] font-mono border border-purple-500/20 uppercase">End-to-End</span>
                     <span className="px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-mono border border-blue-500/20 uppercase">Next.js / React</span>
                  </div>
-                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">Enterprise Workflow Automation</h2>
+                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.enterprise.title')}</h2>
                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    Vollständige Projektverantwortung: Anforderungsanalyse mit Stakeholdern, UX/UI-Konzeption in Figma, Frontend-Entwicklung und Deployment. Business-Anforderungen direkt in skalierbare Lösungen übersetzt.
+                    {t('projects.enterprise.desc')}
                  </p>
                  <div className="flex flex-wrap gap-2 mb-8">
-                    {['Next.js', 'React', 'Supabase', 'Vercel', 'Figma'].map(t => (
-                      <span key={t} className="text-xs font-mono text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#050505] rounded border border-black/5 dark:border-white/5">{t}</span>
+                    {['Next.js', 'React', 'Supabase', 'Vercel', 'Figma'].map(tag => (
+                      <span key={tag} className="text-xs font-mono text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#050505] rounded border border-black/5 dark:border-white/5">{tag}</span>
                     ))}
                  </div>
               </div>
-              <Button to="/contact" variant="outline" className="w-fit">Details anfragen</Button>
+              <Button to="/contact" variant="outline" className="w-fit">{t('projects.enterprise.cta')}</Button>
            </div>
 
            <div className="lg:col-span-7 bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 md:p-8 relative overflow-hidden">
@@ -155,7 +161,7 @@ export default function ProjectsPage() {
                  <div className="col-span-2 bg-white dark:bg-[#111] p-6 rounded border border-black/5 dark:border-white/5 flex items-center justify-between">
                     <div>
                       <div className="text-4xl font-mono font-bold text-black dark:text-white">500%</div>
-                      <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Produktivitätssteigerung</div>
+                      <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">{t('projects.enterprise.metric')}</div>
                     </div>
                     <div className="h-12 w-12 rounded-full bg-green-500/20 flex items-center justify-center">
                        <ArrowUpRight size={24} className="text-green-600 dark:text-green-500"/>
@@ -163,11 +169,11 @@ export default function ProjectsPage() {
                  </div>
                  <div className="bg-white dark:bg-[#111] p-4 rounded border border-black/5 dark:border-white/5">
                     <div className="text-xs font-mono text-gray-500 uppercase mb-2">Role</div>
-                    <div className="text-black dark:text-white font-mono text-sm">Lead / Owner</div>
+                    <div className="text-black dark:text-white font-mono text-sm">{t('projects.enterprise.role')}</div>
                  </div>
                  <div className="bg-white dark:bg-[#111] p-4 rounded border border-black/5 dark:border-white/5">
                     <div className="text-xs font-mono text-gray-500 uppercase mb-2">Focus</div>
-                    <div className="text-black dark:text-white font-mono text-sm">Architektur</div>
+                    <div className="text-black dark:text-white font-mono text-sm">{t('projects.enterprise.focus')}</div>
                  </div>
               </div>
            </div>
@@ -178,22 +184,12 @@ export default function ProjectsPage() {
            <div className="lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
               <div className="bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 h-full flex flex-col justify-center relative overflow-hidden">
                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                       <Check size={16} className="text-green-600 dark:text-green-500" />
-                       <span className="text-sm text-gray-600 dark:text-gray-300">Requirements Engineering mit Stakeholdern</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                       <Check size={16} className="text-green-600 dark:text-green-500" />
-                       <span className="text-sm text-gray-600 dark:text-gray-300">UX/UI-Konzeption & Branding</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                       <Check size={16} className="text-green-600 dark:text-green-500" />
-                       <span className="text-sm text-gray-600 dark:text-gray-300">CI/CD Pipeline & Automated Testing</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                       <Check size={16} className="text-green-600 dark:text-green-500" />
-                       <span className="text-sm text-gray-600 dark:text-gray-300">Deployment via Vercel</span>
-                    </div>
+                    {saasChecks.map((check, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                         <Check size={16} className="text-green-600 dark:text-green-500" />
+                         <span className="text-sm text-gray-600 dark:text-gray-300">{check}</span>
+                      </div>
+                    ))}
                  </div>
                  <div className="mt-6 pt-4 border-t border-black/5 dark:border-white/5">
                     <div className="text-xs text-gray-500 mb-2">Key Tech</div>
@@ -211,17 +207,17 @@ export default function ProjectsPage() {
                     <span className="px-3 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 text-[10px] font-mono border border-orange-500/20 uppercase">Branding</span>
                     <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white text-[10px] font-mono border border-black/10 dark:border-white/20 uppercase">Full Process</span>
                  </div>
-                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">SaaS Platform & Brand Identity</h2>
+                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.saas.title')}</h2>
                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    Ganzheitliche Projektplanung: Business-Anforderungen erfasst, UX/UI-Design als Teil der Brand Identity entwickelt, Frontend mit Next.js umgesetzt und über CI/CD-Pipelines deployed.
+                    {t('projects.saas.desc')}
                  </p>
                  <div className="flex flex-wrap gap-2 mb-8">
-                    {['Next.js', 'Supabase', 'Tailwind', 'GitHub Actions', 'Vercel'].map(t => (
-                      <span key={t} className="text-xs font-mono text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#050505] rounded border border-black/5 dark:border-white/5">{t}</span>
+                    {['Next.js', 'Supabase', 'Tailwind', 'GitHub Actions', 'Vercel'].map(tag => (
+                      <span key={tag} className="text-xs font-mono text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#050505] rounded border border-black/5 dark:border-white/5">{tag}</span>
                     ))}
                  </div>
               </div>
-              <Button to="/contact" variant="outline" className="w-fit">Details anfragen</Button>
+              <Button to="/contact" variant="outline" className="w-fit">{t('projects.saas.cta')}</Button>
            </div>
         </div>
 

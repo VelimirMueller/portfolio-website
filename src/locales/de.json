@@ -1,0 +1,328 @@
+{
+  "nav": {
+    "home": "Start",
+    "homeDesc": "Home & Overview",
+    "services": "Leistungen",
+    "servicesDesc": "Product Engineering",
+    "projects": "Projekte",
+    "projectsDesc": "Case Studies",
+    "about": "Über mich",
+    "aboutDesc": "Bio & Experience",
+    "contact": "Kontakt",
+    "contactDesc": "Get in touch",
+    "toggleTheme": "Theme umschalten",
+    "openMenu": "Navigationsmenü öffnen",
+    "closeMenu": "Navigationsmenü schließen",
+    "children": {
+      "requirementsEngineering": "Requirements Engineering",
+      "uxUiBranding": "UX/UI & Branding",
+      "frontendDevelopment": "Frontend Development",
+      "projectDelivery": "Projektplanung",
+      "modernStack": "Modern Stack"
+    }
+  },
+  "home": {
+    "badge": "Verfügbar für Projekte",
+    "subtitle": "Senior Frontend Engineer",
+    "subtitleSecondary": "Product Engineer",
+    "description": "Ich übersetze Business-Anforderungen in durchdachte UX/UI-Konzepte und setze sie mit modernem Stack um. Von der Anforderungsanalyse über das Branding bis zum Deployment – alles aus einer Hand.",
+    "ctaProjects": "Projekte ansehen",
+    "ctaContact": "Kontakt",
+    "techDna": "Engineering DNA",
+    "systemStatus": "System Status",
+    "operational": "Operational",
+    "dashboardDemo": "Dashboard Demo",
+    "clickToPlay": "Click to play",
+    "thePerson": "The Person",
+    "personQuote": "Gutes Frontend beginnt nicht beim Code, sondern beim Verstehen des Business. Ich analysiere Anforderungen, übersetze sie in UX/UI-Konzepte, die zur Marke passen, und plane das Projekt von der Idee bis zum Deployment. Mein Ziel:",
+    "personQuoteHighlight": "Nahtloser Prozess mit modernen Tools.",
+    "personName": "Velimir Müller",
+    "personRole": "Frontend Engineer",
+    "servicesLabel": "Services",
+    "servicesTitle": "End-to-End",
+    "servicesDesc": "Von Requirements Engineering über UX/UI-Design bis zum Deployment mit Next.js, Supabase und Vercel.",
+    "allServices": "Alle Leistungen"
+  },
+  "services": {
+    "title": "OFFER.",
+    "subtitle": "End-to-End Engineering",
+    "heroTitle": "Von der Idee zum Go-Live",
+    "heroDesc": "Ich begleite digitale Produkte ganzheitlich:",
+    "heroDescBold": "Business-Anforderungen verstehen",
+    "heroDescAfter": ", in UX/UI übersetzen, das Branding mitdenken und mit modernem Stack wie Next.js, Supabase und Vercel umsetzen – bis zum Deployment.",
+    "pipeline1": "Requirements → UX/UI → Code",
+    "pipeline2": "Planung → Entwicklung → Deployment",
+    "valueAdd": "Value Add",
+    "valueItems": [
+      "Requirements Engineering & Stakeholder-Kommunikation",
+      "UX/UI-Design als Teil der Brand Identity",
+      "Frontend-Entwicklung mit Next.js & Supabase",
+      "CI/CD, Vercel Deployment & Monitoring"
+    ],
+    "checkAvailability": "Verfügbarkeit prüfen",
+    "detailTitle": "Leistungen im Detail",
+    "serviceNames": {
+      "requirementsEngineering": "Requirements Engineering",
+      "uxUiBranding": "UX/UI & Branding",
+      "frontendDevelopment": "Frontend Development",
+      "projectDelivery": "Projektplanung & Delivery",
+      "modernStack": "Modern Stack"
+    }
+  },
+  "serviceDetail": {
+    "challenges": "Herausforderungen",
+    "approach": "Lösungsansatz",
+    "techStack": "Tech Stack",
+    "interested": "Interesse geweckt?",
+    "interestedDesc": "Lassen Sie uns unverbindlich darüber sprechen, wie ich Ihr Product Team verstärken kann.",
+    "requirements-engineering": {
+      "title": "Requirements Engineering",
+      "subtitle": "Business verstehen",
+      "description": "Gutes Frontend beginnt nicht beim Code, sondern beim Verstehen des Business. Ich erfasse Stakeholder-Anforderungen, analysiere Geschäftsprozesse und übersetze sie in klar definierte, umsetzbare Spezifikationen.",
+      "problems": [
+        "Unklare oder widersprüchliche Anforderungen von Stakeholdern",
+        "Features werden gebaut, aber lösen das eigentliche Problem nicht",
+        "Fehlende Dokumentation führt zu Scope Creep",
+        "Kommunikationslücken zwischen Business und Entwicklung"
+      ],
+      "process": [
+        { "title": "Stakeholder Interviews", "desc": "Strukturierte Gespräche zur Erfassung der Business-Ziele." },
+        { "title": "Anforderungsanalyse", "desc": "User Stories, Acceptance Criteria und Priorisierung." },
+        { "title": "Machbarkeitscheck", "desc": "Technische Bewertung und Aufwandsschätzung." },
+        { "title": "Spezifikation", "desc": "Dokumentierte Requirements als Grundlage für Design und Entwicklung." }
+      ],
+      "tech": ["User Stories", "Stakeholder Mapping", "Figma", "Notion", "Claude AI"],
+      "cta": "Anforderungsanalyse starten"
+    },
+    "ux-ui-branding": {
+      "title": "UX/UI & Branding",
+      "subtitle": "Design als Markenbotschaft",
+      "description": "UX/UI-Design ist mehr als hübsche Screens – es ist ein integraler Teil der Markenidentität. Ich übersetze Business-Anforderungen in visuelle Konzepte, die zur Brand passen und Nutzer überzeugen.",
+      "problems": [
+        "Inkonsistente Markenwahrnehmung über digitale Touchpoints",
+        "Design ohne Verständnis für die zugrundeliegenden Business-Ziele",
+        "Disconnect zwischen Brand Identity und User Interface",
+        "Fehlende Design-Systematik für skalierbare Produkte"
+      ],
+      "process": [
+        { "title": "Brand Analysis", "desc": "Markenidentität verstehen und in Design-Prinzipien übersetzen." },
+        { "title": "UX Konzeption", "desc": "Wireframes und User Flows basierend auf den Requirements." },
+        { "title": "UI Design", "desc": "High-Fidelity Designs in Figma, konsistent mit der Brand." },
+        { "title": "Design System", "desc": "Skalierbare Komponentenbibliothek als Single Source of Truth." }
+      ],
+      "tech": ["Figma", "Design Tokens", "Tailwind CSS", "Radix UI", "Storybook"],
+      "cta": "UX/UI Projekt besprechen"
+    },
+    "frontend-development": {
+      "title": "Frontend Development",
+      "subtitle": "Modern Stack",
+      "description": "Die technische Umsetzung mit Next.js, React und TypeScript. Ich baue performante, SEO-freundliche und wartbare Frontends – basierend auf den zuvor erarbeiteten Requirements und UX/UI-Konzepten.",
+      "problems": [
+        "Veraltete Technologien und fehlende Skalierbarkeit",
+        "Performance-Probleme durch große Bundles",
+        "Keine klare Architektur für wachsende Projekte",
+        "Mangelnde Testabdeckung und Code-Qualität"
+      ],
+      "process": [
+        { "title": "Architecture Setup", "desc": "Next.js App Router, Komponentenstruktur und Best Practices." },
+        { "title": "Component Development", "desc": "Atomic Design Pattern mit TypeScript und Tailwind." },
+        { "title": "Supabase Integration", "desc": "Backend-Anbindung mit Supabase für Auth, DB und Storage." },
+        { "title": "Testing & QA", "desc": "Automatisierte Tests mit Jest, Playwright und CI/CD." }
+      ],
+      "tech": ["Next.js", "React", "TypeScript", "Supabase", "Tailwind CSS"],
+      "cta": "Entwicklung starten"
+    },
+    "project-delivery": {
+      "title": "Projektplanung & Delivery",
+      "subtitle": "Start to Deployment",
+      "description": "Ich plane und begleite Projekte ganzheitlich – von der ersten Idee über die Entwicklung bis zum Go-Live. Mit klarer Struktur, realistischen Meilensteinen und modernen Deployment-Strategien.",
+      "problems": [
+        "Projekte ohne klaren Plan verzögern sich ständig",
+        "Kein definierter Prozess von Anforderung bis Deployment",
+        "Fehlende CI/CD-Pipeline für automatisierte Releases",
+        "Kein Monitoring nach dem Launch"
+      ],
+      "process": [
+        { "title": "Projektplanung", "desc": "Scope, Meilensteine und Tech-Stack-Entscheidung." },
+        { "title": "Sprint-Struktur", "desc": "Iterative Entwicklung mit klaren Deliverables." },
+        { "title": "CI/CD Setup", "desc": "GitHub Actions, automatisierte Tests und Preview Deployments." },
+        { "title": "Go-Live & Monitoring", "desc": "Vercel Deployment, Performance-Monitoring und Iteration." }
+      ],
+      "tech": ["GitHub Actions", "Vercel", "CI/CD", "Playwright", "Analytics"],
+      "cta": "Projekt planen"
+    },
+    "modern-stack": {
+      "title": "Modern Stack",
+      "subtitle": "Supabase, Vercel & AI",
+      "description": "Ich setze auf einen modernen, bewährten Stack: Next.js als Framework, Supabase als Backend, Vercel als Platform und Claude AI als Produktivitätswerkzeug. Alles verbunden durch CI/CD-Pipelines.",
+      "problems": [
+        "Veraltete Infrastruktur mit hohem Wartungsaufwand",
+        "Kein automatisiertes Deployment und Testing",
+        "Fehlende Backend-Lösung für schnelle Prototypen",
+        "Manuelle, repetitive Entwicklungsarbeit ohne AI-Unterstützung"
+      ],
+      "process": [
+        { "title": "Stack Assessment", "desc": "Bewertung der aktuellen Tools und Migrationsmöglichkeiten." },
+        { "title": "Supabase Setup", "desc": "Auth, Datenbank, Storage und Realtime-Funktionen." },
+        { "title": "Vercel Deployment", "desc": "Preview Deployments, Edge Functions und Analytics." },
+        { "title": "AI Integration", "desc": "Claude AI für Code-Reviews, Testing und Dokumentation." }
+      ],
+      "tech": ["Next.js", "Supabase", "Vercel", "Claude AI", "GitHub Actions"],
+      "cta": "Stack-Beratung anfragen"
+    }
+  },
+  "projects": {
+    "title": "WORK.",
+    "subtitle": "Real Impact",
+    "interactiveDemos": "Interactive Demos",
+    "liveUiDemo": "Live UI Demo",
+    "launchDemo": "Launch Demo",
+    "dashboard": {
+      "title": "CRM Dashboard Interface",
+      "desc": "Interaktives Hyper-Growth Startup CRM mit animierten KPIs, Sales Pipeline, Workflow-Automatisierung und Revenue Analytics. Modernes Dashboard-Design mit Custom Charts (CSS/SVG only) und Micro-Interactions."
+    },
+    "planner": {
+      "title": "Project Planning Tool",
+      "desc": "Enterprise-Grade Projektplanungs-Tool mit Phase-Flow Visualisierung, Kanban Board, Gantt-Timeline und Team-Workload-Management. Von der Research-Phase bis zum Launch – alles auf einen Blick."
+    },
+    "supabaseAdmin": {
+      "title": "Supabase Admin Tool",
+      "desc": "Integriertes Datenbank-Admin-Tool direkt in der Entwicklungsumgebung. Schema-Management, Data Browser, REST-API-Builder und Auth-Verwaltung – ohne den Workspace zu verlassen."
+    },
+    "enterprise": {
+      "title": "Enterprise Workflow Automation",
+      "desc": "Vollständige Projektverantwortung: Anforderungsanalyse mit Stakeholdern, UX/UI-Konzeption in Figma, Frontend-Entwicklung und Deployment. Business-Anforderungen direkt in skalierbare Lösungen übersetzt.",
+      "metric": "Produktivitätssteigerung",
+      "role": "Lead / Owner",
+      "focus": "Architektur",
+      "cta": "Details anfragen"
+    },
+    "saas": {
+      "title": "SaaS Platform & Brand Identity",
+      "desc": "Ganzheitliche Projektplanung: Business-Anforderungen erfasst, UX/UI-Design als Teil der Brand Identity entwickelt, Frontend mit Next.js umgesetzt und über CI/CD-Pipelines deployed.",
+      "checks": [
+        "Requirements Engineering mit Stakeholdern",
+        "UX/UI-Konzeption & Branding",
+        "CI/CD Pipeline & Automated Testing",
+        "Deployment via Vercel"
+      ],
+      "cta": "Details anfragen"
+    }
+  },
+  "about": {
+    "title": "PROFILE.",
+    "subtitle": "Velimir Müller",
+    "summary": "Summary",
+    "bio1": "Ich bin",
+    "bio1Bold": "Senior Frontend Engineer & Product Engineer",
+    "bio1After": "mit langjähriger Erfahrung im Product Engineering. Mein Fokus liegt auf dem gesamten Produktprozess – von der Anforderungsanalyse bis zum Deployment.",
+    "bio2": "Ich verstehe Requirements Engineering als Grundlage jedes erfolgreichen Projekts: Business-Anforderungen erfassen, in UX/UI-Konzepte übersetzen und dabei das Branding als integralen Bestandteil des Prozesses behandeln.",
+    "bio3": "Ich plane und begleite Projekte ganzheitlich – von der Idee bis zum Go-Live – mit modernem Stack wie Next.js, Supabase, Vercel und CI/CD-Pipelines. Claude AI nutze ich als Produktivitätswerkzeug im Entwicklungsalltag.",
+    "yearsExp": "Jahre Erfahrung",
+    "reqDeploy": "Req → Deployment",
+    "uiBranding": "UI & Branding",
+    "experienceLog": "Experience Log",
+    "current": "Current",
+    "exp1": {
+      "title": "Senior Software Engineer - Frontend",
+      "tag": "Hyper-Growth Startup",
+      "company": "GALVANY",
+      "date": "Feb 2025 - Present",
+      "desc": "End-to-End Produktentwicklung mit React und Vue.js. Feature Ownership & Product Discovery. UX-Design in Figma, AWS-Infrastruktur (S3, CloudFront), Testing mit Vitest und Playwright."
+    },
+    "exp2": {
+      "title": "Software Engineer - Frontend",
+      "tag": "Enterprise SaaS",
+      "company": "DEMOS plan GmbH",
+      "date": "Oct 2021 - Jan 2025",
+      "desc": "Produktverantwortung für Kernfeatures. Vue 2/3 Architektur, interaktive Maps mit OpenLayers, State Management mit VueX/Pinia, Unit- und Komponententests mit Jest/Vitest, Mentoring."
+    },
+    "exp3": {
+      "title": "Web Developer",
+      "tag": "Freelance & Agency",
+      "date": "Feb 2019 - Jun 2020",
+      "desc": "Erstellung und Wartung von WordPress-Instanzen mit WooCommerce-Webshops – von der Planung bis zum Deployment."
+    },
+    "exp4": {
+      "title": "Specialist",
+      "tag": "E-Commerce",
+      "company": "Zalando SE",
+      "date": "Apr 2017 - Mar 2019",
+      "desc": "Specialist bei Zalando SE im Bereich E-Commerce."
+    }
+  },
+  "contact": {
+    "title": "CONTACT.",
+    "subtitle": "Get In Touch",
+    "intro": "Offen für Projekte und Rollen, in denen ich Business-Anforderungen in durchdachte UX/UI-Konzepte übersetze und mit modernen Tools wie Next.js, Supabase und Vercel umsetze.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Ihr Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "ihre@email.com",
+    "messageLabel": "Nachricht",
+    "messagePlaceholder": "Lassen Sie uns sprechen...",
+    "submitButton": "Nachricht senden",
+    "submitting": "Wird gesendet...",
+    "successMessage": "Nachricht erfolgreich gesendet!",
+    "errorMessage": "Fehler beim Senden. Bitte versuchen Sie es erneut.",
+    "emailLink": "Kontaktieren",
+    "linkedinLink": "Vernetzen",
+    "githubLink": "Code ansehen"
+  },
+  "footer": {
+    "tagline": "Senior Frontend Engineer.",
+    "taglineSecondary": "Product Engineer.",
+    "taglineDesc": "From business needs to UX/UI to deployment.",
+    "sitemap": "Sitemap",
+    "connect": "Connect",
+    "services": "Leistungen",
+    "projects": "Projekte",
+    "about": "Über Mich",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "builtWith": "Built with Next.js, Supabase & Vercel."
+  },
+  "imprint": {
+    "title": "IMPRESSUM.",
+    "subtitle": "Angaben gemäß § 5 TMG",
+    "responsibleTitle": "Verantwortlich",
+    "address": "Postanschrift"
+  },
+  "privacy": {
+    "title": "DATENSCHUTZ.",
+    "subtitle": "Datenschutzerklärung",
+    "s1Title": "1. Verantwortlicher",
+    "s1Text": "Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO):",
+    "s2Title": "2. Allgemeine Hinweise",
+    "s2Text": "Der Schutz Ihrer persönlichen Daten ist mir wichtig. Personenbezogene Daten werden auf dieser Website nur im notwendigen Umfang und gemäß den Vorgaben der Datenschutz-Grundverordnung (DSGVO) verarbeitet.\n\nPersonenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.",
+    "s3Title": "3. Kontaktformular",
+    "s3Text": "Wenn Sie mich über das Kontaktformular kontaktieren, werden die von Ihnen gemachten Angaben verarbeitet und gespeichert.",
+    "s3DataTitle": "Verarbeitete Daten:",
+    "s3Data": ["Name", "E-Mail-Adresse", "Nachricht"],
+    "s3Purpose": "Zweck der Verarbeitung:",
+    "s3PurposeText": "Bearbeitung Ihrer Anfrage und Kontaktaufnahme.",
+    "s3Legal": "Rechtsgrundlage:",
+    "s3LegalText": "Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen), da die Anfrage im Zusammenhang mit meiner professionellen Tätigkeit steht.",
+    "s4Title": "4. Speicherung der Daten (Supabase)",
+    "s4Text": "Die über das Kontaktformular übermittelten Daten werden in einer Datenbank des Dienstleisters Supabase gespeichert.",
+    "s4Provider": "Anbieter:",
+    "s4ProviderText": "Supabase, Inc., USA",
+    "s4Detail": "Supabase wird als Auftragsverarbeiter eingesetzt. Es besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO. Die Datenübermittlung in ein Drittland erfolgt auf Grundlage der EU-Standardvertragsklauseln gemäß Art. 46 DSGVO.",
+    "s5Title": "5. Speicherdauer",
+    "s5Text": "Die über das Kontaktformular übermittelten Daten werden nur so lange gespeichert, wie dies zur Bearbeitung der Anfrage erforderlich ist oder gesetzliche Aufbewahrungspflichten bestehen. Danach werden die Daten gelöscht.",
+    "s6Title": "6. Ihre Rechte",
+    "s6Text": "Sie haben jederzeit das Recht auf:",
+    "s6Rights": [
+      "Auskunft über Ihre gespeicherten personenbezogenen Daten (Art. 15 DSGVO)",
+      "Berichtigung unrichtiger Daten (Art. 16 DSGVO)",
+      "Löschung Ihrer Daten (Art. 17 DSGVO)",
+      "Einschränkung der Verarbeitung (Art. 18 DSGVO)",
+      "Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)"
+    ],
+    "s6Contact": "Zur Ausübung Ihrer Rechte genügt eine formlose Mitteilung per E-Mail.",
+    "s7Title": "7. Beschwerderecht",
+    "s7Text": "Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig ist in der Regel die Datenschutzbehörde Ihres Bundeslandes.",
+    "s8Title": "8. SSL-Verschlüsselung",
+    "s8Text": "Diese Website nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung, um übermittelte Daten zu schützen."
+  }
+}

@@ -9,7 +9,7 @@ serve(async (req) => {
 
     // Send email with Resend
     const data = await resend.emails.send({
-          from: "onboarding@resend.dev",
+          from: "team@velimir-mueller.de",
           to: 'velimir.mueller@googlemail.com', // Changed to your verified email
           subject: 'New Contact Form Submission',
           html: `
