@@ -4,6 +4,7 @@ import React from 'react';
 import { Terminal } from 'lucide-react';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
+import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useLanguage } from '@/components/language/LanguageProvider';
 
 export default function AboutPage() {
@@ -11,12 +12,15 @@ export default function AboutPage() {
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
-      <SectionHeader title={t('about.title')} subtitle={t('about.subtitle')} />
+      <AnimateIn from="bottom">
+        <SectionHeader title={t('about.title')} subtitle={t('about.subtitle')} />
+      </AnimateIn>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
         {/* Bio Text */}
-        <BentoCard className="lg:col-span-8 bg-white dark:bg-[#111] min-h-[400px]" title={t('about.summary')}>
+        <AnimateIn from="left" delay={100} className="lg:col-span-8">
+        <BentoCard className="bg-white dark:bg-[#111] min-h-[400px]" title={t('about.summary')}>
            <div className="prose dark:prose-invert prose-lg max-w-none mt-4">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                  {t('about.bio1')} <span className="text-black dark:text-white font-bold">{t('about.bio1Bold')}</span> {t('about.bio1After')}
@@ -44,9 +48,11 @@ export default function AboutPage() {
               </div>
            </div>
         </BentoCard>
+        </AnimateIn>
 
         {/* Tech Stack Terminal */}
-        <BentoCard className="lg:col-span-4 bg-gray-50 dark:bg-[#0A0A0A] border-black/5 dark:border-white/10 p-0">
+        <AnimateIn from="right" delay={200} className="lg:col-span-4">
+        <BentoCard className="bg-gray-50 dark:bg-[#0A0A0A] border-black/5 dark:border-white/10 p-0">
            <div className="flex items-center gap-2 px-4 py-3 bg-white dark:bg-[#111] border-b border-black/5 dark:border-white/5">
               <Terminal size={14} className="text-gray-500"/>
               <span className="text-xs font-mono text-gray-500">skills.json</span>
@@ -70,9 +76,11 @@ export default function AboutPage() {
                </div>
            </div>
         </BentoCard>
+        </AnimateIn>
 
         {/* Timeline */}
-        <BentoCard className="lg:col-span-12 bg-white dark:bg-[#111]" title={t('about.experienceLog')}>
+        <AnimateIn from="bottom" delay={100} className="lg:col-span-12">
+        <BentoCard className="bg-white dark:bg-[#111]" title={t('about.experienceLog')}>
            <div className="mt-8 space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-black/10 dark:before:via-white/10 before:to-transparent">
 
               <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
@@ -148,6 +156,7 @@ export default function AboutPage() {
 
            </div>
         </BentoCard>
+        </AnimateIn>
 
       </div>
     </div>

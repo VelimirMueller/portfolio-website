@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
+import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useLanguage, useTranslationArray } from '@/components/language/LanguageProvider';
 
 export default function PrivacyPage() {
@@ -11,8 +12,11 @@ export default function PrivacyPage() {
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
-      <SectionHeader title={t('privacy.title')} subtitle={t('privacy.subtitle')} />
+      <AnimateIn from="bottom">
+        <SectionHeader title={t('privacy.title')} subtitle={t('privacy.subtitle')} />
+      </AnimateIn>
 
+      <AnimateIn from="bottom" delay={100}>
       <div className="bg-white dark:bg-[#111] p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 space-y-10">
 
         {/* 1. Verantwortlicher */}
@@ -91,6 +95,7 @@ export default function PrivacyPage() {
         </section>
 
       </div>
+      </AnimateIn>
     </div>
   );
 }

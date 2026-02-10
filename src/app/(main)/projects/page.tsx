@@ -6,6 +6,7 @@ import { ArrowUpRight, Cpu, Check, LayoutDashboard, ArrowRight, KanbanSquare, Da
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { BentoCard } from '@/components/molecules/BentoCard';
+import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useLanguage, useTranslationArray } from '@/components/language/LanguageProvider';
 
 export default function ProjectsPage() {
@@ -14,13 +15,18 @@ export default function ProjectsPage() {
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
-      <SectionHeader title={t('projects.title')} subtitle={t('projects.subtitle')} />
+      <AnimateIn from="bottom">
+        <SectionHeader title={t('projects.title')} subtitle={t('projects.subtitle')} />
+      </AnimateIn>
 
       {/* --- FEATURED DEMOS --- */}
       <div className="mb-16 space-y-6">
-         <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
+         <AnimateIn from="left">
+           <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
+         </AnimateIn>
 
          {/* CRM Dashboard */}
+         <AnimateIn from="bottom-left" delay={100}>
          <Link href="/projects/dashboard-demo" className="block group">
            <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-blue-500/20 hover:border-blue-500/50 transition-all">
               <div className="flex flex-col md:flex-row items-center gap-8">
@@ -48,8 +54,10 @@ export default function ProjectsPage() {
               </div>
            </BentoCard>
          </Link>
+         </AnimateIn>
 
          {/* Project Planner */}
+         <AnimateIn from="bottom" delay={200}>
          <Link href="/projects/project-planner" className="block group">
            <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-cyan-500/20 hover:border-cyan-500/50 transition-all">
               <div className="flex flex-col md:flex-row items-center gap-8">
@@ -91,8 +99,10 @@ export default function ProjectsPage() {
               </div>
            </BentoCard>
          </Link>
+         </AnimateIn>
 
          {/* Supabase Admin */}
+         <AnimateIn from="bottom-right" delay={300}>
          <Link href="/projects/supabase-admin" className="block group">
            <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-emerald-500/20 hover:border-emerald-500/50 transition-all">
               <div className="flex flex-col md:flex-row items-center gap-8">
@@ -127,11 +137,13 @@ export default function ProjectsPage() {
               </div>
            </BentoCard>
          </Link>
+         </AnimateIn>
       </div>
 
       <div className="flex flex-col gap-8 md:gap-12">
 
         {/* Project 1: Enterprise Workflow */}
+        <AnimateIn from="left">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all">
            <div className="lg:col-span-5 flex flex-col justify-between">
               <div>
@@ -178,8 +190,10 @@ export default function ProjectsPage() {
               </div>
            </div>
         </div>
+        </AnimateIn>
 
         {/* Project 2: SaaS Platform */}
+        <AnimateIn from="right">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all">
            <div className="lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
               <div className="bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 h-full flex flex-col justify-center relative overflow-hidden">
@@ -220,6 +234,7 @@ export default function ProjectsPage() {
               <Button to="/contact" variant="outline" className="w-fit">{t('projects.saas.cta')}</Button>
            </div>
         </div>
+        </AnimateIn>
 
       </div>
     </div>
