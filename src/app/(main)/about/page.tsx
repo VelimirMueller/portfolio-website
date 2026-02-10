@@ -20,7 +20,7 @@ export default function AboutPage() {
 
         {/* Bio Text */}
         <AnimateIn from="left" delay={100} className="lg:col-span-8">
-        <BentoCard className="bg-white dark:bg-[#111] min-h-[400px]" title={t('about.summary')}>
+        <BentoCard className="h-full bg-white dark:bg-[#111] min-h-[400px]" title={t('about.summary')}>
            <div className="prose dark:prose-invert prose-lg max-w-none mt-4">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                  {t('about.bio1')} <span className="text-black dark:text-white font-bold">{t('about.bio1Bold')}</span> {t('about.bio1After')}
@@ -52,7 +52,7 @@ export default function AboutPage() {
 
         {/* Tech Stack Terminal */}
         <AnimateIn from="right" delay={200} className="lg:col-span-4">
-        <BentoCard className="bg-gray-50 dark:bg-[#0A0A0A] border-black/5 dark:border-white/10 p-0">
+        <BentoCard className="h-full bg-gray-50 dark:bg-[#0A0A0A] border-black/5 dark:border-white/10 p-0">
            <div className="flex items-center gap-2 px-4 py-3 bg-white dark:bg-[#111] border-b border-black/5 dark:border-white/5">
               <Terminal size={14} className="text-gray-500"/>
               <span className="text-xs font-mono text-gray-500">skills.json</span>
