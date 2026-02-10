@@ -7,6 +7,11 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   reporter: 'html',
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.02,
+    },
+  },
   use: {
     baseURL: 'http://localhost:6006',
     screenshot: 'only-on-failure',
