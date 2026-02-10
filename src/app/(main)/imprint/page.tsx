@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
+import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useLanguage } from '@/components/language/LanguageProvider';
 
 export default function ImprintPage() {
@@ -9,8 +10,11 @@ export default function ImprintPage() {
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
-      <SectionHeader title={t('imprint.title')} subtitle={t('imprint.subtitle')} />
+      <AnimateIn from="bottom">
+        <SectionHeader title={t('imprint.title')} subtitle={t('imprint.subtitle')} />
+      </AnimateIn>
 
+      <AnimateIn from="bottom" delay={100}>
       <div className="bg-white dark:bg-[#111] p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10">
         <h2 className="text-xl font-mono font-bold text-black dark:text-white mb-8">
           {t('imprint.address')}
@@ -21,6 +25,7 @@ export default function ImprintPage() {
           <p>12045 Berlin</p>
         </div>
       </div>
+      </AnimateIn>
     </div>
   );
 }

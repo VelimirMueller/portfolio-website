@@ -4,6 +4,7 @@ import React from 'react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { Button } from '@/components/atoms/Button';
+import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { Check, Zap, Layers, GitBranch, Laptop, Box, type LucideIcon } from 'lucide-react';
 import { useLanguage, useTranslationArray, useTranslationObjectArray } from '@/components/language/LanguageProvider';
 
@@ -27,11 +28,14 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
-      <SectionHeader title={t(`serviceDetail.${serviceId}.title`)} subtitle={t(`serviceDetail.${serviceId}.subtitle`)} />
+      <AnimateIn from="bottom">
+        <SectionHeader title={t(`serviceDetail.${serviceId}.title`)} subtitle={t(`serviceDetail.${serviceId}.subtitle`)} />
+      </AnimateIn>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
         <div className="lg:col-span-8 space-y-6">
+          <AnimateIn from="left" delay={100}>
           <BentoCard className="bg-white dark:bg-[#111] min-h-[300px]">
              <div className="flex items-start gap-4 mb-6">
                 <div className="p-3 bg-black/5 dark:bg-white/5 rounded-xl border border-black/5 dark:border-white/10 text-black dark:text-white">
@@ -45,8 +49,10 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
                 </div>
              </div>
           </BentoCard>
+          </AnimateIn>
 
           <div className="grid md:grid-cols-2 gap-6">
+             <AnimateIn from="bottom-left" delay={200}>
              <BentoCard className="bg-gray-50 dark:bg-[#0A0A0A]" title={t('serviceDetail.challenges')}>
                 <ul className="space-y-3 mt-4">
                    {problems.map((prob, i) => (
@@ -57,7 +63,9 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
                    ))}
                 </ul>
              </BentoCard>
+             </AnimateIn>
 
+             <AnimateIn from="bottom-right" delay={250}>
              <BentoCard className="bg-gray-50 dark:bg-[#0A0A0A]" title={t('serviceDetail.approach')}>
                 <ul className="space-y-4 mt-4">
                    {process.map((step, i) => (
@@ -71,10 +79,12 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
                    ))}
                 </ul>
              </BentoCard>
+             </AnimateIn>
           </div>
         </div>
 
         <div className="lg:col-span-4 space-y-6">
+           <AnimateIn from="right" delay={150}>
            <BentoCard className="bg-[#E5E5E5] dark:bg-[#E2E2E2] !text-black" title={t('serviceDetail.techStack')}>
               <div className="flex flex-wrap gap-2 mt-4">
                  {tech.map((item) => (
@@ -84,7 +94,9 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
                  ))}
               </div>
            </BentoCard>
+           </AnimateIn>
 
+           <AnimateIn from="right" delay={250}>
            <BentoCard className="bg-blue-50 dark:bg-blue-900/10 border-blue-500/20">
               <h3 className="text-xl font-bold text-blue-900 dark:text-white mb-2">{t('serviceDetail.interested')}</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
@@ -94,6 +106,7 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
                  {t(`serviceDetail.${serviceId}.cta`)}
               </Button>
            </BentoCard>
+           </AnimateIn>
         </div>
 
       </div>

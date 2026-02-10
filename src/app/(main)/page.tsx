@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Play, Code2, Database, Layout, Terminal, Box, Globe } from 'lucide-react';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { Button } from '@/components/atoms/Button';
+import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useLanguage } from '@/components/language/LanguageProvider';
 
 const DashboardPromoVideo = () => {
@@ -55,7 +56,7 @@ const DashboardPromoVideo = () => {
   };
 
   return (
-    <BentoCard className="md:col-span-3 lg:col-span-4 bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none p-0">
+    <BentoCard className="bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none p-0">
       <div ref={containerRef} className="relative w-full h-full min-h-[320px]">
         {isInView && (
           <video
@@ -120,7 +121,7 @@ const TechStackGrid = () => {
   ];
 
   return (
-    <BentoCard className="md:col-span-3 lg:col-span-4 bg-white dark:bg-[#121214]" title={t('home.techDna')}>
+    <BentoCard className="bg-white dark:bg-[#121214]" title={t('home.techDna')}>
       <div className="grid grid-cols-2 gap-2 mt-4">
         {stacks.map((item, i) => (
           <div key={i} className="flex flex-col p-3 rounded-lg bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border hover:border-brand-500/30 dark:hover:border-brand-500/30 transition-colors group">
@@ -161,7 +162,8 @@ export default function HomePage() {
 
       <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4 auto-rows-min">
 
-        <BentoCard className="md:col-span-6 lg:col-span-8 min-h-[450px] bg-white dark:bg-[#121214] border-light-border dark:border-dark-border justify-between relative overflow-hidden">
+        <AnimateIn from="left" className="md:col-span-6 lg:col-span-8">
+        <BentoCard className="min-h-[450px] bg-white dark:bg-[#121214] border-light-border dark:border-dark-border justify-between relative overflow-hidden">
           <div className="absolute inset-0 opacity-20 bg-noise pointer-events-none"></div>
 
           <div className="relative z-10 flex flex-col h-full justify-between">
@@ -201,12 +203,18 @@ export default function HomePage() {
             </div>
           </div>
         </BentoCard>
+        </AnimateIn>
 
-        <DashboardPromoVideo />
+        <AnimateIn from="right" delay={100} className="md:col-span-3 lg:col-span-4">
+          <DashboardPromoVideo />
+        </AnimateIn>
 
-        <TechStackGrid />
+        <AnimateIn from="bottom-right" delay={200} className="md:col-span-3 lg:col-span-4">
+          <TechStackGrid />
+        </AnimateIn>
 
-        <BentoCard className="md:col-span-6 lg:col-span-5 bg-white dark:bg-[#121214]" subtitle={t('home.thePerson')}>
+        <AnimateIn from="bottom-left" delay={100} className="md:col-span-6 lg:col-span-5">
+        <BentoCard className="bg-white dark:bg-[#121214]" subtitle={t('home.thePerson')}>
            <div className="h-full flex flex-col justify-center relative">
              <div className="absolute top-0 right-0 text-9xl font-serif italic text-black/5 dark:text-white/5 -z-10 translate-x-4 -translate-y-4 font-bold" aria-hidden="true">VM</div>
              <div className="font-mono text-sm text-gray-600 dark:text-gray-300 leading-relaxed z-10">
@@ -222,8 +230,10 @@ export default function HomePage() {
              </div>
            </div>
         </BentoCard>
+        </AnimateIn>
 
-        <BentoCard className="md:col-span-6 lg:col-span-3 bg-zinc-100 dark:bg-zinc-900 border-none" subtitle={t('home.servicesLabel')}>
+        <AnimateIn from="bottom" delay={200} className="md:col-span-6 lg:col-span-3">
+        <BentoCard className="bg-zinc-100 dark:bg-zinc-900 border-none" subtitle={t('home.servicesLabel')}>
            <div className="flex flex-col h-full justify-between">
              <div>
                <h3 className="text-xl font-bold text-light-text dark:text-dark-text mb-2">{t('home.servicesTitle')}</h3>
@@ -236,6 +246,7 @@ export default function HomePage() {
              </Link>
            </div>
         </BentoCard>
+        </AnimateIn>
 
       </div>
     </div>

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Linkedin, Github } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
+import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { createClient } from '@/utils/supabase/client';
 import { useLanguage } from '@/components/language/LanguageProvider';
 
@@ -63,8 +64,11 @@ export default function ContactPage() {
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
-       <SectionHeader title={t('contact.title')} subtitle={t('contact.subtitle')} />
+       <AnimateIn from="bottom">
+         <SectionHeader title={t('contact.title')} subtitle={t('contact.subtitle')} />
+       </AnimateIn>
 
+       <AnimateIn from="bottom" delay={100}>
        <div className="bg-white dark:bg-[#111] p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full -mr-32 -mt-32 pointer-events-none hidden md:block md:blur-3xl"></div>
 
@@ -172,6 +176,7 @@ export default function ContactPage() {
             </div>
           </div>
        </div>
+       </AnimateIn>
     </div>
   );
 }
