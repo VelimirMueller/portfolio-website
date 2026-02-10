@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Linkedin, Github } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
@@ -16,6 +16,13 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const { t } = useLanguage();
+
+  useEffect(() => {
+    if (submitStatus) {
+      const timer = setTimeout(() => setSubmitStatus(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [submitStatus]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
