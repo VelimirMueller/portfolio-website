@@ -1,109 +1,31 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Play, Code2, Database, Layout, Terminal, Box, Globe } from 'lucide-react';
+import { ArrowRight, Code2, Database, Layout, Terminal, Box, Globe } from 'lucide-react';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useLanguage } from '@/components/language/LanguageProvider';
 
-const DashboardPromoVideo = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+const HighlightStatement = () => {
   const { t } = useLanguage();
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '200px' }
-    );
-
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, []);
-
-  const handlePlay = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (!isLoaded) {
-      video.load();
-      video.addEventListener('loadeddata', () => {
-        setIsLoaded(true);
-        video.play();
-        setIsPlaying(true);
-      }, { once: true });
-      return;
-    }
-    if (video.paused) {
-      video.play();
-      setIsPlaying(true);
-    } else {
-      video.pause();
-      setIsPlaying(false);
-    }
-  };
-
   return (
-    <BentoCard className="h-full bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none p-0">
-      <div ref={containerRef} className="relative w-full h-full min-h-[320px]">
-        {isInView && (
-          <video
-            ref={videoRef}
-            className="absolute inset-0 w-full h-full object-cover rounded-[1.5rem]"
-            width={1280}
-            height={720}
-            muted
-            loop
-            playsInline
-            preload="none"
-            onLoadedData={() => setIsLoaded(true)}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-          >
-            <source src="/dashboard-promo.mp4" type="video/mp4" />
-          </video>
-        )}
-
-        {/* Play/pause overlay - always visible, acts as placeholder before load */}
-        <button
-          onClick={handlePlay}
-          className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 hover:bg-black/20 transition-colors cursor-pointer group/play focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 rounded-[1.5rem]"
-          aria-label={isPlaying ? 'Pause dashboard demo video' : 'Play dashboard demo video'}
-        >
-          {!isPlaying && (
-            <div className="flex flex-col items-center gap-4">
-              {/* Placeholder background when not loaded */}
-              {!isLoaded && (
-                <div className="absolute inset-0 bg-zinc-100 dark:bg-zinc-900 rounded-[1.5rem]">
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-                </div>
-              )}
-              <div className="relative z-10 flex flex-col items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-white/90 dark:bg-black/80 flex items-center justify-center shadow-xl border border-white/20 group-hover/play:scale-110 transition-transform">
-                  <Play size={24} className="text-black dark:text-white ml-1" aria-hidden="true" />
-                </div>
-                {!isLoaded && (
-                  <div className="text-center">
-                    <p className="font-mono text-sm font-bold text-black dark:text-white">{t('home.dashboardDemo')}</p>
-                    <p className="text-xs text-gray-500 mt-1">{t('home.clickToPlay')}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </button>
+    <BentoCard className="h-full bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none">
+      <div className="relative w-full h-full min-h-[320px] flex flex-col justify-center items-center text-center px-6">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="relative z-10 flex flex-col items-center gap-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-500/20 bg-brand-500/5 text-brand-600 dark:text-brand-500 text-[10px] font-mono uppercase tracking-wider">
+            {t('home.highlightTag')}
+          </div>
+          <p className="font-mono text-2xl md:text-3xl font-bold text-black dark:text-white leading-tight max-w-sm">
+            {t('home.highlightTitle')}
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs leading-relaxed">
+            {t('home.highlightDesc')}
+          </p>
+        </div>
       </div>
     </BentoCard>
   );
@@ -206,7 +128,7 @@ export default function HomePage() {
         </AnimateIn>
 
         <AnimateIn from="right" delay={100} className="md:col-span-3 lg:col-span-4">
-          <DashboardPromoVideo />
+          <HighlightStatement />
         </AnimateIn>
 
         <AnimateIn from="bottom-right" delay={200} className="md:col-span-3 lg:col-span-4">
