@@ -23,9 +23,9 @@
   },
   "home": {
     "badge": "Verfügbar für Projekte",
-    "subtitle": "Senior Frontend Engineer",
-    "subtitleSecondary": "Product Engineer",
-    "description": "Ich übersetze Business-Anforderungen in durchdachte UX/UI-Konzepte und setze sie mit modernem Stack um. Von der Anforderungsanalyse über das Branding bis zum Deployment – alles aus einer Hand.",
+    "subtitle": "Senior Product Engineer",
+    "subtitleSecondary": "Full-Stack · ML · Infrastructure",
+    "description": "Ich liefere Produkte end-to-end. In über 9 Jahren bin ich vom Frontend-Spezialisten zum Verantwortlichen für den gesamten Lifecycle geworden — von Figma-Design über React und verschiedene Backend-Technologien bis zu AWS/Azure-Deployment und Terraform.",
     "ctaProjects": "Projekte ansehen",
     "ctaContact": "Kontakt",
     "techDna": "Engineering DNA",
@@ -34,10 +34,10 @@
     "dashboardDemo": "Dashboard Demo",
     "clickToPlay": "Click to play",
     "thePerson": "The Person",
-    "personQuote": "Gutes Frontend beginnt nicht beim Code, sondern beim Verstehen des Business. Ich analysiere Anforderungen, übersetze sie in UX/UI-Konzepte, die zur Marke passen, und plane das Projekt von der Idee bis zum Deployment. Mein Ziel:",
+    "personQuote": "Gute Produkte beginnen nicht beim Code, sondern beim Verstehen des Business. Ich analysiere Anforderungen, übersetze sie in UX/UI-Konzepte und verantworte die technische Umsetzung von der Architektur bis zum Deployment. Mein Ziel:",
     "personQuoteHighlight": "Nahtloser Prozess mit modernen Tools.",
     "personName": "Velimir Müller",
-    "personRole": "Frontend Engineer",
+    "personRole": "Product Engineer",
     "servicesLabel": "Services",
     "servicesTitle": "End-to-End",
     "servicesDesc": "Von Requirements Engineering über UX/UI-Design bis zum Deployment mit Next.js, Supabase und Vercel.",
@@ -214,28 +214,28 @@
     "subtitle": "Velimir Müller",
     "summary": "Summary",
     "bio1": "Ich bin",
-    "bio1Bold": "Senior Frontend Engineer & Product Engineer",
-    "bio1After": "mit langjähriger Erfahrung im Product Engineering. Mein Fokus liegt auf dem gesamten Produktprozess – von der Anforderungsanalyse bis zum Deployment.",
-    "bio2": "Ich verstehe Requirements Engineering als Grundlage jedes erfolgreichen Projekts: Business-Anforderungen erfassen, in UX/UI-Konzepte übersetzen und dabei das Branding als integralen Bestandteil des Prozesses behandeln.",
-    "bio3": "Ich plane und begleite Projekte ganzheitlich – von der Idee bis zum Go-Live – mit modernem Stack wie Next.js, Supabase, Vercel und CI/CD-Pipelines. Claude AI nutze ich als Produktivitätswerkzeug im Entwicklungsalltag.",
+    "bio1Bold": "Senior Product Engineer",
+    "bio1After": "der Produkte end-to-end liefert. In über 9 Jahren bin ich vom Frontend-Spezialisten zum Verantwortlichen für den gesamten Lifecycle geworden — von Figma-Design über React und verschiedene Backend-Technologien bis zu AWS/Azure-Deployment und Terraform.",
+    "bio2": "Zuletzt habe ich eine Lead-Management-Plattform gebaut, die die Zuweisungszeit um das 3-4-fache reduziert hat, und ein ML-Modell entwickelt, das eine 100%ige Conversion-Steigerung für die Sales-Pipeline projiziert — von der Datenanalyse über die Modellentwicklung bis zur Integrationsplanung.",
+    "bio3": "Mein Stack umfasst das gesamte Bild: React, Vue, TypeScript, Laravel, Supabase, Vercel, Terraform, Docker, AWS, Azure. Ich schreibe Tests (Unit, E2E, visuelle Regression), gestalte Komponentensysteme und achte auf die Details, die \"funktioniert\" von \"funktioniert gut\" unterscheiden.",
     "yearsExp": "Jahre Erfahrung",
     "reqDeploy": "Req → Deployment",
     "uiBranding": "UI & Branding",
     "experienceLog": "Experience Log",
     "current": "Current",
     "exp1": {
-      "title": "Senior Software Engineer - Frontend",
+      "title": "Senior Software Engineer - Frontend / Product",
       "tag": "Hyper-Growth Startup",
       "company": "GALVANY",
       "date": "Feb 2025 - Present",
-      "desc": "End-to-End Produktentwicklung mit React und Vue.js. Feature Ownership & Product Discovery. UX-Design in Figma, AWS-Infrastruktur (S3, CloudFront), Testing mit Vitest und Playwright."
+      "desc": "End-to-End Product Engineering verantwortet — von Requirements und Figma-Designs über Full-Stack-Implementierung bis zum Cloud-Deployment. Lead-Management-Plattform gebaut (Laravel, React, TypeScript, Inertia, Terraform), die die Zuweisungszeit um das 3-4-fache reduzierte. Eigenständig ML-Modell entwickelt mit projizierter 100% Conversion-Steigerung. AWS- und Azure-Umgebungen mit Terraform konfiguriert. Vollständige Test-Pyramide: Unit, E2E mit Playwright, visuelle Regression."
     },
     "exp2": {
       "title": "Software Engineer - Frontend",
       "tag": "Enterprise SaaS",
       "company": "DEMOS plan GmbH",
       "date": "Oct 2021 - Jan 2025",
-      "desc": "Produktverantwortung für Kernfeatures. Vue 2/3 Architektur, interaktive Maps mit OpenLayers, State Management mit VueX/Pinia, Unit- und Komponententests mit Jest/Vitest, Mentoring."
+      "desc": "Vue.js-Applikationen für eine Civic-Tech-Plattform gebaut und gewartet. Architekturmuster für Vue 2/3 entworfen (Vuex, Pinia), interaktive Karten mit OpenLayers entwickelt, Testing-Praktiken etabliert (Jest, Vitest) und Junior-Entwickler mit Sessions zu TDD und Refactoring-Patterns mentored."
     },
     "exp3": {
       "title": "Web Developer",
@@ -250,12 +250,26 @@
       "company": "Zalando SE",
       "date": "Apr 2017 - Mar 2019",
       "desc": "Specialist bei Zalando SE im Bereich E-Commerce."
+    },
+    "exp5": {
+      "title": "IT-Trainee - Anwendungsentwicklung",
+      "tag": "IT-Ausbildung (IHK)",
+      "company": "cimdata Bildungsakademie GmbH",
+      "date": "Apr 2019 - Jun 2021",
+      "desc": "Ausbildung zum Fachinformatiker für Anwendungsentwicklung (IHK-zertifiziert). Inklusive 10-monatigem Praktikum beim Servicezentrum der Berliner Volkshochschulen mit Linux-Infrastruktur, IT-Sicherheit und Entwicklungsarbeit."
+    },
+    "exp6": {
+      "title": "Praktikum",
+      "tag": "Öffentlicher Sektor IT",
+      "company": "Servicezentrum der Berliner Volkshochschulen",
+      "date": "Aug 2020 - Mai 2021",
+      "desc": "Linux-Systeme mit BigBlueButton administriert, IT-Sicherheitskonzepte für selbst gehostete Server umgesetzt, Features mit Ruby on Rails und React entwickelt und interne IT-Infrastruktur verwaltet."
     }
   },
   "contact": {
     "title": "CONTACT.",
     "subtitle": "Get In Touch",
-    "intro": "Offen für Projekte und Rollen, in denen ich Business-Anforderungen in durchdachte UX/UI-Konzepte übersetze und mit modernen Tools wie Next.js, Supabase und Vercel umsetze.",
+    "intro": "Offen für Projekte und Rollen, in denen ich den gesamten Produktlebenszyklus verantworte — von der Anforderungsanalyse über UX/UI-Design bis zur Full-Stack-Entwicklung und Cloud-Deployment.",
     "nameLabel": "Name",
     "namePlaceholder": "Ihr Name",
     "emailLabel": "Email",
@@ -271,9 +285,9 @@
     "githubLink": "Code ansehen"
   },
   "footer": {
-    "tagline": "Senior Frontend Engineer.",
-    "taglineSecondary": "Product Engineer.",
-    "taglineDesc": "From business needs to UX/UI to deployment.",
+    "tagline": "Senior Product Engineer.",
+    "taglineSecondary": "Full-Stack · ML · Infrastructure.",
+    "taglineDesc": "Von Business-Anforderungen bis zum Deployment — Full Lifecycle Ownership.",
     "sitemap": "Sitemap",
     "connect": "Connect",
     "services": "Leistungen",
