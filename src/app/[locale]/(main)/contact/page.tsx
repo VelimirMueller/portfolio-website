@@ -6,7 +6,7 @@ import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { createClient } from '@/utils/supabase/client';
-import { useLanguage } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   useEffect(() => {
     if (submitStatus) {
