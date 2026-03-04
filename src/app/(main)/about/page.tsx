@@ -60,19 +60,23 @@ export default function AboutPage() {
            <div className="p-4 font-mono text-sm space-y-4">
                <div>
                   <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;frontend&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Next.js&quot;, &quot;React&quot;, &quot;TypeScript&quot;, &quot;Tailwind&quot;]</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Next.js&quot;, &quot;React&quot;, &quot;Vue&quot;, &quot;TypeScript&quot;, &quot;Tailwind&quot;]</div>
                </div>
                <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;platform&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Supabase&quot;, &quot;Vercel&quot;, &quot;CI/CD&quot;, &quot;GitHub Actions&quot;]</div>
+                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;backend&quot;:</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Laravel&quot;, &quot;Supabase&quot;, &quot;Ruby on Rails&quot;]</div>
+               </div>
+               <div>
+                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;infrastructure&quot;:</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;AWS&quot;, &quot;Azure&quot;, &quot;Terraform&quot;, &quot;Docker&quot;, &quot;Vercel&quot;]</div>
                </div>
                <div>
                   <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;process&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Requirements Engineering&quot;, &quot;UX/UI&quot;, &quot;Branding&quot;]</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Requirements Engineering&quot;, &quot;UX/UI&quot;, &quot;Figma&quot;]</div>
                </div>
                <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;tools&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Figma&quot;, &quot;Claude AI&quot;, &quot;Playwright&quot;]</div>
+                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;ml&quot;:</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Data Analysis&quot;, &quot;Model Dev&quot;, &quot;Python&quot;]</div>
                </div>
            </div>
         </BentoCard>
@@ -150,6 +154,40 @@ export default function AboutPage() {
                       <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp4.date')}</time>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
                         {t('about.exp4.desc')}
+                      </p>
+                  </div>
+              </div>
+
+              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
+                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+                  </div>
+                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
+                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp5.title')}</h3>
+                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp5.tag')}</span>
+                      </div>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp5.company')}</div>
+                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp5.date')}</time>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">
+                        {t('about.exp5.desc')}
+                      </p>
+                  </div>
+              </div>
+
+              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
+                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+                  </div>
+                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
+                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp6.title')}</h3>
+                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp6.tag')}</span>
+                      </div>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp6.company')}</div>
+                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp6.date')}</time>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">
+                        {t('about.exp6.desc')}
                       </p>
                   </div>
               </div>
