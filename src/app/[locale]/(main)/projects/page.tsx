@@ -7,11 +7,11 @@ import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
-import { useLanguage, useTranslationArray } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 
 export default function ProjectsPage() {
-  const { t } = useLanguage();
-  const saasChecks = useTranslationArray('projects.saas.checks');
+  const t = useTranslations();
+  const saasChecks = t.raw('projects.saas.checks') as string[];
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">

@@ -6,7 +6,7 @@ import { BentoCard } from '@/components/molecules/BentoCard';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { Check, Zap, Layers, GitBranch, Laptop, Box, type LucideIcon } from 'lucide-react';
-import { useLanguage, useTranslationArray, useTranslationObjectArray } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 
 type ServiceId = 'requirements-engineering' | 'ux-ui-branding' | 'frontend-development' | 'project-delivery' | 'modern-stack';
 
@@ -19,10 +19,10 @@ const iconMap: Record<ServiceId, LucideIcon> = {
 };
 
 export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
-  const { t } = useLanguage();
-  const problems = useTranslationArray(`serviceDetail.${serviceId}.problems`);
-  const process = useTranslationObjectArray(`serviceDetail.${serviceId}.process`);
-  const tech = useTranslationArray(`serviceDetail.${serviceId}.tech`);
+  const t = useTranslations();
+  const problems = t.raw(`serviceDetail.${serviceId}.problems`) as string[];
+  const process = t.raw(`serviceDetail.${serviceId}.process`) as Record<string, string>[];
+  const tech = t.raw(`serviceDetail.${serviceId}.tech`) as string[];
 
   const Icon = iconMap[serviceId as ServiceId] || Check;
 

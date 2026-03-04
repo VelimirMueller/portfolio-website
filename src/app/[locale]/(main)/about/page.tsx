@@ -5,10 +5,10 @@ import { Terminal } from 'lucide-react';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
-import { useLanguage } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 
 export default function AboutPage() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">

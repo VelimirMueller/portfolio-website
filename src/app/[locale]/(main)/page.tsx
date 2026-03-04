@@ -6,10 +6,10 @@ import { ArrowRight, Code2, Database, Layout, Terminal, Box, Globe } from 'lucid
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
-import { useLanguage } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 
 const HighlightStatement = () => {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <BentoCard className="h-full bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none">
@@ -32,7 +32,7 @@ const HighlightStatement = () => {
 };
 
 const TechStackGrid = () => {
-  const { t } = useLanguage();
+  const t = useTranslations();
   const stacks = [
     { label: "Next.js", icon: Globe, cat: "Framework" },
     { label: "Supabase", icon: Database, cat: "Backend" },
@@ -69,7 +69,7 @@ const TechStackGrid = () => {
 };
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto relative">

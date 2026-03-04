@@ -6,14 +6,14 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/atoms/Button';
 import { useTheme } from '@/components/theme/ThemeProvider';
-import { useLanguage } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 import { LanguageToggle } from '@/components/atoms/LanguageToggle';
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname() ?? '/';
   const { theme, toggleTheme } = useTheme();
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   const isActive = (path: string) => {
     if (path === '/') return pathname === '/';

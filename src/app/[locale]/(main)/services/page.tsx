@@ -7,11 +7,11 @@ import { BentoCard } from '@/components/molecules/BentoCard';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
-import { useLanguage, useTranslationArray } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 
 export default function ServicesPage() {
-  const { t } = useLanguage();
-  const valueItems = useTranslationArray('services.valueItems');
+  const t = useTranslations();
+  const valueItems = t.raw('services.valueItems') as string[];
 
   const serviceLinks = [
     { key: 'requirementsEngineering', icon: ClipboardList, path: "/services/requirements-engineering" },

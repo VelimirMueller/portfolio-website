@@ -3,10 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Mail, Linkedin, Github } from 'lucide-react';
-import { useLanguage } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 
 export const Footer = () => {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <footer className="max-w-7xl mx-auto px-4 py-12 md:py-20 border-t border-black/5 dark:border-white/5 mt-20">

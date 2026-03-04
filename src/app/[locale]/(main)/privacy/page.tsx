@@ -3,12 +3,12 @@
 import React from 'react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
-import { useLanguage, useTranslationArray } from '@/components/language/LanguageProvider';
+import { useTranslations } from 'next-intl';
 
 export default function PrivacyPage() {
-  const { t } = useLanguage();
-  const s3Data = useTranslationArray('privacy.s3Data');
-  const s6Rights = useTranslationArray('privacy.s6Rights');
+  const t = useTranslations();
+  const s3Data = t.raw('privacy.s3Data') as string[];
+  const s6Rights = t.raw('privacy.s6Rights') as string[];
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
