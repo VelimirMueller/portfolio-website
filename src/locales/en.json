@@ -31,9 +31,9 @@
     "techDna": "Engineering DNA",
     "systemStatus": "System Status",
     "operational": "Operational",
-    "highlightTag": "ML Achievement",
-    "highlightTitle": "100% Conversion Lift",
-    "highlightDesc": "Built an ML model projecting 100% conversion lift for a sales pipeline. From data analysis through model development to integration planning.",
+    "highlightTag": "ML Exploration",
+    "highlightTitle": "Smarter Seller Assignment",
+    "highlightDesc": "Built a first ML model analyzing lead and seller features to optimize assignment. Promising results: predicted conversion from ~6% to 11% through smarter matching.",
     "thePerson": "The Person",
     "personQuote": "Good products don't start with code, but with understanding the business. I analyze requirements, translate them into UX/UI concepts, and own the technical execution from architecture to deployment. My goal:",
     "personQuoteHighlight": "Seamless process with modern tools.",
@@ -217,7 +217,7 @@
     "bio1": "I am a",
     "bio1Bold": "Senior Product Engineer",
     "bio1After": "who ships end-to-end. Over 9 years I've moved from frontend specialist to owning the full lifecycle — designing in Figma, building in React and various backend technologies, deploying on AWS and Azure, and writing the Terraform to hold it all together.",
-    "bio2": "Recently, I built a lead management platform that cut seller assignment time by 3-4x and developed an ML model projecting 100% conversion lift for a sales pipeline — from data analysis through model development to integration planning.",
+    "bio2": "Recently, I built a lead management platform that cut seller assignment time by 3-4x and explored ML by building a model that analyzes lead and seller features for smarter assignment — predicting conversion improvement from ~6% to 11%.",
     "bio3": "My stack spans the full picture: React, Vue, TypeScript, Laravel, Supabase, Vercel, Terraform, Docker, AWS, Azure. I write tests (unit, E2E, visual regression), design component systems, and care about the details that separate \"works\" from \"works well.\"",
     "yearsExp": "Years Experience",
     "reqDeploy": "Req → Deployment",
@@ -229,7 +229,7 @@
       "tag": "Hyper-Growth Startup",
       "company": "GALVANY",
       "date": "Feb 2025 - Present",
-      "desc": "Owned product engineering end-to-end — from requirements and Figma designs through full-stack implementation to cloud deployment. Built a lead management platform (Laravel, React, TypeScript, Inertia, Terraform) that reduced assignment time by 3-4x. Independently developed an ML model projecting 100% conversion lift. Configured AWS and Azure environments with Terraform. Full testing pyramid: unit, E2E with Playwright, visual regression."
+      "desc": "Owned product engineering end-to-end — from requirements and Figma designs through full-stack implementation to cloud deployment. Built a lead management platform (Laravel, React, TypeScript, Inertia, Terraform) that reduced assignment time by 3-4x. Explored ML independently: built a model analyzing lead and seller features to optimize assignment, predicting conversion from ~6% to 11%. Configured AWS and Azure environments with Terraform. Full testing pyramid: unit, E2E with Playwright, visual regression."
     },
     "exp2": {
       "title": "Software Engineer - Frontend",

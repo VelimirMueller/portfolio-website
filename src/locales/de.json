@@ -31,9 +31,9 @@
     "techDna": "Engineering DNA",
     "systemStatus": "System Status",
     "operational": "Operational",
-    "highlightTag": "ML Achievement",
-    "highlightTitle": "100% Conversion-Steigerung",
-    "highlightDesc": "ML-Modell entwickelt mit projizierter 100% Conversion-Steigerung für die Sales-Pipeline. Von der Datenanalyse über die Modellentwicklung bis zur Integrationsplanung.",
+    "highlightTag": "ML Exploration",
+    "highlightTitle": "Smartere Seller-Zuordnung",
+    "highlightDesc": "Erstes ML-Modell entwickelt, das Lead- und Seller-Features analysiert, um die Zuordnung zu optimieren. Vielversprechende Ergebnisse: prognostizierte Conversion von ~6% auf 11% durch smarteres Matching.",
     "thePerson": "The Person",
     "personQuote": "Gute Produkte beginnen nicht beim Code, sondern beim Verstehen des Business. Ich analysiere Anforderungen, übersetze sie in UX/UI-Konzepte und verantworte die technische Umsetzung von der Architektur bis zum Deployment. Mein Ziel:",
     "personQuoteHighlight": "Nahtloser Prozess mit modernen Tools.",
@@ -217,7 +217,7 @@
     "bio1": "Ich bin",
     "bio1Bold": "Senior Product Engineer",
     "bio1After": "der Produkte end-to-end liefert. In über 9 Jahren bin ich vom Frontend-Spezialisten zum Verantwortlichen für den gesamten Lifecycle geworden — von Figma-Design über React und verschiedene Backend-Technologien bis zu AWS/Azure-Deployment und Terraform.",
-    "bio2": "Zuletzt habe ich eine Lead-Management-Plattform gebaut, die die Zuweisungszeit um das 3-4-fache reduziert hat, und ein ML-Modell entwickelt, das eine 100%ige Conversion-Steigerung für die Sales-Pipeline projiziert — von der Datenanalyse über die Modellentwicklung bis zur Integrationsplanung.",
+    "bio2": "Zuletzt habe ich eine Lead-Management-Plattform gebaut, die die Zuweisungszeit um das 3-4-fache reduziert hat, und eigenständig ML erkundet: ein Modell entwickelt, das Lead- und Seller-Features analysiert, um die Zuordnung zu optimieren — mit prognostizierter Conversion-Verbesserung von ~6% auf 11%.",
     "bio3": "Mein Stack umfasst das gesamte Bild: React, Vue, TypeScript, Laravel, Supabase, Vercel, Terraform, Docker, AWS, Azure. Ich schreibe Tests (Unit, E2E, visuelle Regression), gestalte Komponentensysteme und achte auf die Details, die \"funktioniert\" von \"funktioniert gut\" unterscheiden.",
     "yearsExp": "Jahre Erfahrung",
     "reqDeploy": "Req → Deployment",
@@ -229,7 +229,7 @@
       "tag": "Hyper-Growth Startup",
       "company": "GALVANY",
       "date": "Feb 2025 - Present",
-      "desc": "End-to-End Product Engineering verantwortet — von Requirements und Figma-Designs über Full-Stack-Implementierung bis zum Cloud-Deployment. Lead-Management-Plattform gebaut (Laravel, React, TypeScript, Inertia, Terraform), die die Zuweisungszeit um das 3-4-fache reduzierte. Eigenständig ML-Modell entwickelt mit projizierter 100% Conversion-Steigerung. AWS- und Azure-Umgebungen mit Terraform konfiguriert. Vollständige Test-Pyramide: Unit, E2E mit Playwright, visuelle Regression."
+      "desc": "End-to-End Product Engineering verantwortet — von Requirements und Figma-Designs über Full-Stack-Implementierung bis zum Cloud-Deployment. Lead-Management-Plattform gebaut (Laravel, React, TypeScript, Inertia, Terraform), die die Zuweisungszeit um das 3-4-fache reduzierte. Eigenständig ML erkundet: Modell entwickelt, das Lead- und Seller-Features analysiert, um die Zuordnung zu optimieren — prognostizierte Conversion von ~6% auf 11%. AWS- und Azure-Umgebungen mit Terraform konfiguriert. Vollständige Test-Pyramide: Unit, E2E mit Playwright, visuelle Regression."
     },
     "exp2": {
       "title": "Software Engineer - Frontend",
