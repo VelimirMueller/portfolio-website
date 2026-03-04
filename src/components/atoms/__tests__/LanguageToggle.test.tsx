@@ -1,87 +1,61 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { LanguageToggle } from "../LanguageToggle";
-import { LanguageProvider } from "@/components/language/LanguageProvider";
 
-// Mock localStorage
-const localStorageMock = (() => {
-  let store: Record<string, string> = {};
-  return {
-    getItem: jest.fn((key: string) => store[key] ?? null),
-    setItem: jest.fn((key: string, value: string) => {
-      store[key] = value;
-    }),
-    clear: () => {
-      store = {};
-    },
-  };
-})();
+// Mock next-intl
+let mockLocale = "de";
+jest.mock("next-intl", () => ({
+  useLocale: () => mockLocale,
+}));
 
-Object.defineProperty(window, "localStorage", { value: localStorageMock });
+// Mock @/i18n/navigation
+const mockReplace = jest.fn();
+jest.mock("@/i18n/navigation", () => ({
+  useRouter: () => ({ replace: mockReplace }),
+  usePathname: () => "/",
+}));
 
 beforeEach(() => {
-  localStorageMock.clear();
-  jest.clearAllMocks();
+  mockLocale = "de";
+  mockReplace.mockClear();
 });
 
-const renderWithProviders = async (ui: React.ReactElement) => {
-  let result: ReturnType<typeof render> | undefined;
-  await act(async () => {
-    result = render(<LanguageProvider>{ui}</LanguageProvider>);
-  });
-  return result!;
-};
-
 describe("LanguageToggle", () => {
-  it("renders with 'EN' text when default language is 'de'", async () => {
-    await renderWithProviders(<LanguageToggle />);
+  it("renders with 'EN' text when locale is 'de'", () => {
+    render(<LanguageToggle />);
     expect(screen.getByText("EN")).toBeInTheDocument();
   });
 
-  it("has correct aria-label for default German language", async () => {
-    await renderWithProviders(<LanguageToggle />);
+  it("has correct aria-label for German locale", () => {
+    render(<LanguageToggle />);
     expect(
       screen.getByLabelText("Switch to English")
     ).toBeInTheDocument();
   });
 
-  it("switches to 'DE' text after clicking", async () => {
-    await renderWithProviders(<LanguageToggle />);
+  it("calls router.replace with 'en' locale when clicked", () => {
+    render(<LanguageToggle />);
 
-    await act(async () => {
-      screen.getByText("EN").click();
-    });
+    fireEvent.click(screen.getByText("EN"));
 
+    expect(mockReplace).toHaveBeenCalledWith("/", { locale: "en" });
+  });
+
+  it("renders 'DE' when locale is 'en'", () => {
+    mockLocale = "en";
+    render(<LanguageToggle />);
     expect(screen.getByText("DE")).toBeInTheDocument();
   });
 
-  it("updates aria-label after toggling to English", async () => {
-    await renderWithProviders(<LanguageToggle />);
-
-    await act(async () => {
-      screen.getByText("EN").click();
-    });
-
+  it("has correct aria-label for English locale", () => {
+    mockLocale = "en";
+    render(<LanguageToggle />);
     expect(
       screen.getByLabelText("Auf Deutsch wechseln")
     ).toBeInTheDocument();
   });
 
-  it("renders as a button element", async () => {
-    await renderWithProviders(<LanguageToggle />);
+  it("renders as a button element", () => {
+    render(<LanguageToggle />);
     expect(screen.getByRole("button")).toBeInTheDocument();
-  });
-
-  it("toggles back to EN after two clicks", async () => {
-    await renderWithProviders(<LanguageToggle />);
-
-    await act(async () => {
-      screen.getByText("EN").click();
-    });
-
-    await act(async () => {
-      screen.getByText("DE").click();
-    });
-
-    expect(screen.getByText("EN")).toBeInTheDocument();
   });
 });
