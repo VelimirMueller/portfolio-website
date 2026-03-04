@@ -214,28 +214,28 @@
     "subtitle": "Velimir Müller",
     "summary": "Summary",
     "bio1": "I am a",
-    "bio1Bold": "Senior Frontend Engineer & Product Engineer",
-    "bio1After": "with many years of experience in product engineering. My focus is on the entire product process – from requirements analysis to deployment.",
-    "bio2": "I see requirements engineering as the foundation of every successful project: capturing business requirements, translating them into UX/UI concepts, and treating branding as an integral part of the process.",
-    "bio3": "I plan and accompany projects holistically – from idea to go-live – with a modern stack like Next.js, Supabase, Vercel, and CI/CD pipelines. I use Claude AI as a productivity tool in my daily development work.",
+    "bio1Bold": "Senior Product Engineer",
+    "bio1After": "who ships end-to-end. Over 9 years I've moved from frontend specialist to owning the full lifecycle — designing in Figma, building in React and various backend technologies, deploying on AWS and Azure, and writing the Terraform to hold it all together.",
+    "bio2": "Recently, I built a lead management platform that cut seller assignment time by 3-4x and developed an ML model projecting 100% conversion lift for a sales pipeline — from data analysis through model development to integration planning.",
+    "bio3": "My stack spans the full picture: React, Vue, TypeScript, Laravel, Supabase, Vercel, Terraform, Docker, AWS, Azure. I write tests (unit, E2E, visual regression), design component systems, and care about the details that separate \"works\" from \"works well.\"",
     "yearsExp": "Years Experience",
     "reqDeploy": "Req → Deployment",
     "uiBranding": "UI & Branding",
     "experienceLog": "Experience Log",
     "current": "Current",
     "exp1": {
-      "title": "Senior Software Engineer - Frontend",
+      "title": "Senior Software Engineer - Frontend / Product",
       "tag": "Hyper-Growth Startup",
       "company": "GALVANY",
       "date": "Feb 2025 - Present",
-      "desc": "End-to-end product development with React and Vue.js. Feature Ownership & Product Discovery. UX design in Figma, AWS infrastructure (S3, CloudFront), testing with Vitest and Playwright."
+      "desc": "Owned product engineering end-to-end — from requirements and Figma designs through full-stack implementation to cloud deployment. Built a lead management platform (Laravel, React, TypeScript, Inertia, Terraform) that reduced assignment time by 3-4x. Independently developed an ML model projecting 100% conversion lift. Configured AWS and Azure environments with Terraform. Full testing pyramid: unit, E2E with Playwright, visual regression."
     },
     "exp2": {
       "title": "Software Engineer - Frontend",
       "tag": "Enterprise SaaS",
       "company": "DEMOS plan GmbH",
       "date": "Oct 2021 - Jan 2025",
-      "desc": "Product ownership for core features. Vue 2/3 architecture, interactive maps with OpenLayers, state management with VueX/Pinia, unit and component tests with Jest/Vitest, mentoring."
+      "desc": "Built and maintained Vue.js applications for a civic-tech platform. Designed architecture patterns for Vue 2/3 (Vuex, Pinia), developed interactive maps with OpenLayers, established testing practices (Jest, Vitest), and mentored junior developers with sessions on TDD and refactoring patterns."
     },
     "exp3": {
       "title": "Web Developer",
@@ -250,6 +250,20 @@
       "company": "Zalando SE",
       "date": "Apr 2017 - Mar 2019",
       "desc": "Specialist at Zalando SE in the e-commerce division."
+    },
+    "exp5": {
+      "title": "IT-Trainee - Application Development",
+      "tag": "IT Training (IHK)",
+      "company": "cimdata Bildungsakademie GmbH",
+      "date": "Apr 2019 - Jun 2021",
+      "desc": "Formal training as IT Specialist for Application Development (IHK certified). Included a 10-month internship at Servicezentrum der Berliner Volkshochschulen with Linux infrastructure, IT security, and development work."
+    },
+    "exp6": {
+      "title": "Internship Program",
+      "tag": "Public Sector IT",
+      "company": "Servicezentrum der Berliner Volkshochschulen",
+      "date": "Aug 2020 - May 2021",
+      "desc": "Administered Linux systems with BigBlueButton, applied IT security concepts for self-hosted servers, developed features with Ruby on Rails and React, and managed internal IT infrastructure."
     }
   },
   "contact": {
