@@ -1,8 +1,28 @@
 import React from "react";
 import { render, screen, act, fireEvent } from "@testing-library/react";
 import { Navigation } from "../Navigation";
-import { LanguageProvider } from "@/components/language/LanguageProvider";
+import de from "@/locales/de.json";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+
+// Mock next-intl with a minimal implementation that reads the German locale
+jest.mock("next-intl", () => ({
+  useTranslations: () => {
+    const t = (key: string) => {
+      const keys = key.split(".");
+      let value: unknown = de;
+      for (const k of keys) {
+        if (value && typeof value === "object") {
+          value = (value as Record<string, unknown>)[k];
+        } else {
+          return key;
+        }
+      }
+      return typeof value === "string" ? value : key;
+    };
+    return t;
+  },
+  useLocale: () => "de",
+}));
 
 // Mock next/link
 jest.mock("next/link", () => {
@@ -27,6 +47,13 @@ jest.mock("next/link", () => {
 let mockPathname = "/";
 jest.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
+}));
+
+const mockReplace = jest.fn();
+jest.mock("@/i18n/navigation", () => ({
+  useRouter: () => ({ replace: mockReplace }),
+  usePathname: () => mockPathname,
+  Link: ({ children, href, className }: { children: React.ReactNode; href: string; className?: string }) => <a href={href} className={className}>{children}</a>,
 }));
 
 // Mock lucide-react icons
@@ -86,7 +113,7 @@ const renderWithProviders = async (ui: React.ReactElement) => {
   await act(async () => {
     result = render(
       <ThemeProvider>
-        <LanguageProvider>{ui}</LanguageProvider>
+        {ui}
       </ThemeProvider>
     );
   });
