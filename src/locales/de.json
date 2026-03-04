@@ -57,15 +57,15 @@
     "valueItems": [
       "Requirements Engineering & Stakeholder-Kommunikation",
       "UX/UI-Design als Teil der Brand Identity",
-      "Frontend-Entwicklung mit Next.js & Supabase",
-      "CI/CD, Vercel Deployment & Monitoring"
+      "Full-Stack-Entwicklung mit React, Laravel & Supabase",
+      "CI/CD, Cloud Deployment (AWS, Azure, Vercel) & Monitoring"
     ],
     "checkAvailability": "Verfügbarkeit prüfen",
     "detailTitle": "Leistungen im Detail",
     "serviceNames": {
       "requirementsEngineering": "Requirements Engineering",
       "uxUiBranding": "UX/UI & Branding",
-      "frontendDevelopment": "Frontend Development",
+      "frontendDevelopment": "Full-Stack Development",
       "projectDelivery": "Projektplanung & Delivery",
       "modernStack": "Modern Stack"
     }
