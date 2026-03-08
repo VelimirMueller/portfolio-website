@@ -173,9 +173,10 @@
     }
   },
   "projects": {
-    "title": "WORK.",
-    "subtitle": "Real Impact",
+    "title": "DEMOS.",
+    "subtitle": "Beispiel Demo Projekte",
     "interactiveDemos": "Interactive Demos",
+    "realWorldWork": "Real-World Work",
     "liveUiDemo": "Live UI Demo",
     "launchDemo": "Launch Demo",
     "dashboard": {
@@ -186,13 +187,9 @@
       "title": "Project Planning Tool",
       "desc": "Enterprise-Grade Projektplanungs-Tool mit Phase-Flow Visualisierung, Kanban Board, Gantt-Timeline und Team-Workload-Management. Von der Research-Phase bis zum Launch – alles auf einen Blick."
     },
-    "supabaseAdmin": {
-      "title": "Supabase Admin Tool",
-      "desc": "Integriertes Datenbank-Admin-Tool direkt in der Entwicklungsumgebung. Schema-Management, Data Browser, REST-API-Builder und Auth-Verwaltung – ohne den Workspace zu verlassen."
-    },
     "enterprise": {
       "title": "Enterprise Workflow Automation",
-      "desc": "Vollständige Projektverantwortung: Anforderungsanalyse mit Stakeholdern, UX/UI-Konzeption in Figma, Frontend-Entwicklung und Deployment. Business-Anforderungen direkt in skalierbare Lösungen übersetzt.",
+      "desc": "Produktions-SaaS-Plattform gebaut und ausgeliefert, die komplexe Business-Workflows end-to-end automatisiert. Von Stakeholder-Anforderungen über Architektur-Entscheidungen bis zum skalierbaren Deployment — das mache ich täglich als SaaS-Entwickler.",
       "metric": "Produktivitätssteigerung",
       "role": "Lead / Owner",
       "focus": "Architektur",
@@ -200,12 +197,12 @@
     },
     "saas": {
       "title": "SaaS Platform & Brand Identity",
-      "desc": "Ganzheitliche Projektplanung: Business-Anforderungen erfasst, UX/UI-Design als Teil der Brand Identity entwickelt, Frontend mit Next.js umgesetzt und über CI/CD-Pipelines deployed.",
+      "desc": "Ein vollständiges SaaS-Produkt designed, gebaut und gelauncht — Auth-Flows, Subscription-Logik, Multi-Tenant-Architektur und Brand Identity. Ich verantworte den Full Stack von Figma-Mockups bis CI/CD-Pipelines und Production-Monitoring.",
       "checks": [
-        "Requirements Engineering mit Stakeholdern",
-        "UX/UI-Konzeption & Branding",
+        "Multi-Tenant-Architektur & Auth-Flows",
+        "Subscription- & Billing-Integration",
         "CI/CD Pipeline & Automated Testing",
-        "Deployment via Vercel"
+        "Production Deployment & Monitoring"
       ],
       "cta": "Details anfragen"
     }
@@ -214,11 +211,11 @@
     "title": "PROFILE.",
     "subtitle": "Velimir Müller",
     "summary": "Summary",
-    "bio1": "Ich bin",
+    "bio1": "",
     "bio1Bold": "Senior Product Engineer",
-    "bio1After": "der Produkte end-to-end liefert. In über 9 Jahren bin ich vom Frontend-Spezialisten zum Verantwortlichen für den gesamten Lifecycle geworden — von Figma-Design über React und verschiedene Backend-Technologien bis zu AWS/Azure-Deployment und Terraform.",
-    "bio2": "Zuletzt habe ich eine Lead-Management-Plattform gebaut, die die Zuweisungszeit um das 3-4-fache reduziert hat, und eigenständig ML erkundet: ein Modell entwickelt, das Lead- und Seller-Features analysiert, um die Zuordnung zu optimieren — mit prognostizierter Conversion-Verbesserung von ~6% auf 11%.",
-    "bio3": "Mein Stack umfasst das gesamte Bild: React, Vue, TypeScript, Laravel, Supabase, Vercel, Terraform, Docker, AWS, Azure. Ich schreibe Tests (Unit, E2E, visuelle Regression), gestalte Komponentensysteme und achte auf die Details, die \"funktioniert\" von \"funktioniert gut\" unterscheiden.",
+    "bio1After": "der Produkte end-to-end verantwortet. Von der Anforderungsanalyse und UX-Konzeption in Figma über moderne Frontend-Architekturen mit React, Vue, Next.js und Nuxt bis zu Cloud-Infrastruktur und ML-gestützter Optimierung.",
+    "bio2": "Im Backend arbeite ich mit Laravel, FastAPI und Quarkus, als Datenbankschicht mit PostgreSQL und Supabase. Ich kenne den gesamten Stack und wähle pragmatisch das richtige Werkzeug für den Job. KI-Tools wie GitHub Copilot und Claude integriere ich täglich in meinen Entwicklungsprozess, nicht als Gimmick sondern als echten Produktivitätshebel.",
+    "bio3": "Mit Erfahrung aus Startups, mittelständischen Unternehmen und Corporations bringe ich technische Tiefe und unternehmerisches Denken zusammen. Ich baue nicht nur Features, ich baue Produkte, die einen Unterschied machen.",
     "yearsExp": "Jahre Erfahrung",
     "reqDeploy": "Req → Deployment",
     "uiBranding": "UI & Branding",
@@ -239,27 +236,34 @@
       "desc": "Vue.js-Applikationen für eine Civic-Tech-Plattform gebaut und gewartet. Architekturmuster für Vue 2/3 entworfen (Vuex, Pinia), interaktive Karten mit OpenLayers entwickelt, Testing-Praktiken etabliert (Jest, Vitest) und Junior-Entwickler mit Sessions zu TDD und Refactoring-Patterns mentored."
     },
     "exp3": {
+      "title": "Frontend Engineer / Product Engineer",
+      "tag": "Startup · bewerbermappe.com",
+      "company": "Housy GmbH",
+      "date": "Mär 2021 - Okt 2021",
+      "desc": "Mitentwicklung einer digitalen Bewerbungsmappe-Plattform (bewerbermappe.com), die in Medien wie Welt, NTV und Berliner Zeitung featured wurde. Technische Umsetzung einer komplexen Multi-Plugin WordPress-Architektur mit Custom Theme Development. Mitgestaltung der User Journey von der Landing Page bis zum Checkout. Enge Zusammenarbeit im Agenturteam von der Konzeption bis zum Launch."
+    },
+    "exp4": {
       "title": "Web Developer",
       "tag": "Freelance & Agency",
       "company": "u.a. HOUSY",
       "date": "Feb 2019 - Jun 2020",
       "desc": "Erstellung und Wartung von WordPress-Instanzen mit WooCommerce-Webshops – von der Planung bis zum Deployment."
     },
-    "exp4": {
+    "exp5": {
       "title": "Specialist",
       "tag": "E-Commerce",
       "company": "Zalando SE",
       "date": "Apr 2017 - Mar 2019",
       "desc": "Specialist bei Zalando SE im Bereich E-Commerce."
     },
-    "exp5": {
+    "exp6": {
       "title": "IT-Trainee - Anwendungsentwicklung",
       "tag": "IT-Ausbildung (IHK)",
       "company": "cimdata Bildungsakademie GmbH",
       "date": "Apr 2019 - Jun 2021",
       "desc": "Ausbildung zum Fachinformatiker für Anwendungsentwicklung (IHK-zertifiziert). Inklusive 10-monatigem Praktikum beim Servicezentrum der Berliner Volkshochschulen mit Linux-Infrastruktur, IT-Sicherheit und Entwicklungsarbeit."
     },
-    "exp6": {
+    "exp7": {
       "title": "Praktikum",
       "tag": "Öffentlicher Sektor IT",
       "company": "Servicezentrum der Berliner Volkshochschulen",

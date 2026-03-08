@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Cpu, Check, LayoutDashboard, ArrowRight, KanbanSquare, Database } from 'lucide-react';
+import { ArrowUpRight, Cpu, Check, LayoutDashboard, ArrowRight, KanbanSquare } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { BentoCard } from '@/components/molecules/BentoCard';
@@ -101,46 +101,12 @@ export default function ProjectsPage() {
          </Link>
          </AnimateIn>
 
-         {/* Supabase Admin */}
-         <AnimateIn from="bottom-right" delay={300}>
-         <Link href="/projects/supabase-admin" className="block group">
-           <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-emerald-500/20 hover:border-emerald-500/50 transition-all">
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                 <div className="flex-1">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono mb-4 border border-emerald-500/20">
-                       <Database size={12} />
-                       <span>{t('projects.liveUiDemo')}</span>
-                    </div>
-                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.supabaseAdmin.title')}</h2>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-                       {t('projects.supabaseAdmin.desc')}
-                    </p>
-                    <div className="flex items-center text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold group-hover:translate-x-2 transition-transform">
-                       {t('projects.launchDemo')} <ArrowRight size={14} className="ml-2" />
-                    </div>
-                 </div>
-
-                 <div className="w-full md:w-1/3 aspect-video bg-gray-100 dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-[#222] p-4 relative overflow-hidden shadow-2xl group-hover:shadow-emerald-900/10 transition-shadow">
-                    {/* Mini DB admin preview */}
-                    <div className="absolute top-4 left-4 w-10 h-full bg-white dark:bg-[#0d1117] rounded-l-lg border-r border-gray-200 dark:border-emerald-900/30"></div>
-                    <div className="absolute top-4 left-16 right-4 h-6 bg-white dark:bg-[#0d1117] rounded-lg border border-gray-200 dark:border-emerald-900/20"></div>
-                    <div className="absolute top-12 left-16 right-4 flex flex-col gap-1">
-                       <div className="h-4 bg-emerald-500/10 rounded-sm border border-emerald-500/10"></div>
-                       <div className="grid grid-cols-4 gap-0.5">
-                          {Array.from({ length: 12 }).map((_, i) => (
-                            <div key={i} className="h-3 bg-white dark:bg-[#111] rounded-sm border border-gray-200 dark:border-[#1e2d3d]"></div>
-                          ))}
-                       </div>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-100 dark:from-[#050505] to-transparent pointer-events-none"></div>
-                 </div>
-              </div>
-           </BentoCard>
-         </Link>
-         </AnimateIn>
       </div>
 
       <div className="flex flex-col gap-8 md:gap-12">
+        <AnimateIn from="left">
+          <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.realWorldWork')}</h3>
+        </AnimateIn>
 
         {/* Project 1: Enterprise Workflow */}
         <AnimateIn from="left">

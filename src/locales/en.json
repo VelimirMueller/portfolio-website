@@ -173,9 +173,10 @@
     }
   },
   "projects": {
-    "title": "WORK.",
-    "subtitle": "Real Impact",
+    "title": "DEMOS.",
+    "subtitle": "Example Demo Projects",
     "interactiveDemos": "Interactive Demos",
+    "realWorldWork": "Real-World Work",
     "liveUiDemo": "Live UI Demo",
     "launchDemo": "Launch Demo",
     "dashboard": {
@@ -186,13 +187,9 @@
       "title": "Project Planning Tool",
       "desc": "Enterprise-grade project planning tool with phase-flow visualization, Kanban board, Gantt timeline, and team workload management. From research phase to launch – everything at a glance."
     },
-    "supabaseAdmin": {
-      "title": "Supabase Admin Tool",
-      "desc": "Integrated database admin tool directly in the development environment. Schema management, data browser, REST API builder, and auth management – without leaving the workspace."
-    },
     "enterprise": {
       "title": "Enterprise Workflow Automation",
-      "desc": "Full project ownership: requirements analysis with stakeholders, UX/UI conception in Figma, frontend development, and deployment. Business requirements directly translated into scalable solutions.",
+      "desc": "Built and shipped a production SaaS platform that automates complex business workflows end-to-end. From stakeholder requirements through architecture decisions to scalable deployment — this is what I do daily as a SaaS developer.",
       "metric": "Productivity Increase",
       "role": "Lead / Owner",
       "focus": "Architecture",
@@ -200,12 +197,12 @@
     },
     "saas": {
       "title": "SaaS Platform & Brand Identity",
-      "desc": "Holistic project planning: business requirements captured, UX/UI design developed as part of brand identity, frontend implemented with Next.js, and deployed via CI/CD pipelines.",
+      "desc": "Designed, built, and launched a complete SaaS product — auth flows, subscription logic, multi-tenant architecture, and brand identity. I own the full stack from Figma mockups to CI/CD pipelines and production monitoring.",
       "checks": [
-        "Requirements Engineering with Stakeholders",
-        "UX/UI Conception & Branding",
+        "Multi-Tenant Architecture & Auth Flows",
+        "Subscription & Billing Integration",
         "CI/CD Pipeline & Automated Testing",
-        "Deployment via Vercel"
+        "Production Deployment & Monitoring"
       ],
       "cta": "Request Details"
     }
@@ -214,11 +211,11 @@
     "title": "PROFILE.",
     "subtitle": "Velimir Müller",
     "summary": "Summary",
-    "bio1": "I am a",
+    "bio1": "",
     "bio1Bold": "Senior Product Engineer",
-    "bio1After": "who ships end-to-end. Over 9 years I've moved from frontend specialist to owning the full lifecycle — designing in Figma, building in React and various backend technologies, deploying on AWS and Azure, and writing the Terraform to hold it all together.",
-    "bio2": "Recently, I built a lead management platform that cut seller assignment time by 3-4x and explored ML by building a model that analyzes lead and seller features for smarter assignment — predicting conversion improvement from ~6% to 11%.",
-    "bio3": "My stack spans the full picture: React, Vue, TypeScript, Laravel, Supabase, Vercel, Terraform, Docker, AWS, Azure. I write tests (unit, E2E, visual regression), design component systems, and care about the details that separate \"works\" from \"works well.\"",
+    "bio1After": "who owns products end-to-end. From requirements analysis and UX conception in Figma through modern frontend architectures with React, Vue, Next.js, and Nuxt to cloud infrastructure and ML-driven optimization.",
+    "bio2": "On the backend I work with Laravel, FastAPI, and Quarkus, with PostgreSQL and Supabase as the database layer. I know the full stack and pragmatically choose the right tool for the job. AI tools like GitHub Copilot and Claude are part of my daily development workflow — not as a gimmick but as a real productivity lever.",
+    "bio3": "With experience from startups, mid-sized companies, and corporations, I combine technical depth with entrepreneurial thinking. I don't just build features — I build products that make a difference.",
     "yearsExp": "Years Experience",
     "reqDeploy": "Req → Deployment",
     "uiBranding": "UI & Branding",
@@ -239,27 +236,34 @@
       "desc": "Built and maintained Vue.js applications for a civic-tech platform. Designed architecture patterns for Vue 2/3 (Vuex, Pinia), developed interactive maps with OpenLayers, established testing practices (Jest, Vitest), and mentored junior developers with sessions on TDD and refactoring patterns."
     },
     "exp3": {
+      "title": "Frontend Engineer / Product Engineer",
+      "tag": "Startup · bewerbermappe.com",
+      "company": "Housy GmbH",
+      "date": "Mar 2021 - Oct 2021",
+      "desc": "Co-developed a digital application portfolio platform (bewerbermappe.com) featured in Welt, NTV, and Berliner Zeitung. Built a complex multi-plugin WordPress architecture with custom theme development. Shaped the user journey from landing page to checkout. Close collaboration within the agency team from concept to launch."
+    },
+    "exp4": {
       "title": "Web Developer",
       "tag": "Freelance & Agency",
       "company": "incl. HOUSY",
       "date": "Feb 2019 - Jun 2020",
       "desc": "Creation and maintenance of WordPress instances with WooCommerce webshops – from planning to deployment."
     },
-    "exp4": {
+    "exp5": {
       "title": "Specialist",
       "tag": "E-Commerce",
       "company": "Zalando SE",
       "date": "Apr 2017 - Mar 2019",
       "desc": "Specialist at Zalando SE in the e-commerce division."
     },
-    "exp5": {
+    "exp6": {
       "title": "IT-Trainee - Application Development",
       "tag": "IT Training (IHK)",
       "company": "cimdata Bildungsakademie GmbH",
       "date": "Apr 2019 - Jun 2021",
       "desc": "Formal training as IT Specialist for Application Development (IHK certified). Included a 10-month internship at Servicezentrum der Berliner Volkshochschulen with Linux infrastructure, IT security, and development work."
     },
-    "exp6": {
+    "exp7": {
       "title": "Internship Program",
       "tag": "Public Sector IT",
       "company": "Servicezentrum der Berliner Volkshochschulen",
