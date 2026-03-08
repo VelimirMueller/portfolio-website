@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || 'https://velimir-mueller.vercel.app'
   ),
+  title: 'Velimir Müller | Senior Product Engineer',
+  description:
+    'Senior Product Engineer – end-to-end product ownership from requirements analysis and UX/UI design to full-stack development and cloud deployment.',
 };
 
 export default function RootLayout({

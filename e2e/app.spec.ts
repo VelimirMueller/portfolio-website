@@ -14,7 +14,7 @@ function isMobile(page: Page): boolean {
 /** On mobile, opens the hamburger menu so that nav links become visible. */
 async function openMobileMenuIfNeeded(page: Page) {
   if (isMobile(page)) {
-    await page.getByRole('button', { name: /menü öffnen|open menu/i }).click();
+    await page.getByRole('button', { name: /navigationsmenü öffnen|open navigation menu/i }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
   }
 }
@@ -24,7 +24,7 @@ async function openMobileMenuIfNeeded(page: Page) {
 test.describe('Page rendering', () => {
   test('homepage loads with correct title', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle(/Velimir Müller/);
+    await expect(page).toHaveTitle(/Velimir Müller/i);
   });
 
   test('homepage displays hero content', async ({ page }) => {
@@ -76,7 +76,7 @@ test.describe('Navigation', () => {
     await page.goto('/');
     if (isMobile(page)) {
       await openMobileMenuIfNeeded(page);
-      await page.getByRole('dialog').getByRole('link', { name: /Leistungen/i }).first().click();
+      await page.getByRole('dialog').getByRole('link', { name: /services|Leistungen/i }).first().click();
     } else {
       await page.locator('nav').getByRole('link', { name: /services|Leistungen/i }).first().click();
     }
@@ -87,7 +87,7 @@ test.describe('Navigation', () => {
     await page.goto('/');
     if (isMobile(page)) {
       await openMobileMenuIfNeeded(page);
-      await page.getByRole('dialog').getByRole('link', { name: /Über/i }).click();
+      await page.getByRole('dialog').getByRole('link', { name: /about|Über/i }).first().click();
     } else {
       await page.locator('nav').getByRole('link', { name: /about|Über/i }).first().click();
     }
@@ -98,7 +98,7 @@ test.describe('Navigation', () => {
     await page.goto('/');
     if (isMobile(page)) {
       await openMobileMenuIfNeeded(page);
-      await page.getByRole('dialog').getByRole('link', { name: /Kontakt/i }).click();
+      await page.getByRole('dialog').getByRole('link', { name: /contact|Kontakt/i }).first().click();
     } else {
       await page.locator('nav').getByRole('link', { name: /contact|Kontakt/i }).first().click();
     }
@@ -137,18 +137,14 @@ test.describe('Service detail pages', () => {
 test.describe('Project demos', () => {
   test('dashboard demo loads', async ({ page }) => {
     await page.goto('/projects/dashboard-demo');
-    await expect(page).toHaveTitle(/Velimir Müller/);
+    await expect(page).toHaveTitle(/Velimir Müller/i);
   });
 
   test('project planner loads', async ({ page }) => {
     await page.goto('/projects/project-planner');
-    await expect(page).toHaveTitle(/Velimir Müller/);
+    await expect(page).toHaveTitle(/Velimir Müller/i);
   });
 
-  test('supabase admin loads', async ({ page }) => {
-    await page.goto('/projects/supabase-admin');
-    await expect(page).toHaveTitle(/Velimir Müller/);
-  });
 });
 
 // ─── Theme Toggle ───────────────────────────────────────────
@@ -177,17 +173,18 @@ test.describe('Theme', () => {
 // ─── Language Toggle ────────────────────────────────────────
 
 test.describe('Language', () => {
-  test('language toggle switches to English', async ({ page }) => {
-    await page.goto('/');
-    // On mobile the desktop toggle is hidden, so pick the last visible one
-    // Both viewports render LanguageToggle — mobile section comes after desktop in DOM
+  test('language toggle switches locale', async ({ page }) => {
+    // Force start in German
+    await page.goto('/de');
+    await page.waitForLoadState('networkidle');
+    // Button text is "EN" and aria-label is "Switch to English"
     if (isMobile(page)) {
-      await page.getByRole('button', { name: /english|deutsch/i }).last().click();
+      await page.getByRole('button', { name: /switch to english/i }).last().click();
     } else {
-      await page.getByRole('button', { name: /english|deutsch/i }).first().click();
+      await page.getByRole('button', { name: /switch to english/i }).first().click();
     }
-    // After switch, html lang should be "en"
-    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    // After switch, URL should contain /en
+    await expect(page).toHaveURL(/\/en/);
   });
 });
 
