@@ -60,11 +60,11 @@ export default function AboutPage() {
            <div className="p-4 font-mono text-sm space-y-4">
                <div>
                   <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;frontend&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Next.js&quot;, &quot;React&quot;, &quot;Vue&quot;, &quot;TypeScript&quot;, &quot;Tailwind&quot;]</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;React&quot;, &quot;Vue&quot;, &quot;Next.js&quot;, &quot;Nuxt&quot;, &quot;TypeScript&quot;, &quot;Tailwind&quot;]</div>
                </div>
                <div>
                   <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;backend&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Laravel&quot;, &quot;Supabase&quot;, &quot;Ruby on Rails&quot;]</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Laravel&quot;, &quot;FastAPI&quot;, &quot;Quarkus&quot;, &quot;PostgreSQL&quot;, &quot;Supabase&quot;]</div>
                </div>
                <div>
                   <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;infrastructure&quot;:</div>
@@ -75,8 +75,8 @@ export default function AboutPage() {
                   <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Requirements Engineering&quot;, &quot;UX/UI&quot;, &quot;Figma&quot;]</div>
                </div>
                <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;ml&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Data Analysis&quot;, &quot;Model Dev&quot;, &quot;Python&quot;]</div>
+                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;ai&quot;:</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;GitHub Copilot&quot;, &quot;Claude&quot;, &quot;ML&quot;, &quot;Python&quot;]</div>
                </div>
            </div>
         </BentoCard>
