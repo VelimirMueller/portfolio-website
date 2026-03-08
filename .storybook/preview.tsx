@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
 import type { Preview, Decorator } from '@storybook/react';
+import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
-import { LanguageProvider } from '../src/components/language/LanguageProvider';
+import deMessages from '../src/locales/de.json';
+import enMessages from '../src/locales/en.json';
 import '../src/app/globals.css';
+
+const messages: Record<string, typeof deMessages> = { de: deMessages, en: enMessages };
 
 const withProviders: Decorator = (Story, context) => {
   const selectedTheme = (context.globals.theme as string) || 'dark';
+  const selectedLocale = (context.globals.locale as string) || 'de';
 
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
@@ -14,11 +19,11 @@ const withProviders: Decorator = (Story, context) => {
   }, [selectedTheme]);
 
   return (
-    <ThemeProvider>
-      <LanguageProvider>
+    <NextIntlClientProvider locale={selectedLocale} messages={messages[selectedLocale]}>
+      <ThemeProvider>
         <Story />
-      </LanguageProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </NextIntlClientProvider>
   );
 };
 
@@ -37,9 +42,22 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    locale: {
+      name: 'Locale',
+      description: 'Toggle language',
+      toolbar: {
+        icon: 'globe',
+        items: [
+          { value: 'de', title: 'Deutsch' },
+          { value: 'en', title: 'English' },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
   initialGlobals: {
     theme: 'dark',
+    locale: 'de',
   },
   parameters: {
     controls: {
@@ -70,6 +88,12 @@ const preview: Preview = {
       },
     },
     backgrounds: { disable: true },
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        pathname: '/',
+      },
+    },
     docs: {
       toc: true,
     },
