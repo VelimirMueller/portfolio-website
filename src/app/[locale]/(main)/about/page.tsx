@@ -64,7 +64,7 @@ export default function AboutPage() {
                </div>
                <div>
                   <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;backend&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Laravel&quot;, &quot;FastAPI&quot;, &quot;Quarkus&quot;, &quot;PostgreSQL&quot;, &quot;Supabase&quot;]</div>
+                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;FastAPI&quot;, &quot;Quarkus&quot;, &quot;PostgreSQL&quot;, &quot;Supabase&quot;, &quot;Laravel&quot;]</div>
                </div>
                <div>
                   <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;infrastructure&quot;:</div>
