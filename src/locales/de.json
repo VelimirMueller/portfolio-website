@@ -22,6 +22,8 @@
     }
   },
   "home": {
+    "metaTitle": "Velimir Müller | Senior Product Engineer",
+    "metaDesc": "Senior Product Engineer — von Figma bis AWS. React, TypeScript, Laravel, Supabase, Terraform.",
     "badge": "Verfügbar für Projekte",
     "subtitle": "Senior Product Engineer",
     "subtitleSecondary": "Full-Stack · ML · Infrastructure",
@@ -45,6 +47,8 @@
     "allServices": "Alle Leistungen"
   },
   "services": {
+    "metaTitle": "Leistungen — Velimir Müller",
+    "metaDesc": "Requirements Engineering, UX/UI-Design, Frontend-Entwicklung, Projektlieferung und Modern-Stack-Beratung.",
     "title": "OFFER.",
     "subtitle": "End-to-End Engineering",
     "heroTitle": "Von der Idee zum Go-Live",
@@ -173,6 +177,8 @@
     }
   },
   "projects": {
+    "metaTitle": "Projekte — Velimir Müller",
+    "metaDesc": "Ausgewählte Projekte: interaktive Dashboards, Projektplaner und Admin-Tools mit React, Next.js und Supabase.",
     "title": "DEMOS.",
     "subtitle": "Beispiel Demo Projekte",
     "interactiveDemos": "Interactive Demos",
@@ -208,6 +214,8 @@
     }
   },
   "about": {
+    "metaTitle": "Über mich — Velimir Müller",
+    "metaDesc": "9+ Jahre vom Frontend-Spezialisten zum Full-Stack Product Engineer. React, Vue, TypeScript, Laravel, AWS, Azure.",
     "title": "PROFILE.",
     "subtitle": "Velimir Müller",
     "summary": "Summary",
@@ -272,7 +280,9 @@
     }
   },
   "contact": {
-    "title": "CONTACT.",
+    "metaTitle": "Kontakt — Velimir Müller",
+    "metaDesc": "Kontaktieren Sie mich für Zusammenarbeit, Beratung oder Projektanfragen.",
+    "title": "KONTAKT.",
     "subtitle": "Get In Touch",
     "intro": "Offen für Projekte und Rollen, in denen ich den gesamten Produktlebenszyklus verantworte — von der Anforderungsanalyse über UX/UI-Design bis zur Full-Stack-Entwicklung und Cloud-Deployment.",
     "nameLabel": "Name",
@@ -303,12 +313,16 @@
     "builtWith": "Built with Next.js, Supabase & Vercel."
   },
   "imprint": {
+    "metaTitle": "Impressum — Velimir Müller",
+    "metaDesc": "Impressum und rechtliche Informationen.",
     "title": "IMPRESSUM.",
     "subtitle": "Angaben gemäß § 5 TMG",
     "responsibleTitle": "Verantwortlich",
     "address": "Postanschrift"
   },
   "privacy": {
+    "metaTitle": "Datenschutz — Velimir Müller",
+    "metaDesc": "Datenschutzerklärung und Informationen zum Datenschutz.",
     "title": "DATENSCHUTZ.",
     "subtitle": "Datenschutzerklärung",
     "s1Title": "1. Verantwortlicher",

@@ -22,6 +22,8 @@
     }
   },
   "home": {
+    "metaTitle": "Velimir Müller | Senior Product Engineer",
+    "metaDesc": "Senior Product Engineer shipping end-to-end — from Figma to AWS. React, TypeScript, Laravel, Supabase, Terraform.",
     "badge": "Available for Projects",
     "subtitle": "Senior Product Engineer",
     "subtitleSecondary": "Full-Stack · ML · Infrastructure",
@@ -45,6 +47,8 @@
     "allServices": "All Services"
   },
   "services": {
+    "metaTitle": "Services — Velimir Müller",
+    "metaDesc": "Requirements engineering, UX/UI design, frontend development, project delivery, and modern stack consulting.",
     "title": "OFFER.",
     "subtitle": "End-to-End Engineering",
     "heroTitle": "From Idea to Go-Live",
@@ -173,6 +177,8 @@
     }
   },
   "projects": {
+    "metaTitle": "Projects — Velimir Müller",
+    "metaDesc": "Selected projects: interactive dashboards, project planners, and admin tools built with React, Next.js, and Supabase.",
     "title": "DEMOS.",
     "subtitle": "Example Demo Projects",
     "interactiveDemos": "Interactive Demos",
@@ -208,6 +214,8 @@
     }
   },
   "about": {
+    "metaTitle": "About — Velimir Müller",
+    "metaDesc": "9+ years from frontend specialist to full-stack product engineer. React, Vue, TypeScript, Laravel, AWS, Azure.",
     "title": "PROFILE.",
     "subtitle": "Velimir Müller",
     "summary": "Summary",
@@ -272,6 +280,8 @@
     }
   },
   "contact": {
+    "metaTitle": "Contact — Velimir Müller",
+    "metaDesc": "Get in touch for collaboration, consulting, or project inquiries.",
     "title": "CONTACT.",
     "subtitle": "Get In Touch",
     "intro": "Open for projects and roles where I own the full product lifecycle — from requirements analysis through UX/UI design to full-stack development and cloud deployment.",
@@ -303,12 +313,16 @@
     "builtWith": "Built with Next.js, Supabase & Vercel."
   },
   "imprint": {
+    "metaTitle": "Imprint — Velimir Müller",
+    "metaDesc": "Legal notice and imprint information.",
     "title": "IMPRINT.",
     "subtitle": "Legal Notice",
     "responsibleTitle": "Responsible",
     "address": "Postal Address"
   },
   "privacy": {
+    "metaTitle": "Privacy Policy — Velimir Müller",
+    "metaDesc": "Privacy policy and data protection information.",
     "title": "PRIVACY.",
     "subtitle": "Privacy Policy",
     "s1Title": "1. Controller",
