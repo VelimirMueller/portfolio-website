@@ -44,3 +44,5 @@ storybook-static
 # playwright
 test-results/
 playwright-report/
+
+context.db*
