@@ -23,43 +23,43 @@ async function openMobileMenuIfNeeded(page: Page) {
 
 test.describe('Page rendering', () => {
   test('homepage loads with correct title', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     await expect(page).toHaveTitle(/Velimir Müller/i);
   });
 
   test('homepage displays hero content', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     await expect(page.locator('h1')).toContainText('VELIMIR');
     await expect(page.locator('h1')).toContainText('MÜLLER');
   });
 
   test('services page loads', async ({ page }) => {
-    await page.goto('/services');
+    await page.goto('/de/services');
     await expect(page.locator('h1')).toBeVisible();
   });
 
   test('projects page loads', async ({ page }) => {
-    await page.goto('/projects');
+    await page.goto('/de/projects');
     await expect(page.locator('h1')).toBeVisible();
   });
 
   test('about page loads', async ({ page }) => {
-    await page.goto('/about');
+    await page.goto('/de/about');
     await expect(page.locator('h1')).toBeVisible();
   });
 
   test('contact page loads', async ({ page }) => {
-    await page.goto('/contact');
+    await page.goto('/de/contact');
     await expect(page.locator('h1')).toBeVisible();
   });
 
   test('imprint page loads', async ({ page }) => {
-    await page.goto('/imprint');
+    await page.goto('/de/imprint');
     await expect(page.locator('h1')).toBeVisible();
   });
 
   test('privacy page loads', async ({ page }) => {
-    await page.goto('/privacy');
+    await page.goto('/de/privacy');
     await expect(page.locator('h1')).toBeVisible();
   });
 });
@@ -68,45 +68,45 @@ test.describe('Page rendering', () => {
 
 test.describe('Navigation', () => {
   test('navbar is visible on homepage', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     await expect(page.locator('nav')).toBeVisible();
   });
 
   test('can navigate to services via nav link', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     if (isMobile(page)) {
       await openMobileMenuIfNeeded(page);
       await page.getByRole('dialog').getByRole('link', { name: /services|Leistungen/i }).first().click();
     } else {
       await page.locator('nav').getByRole('link', { name: /services|Leistungen/i }).first().click();
     }
-    await expect(page).toHaveURL(/\/services/);
+    await expect(page).toHaveURL(/\/de\/services/);
   });
 
   test('can navigate to about via nav link', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     if (isMobile(page)) {
       await openMobileMenuIfNeeded(page);
       await page.getByRole('dialog').getByRole('link', { name: /about|Über/i }).first().click();
     } else {
       await page.locator('nav').getByRole('link', { name: /about|Über/i }).first().click();
     }
-    await expect(page).toHaveURL(/\/about/);
+    await expect(page).toHaveURL(/\/de\/about/);
   });
 
   test('can navigate to contact via CTA button', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     if (isMobile(page)) {
       await openMobileMenuIfNeeded(page);
       await page.getByRole('dialog').getByRole('link', { name: /contact|Kontakt/i }).first().click();
     } else {
       await page.locator('nav').getByRole('link', { name: /contact|Kontakt/i }).first().click();
     }
-    await expect(page).toHaveURL(/\/contact/);
+    await expect(page).toHaveURL(/\/de\/contact/);
   });
 
   test('footer links to imprint and privacy', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     const footer = page.locator('footer');
     await expect(footer.getByRole('link', { name: /imprint|Impressum/i })).toBeVisible();
     await expect(footer.getByRole('link', { name: /privacy|Datenschutz/i })).toBeVisible();
@@ -126,7 +126,7 @@ test.describe('Service detail pages', () => {
 
   for (const serviceId of services) {
     test(`${serviceId} page loads`, async ({ page }) => {
-      await page.goto(`/services/${serviceId}`);
+      await page.goto(`/de/services/${serviceId}`);
       await expect(page.locator('h1')).toBeVisible();
     });
   }
@@ -151,13 +151,13 @@ test.describe('Project demos', () => {
 
 test.describe('Theme', () => {
   test('dark mode is active by default', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     const html = page.locator('html');
     await expect(html).toHaveClass(/dark/);
   });
 
   test('theme toggle switches to light mode', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/de');
     const html = page.locator('html');
     if (isMobile(page)) {
       // Mobile has its own visible theme toggle with hardcoded aria-label
@@ -192,7 +192,7 @@ test.describe('Language', () => {
 
 test.describe('Contact form', () => {
   test('form fields are present', async ({ page }) => {
-    await page.goto('/contact');
+    await page.goto('/de/contact');
     const form = page.locator('form');
     await expect(form.getByLabel(/name/i)).toBeVisible();
     await expect(form.getByLabel(/email/i)).toBeVisible();
@@ -205,7 +205,7 @@ test.describe('Contact form', () => {
 
 test.describe('404', () => {
   test('non-existent page shows 404', async ({ page }) => {
-    const response = await page.goto('/this-page-does-not-exist');
+    const response = await page.goto('/de/this-page-does-not-exist');
     expect(response?.status()).toBe(404);
   });
 });

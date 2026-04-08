@@ -16,7 +16,7 @@
     "children": {
       "requirementsEngineering": "Requirements Engineering",
       "uxUiBranding": "UX/UI & Branding",
-      "frontendDevelopment": "Frontend Development",
+      "frontendDevelopment": "Full-Stack Development",
       "projectDelivery": "Projektplanung",
       "modernStack": "Modern Stack"
     }
@@ -26,16 +26,17 @@
     "metaDesc": "Senior Product Engineer — von Figma bis AWS. React, TypeScript, Laravel, Supabase, Terraform.",
     "badge": "Verfügbar für Projekte",
     "subtitle": "Senior Product Engineer",
-    "subtitleSecondary": "Full-Stack · ML · Infrastructure",
-    "description": "Ich liefere Produkte end-to-end. In über 9 Jahren bin ich vom Frontend-Spezialisten zum Verantwortlichen für den gesamten Lifecycle geworden — von Figma-Design über React und verschiedene Backend-Technologien bis zu AWS/Azure-Deployment und Terraform.",
+    "subtitleSecondary": "Full-Stack · Agentic Workflows · Infrastructure",
+    "description": "Ich liefere Produkte end-to-end. In über 9 Jahren bin ich vom Frontend-Spezialisten zum Verantwortlichen für den gesamten Lifecycle geworden — von Figma über React, Vue, Node.js, Laravel bis zum Cloud-Deployment. Heute bringe ich dieselbe Tiefe in Agentic Workflows und Context Engineering ein und entwickle Open-Source-MCP-Tooling für KI-gestützte Entwicklung.",
     "ctaProjects": "Projekte ansehen",
     "ctaContact": "Kontakt",
     "techDna": "Engineering DNA",
     "systemStatus": "System Status",
     "operational": "Operational",
-    "highlightTag": "ML Exploration",
-    "highlightTitle": "Smartere Seller-Zuordnung",
-    "highlightDesc": "Erstes ML-Modell entwickelt, das Lead- und Seller-Features analysiert, um die Zuordnung zu optimieren. Vielversprechende Ergebnisse: prognostizierte Conversion von ~6% auf 11% durch smarteres Matching.",
+    "highlightTag": "Open Source",
+    "highlightTitle": "Ein komplettes AI-Team. Ein npm-Package.",
+    "highlightDesc": "MCP-Server, der Codebases in SQLite indexiert — 25x weniger Tokens, 81 Tools, virtuelles Scrum-Team mit Sprints, Retros & Live-Dashboard.",
+    "highlightCta": "Auf GitHub ansehen",
     "thePerson": "The Person",
     "personQuote": "Gute Produkte beginnen nicht beim Code, sondern beim Verstehen des Business. Ich analysiere Anforderungen, übersetze sie in UX/UI-Konzepte und verantworte die technische Umsetzung von der Architektur bis zum Deployment. Mein Ziel:",
     "personQuoteHighlight": "Nahtloser Prozess mit modernen Tools.",
@@ -48,7 +49,7 @@
   },
   "services": {
     "metaTitle": "Leistungen — Velimir Müller",
-    "metaDesc": "Requirements Engineering, UX/UI-Design, Frontend-Entwicklung, Projektlieferung und Modern-Stack-Beratung.",
+    "metaDesc": "Requirements Engineering, UX/UI-Design, Full-Stack-Entwicklung mit React, Vue, Node.js, Laravel, Quarkus und Modern-Stack-Beratung.",
     "title": "OFFER.",
     "subtitle": "End-to-End Engineering",
     "heroTitle": "Von der Idee zum Go-Live",
@@ -61,7 +62,7 @@
     "valueItems": [
       "Requirements Engineering & Stakeholder-Kommunikation",
       "UX/UI-Design als Teil der Brand Identity",
-      "Full-Stack-Entwicklung mit React, Laravel & Supabase",
+      "Full-Stack-Entwicklung mit React, Vue, Node.js, Laravel & Supabase",
       "CI/CD, Cloud Deployment (AWS, Azure, Vercel) & Monitoring"
     ],
     "checkAvailability": "Verfügbarkeit prüfen",
@@ -119,9 +120,9 @@
       "cta": "UX/UI Projekt besprechen"
     },
     "frontend-development": {
-      "title": "Frontend Development",
+      "title": "Full-Stack Development",
       "subtitle": "Modern Stack",
-      "description": "Die technische Umsetzung mit Next.js, React und TypeScript. Ich baue performante, SEO-freundliche und wartbare Frontends – basierend auf den zuvor erarbeiteten Requirements und UX/UI-Konzepten.",
+      "description": "Die technische Umsetzung mit Next.js, React, Vue, Nuxt, Node.js und TypeScript im Frontend — und Laravel, Quarkus oder FastAPI im Backend. Ich baue performante, SEO-freundliche und wartbare Anwendungen – basierend auf den zuvor erarbeiteten Requirements und UX/UI-Konzepten.",
       "problems": [
         "Veraltete Technologien und fehlende Skalierbarkeit",
         "Performance-Probleme durch große Bundles",
@@ -129,12 +130,12 @@
         "Mangelnde Testabdeckung und Code-Qualität"
       ],
       "process": [
-        { "title": "Architecture Setup", "desc": "Next.js App Router, Komponentenstruktur und Best Practices." },
+        { "title": "Architecture Setup", "desc": "Next.js / Nuxt App Router, Komponentenstruktur und Best Practices." },
         { "title": "Component Development", "desc": "Atomic Design Pattern mit TypeScript und Tailwind." },
-        { "title": "Supabase Integration", "desc": "Backend-Anbindung mit Supabase für Auth, DB und Storage." },
+        { "title": "Backend Integration", "desc": "Node.js, Laravel, Quarkus oder Supabase für Auth, DB und APIs." },
         { "title": "Testing & QA", "desc": "Automatisierte Tests mit Jest, Playwright und CI/CD." }
       ],
-      "tech": ["Next.js", "React", "TypeScript", "Supabase", "Tailwind CSS"],
+      "tech": ["Next.js", "React", "Vue", "Nuxt", "Node.js", "TypeScript", "Laravel", "Quarkus", "Supabase", "Tailwind CSS"],
       "cta": "Entwicklung starten"
     },
     "project-delivery": {
@@ -178,7 +179,7 @@
   },
   "projects": {
     "metaTitle": "Projekte — Velimir Müller",
-    "metaDesc": "Ausgewählte Projekte: interaktive Dashboards, Projektplaner und Admin-Tools mit React, Next.js und Supabase.",
+    "metaDesc": "Ausgewählte Projekte: interaktive Dashboards, Projektplaner und Admin-Tools mit React, Vue, Next.js, Node.js und Supabase.",
     "title": "DEMOS.",
     "subtitle": "Beispiel Demo Projekte",
     "interactiveDemos": "Interactive Demos",
@@ -284,7 +285,7 @@
     "metaDesc": "Kontaktieren Sie mich für Zusammenarbeit, Beratung oder Projektanfragen.",
     "title": "KONTAKT.",
     "subtitle": "Get In Touch",
-    "intro": "Offen für Projekte und Rollen, in denen ich den gesamten Produktlebenszyklus verantworte — von der Anforderungsanalyse über UX/UI-Design bis zur Full-Stack-Entwicklung und Cloud-Deployment.",
+    "intro": "Offen für Projekte und Rollen, in denen ich den gesamten Produktlebenszyklus verantworte — von der Anforderungsanalyse über UX/UI-Design bis zur Full-Stack-Entwicklung mit React, Vue, Node.js, Laravel, Quarkus und Cloud-Deployment.",
     "nameLabel": "Name",
     "namePlaceholder": "Ihr Name",
     "emailLabel": "Email",
@@ -301,7 +302,7 @@
   },
   "footer": {
     "tagline": "Senior Product Engineer.",
-    "taglineSecondary": "Full-Stack · ML · Infrastructure.",
+    "taglineSecondary": "Full-Stack · Agentic Workflows · Infrastructure.",
     "taglineDesc": "Von Business-Anforderungen bis zum Deployment — Full Lifecycle Ownership.",
     "sitemap": "Sitemap",
     "connect": "Connect",

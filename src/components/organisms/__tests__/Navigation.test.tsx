@@ -164,7 +164,7 @@ describe("Navigation", () => {
       screen.getByText("Requirements Engineering")
     ).toBeInTheDocument();
     expect(screen.getByText("UX/UI & Branding")).toBeInTheDocument();
-    expect(screen.getByText("Frontend Development")).toBeInTheDocument();
+    expect(screen.getByText("Full-Stack Development")).toBeInTheDocument();
     expect(screen.getByText("Projektplanung")).toBeInTheDocument();
     expect(screen.getByText("Modern Stack")).toBeInTheDocument();
   });
@@ -291,7 +291,7 @@ describe("Navigation", () => {
     mockPathname = "/services/frontend-development";
     await renderWithProviders(<Navigation />);
 
-    const feLink = screen.getAllByText("Frontend Development");
+    const feLink = screen.getAllByText("Full-Stack Development");
     const desktopDropdownLink = feLink[0].closest("a");
     expect(desktopDropdownLink?.className).toContain("font-bold");
   });
