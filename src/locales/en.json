@@ -16,7 +16,7 @@
     "children": {
       "requirementsEngineering": "Requirements Engineering",
       "uxUiBranding": "UX/UI & Branding",
-      "frontendDevelopment": "Frontend Development",
+      "frontendDevelopment": "Full-Stack Development",
       "projectDelivery": "Project Delivery",
       "modernStack": "Modern Stack"
     }
@@ -26,16 +26,17 @@
     "metaDesc": "Senior Product Engineer shipping end-to-end — from Figma to AWS. React, TypeScript, Laravel, Supabase, Terraform.",
     "badge": "Available for Projects",
     "subtitle": "Senior Product Engineer",
-    "subtitleSecondary": "Full-Stack · ML · Infrastructure",
-    "description": "I ship products end-to-end. Over 9 years I've moved from frontend specialist to owning the full lifecycle — designing in Figma, building in React and different backend technologies, deploying on AWS and Azure, and writing the Terraform to hold it all together.",
+    "subtitleSecondary": "Full-Stack · Agentic Workflows · Infrastructure",
+    "description": "I ship products end-to-end. Over 9 years I've moved from frontend specialist to owning the full lifecycle — from Figma to React, Vue, Node.js, Laravel, and cloud deployment. I now bring that same depth to agentic workflows and context engineering, building open-source MCP tooling for AI-driven development.",
     "ctaProjects": "View Projects",
     "ctaContact": "Contact",
     "techDna": "Engineering DNA",
     "systemStatus": "System Status",
     "operational": "Operational",
-    "highlightTag": "ML Exploration",
-    "highlightTitle": "Smarter Seller Assignment",
-    "highlightDesc": "Built a first ML model analyzing lead and seller features to optimize assignment. Promising results: predicted conversion from ~6% to 11% through smarter matching.",
+    "highlightTag": "Open Source",
+    "highlightTitle": "A full AI engineering team. One npm package.",
+    "highlightDesc": "MCP server that indexes codebases into SQLite — 25x fewer tokens, 81 tools, virtual scrum team with sprints, retros & a live dashboard.",
+    "highlightCta": "View on GitHub",
     "thePerson": "The Person",
     "personQuote": "Good products don't start with code, but with understanding the business. I analyze requirements, translate them into UX/UI concepts, and own the technical execution from architecture to deployment. My goal:",
     "personQuoteHighlight": "Seamless process with modern tools.",
@@ -48,20 +49,20 @@
   },
   "services": {
     "metaTitle": "Services — Velimir Müller",
-    "metaDesc": "Requirements engineering, UX/UI design, frontend development, project delivery, and modern stack consulting.",
+    "metaDesc": "Requirements engineering, UX/UI design, full-stack development with React, Vue, Node.js, Laravel, Quarkus, and modern stack consulting.",
     "title": "OFFER.",
     "subtitle": "End-to-End Engineering",
     "heroTitle": "From Idea to Go-Live",
     "heroDesc": "I accompany digital products holistically:",
     "heroDescBold": "Understanding business requirements",
-    "heroDescAfter": ", translating into UX/UI, thinking about branding, and implementing with a modern stack like Next.js, Supabase, and Vercel – all the way to deployment.",
+    "heroDescAfter": ", in UX/UI übersetzen, das Branding mitdenken und mit modernem Stack wie Next.js, Vue, Nuxt, Node.js, Laravel, Quarkus, Supabase und Vercel umsetzen – bis zum Deployment.",
     "pipeline1": "Requirements → UX/UI → Code",
     "pipeline2": "Planning → Development → Deployment",
     "valueAdd": "Value Add",
     "valueItems": [
       "Requirements Engineering & Stakeholder Communication",
       "UX/UI Design as Part of Brand Identity",
-      "Full-Stack Development with React, Laravel & Supabase",
+      "Full-Stack Development with React, Vue, Node.js, Laravel & Supabase",
       "CI/CD, Cloud Deployment (AWS, Azure, Vercel) & Monitoring"
     ],
     "checkAvailability": "Check Availability",
@@ -119,9 +120,9 @@
       "cta": "Discuss UX/UI Project"
     },
     "frontend-development": {
-      "title": "Frontend Development",
+      "title": "Full-Stack Development",
       "subtitle": "Modern Stack",
-      "description": "Technical implementation with Next.js, React, and TypeScript. I build performant, SEO-friendly, and maintainable frontends – based on previously developed requirements and UX/UI concepts.",
+      "description": "Technical implementation with Next.js, React, Vue, Nuxt, Node.js, and TypeScript on the frontend — and Laravel, Quarkus, or FastAPI on the backend. I build performant, SEO-friendly, and maintainable applications – based on previously developed requirements and UX/UI concepts.",
       "problems": [
         "Outdated technologies and lack of scalability",
         "Performance issues due to large bundles",
@@ -129,12 +130,12 @@
         "Insufficient test coverage and code quality"
       ],
       "process": [
-        { "title": "Architecture Setup", "desc": "Next.js App Router, component structure, and best practices." },
+        { "title": "Architecture Setup", "desc": "Next.js / Nuxt App Router, component structure, and best practices." },
         { "title": "Component Development", "desc": "Atomic design pattern with TypeScript and Tailwind." },
-        { "title": "Supabase Integration", "desc": "Backend connection with Supabase for auth, DB, and storage." },
+        { "title": "Backend Integration", "desc": "Node.js, Laravel, Quarkus or Supabase for auth, DB, and APIs." },
         { "title": "Testing & QA", "desc": "Automated tests with Jest, Playwright, and CI/CD." }
       ],
-      "tech": ["Next.js", "React", "TypeScript", "Supabase", "Tailwind CSS"],
+      "tech": ["Next.js", "React", "Vue", "Nuxt", "Node.js", "TypeScript", "Laravel", "Quarkus", "Supabase", "Tailwind CSS"],
       "cta": "Start Development"
     },
     "project-delivery": {
@@ -158,8 +159,8 @@
     },
     "modern-stack": {
       "title": "Modern Stack",
-      "subtitle": "Supabase, Vercel & AI",
-      "description": "I rely on a modern, proven stack: Next.js as framework, Supabase as backend, Vercel as platform, and Claude AI as a productivity tool. All connected through CI/CD pipelines.",
+      "subtitle": "Full-Stack Toolbox",
+      "description": "I rely on a modern, proven stack: Next.js or Nuxt as framework, Node.js, Laravel or Quarkus as backend, Supabase or PostgreSQL for data, Vercel as platform, and Claude AI as a productivity tool. All connected through CI/CD pipelines.",
       "problems": [
         "Outdated infrastructure with high maintenance costs",
         "No automated deployment and testing",
@@ -168,17 +169,17 @@
       ],
       "process": [
         { "title": "Stack Assessment", "desc": "Evaluation of current tools and migration options." },
-        { "title": "Supabase Setup", "desc": "Auth, database, storage, and realtime features." },
+        { "title": "Backend Setup", "desc": "Node.js, Laravel, Quarkus, or Supabase — the right tool for the job." },
         { "title": "Vercel Deployment", "desc": "Preview deployments, edge functions, and analytics." },
         { "title": "AI Integration", "desc": "Claude AI for code reviews, testing, and documentation." }
       ],
-      "tech": ["Next.js", "Supabase", "Vercel", "Claude AI", "GitHub Actions"],
+      "tech": ["Next.js", "Vue", "Nuxt", "Node.js", "Laravel", "Quarkus", "Supabase", "Vercel", "Claude AI", "GitHub Actions"],
       "cta": "Request Stack Consultation"
     }
   },
   "projects": {
     "metaTitle": "Projects — Velimir Müller",
-    "metaDesc": "Selected projects: interactive dashboards, project planners, and admin tools built with React, Next.js, and Supabase.",
+    "metaDesc": "Selected projects: interactive dashboards, project planners, and admin tools built with React, Vue, Next.js, Node.js, and Supabase.",
     "title": "DEMOS.",
     "subtitle": "Example Demo Projects",
     "interactiveDemos": "Interactive Demos",
@@ -284,7 +285,7 @@
     "metaDesc": "Get in touch for collaboration, consulting, or project inquiries.",
     "title": "CONTACT.",
     "subtitle": "Get In Touch",
-    "intro": "Open for projects and roles where I own the full product lifecycle — from requirements analysis through UX/UI design to full-stack development and cloud deployment.",
+    "intro": "Open for projects and roles where I own the full product lifecycle — from requirements analysis through UX/UI design to full-stack development with React, Vue, Node.js, Laravel, Quarkus to and cloud deployment.",
     "nameLabel": "Name",
     "namePlaceholder": "Your Name",
     "emailLabel": "Email",
@@ -301,7 +302,7 @@
   },
   "footer": {
     "tagline": "Senior Product Engineer.",
-    "taglineSecondary": "Full-Stack · ML · Infrastructure.",
+    "taglineSecondary": "Full-Stack · Agentic Workflows · Infrastructure.",
     "taglineDesc": "From business needs to deployment — full lifecycle ownership.",
     "sitemap": "Sitemap",
     "connect": "Connect",

@@ -1,3 +1,5 @@
+import { getTranslations } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { ServiceDetailContent } from './ServiceDetailContent';
 import { notFound } from 'next/navigation';
 
@@ -9,16 +11,32 @@ export function generateStaticParams() {
   }));
 }
 
-export default async function ServiceDetailPage({
-  params,
-}: {
-  params: Promise<{ serviceId: string }>;
-}) {
-  const { serviceId } = await params;
+type Props = {
+  params: Promise<{ locale: string; serviceId: string }>;
+};
+
+export async function generateMetadata({ params }: Props) {
+  const { locale, serviceId } = await params;
+
+  if (!validServiceIds.includes(serviceId)) {
+    return {};
+  }
+
+  const t = await getTranslations({ locale, namespace: 'serviceDetail' });
+
+  return {
+    title: `${t(`${serviceId}.title`)} — Velimir Müller`,
+    description: t(`${serviceId}.description`),
+  };
+}
+
+export default async function ServiceDetailPage({ params }: Props) {
+  const { locale, serviceId } = await params;
 
   if (!validServiceIds.includes(serviceId)) {
     notFound();
   }
 
+  setRequestLocale(locale);
   return <ServiceDetailContent serviceId={serviceId} />;
 }

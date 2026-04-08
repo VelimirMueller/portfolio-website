@@ -1,9 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Button } from "../Button";
 
-// Mock next/link
-jest.mock("next/link", () => {
-  return function MockLink({
+jest.mock("@/i18n/navigation", () => ({
+  Link: function MockLink({
     children,
     href,
     className,
@@ -13,12 +12,15 @@ jest.mock("next/link", () => {
     className?: string;
   }) {
     return (
-      <a href={href} className={className} data-testid="next-link">
+      <a href={`/de${href}`} className={className} data-testid="next-link">
         {children}
       </a>
     );
-  };
-});
+  },
+  redirect: jest.fn(),
+  usePathname: () => "/de",
+  useRouter: () => ({ push: jest.fn(), replace: jest.fn() }),
+}));
 
 describe("Button", () => {
   it("renders children correctly", () => {
@@ -50,10 +52,10 @@ describe("Button", () => {
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("renders as a Next.js Link for internal `to`", () => {
+  it("renders as a locale-prefixed Link for internal `to`", () => {
     render(<Button to="/about">About</Button>);
     const link = screen.getByTestId("next-link");
-    expect(link).toHaveAttribute("href", "/about");
+    expect(link).toHaveAttribute("href", "/de/about");
   });
 
   it("applies the primary variant class by default", () => {

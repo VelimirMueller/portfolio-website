@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Circular toggle button that switches between German (DE) and English (EN). Reads from `LanguageProvider` context — clicking the button toggles the active language. Shows the language to switch *to* (e.g. "EN" when current language is German).',
+          'Circular toggle button that switches between German (DE) and English (EN). Uses next-intl routing — clicking the button switches the active language. Shows the language to switch *to* (e.g. "EN" when current language is German).',
       },
     },
   },

@@ -21,9 +21,9 @@ jest.mock("next-intl", () => ({
   },
 }));
 
-// Mock next/link
-jest.mock("next/link", () => {
-  return function MockLink({
+// Mock @/i18n/navigation (used by Footer for locale-aware links)
+jest.mock("@/i18n/navigation", () => ({
+  Link: function MockLink({
     children,
     href,
     className,
@@ -33,12 +33,15 @@ jest.mock("next/link", () => {
     className?: string;
   }) {
     return (
-      <a href={href} className={className}>
+      <a href={`/de${href}`} className={className}>
         {children}
       </a>
     );
-  };
-});
+  },
+  redirect: jest.fn(),
+  usePathname: () => '/de',
+  useRouter: () => ({ push: jest.fn(), replace: jest.fn() }),
+}));
 
 // Mock lucide-react icons
 jest.mock("lucide-react", () => ({
@@ -63,15 +66,15 @@ describe("Footer", () => {
     renderFooter(<Footer />);
     expect(screen.getByText("Leistungen").closest("a")).toHaveAttribute(
       "href",
-      "/services"
+      "/de/services"
     );
     expect(screen.getByText("Projekte").closest("a")).toHaveAttribute(
       "href",
-      "/projects"
+      "/de/projects"
     );
     expect(screen.getByText("Über Mich").closest("a")).toHaveAttribute(
       "href",
-      "/about"
+      "/de/about"
     );
   });
 
@@ -103,11 +106,11 @@ describe("Footer", () => {
     expect(screen.getByText("Datenschutz")).toBeInTheDocument();
     expect(screen.getByText("Impressum").closest("a")).toHaveAttribute(
       "href",
-      "/imprint"
+      "/de/imprint"
     );
     expect(screen.getByText("Datenschutz").closest("a")).toHaveAttribute(
       "href",
-      "/privacy"
+      "/de/privacy"
     );
   });
 });

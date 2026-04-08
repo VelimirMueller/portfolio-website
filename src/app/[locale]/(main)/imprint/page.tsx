@@ -1,31 +1,23 @@
-'use client';
+import { getTranslations } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
+import ImprintContent from './ImprintContent';
 
-import React from 'react';
-import { SectionHeader } from '@/components/molecules/SectionHeader';
-import { AnimateIn } from '@/components/atoms/AnimateIn';
-import { useTranslations } from 'next-intl';
+type Props = {
+  params: Promise<{ locale: string }>;
+};
 
-export default function ImprintPage() {
-  const t = useTranslations();
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'imprint' });
 
-  return (
-    <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
-      <AnimateIn from="bottom">
-        <SectionHeader title={t('imprint.title')} subtitle={t('imprint.subtitle')} />
-      </AnimateIn>
+  return {
+    title: t('metaTitle'),
+    description: t('metaDesc'),
+  };
+}
 
-      <AnimateIn from="bottom" delay={100}>
-      <div className="bg-white dark:bg-[#111] p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10">
-        <h2 className="text-xl font-mono font-bold text-black dark:text-white mb-8">
-          {t('imprint.address')}
-        </h2>
-        <div className="text-gray-600 dark:text-gray-400 space-y-1 font-mono text-sm">
-          <p className="font-bold text-black dark:text-white">C/O RYSE Group GmbH</p>
-          <p>Wildenbruchstraße 69</p>
-          <p>12045 Berlin</p>
-        </div>
-      </div>
-      </AnimateIn>
-    </div>
-  );
+export default async function ImprintPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  return <ImprintContent />;
 }
