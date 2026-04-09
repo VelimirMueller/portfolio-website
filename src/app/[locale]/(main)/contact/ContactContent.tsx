@@ -73,12 +73,23 @@ export default function ContactContent() {
     submitForm(token);
   }, [submitForm]);
 
+  const handleCaptchaError = useCallback(() => {
+    setIsSubmitting(false);
+    setSubmitStatus('error');
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
+    setIsSubmitting(true);
 
     if (showCaptcha) {
-      captchaRef.current?.execute();
+      if (!captchaRef.current) {
+        setIsSubmitting(false);
+        setSubmitStatus('error');
+        return;
+      }
+      captchaRef.current.execute();
     } else {
       submitForm('');
     }
@@ -150,7 +161,8 @@ export default function ContactContent() {
                   key={captchaKey}
                   sitekey={HCAPTCHA_SITEKEY!}
                   onVerify={handleCaptchaVerify}
-                  onExpire={() => setCaptchaToken(null)}
+                  onExpire={() => { setCaptchaToken(null); setIsSubmitting(false); }}
+                  onError={handleCaptchaError}
                   theme="dark"
                   size="invisible"
                 />
