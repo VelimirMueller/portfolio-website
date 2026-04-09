@@ -190,9 +190,9 @@
       "title": "CRM Dashboard Interface",
       "desc": "Interactive hyper-growth startup CRM with animated KPIs, sales pipeline, workflow automation, and revenue analytics. Modern dashboard design with custom charts (CSS/SVG only) and micro-interactions."
     },
-    "planner": {
-      "title": "Project Planning Tool",
-      "desc": "Enterprise-grade project planning tool with phase-flow visualization, Kanban board, Gantt timeline, and team workload management. From research phase to launch – everything at a glance."
+    "mcp": {
+      "title": "Code Context MCP — Interactive Demo",
+      "desc": "Live demo of vlm-code-context-mcp: an MCP server that turns codebases into structured context for AI agents. Sprint board, Kanban, team management, retros — all powered by 81 tools and a SQLite-backed context engine."
     },
     "enterprise": {
       "title": "Enterprise Workflow Automation",

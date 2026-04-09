@@ -5,6 +5,6 @@ export default createMiddleware(routing);
 
 export const config = {
   matcher: [
-    '/((?!api|_next|.*\\..*|projects/dashboard-demo|projects/project-planner).*)',
+    '/((?!api|_next|.*\\..*|projects/dashboard-demo|projects/mcp-demo).*)',
   ],
 };
