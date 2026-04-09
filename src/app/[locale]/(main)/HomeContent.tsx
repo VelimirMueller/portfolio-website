@@ -33,9 +33,9 @@ const HighlightStatement = () => {
             href="https://github.com/VelimirMueller/vlm-code-context-mcp"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-black dark:text-white border-b border-current pb-0.5 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-black dark:text-white border-b border-current pb-0.5 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors group/cta"
           >
-            {t('home.highlightCta')} <ArrowRight size={10} />
+            {t('home.highlightCta')} <ArrowRight size={10} className="group-hover/cta:translate-x-1 transition-transform" />
           </a>
         </div>
       </div>

@@ -47,7 +47,7 @@ export const Navigation = () => {
       <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
         <div className="bg-white/90 dark:bg-[#121214]/90 backdrop-blur-xl border border-light-border dark:border-dark-border rounded-full p-1.5 flex items-center shadow-2xl dark:shadow-none relative transition-all duration-300">
           <Link href="/" className="pl-4 pr-6 py-2 flex items-center gap-3 group border-r border-light-border dark:border-dark-border mr-1">
-            <div className="w-8 h-8 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-bold font-mono text-xs group-hover:scale-110 transition-transform shadow-lg">VM</div>
+            <div className="w-8 h-8 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-bold font-mono text-xs group-hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-lg">VM</div>
             <span className="font-mono font-bold text-sm tracking-tight text-light-text dark:text-dark-text hidden sm:block group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">Velimir Müller</span>
           </Link>
 
