@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     const verifyResponse = await fetch('https://api.hcaptcha.com/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `response=${hCaptchaToken}&secret=${secret}`,
+      body: new URLSearchParams({ response: hCaptchaToken, secret }).toString(),
     });
 
     const verifyResult = await verifyResponse.json();
