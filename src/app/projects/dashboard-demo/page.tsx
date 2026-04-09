@@ -555,7 +555,7 @@ const FlowConnector = ({ active }: { active: boolean }) => (
 const DashboardView = () => (
   <div className="space-y-6">
     {/* KPI Row */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {KPI_DATA.map((kpi, i) => (
         <AnimatedKPI key={kpi.label} kpi={kpi} index={i} />
       ))}
@@ -600,7 +600,36 @@ const DashboardView = () => (
           <h3 className="text-sm font-bold text-white">Top Pipeline Deals</h3>
           <button className="text-[10px] text-blue-400 font-bold hover:text-blue-300">View all</button>
         </div>
-        <div className="w-full overflow-x-auto">
+        {/* Mobile card layout */}
+        <div className="md:hidden p-4 space-y-3 mt-2">
+          {TOP_DEALS.map((deal, i) => (
+            <div key={i} className="p-3 rounded-xl bg-[#0a0a0a] border border-[#1a1a1a]">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">
+                    {deal.company.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-white">{deal.company}</div>
+                    <div className="text-[10px] text-gray-500">{deal.contact}</div>
+                  </div>
+                </div>
+                <span className="text-xs font-mono font-bold text-white">{formatCurrency(deal.value)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <Badge color={deal.color}>{deal.stage}</Badge>
+                <div className="flex items-center gap-2">
+                  <div className="w-16">
+                    <AnimatedBar width={deal.probability} color={deal.probability > 70 ? 'bg-green-500' : deal.probability > 50 ? 'bg-blue-500' : 'bg-orange-500'} delay={700 + i * 100} />
+                  </div>
+                  <span className="text-[10px] font-mono text-gray-400">{deal.probability}%</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Desktop table layout */}
+        <div className="w-full overflow-x-auto hidden md:block">
           <table className="w-full text-left mt-4">
             <thead>
               <tr className="border-b border-[#222] text-[10px] text-gray-500 uppercase font-mono">
@@ -679,7 +708,7 @@ const PipelineView = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-3">
         <div>
           <h2 className="text-2xl font-bold text-white mb-1">Sales Pipeline</h2>
           <p className="text-gray-500 text-sm">Active opportunities by stage</p>
@@ -695,7 +724,7 @@ const PipelineView = () => {
       </div>
 
       {/* Pipeline Stage Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
         {PIPELINE_STAGES.map((stage, i) => (
           <Card key={stage.name} className="p-4 animate-fade-in-up relative overflow-hidden" style={{ animationDelay: `${i * 80}ms` }}>
             <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${stage.color}`} />
@@ -709,7 +738,38 @@ const PipelineView = () => {
 
       {/* Deals Table */}
       <Card className="p-0 overflow-hidden animate-fade-in-up" style={{ animationDelay: '500ms' }}>
-        <div className="w-full overflow-x-auto">
+        {/* Mobile card layout */}
+        <div className="md:hidden p-4 space-y-3">
+          {PIPELINE_DEALS.map((deal, i) => (
+            <div key={i} className="p-3 rounded-xl bg-[#0a0a0a] border border-[#1a1a1a]">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">{deal.company.charAt(0)}</div>
+                  <div>
+                    <div className="text-xs font-bold text-white">{deal.company}</div>
+                    <div className="text-[10px] text-gray-500">{deal.contact}</div>
+                  </div>
+                </div>
+                <span className="text-xs font-mono font-bold text-white">{formatCurrency(deal.value)}</span>
+              </div>
+              <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center gap-2">
+                  <Badge color={deal.color}>{deal.stage}</Badge>
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-[8px] font-bold border border-white/10">{deal.owner}</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-14">
+                    <AnimatedBar width={deal.probability} color={deal.probability > 70 ? 'bg-green-500' : deal.probability > 50 ? 'bg-blue-500' : 'bg-orange-500'} delay={600 + i * 80} />
+                  </div>
+                  <span className="text-[10px] font-mono text-gray-400">{deal.probability}%</span>
+                  <span className="text-[10px] text-gray-500 font-mono ml-1">{deal.close}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Desktop table layout */}
+        <div className="w-full overflow-x-auto hidden md:block">
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-[#222] text-[10px] text-gray-500 uppercase font-mono bg-[#0a0a0a]">
@@ -769,18 +829,18 @@ const PipelineView = () => {
 
 const WorkflowsView = () => (
   <div className="space-y-6">
-    <div className="flex justify-between items-end">
+    <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-3">
       <div>
         <h2 className="text-2xl font-bold text-white mb-1">Workflows</h2>
         <p className="text-gray-500 text-sm">Automated sequences and campaigns</p>
       </div>
-      <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-500 shadow-lg shadow-blue-900/20">
+      <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-500 shadow-lg shadow-blue-900/20 self-start sm:self-auto">
         <Plus size={14} aria-hidden="true" /> New Workflow
       </button>
     </div>
 
     {/* Automation KPIs */}
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {[
         { label: 'Active Campaigns', value: 7, icon: Workflow, color: 'bg-blue-500/10 text-blue-400' },
         { label: 'Emails Sent', value: 12847, icon: Mail, color: 'bg-purple-500/10 text-purple-400' },
@@ -852,12 +912,12 @@ const WorkflowsView = () => (
 
 const AnalyticsView = () => (
   <div className="space-y-6">
-    <div className="flex justify-between items-end">
+    <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-3">
       <div>
         <h2 className="text-2xl font-bold text-white mb-1">Analytics</h2>
         <p className="text-gray-500 text-sm">Revenue metrics and growth indicators</p>
       </div>
-      <div className="flex bg-[#111] p-1 rounded-xl border border-[#222]">
+      <div className="flex bg-[#111] p-1 rounded-xl border border-[#222] self-start sm:self-auto">
         <button className="px-4 py-1.5 text-xs font-bold bg-[#222] text-white rounded-lg shadow">12M</button>
         <button className="px-4 py-1.5 text-xs font-bold text-gray-500 hover:text-white transition-colors">6M</button>
         <button className="px-4 py-1.5 text-xs font-bold text-gray-500 hover:text-white transition-colors">QTD</button>
@@ -865,7 +925,7 @@ const AnalyticsView = () => (
     </div>
 
     {/* Analytics KPIs */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {ANALYTICS_KPIS.map((kpi, i) => {
         const colorMap: Record<string, string> = {
           blue: 'bg-blue-500/10 text-blue-400',
@@ -974,7 +1034,7 @@ const SettingsView = () => {
                   {isEditing ? 'Save' : 'Edit'}
                 </button>
               </div>
-              <div className="flex items-start gap-6">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                 <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 border-4 border-[#111] relative flex-shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Velimir" alt="Avatar" className="w-full h-full rounded-full" />
@@ -983,7 +1043,7 @@ const SettingsView = () => {
                   </button>
                 </div>
                 <div className="space-y-3 flex-1">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="settings-firstname" className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">First Name</label>
                       <input id="settings-firstname" type="text" value={profile.firstName} onChange={e => setProfile(p => ({ ...p, firstName: e.target.value }))} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded px-3 py-2 text-sm text-gray-300 focus:outline-none transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
@@ -1155,7 +1215,7 @@ const SettingsView = () => {
                 { name: 'Sarah Kim', role: 'Account Executive', initials: 'SK', online: true, email: 'sarah@crmpro.io' },
                 { name: 'Alex Johnson', role: 'SDR Lead', initials: 'AJ', online: false, email: 'alex@crmpro.io' },
               ].map((member, i) => (
-                <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-[#0a0a0a] border border-[#1a1a1a] animate-fade-in-up" style={{ animationDelay: `${150 + i * 80}ms` }}>
+                <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-[#0a0a0a] border border-[#1a1a1a] animate-fade-in-up" style={{ animationDelay: `${150 + i * 80}ms` }}>
                   <div className="flex items-center gap-3">
                     <div className="relative">
                       <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-[10px] font-bold border border-white/10">{member.initials}</div>
@@ -1166,7 +1226,7 @@ const SettingsView = () => {
                       <div className="text-[10px] text-gray-500">{member.email}</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 pl-12 sm:pl-0">
                     <Badge color={i === 0 ? 'purple' : 'blue'}>{member.role}</Badge>
                     <span className={`text-[9px] font-mono uppercase ${member.online ? 'text-green-400' : 'text-gray-600'}`}>{member.online ? 'Online' : 'Offline'}</span>
                   </div>
@@ -1183,9 +1243,9 @@ const SettingsView = () => {
             <p className="text-xs text-gray-500 mb-6">Connect your favorite tools to CRMPro</p>
             <div className="space-y-3">
               {integrations.map((int, i) => (
-                <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-[#0a0a0a] border border-[#1a1a1a] animate-fade-in-up" style={{ animationDelay: `${150 + i * 80}ms` }}>
+                <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-[#0a0a0a] border border-[#1a1a1a] animate-fade-in-up" style={{ animationDelay: `${150 + i * 80}ms` }}>
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-[#1a1a1a] flex items-center justify-center border border-[#222]">
+                    <div className="w-9 h-9 rounded-lg bg-[#1a1a1a] flex items-center justify-center border border-[#222] flex-shrink-0">
                       <Building2 size={16} className="text-gray-400" aria-hidden="true" />
                     </div>
                     <div>
@@ -1317,7 +1377,7 @@ export default function DashboardDemoPage() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white">
               C
             </div>
-            <span className="font-bold text-xl tracking-tight hidden md:block">CRM<span className="text-gray-600">Pro</span></span>
+            <span className="font-bold text-xl tracking-tight">CRM<span className="text-gray-600">Pro</span></span>
           </div>
 
           <div className="space-y-2">
@@ -1353,7 +1413,7 @@ export default function DashboardDemoPage() {
       {/* --- Main Content --- */}
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
 
-        <header className="h-20 border-b border-[#222] flex items-center justify-between px-8 bg-[#050505]/80 backdrop-blur z-20 shrink-0">
+        <header className="h-20 border-b border-[#222] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#050505]/80 backdrop-blur z-20 shrink-0">
           <div className="flex items-center gap-4 md:w-96">
             <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu" onClick={() => setSidebarOpen(o => !o)}>{sidebarOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
 
@@ -1401,7 +1461,7 @@ export default function DashboardDemoPage() {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 scroll-smooth">
           <div className="max-w-7xl mx-auto h-full">
             {renderView()}
           </div>
