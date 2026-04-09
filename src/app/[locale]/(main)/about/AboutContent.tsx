@@ -89,13 +89,13 @@ export default function AboutContent() {
         {/* Timeline */}
         <AnimateIn from="bottom" delay={100} className="lg:col-span-12">
         <BentoCard className="bg-white dark:bg-[#111]" title={t('about.experienceLog')}>
-           <div className="mt-8 space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-black/10 dark:before:via-white/10 before:to-transparent">
+           <div className="mt-8 space-y-6 sm:space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-black/10 dark:before:via-white/10 before:to-transparent">
 
               <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
                   <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
                       <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
                         <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp1.title')}</h3>
                         <div className="flex items-center gap-2 shrink-0">
@@ -115,7 +115,7 @@ export default function AboutContent() {
                   <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
                         <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp2.title')}</h3>
                         <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp2.tag')}</span>
@@ -132,7 +132,7 @@ export default function AboutContent() {
                   <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
                         <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp3.title')}</h3>
                         <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp3.tag')}</span>
@@ -149,7 +149,7 @@ export default function AboutContent() {
                   <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
                         <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp4.title')}</h3>
                         <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp4.tag')}</span>
@@ -166,7 +166,7 @@ export default function AboutContent() {
                   <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
                         <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp5.title')}</h3>
                         <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp5.tag')}</span>
@@ -183,7 +183,7 @@ export default function AboutContent() {
                   <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
                         <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp6.title')}</h3>
                         <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp6.tag')}</span>
@@ -200,7 +200,7 @@ export default function AboutContent() {
                   <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
                       <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
                       <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
                         <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp7.title')}</h3>
                         <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp7.tag')}</span>
