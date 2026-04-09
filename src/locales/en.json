@@ -34,8 +34,8 @@
     "systemStatus": "System Status",
     "operational": "Operational",
     "highlightTag": "Open Source",
-    "highlightTitle": "A full AI engineering team. One npm package.",
-    "highlightDesc": "MCP server that indexes codebases into SQLite — 25x fewer tokens, 81 tools, virtual scrum team with sprints, retros & a live dashboard.",
+    "highlightTitle": "Context engineering, shipped. One npm package.",
+    "highlightDesc": "vlm-code-context-mcp — an MCP server that turns codebases into structured context for AI agents. 25x fewer tokens, 81 tools, built-in scrum team with sprints, retros & live dashboard.",
     "highlightCta": "View on GitHub",
     "thePerson": "The Person",
     "personQuote": "Good products don't start with code, but with understanding the business. I analyze requirements, translate them into UX/UI concepts, and own the technical execution from architecture to deployment. My goal:",
@@ -222,8 +222,8 @@
     "summary": "Summary",
     "bio1": "",
     "bio1Bold": "Senior Product Engineer",
-    "bio1After": "who owns products end-to-end. From requirements analysis and UX conception in Figma through modern frontend architectures with React, Vue, Next.js, and Nuxt to cloud infrastructure and ML-driven optimization.",
-    "bio2": "On the backend I work with Laravel, FastAPI, and Quarkus, with PostgreSQL and Supabase as the database layer. I know the full stack and pragmatically choose the right tool for the job. AI tools like GitHub Copilot and Claude are part of my daily development workflow — not as a gimmick but as a real productivity lever.",
+    "bio1After": "who owns products end-to-end. From requirements analysis and UX conception in Figma through modern frontend architectures with React, Vue, Next.js, and Nuxt to cloud infrastructure and agentic AI workflows.",
+    "bio2": "On the backend I work with Laravel, FastAPI, and Quarkus, with PostgreSQL and Supabase as the database layer. I know the full stack and pragmatically choose the right tool for the job. Beyond using AI daily for development, I build open-source MCP tooling for context engineering — turning codebases into structured context that AI agents can actually work with.",
     "bio3": "With experience from startups, mid-sized companies, and corporations, I combine technical depth with entrepreneurial thinking. I don't just build features — I build products that make a difference.",
     "yearsExp": "Years Experience",
     "reqDeploy": "Req → Deployment",
@@ -235,7 +235,7 @@
       "tag": "Hyper-Growth Startup",
       "company": "GALVANY",
       "date": "Feb 2025 - Present",
-      "desc": "Owned product engineering end-to-end — from requirements and Figma designs through full-stack implementation to cloud deployment. Built a lead management platform (Laravel, React, TypeScript, Inertia, Terraform) that reduced assignment time by 3-4x. Explored ML independently: built a model analyzing lead and seller features to optimize assignment, predicting conversion from ~6% to 11%. Configured AWS and Azure environments with Terraform. Full testing pyramid: unit, E2E with Playwright, visual regression."
+      "desc": "Owned product engineering end-to-end — from requirements and Figma designs through full-stack implementation to cloud deployment. Built a lead management platform (Laravel, React, TypeScript, Inertia, Terraform) that reduced assignment time by 3-4x. Built a data-driven scoring engine for lead-seller matching that improved predicted conversion from ~6% to 11%. Configured AWS and Azure environments with Terraform. Full testing pyramid: unit, E2E with Playwright, visual regression."
     },
     "exp2": {
       "title": "Software Engineer - Frontend",

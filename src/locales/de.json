@@ -34,8 +34,8 @@
     "systemStatus": "System Status",
     "operational": "Operational",
     "highlightTag": "Open Source",
-    "highlightTitle": "Ein komplettes AI-Team. Ein npm-Package.",
-    "highlightDesc": "MCP-Server, der Codebases in SQLite indexiert — 25x weniger Tokens, 81 Tools, virtuelles Scrum-Team mit Sprints, Retros & Live-Dashboard.",
+    "highlightTitle": "Context Engineering, ausgeliefert. Ein npm-Package.",
+    "highlightDesc": "vlm-code-context-mcp — ein MCP-Server, der Codebases in strukturierten Kontext für KI-Agenten verwandelt. 25x weniger Tokens, 81 Tools, integriertes Scrum-Team mit Sprints, Retros & Live-Dashboard.",
     "highlightCta": "Auf GitHub ansehen",
     "thePerson": "The Person",
     "personQuote": "Gute Produkte beginnen nicht beim Code, sondern beim Verstehen des Business. Ich analysiere Anforderungen, übersetze sie in UX/UI-Konzepte und verantworte die technische Umsetzung von der Architektur bis zum Deployment. Mein Ziel:",
@@ -222,8 +222,8 @@
     "summary": "Summary",
     "bio1": "",
     "bio1Bold": "Senior Product Engineer",
-    "bio1After": "der Produkte end-to-end verantwortet. Von der Anforderungsanalyse und UX-Konzeption in Figma über moderne Frontend-Architekturen mit React, Vue, Next.js und Nuxt bis zu Cloud-Infrastruktur und ML-gestützter Optimierung.",
-    "bio2": "Im Backend arbeite ich mit Laravel, FastAPI und Quarkus, als Datenbankschicht mit PostgreSQL und Supabase. Ich kenne den gesamten Stack und wähle pragmatisch das richtige Werkzeug für den Job. KI-Tools wie GitHub Copilot und Claude integriere ich täglich in meinen Entwicklungsprozess, nicht als Gimmick sondern als echten Produktivitätshebel.",
+    "bio1After": "der Produkte end-to-end verantwortet. Von der Anforderungsanalyse und UX-Konzeption in Figma über moderne Frontend-Architekturen mit React, Vue, Next.js und Nuxt bis zu Cloud-Infrastruktur und agentischen KI-Workflows.",
+    "bio2": "Im Backend arbeite ich mit Laravel, FastAPI und Quarkus, als Datenbankschicht mit PostgreSQL und Supabase. Ich kenne den gesamten Stack und wähle pragmatisch das richtige Werkzeug für den Job. Neben dem täglichen Einsatz von KI in der Entwicklung baue ich Open-Source-MCP-Tooling für Context Engineering — Codebases in strukturierten Kontext verwandeln, mit dem KI-Agenten tatsächlich arbeiten können.",
     "bio3": "Mit Erfahrung aus Startups, mittelständischen Unternehmen und Corporations bringe ich technische Tiefe und unternehmerisches Denken zusammen. Ich baue nicht nur Features, ich baue Produkte, die einen Unterschied machen.",
     "yearsExp": "Jahre Erfahrung",
     "reqDeploy": "Req → Deployment",
@@ -235,7 +235,7 @@
       "tag": "Hyper-Growth Startup",
       "company": "GALVANY",
       "date": "Feb 2025 - Present",
-      "desc": "End-to-End Product Engineering verantwortet — von Requirements und Figma-Designs über Full-Stack-Implementierung bis zum Cloud-Deployment. Lead-Management-Plattform gebaut (Laravel, React, TypeScript, Inertia, Terraform), die die Zuweisungszeit um das 3-4-fache reduzierte. Eigenständig ML erkundet: Modell entwickelt, das Lead- und Seller-Features analysiert, um die Zuordnung zu optimieren — prognostizierte Conversion von ~6% auf 11%. AWS- und Azure-Umgebungen mit Terraform konfiguriert. Vollständige Test-Pyramide: Unit, E2E mit Playwright, visuelle Regression."
+      "desc": "End-to-End Product Engineering verantwortet — von Requirements und Figma-Designs über Full-Stack-Implementierung bis zum Cloud-Deployment. Lead-Management-Plattform gebaut (Laravel, React, TypeScript, Inertia, Terraform), die die Zuweisungszeit um das 3-4-fache reduzierte. Datengetriebene Scoring-Engine für Lead-Seller-Matching entwickelt, die die prognostizierte Conversion von ~6% auf 11% verbesserte. AWS- und Azure-Umgebungen mit Terraform konfiguriert. Vollständige Test-Pyramide: Unit, E2E mit Playwright, visuelle Regression."
     },
     "exp2": {
       "title": "Software Engineer - Frontend",
