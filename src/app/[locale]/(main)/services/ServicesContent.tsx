@@ -27,11 +27,11 @@ export default function ServicesContent() {
         <SectionHeader title={t('services.title')} subtitle={t('services.subtitle')} />
       </AnimateIn>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-4">
 
-        <AnimateIn from="left" delay={100} className="md:col-span-12 lg:col-span-8">
+        <AnimateIn from="left" delay={100} className="sm:col-span-6 md:col-span-12 lg:col-span-8">
         <BentoCard className="bg-zinc-200 dark:bg-zinc-900 min-h-[400px]" title={t('services.heroTitle')}>
-           <div className="mt-6 grid md:grid-cols-2 gap-12">
+           <div className="mt-6 grid md:grid-cols-2 gap-6 md:gap-12">
              <div className="flex flex-col justify-between">
                 <p className="text-lg font-medium leading-relaxed mb-8 text-zinc-800 dark:text-zinc-200">
                   {t('services.heroDesc')} <strong className="text-zinc-900 dark:text-white">{t('services.heroDescBold')}</strong>{t('services.heroDescAfter')}
@@ -69,7 +69,7 @@ export default function ServicesContent() {
         </BentoCard>
         </AnimateIn>
 
-        <AnimateIn from="right" delay={200} className="md:col-span-12 lg:col-span-4">
+        <AnimateIn from="right" delay={200} className="sm:col-span-6 md:col-span-12 lg:col-span-4">
         <div className="flex flex-col gap-4">
            <div className="bg-white dark:bg-[#111] p-6 rounded-[1.5rem] border border-black/5 dark:border-white/10">
               <h3 className="text-xl font-bold text-black dark:text-white mb-6">{t('services.detailTitle')}</h3>

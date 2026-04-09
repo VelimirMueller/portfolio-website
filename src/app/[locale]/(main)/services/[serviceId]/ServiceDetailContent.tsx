@@ -32,9 +32,9 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
         <SectionHeader title={t(`serviceDetail.${serviceId}.title`)} subtitle={t(`serviceDetail.${serviceId}.subtitle`)} />
       </AnimateIn>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
 
-        <div className="lg:col-span-8 space-y-6">
+        <div className="md:col-span-8 space-y-6">
           <AnimateIn from="left" delay={100}>
           <BentoCard className="bg-white dark:bg-[#111] min-h-[300px]">
              <div className="flex items-start gap-4 mb-6">
@@ -83,7 +83,7 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
           </div>
         </div>
 
-        <div className="lg:col-span-4 space-y-6">
+        <div className="md:col-span-4 space-y-6">
            <AnimateIn from="right" delay={150}>
            <BentoCard className="bg-[#E5E5E5] dark:bg-[#E2E2E2] !text-black" title={t('serviceDetail.techStack')}>
               <div className="flex flex-wrap gap-2 mt-4">
