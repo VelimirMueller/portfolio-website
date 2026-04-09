@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Mail, Linkedin, Github } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
@@ -8,7 +8,10 @@ import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 
-const HCaptcha = dynamic(() => import('@hcaptcha/react-hcaptcha'), { ssr: false });
+const HCaptcha = dynamic(
+  () => import('@hcaptcha/react-hcaptcha'),
+  { ssr: false },
+) as typeof import('@hcaptcha/react-hcaptcha').default;
 
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY;
 
@@ -18,23 +21,10 @@ export default function ContactContent() {
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaKey, setCaptchaKey] = useState(0);
+  const captchaRef = useRef<any>(null);
   const t = useTranslations();
 
-  useEffect(() => {
-    if (submitStatus) {
-      const timer = setTimeout(() => setSubmitStatus(null), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [submitStatus]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!captchaToken) return;
-
+  const submitForm = useCallback(async (token: string) => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
@@ -46,7 +36,7 @@ export default function ContactContent() {
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          hCaptchaToken: captchaToken,
+          hCaptchaToken: token,
         }),
       });
 
@@ -63,9 +53,36 @@ export default function ContactContent() {
     } finally {
       setIsSubmitting(false);
     }
+  }, [formData]);
+
+  useEffect(() => {
+    if (submitStatus) {
+      const timer = setTimeout(() => setSubmitStatus(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [submitStatus]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const showCaptcha = !!(HCAPTCHA_SITEKEY && HCAPTCHA_SITEKEY !== 'YOUR_HCAPTCHA_SITEKEY');
+
+  const handleCaptchaVerify = useCallback((token: string) => {
+    setCaptchaToken(token);
+    submitForm(token);
+  }, [submitForm]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    if (showCaptcha) {
+      captchaRef.current?.execute();
+    } else {
+      submitForm('');
+    }
+  };
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
@@ -128,15 +145,15 @@ export default function ContactContent() {
               </div>
 
               {showCaptcha && (
-                <div className="flex justify-center">
-                  <HCaptcha
-                    key={captchaKey}
-                    sitekey={HCAPTCHA_SITEKEY!}
-                    onVerify={(token: string) => setCaptchaToken(token)}
-                    onExpire={() => setCaptchaToken(null)}
-                    theme="dark"
-                  />
-                </div>
+                <HCaptcha
+                  ref={captchaRef}
+                  key={captchaKey}
+                  sitekey={HCAPTCHA_SITEKEY!}
+                  onVerify={handleCaptchaVerify}
+                  onExpire={() => setCaptchaToken(null)}
+                  theme="dark"
+                  size="invisible"
+                />
               )}
 
               {submitStatus === 'success' && (
@@ -154,7 +171,7 @@ export default function ContactContent() {
               <div className="flex justify-end">
                 <Button
                   type="submit"
-                  disabled={isSubmitting || (showCaptcha && !captchaToken)}
+                  disabled={isSubmitting}
                   className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 px-8 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? t('contact.submitting') : t('contact.submitButton')}
