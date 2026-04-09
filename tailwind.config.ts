@@ -54,6 +54,8 @@ const config: Config = {
         'stripe-3': 'stripe-flow-3 25s ease-in-out infinite',
         'stripe-4': 'stripe-flow-4 20s ease-in-out infinite',
         'stripe-5': 'stripe-flow-5 28s ease-in-out infinite',
+        'card-shine': 'card-shine 0.6s ease forwards',
+        'border-glow': 'border-glow 3s ease-in-out infinite',
       },
       keyframes: {
         'fade-in-up': {
@@ -139,6 +141,14 @@ const config: Config = {
           '65%':  { transform: 'translate(-25%, -15%) scale(1.35) rotate(8deg)' },
           '85%':  { transform: 'translate(15%, 10%) scale(0.85) rotate(-5deg)' },
           '100%': { transform: 'translate(0%, 0%) scale(0.9) rotate(0deg)' },
+        },
+        'card-shine': {
+          '0%': { left: '-100%' },
+          '100%': { left: '100%' },
+        },
+        'border-glow': {
+          '0%, 100%': { borderColor: 'rgba(99, 102, 241, 0.15)' },
+          '50%': { borderColor: 'rgba(99, 102, 241, 0.4)' },
         },
       },
       backgroundImage: {
