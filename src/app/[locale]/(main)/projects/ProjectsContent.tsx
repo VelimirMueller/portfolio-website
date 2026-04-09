@@ -113,7 +113,7 @@ export default function ProjectsContent() {
 
         {/* Project 1: Enterprise Workflow */}
         <AnimateIn from="left">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
            <div className="lg:col-span-5 flex flex-col justify-between">
               <div>
                  <div className="flex gap-2 mb-6">
@@ -126,7 +126,7 @@ export default function ProjectsContent() {
                  </p>
                  <div className="flex flex-wrap gap-2 mb-8">
                     {['Next.js', 'React', 'Supabase', 'Vercel', 'Figma'].map(tag => (
-                      <span key={tag} className="text-xs font-mono text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#050505] rounded border border-black/5 dark:border-white/5">{tag}</span>
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
                     ))}
                  </div>
               </div>
@@ -141,8 +141,8 @@ export default function ProjectsContent() {
               <div className="grid grid-cols-2 gap-4 h-full content-center">
                  <div className="col-span-2 bg-white dark:bg-[#111] p-6 rounded border border-black/5 dark:border-white/5 flex items-center justify-between">
                     <div>
-                      <div className="text-4xl font-mono font-bold text-black dark:text-white">500%</div>
-                      <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">{t('projects.enterprise.metric')}</div>
+                      <div className="text-4xl md:text-5xl font-mono font-black text-black dark:text-white tracking-tight">500%</div>
+                      <div className="text-xs text-gray-500 uppercase tracking-wider mt-1.5">{t('projects.enterprise.metric')}</div>
                     </div>
                     <div className="h-12 w-12 rounded-full bg-green-500/20 flex items-center justify-center">
                        <ArrowUpRight size={24} className="text-green-600 dark:text-green-500"/>
@@ -163,7 +163,7 @@ export default function ProjectsContent() {
 
         {/* Project 2: SaaS Platform */}
         <AnimateIn from="right">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
            <div className="lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
               <div className="bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 h-full flex flex-col justify-center relative overflow-hidden">
                  <div className="space-y-4">
@@ -199,7 +199,7 @@ export default function ProjectsContent() {
                  </p>
                  <div className="flex flex-wrap gap-2 mb-8">
                     {['Next.js', 'Vue', 'Node.js', 'Laravel', 'Supabase', 'Tailwind', 'GitHub Actions', 'Vercel'].map(tag => (
-                      <span key={tag} className="text-xs font-mono text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#050505] rounded border border-black/5 dark:border-white/5">{tag}</span>
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
                     ))}
                  </div>
               </div>

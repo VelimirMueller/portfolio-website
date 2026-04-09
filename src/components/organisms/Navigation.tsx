@@ -56,7 +56,7 @@ export const Navigation = () => {
               <div key={item.path} className="relative group">
                 <Link
                   href={item.path}
-                  className={`px-5 py-2.5 rounded-full text-xs font-mono transition-all flex items-center gap-1 ${
+                  className={`px-5 py-2.5 rounded-full text-xs font-mono transition-all duration-200 ease-out flex items-center gap-1 ${
                     isActive(item.path)
                       ? 'bg-black text-white dark:bg-white dark:text-black font-bold shadow-md'
                       : 'text-light-sub dark:text-dark-sub hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
@@ -67,12 +67,12 @@ export const Navigation = () => {
                 </Link>
 
                 {item.children && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-[#18181b] border border-light-border dark:border-dark-border rounded-xl p-2 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top z-50">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-[#18181b] border border-light-border dark:border-dark-border rounded-xl p-2 shadow-xl opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 ease-out transform origin-top z-50">
                     {item.children.map((child) => (
                       <Link
                         key={child.path}
                         href={child.path}
-                        className={`block px-4 py-2.5 text-xs font-mono rounded-lg transition-colors ${
+                        className={`block px-4 py-2.5 text-xs font-mono rounded-lg transition-colors duration-200 ease-out ${
                           isActive(child.path)
                            ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white font-bold'
                            : 'text-light-sub dark:text-dark-sub hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'

@@ -23,10 +23,10 @@ export const BentoCard = ({
       <div className="p-6 pb-2 relative z-10">
         <div className="flex justify-between items-start">
           <div>
-            {subtitle && <span className="text-brand-600 dark:text-brand-500 text-[10px] md:text-xs font-mono uppercase tracking-widest block mb-2 flex items-center gap-2 font-bold">
+            {subtitle && <span className="text-brand-600 dark:text-brand-500 text-[11px] md:text-xs font-mono uppercase tracking-widest block mb-2 flex items-center gap-2 font-bold">
               {subtitle}
             </span>}
-            {title && <h3 className="text-xl md:text-2xl font-mono font-bold text-light-text dark:text-dark-text leading-tight mt-1">{title}</h3>}
+            {title && <h3 className="text-xl md:text-2xl font-mono font-bold text-light-text dark:text-dark-text leading-snug mt-1">{title}</h3>}
           </div>
           {Icon && (
             <div className="p-2 rounded-lg bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border group-hover:scale-110 transition-transform duration-300">

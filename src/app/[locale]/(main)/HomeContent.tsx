@@ -60,12 +60,12 @@ const TechStackGrid = () => {
     <BentoCard className="h-full bg-white dark:bg-[#121214]" title={t('home.techDna')}>
       <div className="grid grid-cols-2 gap-2 mt-4">
         {stacks.map((item, i) => (
-          <div key={i} className="flex flex-col p-3 rounded-lg bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border hover:border-brand-500/30 dark:hover:border-brand-500/30 transition-colors group">
-            <div className="flex items-center justify-between mb-2">
-              <item.icon size={16} className="text-light-sub dark:text-dark-sub group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors" aria-hidden="true"/>
-              <span className="text-[9px] font-mono text-gray-500 dark:text-gray-400 uppercase">{item.cat}</span>
+          <div key={i} className="flex flex-col p-3 rounded-lg bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border hover:border-brand-500/30 dark:hover:border-brand-500/30 transition-all duration-200 ease-out group">
+            <div className="flex items-center justify-between mb-1.5">
+              <item.icon size={14} className="text-light-sub dark:text-dark-sub group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors duration-200" aria-hidden="true"/>
+              <span className="text-[9px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-wide">{item.cat}</span>
             </div>
-            <span className="text-sm font-bold text-light-text dark:text-dark-text group-hover:translate-x-1 transition-transform">{item.label}</span>
+            <span className="text-[13px] font-bold text-light-text dark:text-dark-text group-hover:translate-x-0.5 transition-transform duration-200">{item.label}</span>
           </div>
         ))}
       </div>
@@ -116,19 +116,19 @@ export default function HomeContent() {
                 MÜLLER.
               </h1>
 
-              <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center gap-4 mb-7">
                  <div className="h-0.5 w-12 bg-brand-600 dark:bg-brand-500" aria-hidden="true"></div>
                  <div>
                    <p className="font-mono text-sm md:text-lg text-light-sub dark:text-dark-sub uppercase tracking-widest font-medium">
                       {t('home.subtitle')}
                    </p>
-                   <p className="font-mono text-[10px] md:text-xs text-light-sub/60 dark:text-dark-sub/60 uppercase tracking-widest mt-1">
+                   <p className="font-mono text-[10px] md:text-xs text-light-sub/60 dark:text-dark-sub/60 uppercase tracking-widest mt-0.5">
                       {t('home.subtitleSecondary')}
                    </p>
                  </div>
               </div>
 
-              <p className="text-gray-600 dark:text-gray-400 max-w-lg leading-relaxed text-sm md:text-base border-l-2 border-light-border dark:border-dark-border pl-4">
+              <p className="text-gray-600 dark:text-gray-400 max-w-lg leading-[1.7] text-sm md:text-base border-l-2 border-light-border dark:border-dark-border pl-4">
                 {t('home.description')}
               </p>
             </div>
