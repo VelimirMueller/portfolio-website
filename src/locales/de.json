@@ -238,7 +238,7 @@
       "desc": "End-to-End Product Engineering verantwortet — von Requirements und Figma-Designs über Full-Stack-Implementierung bis zum Cloud-Deployment. Lead-Management-Plattform gebaut (Laravel, React, TypeScript, Inertia, Terraform), die die Zuweisungszeit um das 3-4-fache reduzierte. Datengetriebene Scoring-Engine für Lead-Seller-Matching entwickelt, die die prognostizierte Conversion von ~6% auf 11% verbesserte. AWS- und Azure-Umgebungen mit Terraform konfiguriert. Vollständige Test-Pyramide: Unit, E2E mit Playwright, visuelle Regression."
     },
     "exp2": {
-      "title": "Software Engineer - Frontend",
+      "title": "Software Engineer - Frontend / Product",
       "tag": "Enterprise SaaS",
       "company": "DEMOS plan GmbH",
       "date": "Oct 2021 - Jan 2025",
