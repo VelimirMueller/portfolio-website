@@ -33,9 +33,36 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || 'https://velimir-mueller.vercel.app'
   ),
-  title: 'Velimir Müller | Senior Product Engineer',
+  title: 'Velimir Müller | Senior Product Engineer & AI Agentic Developer',
   description:
-    'Senior Product Engineer – end-to-end product ownership from requirements analysis and UX/UI design to full-stack development and cloud deployment.',
+    'Senior Product Engineer & AI Agentic Developer — end-to-end product ownership, MCP server development, and full-stack engineering with Next.js, React, and Claude Code.',
+  keywords: [
+    'Senior Product Engineer',
+    'AI Agentic Developer',
+    'MCP Server Developer',
+    'Model Context Protocol',
+    'Claude Code',
+    'Product Owner',
+    'Full-stack Developer',
+    'Next.js Developer',
+    'Agentic AI',
+    'React',
+    'TypeScript',
+  ],
+  openGraph: {
+    type: 'website',
+    title: 'Velimir Müller | Senior Product Engineer & AI Agentic Developer',
+    description:
+      'Senior Product Engineer & AI Agentic Developer — end-to-end product ownership, MCP server development, and full-stack engineering with Next.js, React, and Claude Code.',
+    siteName: 'Velimir Müller',
+    locale: 'en',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Velimir Müller | Senior Product Engineer & AI Agentic Developer',
+    description:
+      'Senior Product Engineer & AI Agentic Developer — end-to-end product ownership, MCP server development, and full-stack engineering with Next.js, React, and Claude Code.',
+  },
 };
 
 export default function RootLayout({
