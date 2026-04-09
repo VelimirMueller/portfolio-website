@@ -179,6 +179,50 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .fade-in{animation:fadeIn .35s ease forwards}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:0s!important;transition-duration:0s!important}}
+
+/* ═══ MOBILE RESPONSIVE ═══ */
+@media(max-width:768px){
+  .topbar{padding:0 12px;gap:10px;height:56px;flex-wrap:nowrap;overflow-x:auto}
+  .topbar .demo-badge{display:none}
+  .topbar .demo-hint{display:none}
+  .logo-text{font-size:13px}
+  .sim-btn{font-size:11px;padding:5px 10px}
+  .top-nav{overflow-x:auto;padding:0 8px;-webkit-overflow-scrolling:touch}
+  .top-nav-item{padding:10px 12px;font-size:12px;white-space:nowrap;min-height:40px}
+  .quick-actions-bar{padding:0 12px}
+  .sub-tab-bar{overflow-x:auto;padding:0 8px;-webkit-overflow-scrolling:touch}
+  .sub-tab{padding:10px 12px;font-size:12px;white-space:nowrap}
+  .hero-text{padding:10px 12px;font-size:13px}
+  .board-layout{flex-direction:column}
+  .sprint-list-panel{width:100%;max-height:220px;border-right:none;border-bottom:1px solid var(--border)}
+  .sprint-detail{padding:12px}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .kanban-grid{grid-template-columns:1fr;gap:8px;padding:8px 0}
+  .k-col{min-height:auto}
+  .bento-grid{grid-template-columns:1fr}
+  .bento-card.wide{grid-column:span 1}
+  .code-sidebar{width:100%;max-height:200px;border-right:none;border-bottom:1px solid var(--border)}
+  .sd-header{flex-direction:column;align-items:flex-start;gap:8px}
+  .sd-title{font-size:16px}
+  .stepper-row{flex-wrap:wrap;gap:2px}
+  .modal{width:96vw;max-width:none}
+  .modal-stats{grid-template-columns:1fr 1fr 1fr}
+  .agent-card{padding:10px 12px}
+  .ms-card{padding:12px 14px}
+}
+
+@media(max-width:480px){
+  .topbar{height:48px;gap:6px;padding:0 8px}
+  .logo-icon{width:26px;height:26px;border-radius:8px}
+  .logo-icon svg{width:13px;height:13px}
+  .sim-btn{padding:4px 8px;font-size:10px;gap:4px}
+  .metrics-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .m-card{padding:8px}
+  .m-value{font-size:14px}
+  .m-label{font-size:9px}
+  .sprint-list-panel{max-height:180px}
+  .modal-stats{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -191,7 +235,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
     </div>
     <div style="flex:1"></div>
     <span class="demo-badge">Demo</span>
-    <span style="font-size:11px;color:var(--text3)">Dummy data for demonstration</span>
+    <span class="demo-hint" style="font-size:11px;color:var(--text3)">Dummy data for demonstration</span>
     <div id="sim-controls" style="display:flex;align-items:center;gap:10px">
       <button class="sim-btn" id="sim-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Simulate Sprint</button>
       <div id="sim-wrap" style="display:none;align-items:center;gap:8px">
