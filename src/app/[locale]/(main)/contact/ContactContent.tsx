@@ -7,6 +7,7 @@ import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
+import type HCaptchaClass from '@hcaptcha/react-hcaptcha';
 
 const HCaptcha = dynamic(
   () => import('@hcaptcha/react-hcaptcha'),
@@ -21,7 +22,9 @@ export default function ContactContent() {
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaKey, setCaptchaKey] = useState(0);
-  const captchaRef = useRef<any>(null);
+  const captchaRef = useRef<HCaptchaClass | null>(null);
+  const formDataRef = useRef(formData);
+  formDataRef.current = formData;
   const t = useTranslations();
 
   const submitForm = useCallback(async (token: string) => {
@@ -29,13 +32,14 @@ export default function ContactContent() {
     setSubmitStatus(null);
 
     try {
+      const current = formDataRef.current;
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
+          name: current.name,
+          email: current.email,
+          message: current.message,
           hCaptchaToken: token,
         }),
       });
@@ -53,7 +57,7 @@ export default function ContactContent() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [formData]);
+  }, []);
 
   useEffect(() => {
     if (submitStatus) {
