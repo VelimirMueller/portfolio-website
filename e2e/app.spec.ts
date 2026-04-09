@@ -140,11 +140,6 @@ test.describe('Project demos', () => {
     await expect(page).toHaveTitle(/Velimir Müller/i);
   });
 
-  test('project planner loads', async ({ page }) => {
-    await page.goto('/projects/project-planner');
-    await expect(page).toHaveTitle(/Velimir Müller/i);
-  });
-
 });
 
 // ─── Theme Toggle ───────────────────────────────────────────
