@@ -20,7 +20,7 @@ export default function ProjectsContent() {
       </AnimateIn>
 
       {/* --- FEATURED DEMOS --- */}
-      <div className="mb-16 space-y-6">
+      <div className="mb-16 space-y-4 sm:space-y-6">
          <AnimateIn from="left">
            <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
          </AnimateIn>
@@ -29,7 +29,7 @@ export default function ProjectsContent() {
          <AnimateIn from="bottom-left" delay={100}>
          <Link href="/projects/mcp-demo" className="block group">
            <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-emerald-500/20 hover:border-emerald-500/50 transition-all animate-border-glow">
-              <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8">
                  <div className="flex-1">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono mb-4 border border-emerald-500/20">
                        <Terminal size={12} />
@@ -44,7 +44,7 @@ export default function ProjectsContent() {
                     </div>
                  </div>
 
-                 <div className="w-full md:w-1/3 aspect-video bg-[#0c0c10] rounded-xl border border-emerald-500/10 p-4 relative overflow-hidden shadow-2xl group-hover:shadow-emerald-900/10 transition-shadow">
+                 <div className="w-full md:w-1/3 aspect-[2/1] sm:aspect-video bg-[#0c0c10] rounded-xl border border-emerald-500/10 p-4 relative overflow-hidden shadow-2xl group-hover:shadow-emerald-900/10 transition-shadow">
                     {/* Mini sprint board preview */}
                     <div className="absolute top-3 left-3 right-3 h-5 bg-[#131318] rounded border border-[#1c1c28] flex items-center px-2 gap-1.5">
                        <div className="w-2 h-2 rounded-full bg-emerald-500/60"></div>
@@ -77,7 +77,7 @@ export default function ProjectsContent() {
          <AnimateIn from="bottom" delay={200}>
          <Link href="/projects/dashboard-demo" className="block group">
            <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-blue-500/20 hover:border-blue-500/50 transition-all animate-border-glow">
-              <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8">
                  <div className="flex-1">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-mono mb-4 border border-blue-500/20">
                        <LayoutDashboard size={12} />
@@ -92,7 +92,7 @@ export default function ProjectsContent() {
                     </div>
                  </div>
 
-                 <div className="w-full md:w-1/3 aspect-video bg-gray-100 dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-[#222] p-4 relative overflow-hidden shadow-2xl group-hover:shadow-blue-900/10 transition-shadow">
+                 <div className="w-full md:w-1/3 aspect-[2/1] sm:aspect-video bg-gray-100 dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-[#222] p-4 relative overflow-hidden shadow-2xl group-hover:shadow-blue-900/10 transition-shadow">
                     <div className="absolute top-4 left-4 w-12 h-full bg-white dark:bg-[#111] rounded-l-lg border-r border-gray-200 dark:border-[#222]"></div>
                     <div className="absolute top-4 left-20 right-4 h-8 bg-white dark:bg-[#111] rounded-lg border border-gray-200 dark:border-transparent"></div>
                     <div className="absolute top-16 left-20 w-1/3 h-24 bg-white dark:bg-[#111] rounded-lg border border-gray-200 dark:border-[#222]"></div>
@@ -106,7 +106,7 @@ export default function ProjectsContent() {
 
       </div>
 
-      <div className="flex flex-col gap-8 md:gap-12">
+      <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-12">
         <AnimateIn from="left">
           <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.realWorldWork')}</h3>
         </AnimateIn>

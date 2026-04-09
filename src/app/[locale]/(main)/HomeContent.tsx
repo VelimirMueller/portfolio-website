@@ -88,7 +88,7 @@ export default function HomeContent() {
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto relative">
       {/* Animated Gradient Background - Stripe-style flowing gradient */}
-      <div className="fixed top-0 left-0 w-[100vw] h-[50vh] overflow-hidden pointer-events-none -z-10">
+      <div className="fixed top-0 left-0 w-full h-[50vh] overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[10%] right-[15%] w-[220px] h-[220px] rounded-full opacity-[0.25] dark:opacity-[0.35] blur-[80px] animate-stripe-1 bg-gradient-to-br from-purple-500 via-violet-500 to-fuchsia-500 mix-blend-multiply dark:mix-blend-screen"></div>
         <div className="absolute top-[5%] left-[15%] w-[200px] h-[200px] rounded-full opacity-[0.25] dark:opacity-[0.35] blur-[80px] animate-stripe-2 bg-gradient-to-tr from-cyan-400 via-teal-400 to-blue-500 mix-blend-multiply dark:mix-blend-screen"></div>
         <div className="absolute top-[15%] left-[35%] w-[180px] h-[180px] rounded-full opacity-[0.2] dark:opacity-[0.3] blur-[70px] animate-stripe-3 bg-gradient-to-r from-pink-400 via-rose-400 to-red-400 mix-blend-multiply dark:mix-blend-screen"></div>
@@ -111,7 +111,7 @@ export default function HomeContent() {
                 </div>
               </div>
 
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-mono font-bold text-light-text dark:text-dark-text tracking-tighter leading-[0.9] mb-6">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-mono font-bold text-light-text dark:text-dark-text tracking-tighter leading-[0.9] mb-6">
                 VELIMIR <br/>
                 MÜLLER.
               </h1>
