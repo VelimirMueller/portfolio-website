@@ -63,6 +63,7 @@ body {
   }
   .bento-card:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 24px -8px rgba(0, 0, 0, 0.08);
   }
   .dark .bento-card:hover {
     border-color: rgba(255, 255, 255, 0.15);
