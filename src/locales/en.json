@@ -245,6 +245,22 @@
         "Predictive Conversion Modeling",
         "Automated Assignment Recommendations"
       ]
+    },
+    "bewerbermappe": {
+      "title": "bewerbermappe.com",
+      "desc": "Co-developed the digital rental application platform that helps tenants in Germany compile verified documents — income proof, credit reports, and identity verification — into a single professional PDF. Featured in BILD, Die Zeit, and n-tv. Shaped the full user journey from landing page to checkout.",
+      "metric": "Press Features",
+      "metricValue": "3+",
+      "role": "Product Engineer",
+      "focus": "UX & Frontend",
+      "cta": "Visit Site",
+      "ctaHref": "https://bewerbermappe.com",
+      "checks": [
+        "Landing Page to Checkout User Journey",
+        "Multi-Plugin WordPress Architecture",
+        "Custom Theme Development",
+        "Conversion-Optimized Funnel Design"
+      ]
     }
   },
   "about": {

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowUpRight, Cpu, Check, BrainCircuit } from 'lucide-react';
+import { ArrowUpRight, Cpu, Check, BrainCircuit, Newspaper, ExternalLink } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
@@ -12,6 +12,7 @@ export default function ProjectsContent() {
   const t = useTranslations();
   const saasChecks = t.raw('projects.saas.checks') as string[];
   const mlChecks = t.raw('projects.ml.checks') as string[];
+  const bewerbermappeChecks = t.raw('projects.bewerbermappe.checks') as string[];
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
@@ -216,6 +217,63 @@ export default function ProjectsContent() {
                     </div>
                  </div>
               </div>
+           </div>
+        </div>
+        </AnimateIn>
+
+        {/* Project 4: bewerbermappe.com */}
+        <AnimateIn from="right" delay={200}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
+           <div className="lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
+              <div className="bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 h-full flex flex-col justify-center relative overflow-hidden">
+                 <div className="absolute top-0 right-0 p-4 opacity-50">
+                    <Newspaper size={48} className="text-rose-900/20 dark:text-rose-900/40" />
+                 </div>
+                 <div className="space-y-3 mb-6">
+                    {bewerbermappeChecks.map((check, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                         <Check size={16} className="text-rose-600 dark:text-rose-500 shrink-0" />
+                         <span className="text-sm text-gray-600 dark:text-gray-300">{check}</span>
+                      </div>
+                    ))}
+                 </div>
+                 <div className="pt-4 border-t border-black/5 dark:border-white/5">
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">Key Tech</div>
+                    <div className="flex flex-wrap gap-2">
+                       {['WordPress', 'PHP', 'JavaScript', 'WooCommerce', 'Custom Theme'].map(tag => (
+                         <span key={tag} className="px-2 py-1 bg-rose-500/10 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 text-[10px] rounded border border-rose-500/20 dark:border-rose-900/30">{tag}</span>
+                       ))}
+                    </div>
+                 </div>
+              </div>
+           </div>
+
+           <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
+              <div>
+                 <div className="flex gap-2 mb-6">
+                    <span className="px-3 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400 text-[10px] font-mono border border-rose-500/20 uppercase">Startup</span>
+                    <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white text-[10px] font-mono border border-black/10 dark:border-white/20 uppercase">Featured in Press</span>
+                 </div>
+                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.bewerbermappe.title')}</h2>
+                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    {t('projects.bewerbermappe.desc')}
+                 </p>
+                 <div className="flex items-center gap-4 mb-6">
+                    <div className="bg-white dark:bg-[#0a0a0a] border border-black/5 dark:border-white/5 rounded-lg px-4 py-3 flex items-center gap-3">
+                       <div className="text-3xl font-mono font-black text-black dark:text-white">{t('projects.bewerbermappe.metricValue')}</div>
+                       <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('projects.bewerbermappe.metric')}</div>
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 font-mono">BILD · Die Zeit · n-tv</div>
+                 </div>
+                 <div className="flex flex-wrap gap-2 mb-8">
+                    {['WordPress', 'PHP', 'WooCommerce', 'JavaScript', 'UX/UI'].map(tag => (
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
+                    ))}
+                 </div>
+              </div>
+              <a href="https://bewerbermappe.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 border border-black/10 dark:border-white/10 rounded-lg text-sm font-medium text-black dark:text-white hover:border-black/30 dark:hover:border-white/30 transition-colors w-fit">
+                 {t('projects.bewerbermappe.cta')} <ExternalLink size={14} />
+              </a>
            </div>
         </div>
         </AnimateIn>
