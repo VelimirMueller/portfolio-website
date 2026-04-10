@@ -245,6 +245,22 @@
         "Prädiktive Conversion-Modellierung",
         "Automatisierte Zuweisungs-Empfehlungen"
       ]
+    },
+    "bewerbermappe": {
+      "title": "bewerbermappe.com",
+      "desc": "Die digitale Bewerbermappe für Mieter in Deutschland mitentwickelt — Einkommensnachweise, Bonitätsauskünfte und Identitätsverifizierung in einem professionellen PDF. Bekannt aus BILD, Die Zeit und n-tv. Die gesamte User Journey von Landingpage bis Checkout gestaltet.",
+      "metric": "Pressebeiträge",
+      "metricValue": "3+",
+      "role": "Product Engineer",
+      "focus": "UX & Frontend",
+      "cta": "Website besuchen",
+      "ctaHref": "https://bewerbermappe.com",
+      "checks": [
+        "User Journey von Landing Page bis Checkout",
+        "Multi-Plugin WordPress-Architektur",
+        "Custom Theme-Entwicklung",
+        "Conversion-optimiertes Funnel Design"
+      ]
     }
   },
   "about": {
