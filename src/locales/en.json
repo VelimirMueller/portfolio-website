@@ -188,11 +188,29 @@
     "launchDemo": "Launch Demo",
     "dashboard": {
       "title": "CRM Dashboard Interface",
-      "desc": "Interactive hyper-growth startup CRM with animated KPIs, sales pipeline, workflow automation, and revenue analytics. Modern dashboard design with custom charts (CSS/SVG only) and micro-interactions."
+      "desc": "A design-driven demo exploring how data-heavy interfaces can feel refined. Animated KPIs, a drag-and-drop sales pipeline, workflow automation, and revenue analytics — all rendered with custom CSS/SVG charts and deliberate micro-interactions.",
+      "challenge": "Enterprise dashboards often sacrifice aesthetics for function. Dense data tables, generic chart libraries, and utilitarian layouts signal 'internal tool' rather than 'product-grade software'.",
+      "solution": "Designed and built a CRM interface from scratch — animated KPI cards, a pipeline Kanban with drag-and-drop, revenue charts in pure CSS/SVG, and workflow automation views. Every element crafted for visual clarity and interaction quality.",
+      "impact1Value": "0",
+      "impact1Label": "External Chart Deps",
+      "impact2Value": "100%",
+      "impact2Label": "Custom CSS/SVG",
+      "impact3Value": "6",
+      "impact3Label": "Interactive Views",
+      "viewDemo": "View Live Demo"
     },
     "mcp": {
       "title": "Code Context MCP — Interactive Demo",
-      "desc": "Live demo of vlm-code-context-mcp: an MCP server that turns codebases into structured context for AI agents. Sprint board, Kanban, team management, retros — all powered by 81 tools and a SQLite-backed context engine."
+      "desc": "Live demo of vlm-code-context-mcp: an MCP server that turns codebases into structured context for AI agents. Sprint board, Kanban, team management, retros — all powered by 81 tools and a SQLite-backed context engine.",
+      "challenge": "AI coding assistants waste tokens sending irrelevant context. Developers lack structured ways to feed project knowledge into LLMs, leading to hallucinations and wasted compute.",
+      "solution": "Built an MCP server backed by SQLite that indexes codebases into structured context. 81 tools covering file search, sprint management, retros, and team workflows — all through a single npm package.",
+      "impact1Value": "25x",
+      "impact1Label": "Fewer Tokens",
+      "impact2Value": "81",
+      "impact2Label": "Tools",
+      "impact3Value": "1",
+      "impact3Label": "npm Package",
+      "viewDemo": "View Live Demo"
     },
     "enterprise": {
       "title": "Enterprise Workflow Automation",
@@ -212,6 +230,58 @@
         "Production Deployment & Monitoring"
       ],
       "cta": "Request Details"
+    },
+    "ml": {
+      "title": "ML-Driven Lead Matching",
+      "desc": "Explored how machine learning can surface the right seller for every incoming lead — trained on historical company data to predict which pairings convert. The model analyzes past deal outcomes, seller strengths, and lead attributes to recommend optimal assignments automatically.",
+      "metric": "Conversion Uplift",
+      "metricValue": "~6% → 11%",
+      "role": "Exploration / Prototype",
+      "focus": "Data Science",
+      "cta": "Request Details",
+      "checks": [
+        "Historical Deal Data Analysis",
+        "Seller–Lead Affinity Scoring",
+        "Predictive Conversion Modeling",
+        "Automated Assignment Recommendations"
+      ]
+    },
+    "bewerbermappe": {
+      "title": "bewerbermappe.com",
+      "desc": "Co-developed the digital rental application platform that helps tenants in Germany compile verified documents — income proof, credit reports, and identity verification — into a single professional PDF. Featured in BILD, Die Zeit, and n-tv. Shaped the full user journey from landing page to checkout.",
+      "metric": "Press Features",
+      "metricValue": "3+",
+      "role": "Product Engineer",
+      "focus": "UX & Frontend",
+      "cta": "Visit Site",
+      "ctaHref": "https://bewerbermappe.com",
+      "checks": [
+        "Landing Page to Checkout User Journey",
+        "Multi-Plugin WordPress Architecture",
+        "Custom Theme Development",
+        "Conversion-Optimized Funnel Design"
+      ]
+    },
+    "arcade": {
+      "title": "Cyberpunk Arcade Shooter",
+      "desc": "A neon-drenched arcade shooter built from scratch with Rust and the Bevy game engine, then compiled to WebAssembly for browser play. Runs at 60fps in any modern browser — no plugins, no installs. Mobile touch controls included.",
+      "challenge": "Wanted to explore Rust beyond backend services — the ECS architecture of Bevy, GPU-driven rendering, and the discipline of a borrow checker applied to real-time game logic running at 60 frames per second.",
+      "solution": "Built a complete arcade shooter with Bevy's entity-component-system, compiled to WASM via wasm-bindgen, and wrapped it in a Next.js page with custom touch controls for mobile. Zero runtime dependencies in the browser.",
+      "impact1Value": "Rust",
+      "impact1Label": "Built With",
+      "impact2Value": "60fps",
+      "impact2Label": "In Browser",
+      "impact3Value": "WASM",
+      "impact3Label": "No Plugins",
+      "metric": "Built With",
+      "metricValue": "Rust",
+      "cta": "Play in Browser",
+      "checks": [
+        "Bevy ECS Game Engine (Rust)",
+        "WebAssembly Browser Port",
+        "Mobile Touch Controls",
+        "60fps Rendering Pipeline"
+      ]
     }
   },
   "about": {
@@ -298,7 +368,14 @@
     "errorMessage": "Error sending message. Please try again.",
     "emailLink": "Get in touch",
     "linkedinLink": "Connect",
-    "githubLink": "View Code"
+    "githubLink": "View Code",
+    "nameError": "Please enter at least 2 characters",
+    "emailError": "Please enter a valid email address",
+    "messageError": "Please enter at least 10 characters",
+    "successHeading": "Message sent",
+    "successDescription": "Thanks for reaching out. I'll get back to you within 24 hours.",
+    "redirecting": "Redirecting to home in {seconds}s...",
+    "errorDetailed": "Something went wrong. Please try again or email me directly at velimir.mueller@googlemail.com"
   },
   "footer": {
     "tagline": "Senior Product Engineer.",
@@ -359,5 +436,21 @@
     "s7Text": "You have the right to lodge a complaint with a data protection supervisory authority. The responsible authority is usually the data protection authority of your federal state.",
     "s8Title": "8. SSL Encryption",
     "s8Text": "For security reasons, this website uses SSL or TLS encryption to protect transmitted data."
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Page not found",
+    "description": "This route doesn't resolve. Here's where you probably meant to go:",
+    "home": "Home",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "errorPage": {
+    "heading": "Something went wrong",
+    "description": "An unexpected error occurred. Try refreshing the page or use the links below.",
+    "retry": "Try Again",
+    "home": "Home",
+    "projects": "Projects",
+    "contact": "Contact"
   }
 }

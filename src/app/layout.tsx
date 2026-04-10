@@ -72,6 +72,7 @@ export default function RootLayout({
 }) {
   return (
     <html
+      lang="en"
       className={`dark ${inter.variable} ${spaceMono.variable}`}
       suppressHydrationWarning
     >

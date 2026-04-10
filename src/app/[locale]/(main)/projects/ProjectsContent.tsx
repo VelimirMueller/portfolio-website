@@ -1,17 +1,18 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { ArrowUpRight, Cpu, Check, LayoutDashboard, ArrowRight, Terminal } from 'lucide-react';
+import { ArrowUpRight, Cpu, Check, BrainCircuit, Newspaper, ExternalLink } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
-import { BentoCard } from '@/components/molecules/BentoCard';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
+import { ExpandableProjectCard } from '@/components/molecules/ExpandableProjectCard';
 import { useTranslations } from 'next-intl';
 
 export default function ProjectsContent() {
   const t = useTranslations();
   const saasChecks = t.raw('projects.saas.checks') as string[];
+  const mlChecks = t.raw('projects.ml.checks') as string[];
+  const bewerbermappeChecks = t.raw('projects.bewerbermappe.checks') as string[];
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
@@ -20,90 +21,70 @@ export default function ProjectsContent() {
       </AnimateIn>
 
       {/* --- FEATURED DEMOS --- */}
-      <div className="mb-16 space-y-4 sm:space-y-6">
-         <AnimateIn from="left">
-           <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
-         </AnimateIn>
+      <div className="mb-16 space-y-4">
+        <AnimateIn from="left">
+          <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
+        </AnimateIn>
 
-         {/* MCP Demo */}
-         <AnimateIn from="bottom-left" delay={100}>
-         <Link href="/projects/mcp-demo" className="block group">
-           <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-emerald-500/20 hover:border-emerald-500/50 transition-all animate-border-glow">
-              <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8">
-                 <div className="flex-1">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono mb-4 border border-emerald-500/20">
-                       <Terminal size={12} />
-                       <span>{t('projects.liveUiDemo')}</span>
-                    </div>
-                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.mcp.title')}</h2>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-                       {t('projects.mcp.desc')}
-                    </p>
-                    <div className="flex items-center text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold group-hover:translate-x-2 transition-transform">
-                       {t('projects.launchDemo')} <ArrowRight size={14} className="ml-2" />
-                    </div>
-                 </div>
+        <AnimateIn from="bottom" delay={100}>
+          <ExpandableProjectCard
+            title={t('projects.mcp.title')}
+            category="Developer Tool"
+            techStack={['Node.js', 'TypeScript', 'SQLite', 'MCP']}
+            metricValue={t('projects.mcp.impact1Value')}
+            metricLabel={t('projects.mcp.impact1Label')}
+            challenge={t('projects.mcp.challenge')}
+            solution={t('projects.mcp.solution')}
+            impacts={[
+              { value: t('projects.mcp.impact1Value'), label: t('projects.mcp.impact1Label') },
+              { value: t('projects.mcp.impact2Value'), label: t('projects.mcp.impact2Label') },
+              { value: t('projects.mcp.impact3Value'), label: t('projects.mcp.impact3Label') },
+            ]}
+            demoHref="/projects/mcp-demo"
+            demoLabel={t('projects.mcp.viewDemo')}
+            accentColor="emerald"
+          />
+        </AnimateIn>
 
-                 <div className="w-full md:w-1/3 aspect-[2/1] sm:aspect-video bg-[#0c0c10] rounded-xl border border-emerald-500/10 p-4 relative overflow-hidden shadow-2xl group-hover:shadow-emerald-900/10 transition-shadow">
-                    {/* Mini sprint board preview */}
-                    <div className="absolute top-3 left-3 right-3 h-5 bg-[#131318] rounded border border-[#1c1c28] flex items-center px-2 gap-1.5">
-                       <div className="w-2 h-2 rounded-full bg-emerald-500/60"></div>
-                       <div className="w-12 h-1.5 bg-[#1c1c28] rounded-full"></div>
-                    </div>
-                    <div className="absolute top-11 left-3 right-3 flex gap-1.5 h-full">
-                       <div className="flex-1 flex flex-col gap-1">
-                          <div className="h-2 bg-emerald-500/20 rounded-sm"></div>
-                          <div className="h-6 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                          <div className="h-5 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                       </div>
-                       <div className="flex-1 flex flex-col gap-1">
-                          <div className="h-2 bg-amber-500/20 rounded-sm"></div>
-                          <div className="h-8 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                       </div>
-                       <div className="flex-1 flex flex-col gap-1">
-                          <div className="h-2 bg-emerald-500/30 rounded-sm"></div>
-                          <div className="h-5 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                          <div className="h-5 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                       </div>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c10] to-transparent pointer-events-none"></div>
-                 </div>
-              </div>
-           </BentoCard>
-         </Link>
-         </AnimateIn>
+        <AnimateIn from="bottom" delay={200}>
+          <ExpandableProjectCard
+            title={t('projects.dashboard.title')}
+            category="UI Showcase"
+            techStack={['React', 'TypeScript', 'CSS/SVG', 'Next.js']}
+            metricValue={t('projects.dashboard.impact1Value')}
+            metricLabel={t('projects.dashboard.impact1Label')}
+            challenge={t('projects.dashboard.challenge')}
+            solution={t('projects.dashboard.solution')}
+            impacts={[
+              { value: t('projects.dashboard.impact1Value'), label: t('projects.dashboard.impact1Label') },
+              { value: t('projects.dashboard.impact2Value'), label: t('projects.dashboard.impact2Label') },
+              { value: t('projects.dashboard.impact3Value'), label: t('projects.dashboard.impact3Label') },
+            ]}
+            demoHref="/projects/dashboard-demo"
+            demoLabel={t('projects.dashboard.viewDemo')}
+            accentColor="blue"
+          />
+        </AnimateIn>
 
-         {/* CRM Dashboard */}
-         <AnimateIn from="bottom" delay={200}>
-         <Link href="/projects/dashboard-demo" className="block group">
-           <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-blue-500/20 hover:border-blue-500/50 transition-all animate-border-glow">
-              <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8">
-                 <div className="flex-1">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-mono mb-4 border border-blue-500/20">
-                       <LayoutDashboard size={12} />
-                       <span>{t('projects.liveUiDemo')}</span>
-                    </div>
-                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.dashboard.title')}</h2>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-                       {t('projects.dashboard.desc')}
-                    </p>
-                    <div className="flex items-center text-blue-600 dark:text-blue-400 font-mono text-xs font-bold group-hover:translate-x-2 transition-transform">
-                       {t('projects.launchDemo')} <ArrowRight size={14} className="ml-2" />
-                    </div>
-                 </div>
-
-                 <div className="w-full md:w-1/3 aspect-[2/1] sm:aspect-video bg-gray-100 dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-[#222] p-4 relative overflow-hidden shadow-2xl group-hover:shadow-blue-900/10 transition-shadow">
-                    <div className="absolute top-4 left-4 w-12 h-full bg-white dark:bg-[#111] rounded-l-lg border-r border-gray-200 dark:border-[#222]"></div>
-                    <div className="absolute top-4 left-20 right-4 h-8 bg-white dark:bg-[#111] rounded-lg border border-gray-200 dark:border-transparent"></div>
-                    <div className="absolute top-16 left-20 w-1/3 h-24 bg-white dark:bg-[#111] rounded-lg border border-gray-200 dark:border-[#222]"></div>
-                    <div className="absolute top-16 left-[45%] w-1/3 h-24 bg-white dark:bg-[#111] rounded-lg border border-gray-200 dark:border-[#222]"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-100 dark:from-[#050505] to-transparent pointer-events-none"></div>
-                 </div>
-              </div>
-           </BentoCard>
-         </Link>
-         </AnimateIn>
-
+        <AnimateIn from="bottom" delay={300}>
+          <ExpandableProjectCard
+            title={t('projects.arcade.title')}
+            category="Game Dev"
+            techStack={['Rust', 'Bevy', 'WebAssembly', 'Touch Controls']}
+            metricValue={t('projects.arcade.impact1Value')}
+            metricLabel={t('projects.arcade.impact1Label')}
+            challenge={t('projects.arcade.challenge')}
+            solution={t('projects.arcade.solution')}
+            impacts={[
+              { value: t('projects.arcade.impact1Value'), label: t('projects.arcade.impact1Label') },
+              { value: t('projects.arcade.impact2Value'), label: t('projects.arcade.impact2Label') },
+              { value: t('projects.arcade.impact3Value'), label: t('projects.arcade.impact3Label') },
+            ]}
+            demoHref="/projects/cyberpunk-arcade/index.html"
+            demoLabel={t('projects.arcade.cta')}
+            accentColor="orange"
+          />
+        </AnimateIn>
       </div>
 
       <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-12">
@@ -204,6 +185,115 @@ export default function ProjectsContent() {
                  </div>
               </div>
               <Button to="/contact" variant="outline" className="w-fit">{t('projects.saas.cta')}</Button>
+           </div>
+        </div>
+        </AnimateIn>
+
+        {/* Project 3: ML Lead Matching */}
+        <AnimateIn from="left" delay={100}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
+           <div className="lg:col-span-5 flex flex-col justify-between">
+              <div>
+                 <div className="flex gap-2 mb-6">
+                    <span className="px-3 py-1 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-[10px] font-mono border border-teal-500/20 uppercase">Machine Learning</span>
+                    <span className="px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-mono border border-amber-500/20 uppercase">Data Science</span>
+                 </div>
+                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.ml.title')}</h2>
+                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    {t('projects.ml.desc')}
+                 </p>
+                 <div className="flex flex-wrap gap-2 mb-8">
+                    {['Python', 'scikit-learn', 'pandas', 'PostgreSQL', 'FastAPI'].map(tag => (
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
+                    ))}
+                 </div>
+              </div>
+              <Button to="/contact" variant="outline" className="w-fit">{t('projects.ml.cta')}</Button>
+           </div>
+
+           <div className="lg:col-span-7 bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 md:p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-50">
+                 <BrainCircuit size={64} className="text-teal-900/20 dark:text-teal-900/40" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 h-full content-center">
+                 <div className="col-span-2 bg-white dark:bg-[#111] p-6 rounded border border-black/5 dark:border-white/5 flex items-center justify-between">
+                    <div>
+                      <div className="text-4xl md:text-5xl font-mono font-black text-black dark:text-white tracking-tight">{t('projects.ml.metricValue')}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-1.5">{t('projects.ml.metric')}</div>
+                    </div>
+                    <div className="h-12 w-12 rounded-full bg-teal-500/20 flex items-center justify-center">
+                       <ArrowUpRight size={24} className="text-teal-600 dark:text-teal-500"/>
+                    </div>
+                 </div>
+                 <div className="col-span-2">
+                    <div className="space-y-3">
+                       {mlChecks.map((check, i) => (
+                         <div key={i} className="flex items-center gap-3">
+                            <Check size={16} className="text-teal-600 dark:text-teal-500 shrink-0" />
+                            <span className="text-sm text-gray-600 dark:text-gray-300">{check}</span>
+                         </div>
+                       ))}
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+        </AnimateIn>
+
+        {/* Project 4: bewerbermappe.com */}
+        <AnimateIn from="right" delay={200}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
+           <div className="lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
+              <div className="bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 h-full flex flex-col justify-center relative overflow-hidden">
+                 <div className="absolute top-0 right-0 p-4 opacity-50">
+                    <Newspaper size={48} className="text-rose-900/20 dark:text-rose-900/40" />
+                 </div>
+                 <div className="space-y-3 mb-6">
+                    {bewerbermappeChecks.map((check, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                         <Check size={16} className="text-rose-600 dark:text-rose-500 shrink-0" />
+                         <span className="text-sm text-gray-600 dark:text-gray-300">{check}</span>
+                      </div>
+                    ))}
+                 </div>
+                 <div className="pt-4 border-t border-black/5 dark:border-white/5">
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">Key Tech</div>
+                    <div className="flex flex-wrap gap-2">
+                       {['WordPress', 'PHP', 'JavaScript', 'WooCommerce', 'Custom Theme'].map(tag => (
+                         <span key={tag} className="px-2 py-1 bg-rose-500/10 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 text-[10px] rounded border border-rose-500/20 dark:border-rose-900/30">{tag}</span>
+                       ))}
+                    </div>
+                 </div>
+              </div>
+           </div>
+
+           <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
+              <div>
+                 <div className="flex gap-2 mb-6">
+                    <span className="px-3 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400 text-[10px] font-mono border border-rose-500/20 uppercase">Startup</span>
+                    <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white text-[10px] font-mono border border-black/10 dark:border-white/20 uppercase">Featured in Press</span>
+                 </div>
+                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.bewerbermappe.title')}</h2>
+                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    {t('projects.bewerbermappe.desc')}
+                 </p>
+                 <div className="flex items-center gap-4 mb-6">
+                    <div className="bg-white dark:bg-[#0a0a0a] border border-black/5 dark:border-white/5 rounded-lg px-4 py-3 flex items-center gap-3">
+                       <div className="text-3xl font-mono font-black text-black dark:text-white">{t('projects.bewerbermappe.metricValue')}</div>
+                       <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('projects.bewerbermappe.metric')}</div>
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 font-mono">BILD · Die Zeit · n-tv</div>
+                 </div>
+                 <div className="flex flex-wrap gap-2 mb-8">
+                    {['WordPress', 'PHP', 'WooCommerce', 'JavaScript', 'UX/UI'].map(tag => (
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
+                    ))}
+                 </div>
+              </div>
+              <a href="https://bewerbermappe.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 border border-black/10 dark:border-white/10 rounded-lg text-sm font-medium text-black dark:text-white hover:border-black/30 dark:hover:border-white/30 transition-colors w-fit">
+                 {t('projects.bewerbermappe.cta')} <ExternalLink size={14} />
+              </a>
            </div>
         </div>
         </AnimateIn>
