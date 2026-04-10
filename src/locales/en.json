@@ -261,6 +261,27 @@
         "Custom Theme Development",
         "Conversion-Optimized Funnel Design"
       ]
+    },
+    "arcade": {
+      "title": "Cyberpunk Arcade Shooter",
+      "desc": "A neon-drenched arcade shooter built from scratch with Rust and the Bevy game engine, then compiled to WebAssembly for browser play. Runs at 60fps in any modern browser — no plugins, no installs. Mobile touch controls included.",
+      "challenge": "Wanted to explore Rust beyond backend services — the ECS architecture of Bevy, GPU-driven rendering, and the discipline of a borrow checker applied to real-time game logic running at 60 frames per second.",
+      "solution": "Built a complete arcade shooter with Bevy's entity-component-system, compiled to WASM via wasm-bindgen, and wrapped it in a Next.js page with custom touch controls for mobile. Zero runtime dependencies in the browser.",
+      "impact1Value": "Rust",
+      "impact1Label": "Built With",
+      "impact2Value": "60fps",
+      "impact2Label": "In Browser",
+      "impact3Value": "WASM",
+      "impact3Label": "No Plugins",
+      "metric": "Built With",
+      "metricValue": "Rust",
+      "cta": "Play in Browser",
+      "checks": [
+        "Bevy ECS Game Engine (Rust)",
+        "WebAssembly Browser Port",
+        "Mobile Touch Controls",
+        "60fps Rendering Pipeline"
+      ]
     }
   },
   "about": {
