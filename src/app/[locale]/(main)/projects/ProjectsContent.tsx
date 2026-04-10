@@ -47,8 +47,8 @@ export default function ProjectsContent() {
         <AnimateIn from="bottom" delay={200}>
           <ExpandableProjectCard
             title={t('projects.dashboard.title')}
-            category="Enterprise SaaS"
-            techStack={['React', 'TypeScript', 'CSS/SVG', 'Supabase']}
+            category="UI Showcase"
+            techStack={['React', 'TypeScript', 'CSS/SVG', 'Next.js']}
             metricValue={t('projects.dashboard.impact1Value')}
             metricLabel={t('projects.dashboard.impact1Label')}
             challenge={t('projects.dashboard.challenge')}
