@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowUpRight, Cpu, Check } from 'lucide-react';
+import { ArrowUpRight, Cpu, Check, BrainCircuit } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl';
 export default function ProjectsContent() {
   const t = useTranslations();
   const saasChecks = t.raw('projects.saas.checks') as string[];
+  const mlChecks = t.raw('projects.ml.checks') as string[];
 
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
@@ -163,6 +164,58 @@ export default function ProjectsContent() {
                  </div>
               </div>
               <Button to="/contact" variant="outline" className="w-fit">{t('projects.saas.cta')}</Button>
+           </div>
+        </div>
+        </AnimateIn>
+
+        {/* Project 3: ML Lead Matching */}
+        <AnimateIn from="left" delay={100}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
+           <div className="lg:col-span-5 flex flex-col justify-between">
+              <div>
+                 <div className="flex gap-2 mb-6">
+                    <span className="px-3 py-1 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-[10px] font-mono border border-teal-500/20 uppercase">Machine Learning</span>
+                    <span className="px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-mono border border-amber-500/20 uppercase">Data Science</span>
+                 </div>
+                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.ml.title')}</h2>
+                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    {t('projects.ml.desc')}
+                 </p>
+                 <div className="flex flex-wrap gap-2 mb-8">
+                    {['Python', 'scikit-learn', 'pandas', 'PostgreSQL', 'FastAPI'].map(tag => (
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
+                    ))}
+                 </div>
+              </div>
+              <Button to="/contact" variant="outline" className="w-fit">{t('projects.ml.cta')}</Button>
+           </div>
+
+           <div className="lg:col-span-7 bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 md:p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-50">
+                 <BrainCircuit size={64} className="text-teal-900/20 dark:text-teal-900/40" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 h-full content-center">
+                 <div className="col-span-2 bg-white dark:bg-[#111] p-6 rounded border border-black/5 dark:border-white/5 flex items-center justify-between">
+                    <div>
+                      <div className="text-4xl md:text-5xl font-mono font-black text-black dark:text-white tracking-tight">{t('projects.ml.metricValue')}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-1.5">{t('projects.ml.metric')}</div>
+                    </div>
+                    <div className="h-12 w-12 rounded-full bg-teal-500/20 flex items-center justify-center">
+                       <ArrowUpRight size={24} className="text-teal-600 dark:text-teal-500"/>
+                    </div>
+                 </div>
+                 <div className="col-span-2">
+                    <div className="space-y-3">
+                       {mlChecks.map((check, i) => (
+                         <div key={i} className="flex items-center gap-3">
+                            <Check size={16} className="text-teal-600 dark:text-teal-500 shrink-0" />
+                            <span className="text-sm text-gray-600 dark:text-gray-300">{check}</span>
+                         </div>
+                       ))}
+                    </div>
+                 </div>
+              </div>
            </div>
         </div>
         </AnimateIn>

@@ -230,6 +230,21 @@
         "Production Deployment & Monitoring"
       ],
       "cta": "Request Details"
+    },
+    "ml": {
+      "title": "ML-Driven Lead Matching",
+      "desc": "Explored how machine learning can surface the right seller for every incoming lead — trained on historical company data to predict which pairings convert. The model analyzes past deal outcomes, seller strengths, and lead attributes to recommend optimal assignments automatically.",
+      "metric": "Conversion Uplift",
+      "metricValue": "~6% → 11%",
+      "role": "Exploration / Prototype",
+      "focus": "Data Science",
+      "cta": "Request Details",
+      "checks": [
+        "Historical Deal Data Analysis",
+        "Seller–Lead Affinity Scoring",
+        "Predictive Conversion Modeling",
+        "Automated Assignment Recommendations"
+      ]
     }
   },
   "about": {
