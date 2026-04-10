@@ -13,9 +13,9 @@ export const Footer = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
         <div className="md:col-span-2">
           <h3 className="font-mono font-bold text-xl text-black dark:text-white mb-3">Velimir Müller</h3>
-          <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+          <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-w-sm">
             {t('footer.tagline')}<br/>
-            <span className="text-gray-400 dark:text-gray-500 text-xs leading-relaxed">{t('footer.taglineSecondary')}</span><br/>
+            <span className="text-gray-400 text-xs leading-relaxed">{t('footer.taglineSecondary')}</span><br/>
             <span className="text-gray-600 dark:text-gray-400">{t('footer.taglineDesc')}</span>
           </p>
         </div>
@@ -44,7 +44,7 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="mt-12 pt-8 border-t border-black/5 dark:border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-mono gap-2">
+      <div className="mt-12 pt-8 border-t border-black/5 dark:border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 dark:text-gray-400 font-mono gap-2">
         <span>© {new Date().getFullYear()} Velimir Müller.</span>
         <div className="flex gap-4">
           <Link href="/imprint" className="hover:text-black dark:hover:text-white transition-colors duration-200">{t('footer.imprint')}</Link>
