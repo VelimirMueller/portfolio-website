@@ -2,17 +2,10 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, Pause, Crosshair } from 'lucide-react';
+import { ArrowLeft, Play, Pause, Crosshair, Loader2 } from 'lucide-react';
 
-function fireKeyToIframe(
-  iframeRef: React.RefObject<HTMLIFrameElement | null>,
-  key: string,
-  code: string,
-  type: 'keydown' | 'keyup',
-) {
-  const win = iframeRef.current?.contentWindow;
-  if (!win) return;
-  win.document.dispatchEvent(new KeyboardEvent(type, { key, code, bubbles: true }));
+function fireKey(key: string, code: string, type: 'keydown' | 'keyup') {
+  document.dispatchEvent(new KeyboardEvent(type, { key, code, bubbles: true }));
 }
 
 function TouchButton({
@@ -20,7 +13,6 @@ function TouchButton({
   icon,
   keyName,
   keyCode,
-  iframeRef,
   className = '',
   size = 'normal',
 }: {
@@ -28,7 +20,6 @@ function TouchButton({
   icon?: React.ReactNode;
   keyName: string;
   keyCode: string;
-  iframeRef: React.RefObject<HTMLIFrameElement | null>;
   className?: string;
   size?: 'normal' | 'large';
 }) {
@@ -36,18 +27,18 @@ function TouchButton({
 
   const handleStart = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     e.preventDefault();
-    fireKeyToIframe(iframeRef, keyName, keyCode, 'keydown');
-    intervalRef.current = setInterval(() => fireKeyToIframe(iframeRef, keyName, keyCode, 'keydown'), 80);
-  }, [iframeRef, keyName, keyCode]);
+    fireKey(keyName, keyCode, 'keydown');
+    intervalRef.current = setInterval(() => fireKey(keyName, keyCode, 'keydown'), 80);
+  }, [keyName, keyCode]);
 
   const handleEnd = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     e.preventDefault();
-    fireKeyToIframe(iframeRef, keyName, keyCode, 'keyup');
+    fireKey(keyName, keyCode, 'keyup');
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-  }, [iframeRef, keyName, keyCode]);
+  }, [keyName, keyCode]);
 
   const sizeClasses = size === 'large'
     ? 'w-16 h-16 text-base'
@@ -69,15 +60,47 @@ function TouchButton({
 }
 
 export default function CyberpunkArcadePage() {
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [errorMsg, setErrorMsg] = useState('');
   const [isMobile, setIsMobile] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const initCalled = useRef(false);
 
   useEffect(() => {
     setIsMobile('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
 
+  useEffect(() => {
+    // Guard against React strict mode double-mount
+    if (initCalled.current) return;
+    initCalled.current = true;
+
+    // Check WebGL2 support before loading 35MB WASM
+    const testCanvas = document.createElement('canvas');
+    const gl = testCanvas.getContext('webgl2');
+    if (!gl) {
+      setErrorMsg('WebGL2 is not supported in this browser. Try Chrome, Firefox, or Edge.');
+      setStatus('error');
+      return;
+    }
+
+    (async () => {
+      try {
+        // Dynamic import of the ES module from public/ — not a Node module,
+        // so we use a variable to prevent TypeScript/webpack from resolving it
+        const src = '/games/cyberpunk/game.js';
+        const mod = await import(/* webpackIgnore: true */ src);
+        await mod.default({ module_or_path: '/games/cyberpunk/game_bg.wasm' });
+        setStatus('ready');
+      } catch (err) {
+        console.error('WASM init failed:', err);
+        setErrorMsg(err instanceof Error ? err.message : 'Failed to initialize game');
+        setStatus('error');
+      }
+    })();
+  }, []);
+
   return (
-    <div className="fixed inset-0 bg-black z-50 flex flex-col">
+    <div className="fixed inset-0 bg-black z-50">
       {/* Top bar */}
       <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-3 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
         <Link
@@ -92,26 +115,45 @@ export default function CyberpunkArcadePage() {
         </div>
       </div>
 
-      {/* Game iframe — static HTML gives Bevy full canvas control */}
-      <iframe
-        ref={iframeRef}
-        src="/games/cyberpunk/index.html"
-        className="flex-1 w-full border-0"
-        allow="autoplay"
-        title="Cyberpunk Arcade Shooter"
+      {/* Canvas — must exist in DOM before init() because Bevy looks for it */}
+      <canvas
+        id="bevy-canvas"
+        className="w-screen h-screen block"
       />
 
+      {/* Loading overlay */}
+      {status === 'loading' && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90 z-10 gap-4">
+          <Loader2 size={32} className="text-orange-500 animate-spin" />
+          <div className="text-white/60 font-mono text-sm">Loading WASM...</div>
+          <div className="text-white/30 font-mono text-[10px]">~35MB · Rust + Bevy Engine</div>
+        </div>
+      )}
+
+      {/* Error overlay */}
+      {status === 'error' && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90 z-10 gap-4">
+          <div className="text-red-400 font-mono text-sm text-center max-w-md px-4">{errorMsg}</div>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white/80 text-sm font-mono hover:bg-white/20 transition-colors"
+          >
+            Reload
+          </button>
+        </div>
+      )}
+
       {/* Mobile touch controls */}
-      {isMobile && (
+      {isMobile && status === 'ready' && (
         <div className="absolute bottom-0 left-0 right-0 z-20 p-4 pb-8 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
           <div className="flex items-end justify-between max-w-lg mx-auto pointer-events-auto">
             {/* D-pad (left side) */}
             <div className="flex flex-col items-center gap-1.5">
-              <TouchButton label="W" keyName="w" keyCode="KeyW" iframeRef={iframeRef} />
+              <TouchButton label="W" keyName="w" keyCode="KeyW" />
               <div className="flex gap-1.5">
-                <TouchButton label="A" keyName="a" keyCode="KeyA" iframeRef={iframeRef} />
-                <TouchButton label="S" keyName="s" keyCode="KeyS" iframeRef={iframeRef} />
-                <TouchButton label="D" keyName="d" keyCode="KeyD" iframeRef={iframeRef} />
+                <TouchButton label="A" keyName="a" keyCode="KeyA" />
+                <TouchButton label="S" keyName="s" keyCode="KeyS" />
+                <TouchButton label="D" keyName="d" keyCode="KeyD" />
               </div>
             </div>
 
@@ -122,14 +164,12 @@ export default function CyberpunkArcadePage() {
                 icon={<><Play size={14} className="inline" /><Pause size={14} className="inline ml-0.5" /></>}
                 keyName="Enter"
                 keyCode="Enter"
-                iframeRef={iframeRef}
               />
               <TouchButton
                 label="Shoot"
                 icon={<Crosshair size={20} />}
                 keyName=" "
                 keyCode="Space"
-                iframeRef={iframeRef}
                 size="large"
                 className="bg-red-500/20 border-red-500/40 active:bg-red-500/40"
               />
