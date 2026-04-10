@@ -117,7 +117,7 @@ export default function CyberpunkArcadePage() {
 
       {/* Canvas — must exist in DOM before init() because Bevy looks for it */}
       <canvas
-        id="bevy-canvas"
+        id="game-canvas"
         className="w-screen h-screen block"
       />
 
