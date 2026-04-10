@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Cyberpunk Arcade Shooter — Velimir Müller</title>
+    <meta name="description" content="A neon-drenched arcade shooter built with Rust and Bevy, compiled to WebAssembly. Play in your browser." />
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace; }
+        canvas { display: block; width: 100vw; height: 100vh; }
+
+        /* Top bar */
+        .top-bar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            pointer-events: none;
+        }
+        .back-link {
+            display: flex; align-items: center; gap: 6px;
+            color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px;
+            pointer-events: auto; transition: color 0.2s;
+        }
+        .back-link:hover { color: #fff; }
+        .back-link svg { width: 14px; height: 14px; }
+        .controls-hint { color: rgba(255,255,255,0.3); font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        /* Loading overlay */
+        #loading {
+            position: fixed; inset: 0; z-index: 10;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #000; gap: 16px;
+        }
+        #loading.hidden { display: none; }
+        .spinner {
+            width: 32px; height: 32px;
+            border: 3px solid rgba(249,115,22,0.2);
+            border-top-color: #f97316;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .load-text { color: rgba(255,255,255,0.5); font-size: 13px; }
+        .load-sub { color: rgba(255,255,255,0.25); font-size: 10px; }
+
+        /* Error state */
+        #error { display: none; flex-direction: column; align-items: center; gap: 12px; }
+        #error.show { display: flex; }
+        .error-text { color: #f87171; font-size: 14px; }
+        .error-detail { color: rgba(255,255,255,0.3); font-size: 11px; max-width: 400px; text-align: center; }
+        .reload-btn {
+            margin-top: 8px; padding: 8px 20px; background: #1a1a1a;
+            border: 1px solid #333; color: #aaa; border-radius: 8px;
+            cursor: pointer; font-family: inherit; font-size: 12px;
+            transition: border-color 0.2s;
+        }
+        .reload-btn:hover { border-color: #666; }
+
+        /* Mobile touch controls */
+        .touch-controls {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
+            padding: 16px 16px 32px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+        .touch-inner {
+            display: flex; align-items: flex-end; justify-content: space-between;
+            max-width: 480px; margin: 0 auto;
+        }
+        .dpad { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .dpad-row { display: flex; gap: 6px; }
+        .actions { display: flex; align-items: center; gap: 12px; }
+        .touch-btn {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: rgba(255,255,255,0.08); backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7);
+            font-size: 12px; font-family: inherit;
+            display: flex; align-items: center; justify-content: center;
+            user-select: none; touch-action: none;
+            transition: background 0.1s, transform 0.1s;
+        }
+        .touch-btn:active { background: rgba(255,255,255,0.2); transform: scale(0.92); }
+        .touch-btn.large { width: 64px; height: 64px; font-size: 16px; background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); }
+        .touch-btn.large:active { background: rgba(239,68,68,0.3); }
+
+        @media (pointer: coarse), (hover: none) {
+            .touch-controls { display: block; }
+            .controls-hint-desktop { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top bar -->
+    <div class="top-bar">
+        <a href="/en/projects" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Projects
+        </a>
+        <span class="controls-hint controls-hint-desktop">WASD · Space · Enter</span>
+        <span class="controls-hint" style="display:none" id="touch-hint">Touch Controls Active</span>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <div class="load-text">Loading WASM...</div>
+        <div class="load-sub">~35MB · Rust + Bevy Engine</div>
+        <div id="error">
+            <div class="error-text">Failed to load game</div>
+            <div class="error-detail" id="error-msg"></div>
+            <button class="reload-btn" onclick="location.reload()">Reload</button>
+        </div>
+    </div>
+
+    <!-- Game canvas — Bevy looks for #game-canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Mobile touch controls -->
+    <div class="touch-controls" id="touch-controls">
+        <div class="touch-inner">
+            <div class="dpad">
+                <button class="touch-btn" data-key="w" data-code="KeyW">W</button>
+                <div class="dpad-row">
+                    <button class="touch-btn" data-key="a" data-code="KeyA">A</button>
+                    <button class="touch-btn" data-key="s" data-code="KeyS">S</button>
+                    <button class="touch-btn" data-key="d" data-code="KeyD">D</button>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="touch-btn" data-key="Enter" data-code="Enter">⏯</button>
+                <button class="touch-btn large" data-key=" " data-code="Space">⊕</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile detection + touch hint
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.getElementById('touch-hint').style.display = '';
+            document.querySelector('.controls-hint-desktop').style.display = 'none';
+        }
+
+        // Touch controls — dispatch keyboard events to document
+        document.querySelectorAll('.touch-btn').forEach(function(btn) {
+            var key = btn.dataset.key;
+            var code = btn.dataset.code;
+            var interval = null;
+            function fireKey(type) {
+                document.dispatchEvent(new KeyboardEvent(type, { key: key, code: code, bubbles: true }));
+            }
+            btn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                fireKey('keydown');
+                interval = setInterval(function() { fireKey('keydown'); }, 80);
+            }, { passive: false });
+            btn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                fireKey('keyup');
+                clearInterval(interval);
+            }, { passive: false });
+            btn.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                fireKey('keydown');
+                interval = setInterval(function() { fireKey('keydown'); }, 80);
+            });
+            btn.addEventListener('mouseup', function(e) {
+                e.preventDefault();
+                fireKey('keyup');
+                clearInterval(interval);
+            });
+            btn.addEventListener('mouseleave', function() {
+                fireKey('keyup');
+                clearInterval(interval);
+            });
+        });
+    </script>
+
+    <script type="module">
+        try {
+            var mod = await import('/games/cyberpunk/game.js');
+            await mod.default({ module_or_path: '/games/cyberpunk/game_bg.wasm' });
+            document.getElementById('loading').classList.add('hidden');
+        } catch (e) {
+            console.error('WASM init failed:', e);
+            document.querySelector('.spinner').style.display = 'none';
+            document.querySelector('.load-text').style.display = 'none';
+            document.querySelector('.load-sub').style.display = 'none';
+            document.getElementById('error-msg').textContent = e.message || 'Unknown error';
+            document.getElementById('error').classList.add('show');
+        }
+    </script>
+</body>
+</html>
