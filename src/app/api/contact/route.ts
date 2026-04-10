@@ -22,15 +22,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const sitekey = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY;
     const verifyResponse = await fetch('https://api.hcaptcha.com/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ response: hCaptchaToken, secret }).toString(),
+      body: new URLSearchParams({
+        response: hCaptchaToken,
+        secret,
+        ...(sitekey ? { sitekey } : {}),
+      }).toString(),
     });
 
     const verifyResult = await verifyResponse.json();
 
     if (!verifyResult.success) {
+      console.error('hCaptcha verification failed:', verifyResult['error-codes']);
       return NextResponse.json(
         { error: 'Captcha verification failed' },
         { status: 400 }

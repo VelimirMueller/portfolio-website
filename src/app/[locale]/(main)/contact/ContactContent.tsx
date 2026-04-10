@@ -6,13 +6,9 @@ import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import type HCaptchaClass from '@hcaptcha/react-hcaptcha';
 
-const HCaptcha = dynamic(
-  () => import('@hcaptcha/react-hcaptcha'),
-  { ssr: false },
-) as typeof import('@hcaptcha/react-hcaptcha').default;
+type HCaptchaComponent = typeof HCaptchaClass;
 
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY;
 
@@ -22,10 +18,17 @@ export default function ContactContent() {
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaKey, setCaptchaKey] = useState(0);
+  const [HCaptcha, setHCaptcha] = useState<HCaptchaComponent | null>(null);
   const captchaRef = useRef<HCaptchaClass | null>(null);
   const formDataRef = useRef(formData);
   formDataRef.current = formData;
   const t = useTranslations();
+
+  useEffect(() => {
+    import('@hcaptcha/react-hcaptcha').then(mod => {
+      setHCaptcha(() => mod.default);
+    });
+  }, []);
 
   const submitForm = useCallback(async (token: string) => {
     setIsSubmitting(true);
@@ -159,7 +162,7 @@ export default function ContactContent() {
                 ></textarea>
               </div>
 
-              {showCaptcha && (
+              {showCaptcha && HCaptcha && (
                 <HCaptcha
                   ref={captchaRef}
                   key={captchaKey}
