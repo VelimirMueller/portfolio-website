@@ -230,6 +230,21 @@
         "Production Deployment & Monitoring"
       ],
       "cta": "Details anfragen"
+    },
+    "ml": {
+      "title": "ML-gestütztes Lead Matching",
+      "desc": "Untersucht, wie Machine Learning den optimalen Verkäufer für jeden eingehenden Lead ermitteln kann — trainiert auf historischen Unternehmensdaten zur Vorhersage, welche Zuordnungen konvertieren. Das Modell analysiert vergangene Deal-Ergebnisse, Verkäufer-Stärken und Lead-Attribute, um automatisch optimale Zuweisungen zu empfehlen.",
+      "metric": "Conversion-Steigerung",
+      "metricValue": "~6% → 11%",
+      "role": "Exploration / Prototyp",
+      "focus": "Data Science",
+      "cta": "Details anfragen",
+      "checks": [
+        "Historische Deal-Daten Analyse",
+        "Verkäufer–Lead Affinitäts-Scoring",
+        "Prädiktive Conversion-Modellierung",
+        "Automatisierte Zuweisungs-Empfehlungen"
+      ]
     }
   },
   "about": {
