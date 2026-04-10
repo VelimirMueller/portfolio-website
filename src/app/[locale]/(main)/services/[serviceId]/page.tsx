@@ -41,5 +41,26 @@ export default async function ServiceDetailPage({ params }: Props) {
   }
 
   setRequestLocale(locale);
-  return <ServiceDetailContent serviceId={serviceId} />;
+  const t = await getTranslations({ locale, namespace: 'serviceDetail' });
+  const serviceName = t(`${serviceId}.title`);
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `https://www.velimir-mueller.de/${locale}` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `https://www.velimir-mueller.de/${locale}/services` },
+      { '@type': 'ListItem', position: 3, name: serviceName },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <ServiceDetailContent serviceId={serviceId} />
+    </>
+  );
 }
