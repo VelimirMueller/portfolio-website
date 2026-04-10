@@ -188,11 +188,29 @@
     "launchDemo": "Launch Demo",
     "dashboard": {
       "title": "CRM Dashboard Interface",
-      "desc": "Interaktives Hyper-Growth Startup CRM mit animierten KPIs, Sales Pipeline, Workflow-Automatisierung und Revenue Analytics. Modernes Dashboard-Design mit Custom Charts (CSS/SVG only) und Micro-Interactions."
+      "desc": "Eine design-getriebene Demo, die zeigt, wie datenintensive Interfaces elegant wirken können. Animierte KPIs, eine Drag-and-Drop Sales Pipeline, Workflow-Automatisierung und Umsatzanalysen — alles mit Custom CSS/SVG Charts und durchdachten Micro-Interactions.",
+      "challenge": "Enterprise-Dashboards opfern oft Ästhetik zugunsten von Funktion. Überladene Datentabellen, generische Chart-Bibliotheken und nüchterne Layouts wirken wie 'internes Tool' statt 'produktreife Software'.",
+      "solution": "CRM-Interface von Grund auf designt und gebaut — animierte KPI-Karten, Pipeline-Kanban mit Drag-and-Drop, Umsatz-Charts in reinem CSS/SVG und Workflow-Automatisierung. Jedes Element auf visuelle Klarheit und Interaktionsqualität ausgelegt.",
+      "impact1Value": "0",
+      "impact1Label": "Externe Chart-Deps",
+      "impact2Value": "100%",
+      "impact2Label": "Custom CSS/SVG",
+      "impact3Value": "6",
+      "impact3Label": "Interaktive Views",
+      "viewDemo": "Live-Demo ansehen"
     },
     "mcp": {
       "title": "Code Context MCP — Interaktive Demo",
-      "desc": "Live-Demo von vlm-code-context-mcp: ein MCP-Server, der Codebases in strukturierten Kontext für KI-Agenten verwandelt. Sprint Board, Kanban, Team-Management, Retros — angetrieben von 81 Tools und einer SQLite-basierten Context Engine."
+      "desc": "Live-Demo von vlm-code-context-mcp: ein MCP-Server, der Codebases in strukturierten Kontext für KI-Agenten verwandelt. Sprint Board, Kanban, Team-Management, Retros — angetrieben von 81 Tools und einer SQLite-basierten Context Engine.",
+      "challenge": "KI-Coding-Assistenten verschwenden Tokens mit irrelevantem Kontext. Entwicklern fehlen strukturierte Wege, Projektwissen an LLMs zu übergeben — was zu Halluzinationen und verschwendeter Rechenleistung führt.",
+      "solution": "MCP-Server auf SQLite-Basis, der Codebasen in strukturierten Kontext indexiert. 81 Tools für Dateisuche, Sprint-Management, Retros und Team-Workflows — alles über ein einziges npm-Paket.",
+      "impact1Value": "25x",
+      "impact1Label": "Weniger Tokens",
+      "impact2Value": "81",
+      "impact2Label": "Tools",
+      "impact3Value": "1",
+      "impact3Label": "npm-Paket",
+      "viewDemo": "Live-Demo ansehen"
     },
     "enterprise": {
       "title": "Enterprise Workflow Automation",
@@ -212,6 +230,58 @@
         "Production Deployment & Monitoring"
       ],
       "cta": "Details anfragen"
+    },
+    "ml": {
+      "title": "ML-gestütztes Lead Matching",
+      "desc": "Untersucht, wie Machine Learning den optimalen Verkäufer für jeden eingehenden Lead ermitteln kann — trainiert auf historischen Unternehmensdaten zur Vorhersage, welche Zuordnungen konvertieren. Das Modell analysiert vergangene Deal-Ergebnisse, Verkäufer-Stärken und Lead-Attribute, um automatisch optimale Zuweisungen zu empfehlen.",
+      "metric": "Conversion-Steigerung",
+      "metricValue": "~6% → 11%",
+      "role": "Exploration / Prototyp",
+      "focus": "Data Science",
+      "cta": "Details anfragen",
+      "checks": [
+        "Historische Deal-Daten Analyse",
+        "Verkäufer–Lead Affinitäts-Scoring",
+        "Prädiktive Conversion-Modellierung",
+        "Automatisierte Zuweisungs-Empfehlungen"
+      ]
+    },
+    "bewerbermappe": {
+      "title": "bewerbermappe.com",
+      "desc": "Die digitale Bewerbermappe für Mieter in Deutschland mitentwickelt — Einkommensnachweise, Bonitätsauskünfte und Identitätsverifizierung in einem professionellen PDF. Bekannt aus BILD, Die Zeit und n-tv. Die gesamte User Journey von Landingpage bis Checkout gestaltet.",
+      "metric": "Pressebeiträge",
+      "metricValue": "3+",
+      "role": "Product Engineer",
+      "focus": "UX & Frontend",
+      "cta": "Website besuchen",
+      "ctaHref": "https://bewerbermappe.com",
+      "checks": [
+        "User Journey von Landing Page bis Checkout",
+        "Multi-Plugin WordPress-Architektur",
+        "Custom Theme-Entwicklung",
+        "Conversion-optimiertes Funnel Design"
+      ]
+    },
+    "arcade": {
+      "title": "Cyberpunk Arcade Shooter",
+      "desc": "Ein neongetränkter Arcade-Shooter, von Grund auf mit Rust und der Bevy Game Engine gebaut und dann zu WebAssembly für den Browser kompiliert. Läuft mit 60fps in jedem modernen Browser — keine Plugins, keine Installation. Mobile Touch-Steuerung inklusive.",
+      "challenge": "Rust jenseits von Backend-Services erkunden — die ECS-Architektur von Bevy, GPU-getriebenes Rendering und die Disziplin eines Borrow Checkers angewandt auf Echtzeit-Spiellogik mit 60 Bildern pro Sekunde.",
+      "solution": "Kompletten Arcade-Shooter mit Bevys Entity-Component-System gebaut, via wasm-bindgen zu WASM kompiliert und in eine Next.js-Seite mit Custom Touch-Steuerung für Mobile eingebettet. Null Laufzeit-Abhängigkeiten im Browser.",
+      "impact1Value": "Rust",
+      "impact1Label": "Gebaut mit",
+      "impact2Value": "60fps",
+      "impact2Label": "Im Browser",
+      "impact3Value": "WASM",
+      "impact3Label": "Keine Plugins",
+      "metric": "Gebaut mit",
+      "metricValue": "Rust",
+      "cta": "Im Browser spielen",
+      "checks": [
+        "Bevy ECS Game Engine (Rust)",
+        "WebAssembly Browser-Port",
+        "Mobile Touch-Steuerung",
+        "60fps Rendering Pipeline"
+      ]
     }
   },
   "about": {
@@ -298,7 +368,14 @@
     "errorMessage": "Fehler beim Senden. Bitte versuchen Sie es erneut.",
     "emailLink": "Kontaktieren",
     "linkedinLink": "Vernetzen",
-    "githubLink": "Code ansehen"
+    "githubLink": "Code ansehen",
+    "nameError": "Bitte mindestens 2 Zeichen eingeben",
+    "emailError": "Bitte eine gültige E-Mail-Adresse eingeben",
+    "messageError": "Bitte mindestens 10 Zeichen eingeben",
+    "successHeading": "Nachricht gesendet",
+    "successDescription": "Danke für deine Nachricht. Ich melde mich innerhalb von 24 Stunden.",
+    "redirecting": "Weiterleitung zur Startseite in {seconds}s...",
+    "errorDetailed": "Etwas ist schiefgelaufen. Bitte versuche es erneut oder schreibe mir direkt an velimir.mueller@googlemail.com"
   },
   "footer": {
     "tagline": "Senior Product Engineer.",
@@ -359,5 +436,21 @@
     "s7Text": "Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig ist in der Regel die Datenschutzbehörde Ihres Bundeslandes.",
     "s8Title": "8. SSL-Verschlüsselung",
     "s8Text": "Diese Website nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung, um übermittelte Daten zu schützen."
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Seite nicht gefunden",
+    "description": "Diese Route existiert nicht. Hier geht es wahrscheinlich weiter:",
+    "home": "Startseite",
+    "projects": "Projekte",
+    "contact": "Kontakt"
+  },
+  "errorPage": {
+    "heading": "Etwas ist schiefgelaufen",
+    "description": "Ein unerwarteter Fehler ist aufgetreten. Versuche die Seite neu zu laden oder nutze die Links unten.",
+    "retry": "Erneut versuchen",
+    "home": "Startseite",
+    "projects": "Projekte",
+    "contact": "Kontakt"
   }
 }
