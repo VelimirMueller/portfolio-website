@@ -65,6 +65,26 @@ export default function ProjectsContent() {
             accentColor="blue"
           />
         </AnimateIn>
+
+        <AnimateIn from="bottom" delay={300}>
+          <ExpandableProjectCard
+            title={t('projects.arcade.title')}
+            category="Game Dev"
+            techStack={['Rust', 'Bevy', 'WebAssembly', 'Touch Controls']}
+            metricValue={t('projects.arcade.impact1Value')}
+            metricLabel={t('projects.arcade.impact1Label')}
+            challenge={t('projects.arcade.challenge')}
+            solution={t('projects.arcade.solution')}
+            impacts={[
+              { value: t('projects.arcade.impact1Value'), label: t('projects.arcade.impact1Label') },
+              { value: t('projects.arcade.impact2Value'), label: t('projects.arcade.impact2Label') },
+              { value: t('projects.arcade.impact3Value'), label: t('projects.arcade.impact3Label') },
+            ]}
+            demoHref="/projects/cyberpunk-arcade"
+            demoLabel={t('projects.arcade.cta')}
+            accentColor="emerald"
+          />
+        </AnimateIn>
       </div>
 
       <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-12">
