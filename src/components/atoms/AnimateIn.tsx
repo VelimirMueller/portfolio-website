@@ -33,6 +33,26 @@ const getTranslate = (from: string, distance: number): string => {
   }
 };
 
+// Shared IntersectionObserver per threshold to avoid creating dozens of instances
+const observerMap = new Map<number, IntersectionObserver>();
+const callbackMap = new Map<Element, (isIntersecting: boolean) => void>();
+
+function getSharedObserver(threshold: number): IntersectionObserver {
+  if (!observerMap.has(threshold)) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const cb = callbackMap.get(entry.target);
+          if (cb) cb(entry.isIntersecting);
+        });
+      },
+      { threshold },
+    );
+    observerMap.set(threshold, observer);
+  }
+  return observerMap.get(threshold)!;
+}
+
 export const AnimateIn: React.FC<AnimateInProps> = ({
   children,
   from = 'bottom',
@@ -57,20 +77,25 @@ export const AnimateIn: React.FC<AnimateInProps> = ({
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (once) observer.disconnect();
-        } else if (!once) {
-          setIsVisible(false);
+    const observer = getSharedObserver(threshold);
+
+    callbackMap.set(el, (isIntersecting) => {
+      if (isIntersecting) {
+        setIsVisible(true);
+        if (once) {
+          observer.unobserve(el);
+          callbackMap.delete(el);
         }
-      },
-      { threshold },
-    );
+      } else if (!once) {
+        setIsVisible(false);
+      }
+    });
 
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      observer.unobserve(el);
+      callbackMap.delete(el);
+    };
   }, [threshold, once, reducedMotion]);
 
   // Clear inline styles after animation finishes so CSS hover transforms work

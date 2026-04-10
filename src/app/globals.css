@@ -91,7 +91,7 @@ body {
   }
 }
 
-/* Disable heavy effects for reduced motion + mobile perf */
+/* Disable heavy effects for reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -101,17 +101,38 @@ body {
   }
 }
 
-/* Disable backdrop-blur on low-end devices (touch without hover = mobile) */
+/* Mobile performance: disable GPU-heavy effects on touch devices */
 @media (hover: none) {
+  /* Kill backdrop-blur — use solid bg instead */
   .backdrop-blur-sm,
   .backdrop-blur-xl {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
-    background-color: rgba(255, 255, 255, 0.95) !important;
+    background-color: rgba(255, 255, 255, 0.97) !important;
   }
   .dark .backdrop-blur-sm,
   .dark .backdrop-blur-xl {
-    background-color: rgba(18, 18, 20, 0.95) !important;
+    background-color: rgba(18, 18, 20, 0.97) !important;
+  }
+
+  /* Kill all infinite animations — biggest mobile GPU drain */
+  .animate-stripe-1, .animate-stripe-2, .animate-stripe-3,
+  .animate-stripe-4, .animate-stripe-5,
+  .animate-pulse-glow, .animate-shimmer,
+  .animate-float, .animate-float-delayed,
+  .animate-gradient-slow, .animate-gradient-slower, .animate-gradient-reverse,
+  .animate-border-glow {
+    animation: none !important;
+  }
+
+  /* Simplify box-shadows on mobile */
+  .shadow-2xl {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Disable will-change on mobile — saves memory */
+  * {
+    will-change: auto !important;
   }
 }
 
