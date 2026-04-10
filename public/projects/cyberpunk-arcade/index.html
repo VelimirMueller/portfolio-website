@@ -8,7 +8,7 @@
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace; }
-        canvas { display: block; width: 100vw; height: 100vh; }
+        canvas { display: block; width: 100vw; height: 100vh; touch-action: none; }
 
         /* Top bar */
         .top-bar {
@@ -137,7 +137,7 @@
     <div id="loading">
         <div class="spinner"></div>
         <div class="load-text">Loading WASM...</div>
-        <div class="load-sub">~35MB · Rust + Bevy Engine</div>
+        <div class="load-sub">~36MB · Rust + Bevy Engine</div>
         <div id="error">
             <div class="error-text">Failed to load game</div>
             <div class="error-detail" id="error-msg"></div>

@@ -1,0 +1,69 @@
+[      14ms] [WARNING] The `integrity` attribute is currently ignored for preload destinations that do not support subresource integrity. See https://crbug.com/981419 for more information @ http://localhost:8888/:11
+[     486ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1630
+[     512ms] [LOG] %cINFO%c /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_winit-0.16.1/src/system.rs:66%c Creating new window Cyberpunk: The Incredible Bloom Cube (0v1) color: whitesmoke; background: #444 color: gray; font-style: italic color: inherit @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1247
+[    1686ms] [LOG] %cINFO%c /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_render-0.16.1/src/renderer/mod.rs:200%c AdapterInfo { name: "ANGLE (Intel, Mesa Intel(R) Arc(tm) Graphics (MTL), OpenGL 4.6)", vendor: 32902, device: 0, device_type: IntegratedGpu, driver: "", driver_info: "WebGL 2.0 (OpenGL ES 3.0 Chromium)", backend: Gl } color: whitesmoke; background: #444 color: gray; font-style: italic color: inherit @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1247
+[    1702ms] [LOG] %cINFO%c /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_render-0.16.1/src/batching/gpu_preprocessing.rs:1126%c GPU preprocessing is not supported on this device. Falling back to CPU preprocessing. color: whitesmoke; background: #444 color: gray; font-style: italic color: inherit @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1247
+[    1706ms] [LOG] %cWARN%c /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_core_pipeline-0.16.1/src/oit/resolve/mod.rs:83%c OrderIndependentTransparencyPlugin not loaded. GPU lacks support: DownlevelFlags::FRAGMENT_WRITABLE_STORAGE. color: orange; background: #444 color: gray; font-style: italic color: inherit @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1247
+[    1711ms] [LOG] %cWARN%c /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_pbr-0.16.1/src/ssao/mod.rs:92%c ScreenSpaceAmbientOcclusionPlugin not loaded. GPU lacks support: TextureFormat::R16Float does not support TextureUsages::STORAGE_BINDING. color: orange; background: #444 color: gray; font-style: italic color: inherit @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1247
+[    1715ms] [LOG] %cWARN%c /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_pbr-0.16.1/src/atmosphere/mod.rs:170%c AtmospherePlugin not loaded. GPU lacks support for compute shaders. color: orange; background: #444 color: gray; font-style: italic color: inherit @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1247
+[    1946ms] [LOG] %cINFO%c /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_core_pipeline-0.16.1/src/dof/mod.rs:824%c Disabling depth of field on this platform because depth textures aren't supported correctly color: whitesmoke; background: #444 color: gray; font-style: italic color: inherit @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1247
+[    2275ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1757
+[    2276ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1757
+[    2349ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8888/favicon.ico:0
+[    4074ms] [ERROR] panicked at /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_audio-0.16.1/src/audio_source.rs:102:56:
+called `Result::unwrap()` on an `Err` value: UnrecognizedFormat
+
+Stack:
+
+Error
+    at imports.wbg.__wbg_new_8a6f238a6ece86ea (http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1366:21)
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[88049]:0x207c2e1
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[23363]:0x19da7d6
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[48011]:0x1f509ea
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[31103]:0x1c4e32d
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[22196]:0x194f818
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[568]:0x20257b
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[7829]:0x10d8607
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[61539]:0x1fbac24
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[1069]:0x579c89
+
+ @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:922
+[    4080ms] RuntimeError: unreachable
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[23363]:0x19da7fc
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[48011]:0x1f509ea
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[31103]:0x1c4e32d
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[22196]:0x194f818
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[568]:0x20257b
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[7829]:0x10d8607
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[61539]:0x1fbac24
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[1069]:0x579c89
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[21291]:0x18b4efe
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[5713]:0xe6ba32
+[    9594ms] [ERROR] panicked at /home/velimir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winit-0.30.11/src/platform_impl/web/event_loop/runner.rs:683:69:
+already borrowed: BorrowMutError
+
+Stack:
+
+Error
+    at imports.wbg.__wbg_new_8a6f238a6ece86ea (http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:1366:21)
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[88049]:0x207c2e1
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[23363]:0x19da7d6
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[48011]:0x1f509ea
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[40407]:0x1d88c1c
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[9387]:0x1227532
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[31888]:0x1c76e72
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[51209]:0x1f72646
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[61894]:0x1fbd5be
+    at __wbg_adapter_39 (http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:267:10)
+
+ @ http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:922
+[    9596ms] RuntimeError: unreachable
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[23363]:0x19da7fc
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[48011]:0x1f509ea
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[40407]:0x1d88c1c
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[9387]:0x1227532
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[31888]:0x1c76e72
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[51209]:0x1f72646
+    at http://localhost:8888/cyberpunk_rpg-7689e40f8581e958_bg.wasm:wasm-function[61894]:0x1fbd5be
+    at __wbg_adapter_39 (http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:267:10)
+    at real (http://localhost:8888/cyberpunk_rpg-7689e40f8581e958.js:183:20)
