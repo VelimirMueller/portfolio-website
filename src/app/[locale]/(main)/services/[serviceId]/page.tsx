@@ -27,6 +27,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${t(`${serviceId}.title`)} — Velimir Müller`,
     description: t(`${serviceId}.description`),
+    alternates: {
+      canonical: `https://www.velimir-mueller.de/${locale}/services/${serviceId}`,
+    },
   };
 }
 

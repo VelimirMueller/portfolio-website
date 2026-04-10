@@ -13,6 +13,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: t('metaTitle'),
     description: t('metaDesc'),
+    alternates: {
+      canonical: `https://www.velimir-mueller.de/${locale}/projects`,
+    },
   };
 }
 
