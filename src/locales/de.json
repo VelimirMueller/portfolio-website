@@ -188,11 +188,29 @@
     "launchDemo": "Launch Demo",
     "dashboard": {
       "title": "CRM Dashboard Interface",
-      "desc": "Interaktives Hyper-Growth Startup CRM mit animierten KPIs, Sales Pipeline, Workflow-Automatisierung und Revenue Analytics. Modernes Dashboard-Design mit Custom Charts (CSS/SVG only) und Micro-Interactions."
+      "desc": "Interaktives Hyper-Growth Startup CRM mit animierten KPIs, Sales Pipeline, Workflow-Automatisierung und Revenue Analytics. Modernes Dashboard-Design mit Custom Charts (CSS/SVG only) und Micro-Interactions.",
+      "challenge": "Manuelle Zuweisungs-Workflows bei GALVANY kosteten täglich 4+ Stunden. Vertriebsmitarbeiter jonglierten mit Tabellen, verpassten Follow-ups und hatten keine Echtzeit-Pipeline-Übersicht.",
+      "solution": "Drag-and-Drop CRM-Pipeline mit Echtzeit-Sync, animierten KPIs, Workflow-Automatisierung und Umsatzanalysen. Custom Charts (nur CSS/SVG) für abhängigkeitsfreie Dashboards.",
+      "impact1Value": "3-4x",
+      "impact1Label": "Schnellere Zuweisung",
+      "impact2Value": "11%",
+      "impact2Label": "Progn. Conversion",
+      "impact3Value": "0",
+      "impact3Label": "Externe Chart-Deps",
+      "viewDemo": "Live-Demo ansehen"
     },
     "mcp": {
       "title": "Code Context MCP — Interaktive Demo",
-      "desc": "Live-Demo von vlm-code-context-mcp: ein MCP-Server, der Codebases in strukturierten Kontext für KI-Agenten verwandelt. Sprint Board, Kanban, Team-Management, Retros — angetrieben von 81 Tools und einer SQLite-basierten Context Engine."
+      "desc": "Live-Demo von vlm-code-context-mcp: ein MCP-Server, der Codebases in strukturierten Kontext für KI-Agenten verwandelt. Sprint Board, Kanban, Team-Management, Retros — angetrieben von 81 Tools und einer SQLite-basierten Context Engine.",
+      "challenge": "KI-Coding-Assistenten verschwenden Tokens mit irrelevantem Kontext. Entwicklern fehlen strukturierte Wege, Projektwissen an LLMs zu übergeben — was zu Halluzinationen und verschwendeter Rechenleistung führt.",
+      "solution": "MCP-Server auf SQLite-Basis, der Codebasen in strukturierten Kontext indexiert. 81 Tools für Dateisuche, Sprint-Management, Retros und Team-Workflows — alles über ein einziges npm-Paket.",
+      "impact1Value": "25x",
+      "impact1Label": "Weniger Tokens",
+      "impact2Value": "81",
+      "impact2Label": "Tools",
+      "impact3Value": "1",
+      "impact3Label": "npm-Paket",
+      "viewDemo": "Live-Demo ansehen"
     },
     "enterprise": {
       "title": "Enterprise Workflow Automation",
@@ -298,7 +316,14 @@
     "errorMessage": "Fehler beim Senden. Bitte versuchen Sie es erneut.",
     "emailLink": "Kontaktieren",
     "linkedinLink": "Vernetzen",
-    "githubLink": "Code ansehen"
+    "githubLink": "Code ansehen",
+    "nameError": "Bitte mindestens 2 Zeichen eingeben",
+    "emailError": "Bitte eine gültige E-Mail-Adresse eingeben",
+    "messageError": "Bitte mindestens 10 Zeichen eingeben",
+    "successHeading": "Nachricht gesendet",
+    "successDescription": "Danke für deine Nachricht. Ich melde mich innerhalb von 24 Stunden.",
+    "redirecting": "Weiterleitung zur Startseite in {seconds}s...",
+    "errorDetailed": "Etwas ist schiefgelaufen. Bitte versuche es erneut oder schreibe mir direkt an velimir.mueller@googlemail.com"
   },
   "footer": {
     "tagline": "Senior Product Engineer.",
@@ -359,5 +384,21 @@
     "s7Text": "Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig ist in der Regel die Datenschutzbehörde Ihres Bundeslandes.",
     "s8Title": "8. SSL-Verschlüsselung",
     "s8Text": "Diese Website nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung, um übermittelte Daten zu schützen."
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Seite nicht gefunden",
+    "description": "Diese Route existiert nicht. Hier geht es wahrscheinlich weiter:",
+    "home": "Startseite",
+    "projects": "Projekte",
+    "contact": "Kontakt"
+  },
+  "errorPage": {
+    "heading": "Etwas ist schiefgelaufen",
+    "description": "Ein unerwarteter Fehler ist aufgetreten. Versuche die Seite neu zu laden oder nutze die Links unten.",
+    "retry": "Erneut versuchen",
+    "home": "Startseite",
+    "projects": "Projekte",
+    "contact": "Kontakt"
   }
 }

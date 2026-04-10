@@ -188,11 +188,29 @@
     "launchDemo": "Launch Demo",
     "dashboard": {
       "title": "CRM Dashboard Interface",
-      "desc": "Interactive hyper-growth startup CRM with animated KPIs, sales pipeline, workflow automation, and revenue analytics. Modern dashboard design with custom charts (CSS/SVG only) and micro-interactions."
+      "desc": "Interactive hyper-growth startup CRM with animated KPIs, sales pipeline, workflow automation, and revenue analytics. Modern dashboard design with custom charts (CSS/SVG only) and micro-interactions.",
+      "challenge": "Manual assignment workflows at GALVANY consumed 4+ hours daily. Sales reps juggled spreadsheets, missed follow-ups, and lacked real-time pipeline visibility.",
+      "solution": "Built a drag-and-drop CRM pipeline with real-time sync, animated KPIs, workflow automation, and revenue analytics. Custom charts (CSS/SVG only) for zero-dependency dashboards.",
+      "impact1Value": "3-4x",
+      "impact1Label": "Faster Assignment",
+      "impact2Value": "11%",
+      "impact2Label": "Predicted Conversion",
+      "impact3Value": "0",
+      "impact3Label": "External Chart Deps",
+      "viewDemo": "View Live Demo"
     },
     "mcp": {
       "title": "Code Context MCP — Interactive Demo",
-      "desc": "Live demo of vlm-code-context-mcp: an MCP server that turns codebases into structured context for AI agents. Sprint board, Kanban, team management, retros — all powered by 81 tools and a SQLite-backed context engine."
+      "desc": "Live demo of vlm-code-context-mcp: an MCP server that turns codebases into structured context for AI agents. Sprint board, Kanban, team management, retros — all powered by 81 tools and a SQLite-backed context engine.",
+      "challenge": "AI coding assistants waste tokens sending irrelevant context. Developers lack structured ways to feed project knowledge into LLMs, leading to hallucinations and wasted compute.",
+      "solution": "Built an MCP server backed by SQLite that indexes codebases into structured context. 81 tools covering file search, sprint management, retros, and team workflows — all through a single npm package.",
+      "impact1Value": "25x",
+      "impact1Label": "Fewer Tokens",
+      "impact2Value": "81",
+      "impact2Label": "Tools",
+      "impact3Value": "1",
+      "impact3Label": "npm Package",
+      "viewDemo": "View Live Demo"
     },
     "enterprise": {
       "title": "Enterprise Workflow Automation",
@@ -298,7 +316,14 @@
     "errorMessage": "Error sending message. Please try again.",
     "emailLink": "Get in touch",
     "linkedinLink": "Connect",
-    "githubLink": "View Code"
+    "githubLink": "View Code",
+    "nameError": "Please enter at least 2 characters",
+    "emailError": "Please enter a valid email address",
+    "messageError": "Please enter at least 10 characters",
+    "successHeading": "Message sent",
+    "successDescription": "Thanks for reaching out. I'll get back to you within 24 hours.",
+    "redirecting": "Redirecting to home in {seconds}s...",
+    "errorDetailed": "Something went wrong. Please try again or email me directly at velimir.mueller@googlemail.com"
   },
   "footer": {
     "tagline": "Senior Product Engineer.",
@@ -359,5 +384,21 @@
     "s7Text": "You have the right to lodge a complaint with a data protection supervisory authority. The responsible authority is usually the data protection authority of your federal state.",
     "s8Title": "8. SSL Encryption",
     "s8Text": "For security reasons, this website uses SSL or TLS encryption to protect transmitted data."
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Page not found",
+    "description": "This route doesn't resolve. Here's where you probably meant to go:",
+    "home": "Home",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "errorPage": {
+    "heading": "Something went wrong",
+    "description": "An unexpected error occurred. Try refreshing the page or use the links below.",
+    "retry": "Try Again",
+    "home": "Home",
+    "projects": "Projects",
+    "contact": "Contact"
   }
 }
