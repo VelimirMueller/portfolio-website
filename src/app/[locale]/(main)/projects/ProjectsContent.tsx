@@ -80,7 +80,7 @@ export default function ProjectsContent() {
               { value: t('projects.arcade.impact2Value'), label: t('projects.arcade.impact2Label') },
               { value: t('projects.arcade.impact3Value'), label: t('projects.arcade.impact3Label') },
             ]}
-            demoHref="/projects/cyberpunk-arcade"
+            demoHref="/projects/cyberpunk-arcade/index.html"
             demoLabel={t('projects.arcade.cta')}
             accentColor="orange"
           />
