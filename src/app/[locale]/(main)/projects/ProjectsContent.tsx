@@ -1,12 +1,11 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { ArrowUpRight, Cpu, Check, LayoutDashboard, ArrowRight, Terminal } from 'lucide-react';
+import { ArrowUpRight, Cpu, Check } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
-import { BentoCard } from '@/components/molecules/BentoCard';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
+import { ExpandableProjectCard } from '@/components/molecules/ExpandableProjectCard';
 import { useTranslations } from 'next-intl';
 
 export default function ProjectsContent() {
@@ -20,90 +19,50 @@ export default function ProjectsContent() {
       </AnimateIn>
 
       {/* --- FEATURED DEMOS --- */}
-      <div className="mb-16 space-y-4 sm:space-y-6">
-         <AnimateIn from="left">
-           <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
-         </AnimateIn>
+      <div className="mb-16 space-y-4">
+        <AnimateIn from="left">
+          <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
+        </AnimateIn>
 
-         {/* MCP Demo */}
-         <AnimateIn from="bottom-left" delay={100}>
-         <Link href="/projects/mcp-demo" className="block group">
-           <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-emerald-500/20 hover:border-emerald-500/50 transition-all animate-border-glow">
-              <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8">
-                 <div className="flex-1">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono mb-4 border border-emerald-500/20">
-                       <Terminal size={12} />
-                       <span>{t('projects.liveUiDemo')}</span>
-                    </div>
-                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.mcp.title')}</h2>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-                       {t('projects.mcp.desc')}
-                    </p>
-                    <div className="flex items-center text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold group-hover:translate-x-2 transition-transform">
-                       {t('projects.launchDemo')} <ArrowRight size={14} className="ml-2" />
-                    </div>
-                 </div>
+        <AnimateIn from="bottom" delay={100}>
+          <ExpandableProjectCard
+            title={t('projects.mcp.title')}
+            category="Developer Tool"
+            techStack={['Node.js', 'TypeScript', 'SQLite', 'MCP']}
+            metricValue={t('projects.mcp.impact1Value')}
+            metricLabel={t('projects.mcp.impact1Label')}
+            challenge={t('projects.mcp.challenge')}
+            solution={t('projects.mcp.solution')}
+            impacts={[
+              { value: t('projects.mcp.impact1Value'), label: t('projects.mcp.impact1Label') },
+              { value: t('projects.mcp.impact2Value'), label: t('projects.mcp.impact2Label') },
+              { value: t('projects.mcp.impact3Value'), label: t('projects.mcp.impact3Label') },
+            ]}
+            demoHref="/projects/mcp-demo"
+            demoLabel={t('projects.mcp.viewDemo')}
+            accentColor="emerald"
+          />
+        </AnimateIn>
 
-                 <div className="w-full md:w-1/3 aspect-[2/1] sm:aspect-video bg-[#0c0c10] rounded-xl border border-emerald-500/10 p-4 relative overflow-hidden shadow-2xl group-hover:shadow-emerald-900/10 transition-shadow">
-                    {/* Mini sprint board preview */}
-                    <div className="absolute top-3 left-3 right-3 h-5 bg-[#131318] rounded border border-[#1c1c28] flex items-center px-2 gap-1.5">
-                       <div className="w-2 h-2 rounded-full bg-emerald-500/60"></div>
-                       <div className="w-12 h-1.5 bg-[#1c1c28] rounded-full"></div>
-                    </div>
-                    <div className="absolute top-11 left-3 right-3 flex gap-1.5 h-full">
-                       <div className="flex-1 flex flex-col gap-1">
-                          <div className="h-2 bg-emerald-500/20 rounded-sm"></div>
-                          <div className="h-6 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                          <div className="h-5 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                       </div>
-                       <div className="flex-1 flex flex-col gap-1">
-                          <div className="h-2 bg-amber-500/20 rounded-sm"></div>
-                          <div className="h-8 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                       </div>
-                       <div className="flex-1 flex flex-col gap-1">
-                          <div className="h-2 bg-emerald-500/30 rounded-sm"></div>
-                          <div className="h-5 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                          <div className="h-5 bg-[#131318] rounded border border-[#1c1c28]"></div>
-                       </div>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c10] to-transparent pointer-events-none"></div>
-                 </div>
-              </div>
-           </BentoCard>
-         </Link>
-         </AnimateIn>
-
-         {/* CRM Dashboard */}
-         <AnimateIn from="bottom" delay={200}>
-         <Link href="/projects/dashboard-demo" className="block group">
-           <BentoCard className="bg-gradient-to-r from-gray-50 to-white dark:from-[#111] dark:to-[#0A0A0A] border-blue-500/20 hover:border-blue-500/50 transition-all animate-border-glow">
-              <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8">
-                 <div className="flex-1">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-mono mb-4 border border-blue-500/20">
-                       <LayoutDashboard size={12} />
-                       <span>{t('projects.liveUiDemo')}</span>
-                    </div>
-                    <h2 className="text-2xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.dashboard.title')}</h2>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-                       {t('projects.dashboard.desc')}
-                    </p>
-                    <div className="flex items-center text-blue-600 dark:text-blue-400 font-mono text-xs font-bold group-hover:translate-x-2 transition-transform">
-                       {t('projects.launchDemo')} <ArrowRight size={14} className="ml-2" />
-                    </div>
-                 </div>
-
-                 <div className="w-full md:w-1/3 aspect-[2/1] sm:aspect-video bg-gray-100 dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-[#222] p-4 relative overflow-hidden shadow-2xl group-hover:shadow-blue-900/10 transition-shadow">
-                    <div className="absolute top-4 left-4 w-12 h-full bg-white dark:bg-[#111] rounded-l-lg border-r border-gray-200 dark:border-[#222]"></div>
-                    <div className="absolute top-4 left-20 right-4 h-8 bg-white dark:bg-[#111] rounded-lg border border-gray-200 dark:border-transparent"></div>
-                    <div className="absolute top-16 left-20 w-1/3 h-24 bg-white dark:bg-[#111] rounded-lg border border-gray-200 dark:border-[#222]"></div>
-                    <div className="absolute top-16 left-[45%] w-1/3 h-24 bg-white dark:bg-[#111] rounded-lg border border-gray-200 dark:border-[#222]"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-100 dark:from-[#050505] to-transparent pointer-events-none"></div>
-                 </div>
-              </div>
-           </BentoCard>
-         </Link>
-         </AnimateIn>
-
+        <AnimateIn from="bottom" delay={200}>
+          <ExpandableProjectCard
+            title={t('projects.dashboard.title')}
+            category="Enterprise SaaS"
+            techStack={['React', 'TypeScript', 'CSS/SVG', 'Supabase']}
+            metricValue={t('projects.dashboard.impact1Value')}
+            metricLabel={t('projects.dashboard.impact1Label')}
+            challenge={t('projects.dashboard.challenge')}
+            solution={t('projects.dashboard.solution')}
+            impacts={[
+              { value: t('projects.dashboard.impact1Value'), label: t('projects.dashboard.impact1Label') },
+              { value: t('projects.dashboard.impact2Value'), label: t('projects.dashboard.impact2Label') },
+              { value: t('projects.dashboard.impact3Value'), label: t('projects.dashboard.impact3Label') },
+            ]}
+            demoHref="/projects/dashboard-demo"
+            demoLabel={t('projects.dashboard.viewDemo')}
+            accentColor="blue"
+          />
+        </AnimateIn>
       </div>
 
       <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-12">
