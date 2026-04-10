@@ -82,7 +82,7 @@ export default function ProjectsContent() {
             ]}
             demoHref="/projects/cyberpunk-arcade"
             demoLabel={t('projects.arcade.cta')}
-            accentColor="emerald"
+            accentColor="orange"
           />
         </AnimateIn>
       </div>

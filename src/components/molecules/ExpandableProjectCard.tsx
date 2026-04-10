@@ -20,7 +20,7 @@ interface ExpandableProjectCardProps {
   impacts: Impact[];
   demoHref: string;
   demoLabel: string;
-  accentColor: 'blue' | 'emerald';
+  accentColor: 'blue' | 'emerald' | 'orange';
 }
 
 const accentClasses = {
@@ -37,6 +37,13 @@ const accentClasses = {
     label: 'text-emerald-600 dark:text-emerald-400',
     impact: 'border-emerald-500/10',
     link: 'text-emerald-600 dark:text-emerald-400',
+  },
+  orange: {
+    badge: 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20',
+    metric: 'text-orange-600 dark:text-orange-400',
+    label: 'text-orange-600 dark:text-orange-400',
+    impact: 'border-orange-500/10',
+    link: 'text-orange-600 dark:text-orange-400',
   },
 };
 
