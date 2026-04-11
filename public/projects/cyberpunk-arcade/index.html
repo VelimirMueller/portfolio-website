@@ -300,8 +300,8 @@
         try {
             var mod;
             if (useMobileVersion) {
-                mod = await import('/games/cyberpunk_mobile/cyberpunk_rpg-ee32df92de054409.js');
-                await mod.default({ module_or_path: '/games/cyberpunk_mobile/cyberpunk_rpg-ee32df92de054409_bg.wasm' });
+                mod = await import('/games/cyberpunk_mobile/cyberpunk_rpg-2d7ec96c04b7370c.js');
+                await mod.default({ module_or_path: '/games/cyberpunk_mobile/cyberpunk_rpg-2d7ec96c04b7370c_bg.wasm' });
             } else {
                 mod = await import('/games/cyberpunk/game.js');
                 await mod.default({ module_or_path: '/games/cyberpunk/game_bg.wasm' });
