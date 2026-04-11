@@ -203,6 +203,14 @@ function makeMutClosure(arg0, arg1, dtor, f) {
         state.a = 0;
         try {
             return f(a, state.b, ...args);
+        } catch (e) {
+            if (e && e.message === '__WASM_PANIC_INTERCEPTED__') {
+                // Panic was intercepted (time not implemented / audio format).
+                // WASM instance is still alive — schedule next frame to keep game loop running.
+                requestAnimationFrame(function(ts) { try { real(ts); } catch(_) {} });
+                return;
+            }
+            throw e;
         } finally {
             if (--state.cnt === 0) {
                 wasm.__wbindgen_export_4.get(state.dtor)(a, state.b);
@@ -939,12 +947,19 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_error_7534b8e9a36f1ab4 = function(arg0, arg1) {
         let deferred0_0;
         let deferred0_1;
+        let _panicIntercept = false;
         try {
             deferred0_0 = arg0;
             deferred0_1 = arg1;
-            console.error(getStringFromWasm0(arg0, arg1));
+            const msg = getStringFromWasm0(arg0, arg1);
+            if (msg.includes('time not implemented') || msg.includes('UnrecognizedFormat')) {
+                _panicIntercept = true;
+            } else {
+                console.error(msg);
+            }
         } finally {
             wasm.__wbindgen_export_3(deferred0_0, deferred0_1, 1);
+            if (_panicIntercept) throw new Error('__WASM_PANIC_INTERCEPTED__');
         }
     };
     imports.wbg.__wbg_eval_e10dc02e9547f640 = function() { return handleError(function (arg0, arg1) {
