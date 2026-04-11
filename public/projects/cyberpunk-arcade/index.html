@@ -45,6 +45,33 @@
         .load-text { color: rgba(255,255,255,0.5); font-size: 13px; }
         .load-sub { color: rgba(255,255,255,0.25); font-size: 10px; }
 
+        /* Version badge */
+        .version-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 12px; border-radius: 999px;
+            font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .version-badge.desktop {
+            background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+            color: rgba(129,140,248,0.9);
+        }
+        .version-badge.mobile {
+            background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.3);
+            color: rgba(251,146,60,0.9);
+        }
+        .version-badge .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+        .version-badge.desktop .dot { background: #818cf8; }
+        .version-badge.mobile .dot { background: #fb923c; }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         /* Error state */
         #error { display: none; flex-direction: column; align-items: center; gap: 12px; }
         #error.show { display: flex; }
@@ -135,9 +162,13 @@
 
     <!-- Loading -->
     <div id="loading">
+        <div id="version-badge" class="version-badge desktop">
+            <span class="dot"></span>
+            <span id="version-label">Desktop</span>
+        </div>
         <div class="spinner"></div>
-        <div class="load-text">Loading WASM...</div>
-        <div class="load-sub">~36MB · Rust + Bevy Engine</div>
+        <div class="load-text">Loading <span id="load-version">Desktop</span> Build...</div>
+        <div class="load-sub" id="load-detail">~36MB · Rust + Bevy Engine</div>
         <div id="error">
             <div class="error-text">Failed to load game</div>
             <div class="error-detail" id="error-msg"></div>
@@ -168,8 +199,18 @@
 
     <script>
         var isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        var isSmallScreen = window.innerWidth < 768 || (isMobile && window.innerWidth < 1024);
+        var useMobileVersion = isMobile || isSmallScreen;
         var canvas = document.getElementById('game-canvas');
         var rotatePrompt = document.getElementById('rotate-prompt');
+
+        // Update loading screen to reflect which version is loading
+        if (useMobileVersion) {
+            document.getElementById('version-badge').className = 'version-badge mobile';
+            document.getElementById('version-label').textContent = 'Mobile';
+            document.getElementById('load-version').textContent = 'Mobile';
+            document.getElementById('load-detail').textContent = '~14MB · Optimized Mobile Build';
+        }
 
         // Mobile setup
         if (isMobile) {
@@ -183,7 +224,6 @@
                 var rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
                 if (rfs) {
                     rfs.call(el).then(function() {
-                        // Try to lock to landscape
                         if (screen.orientation && screen.orientation.lock) {
                             screen.orientation.lock('landscape').catch(function() {});
                         }
@@ -203,7 +243,6 @@
             window.addEventListener('resize', checkOrientation);
             window.addEventListener('orientationchange', checkOrientation);
             document.addEventListener('fullscreenchange', checkOrientation);
-            // Initial check after a brief delay (let viewport settle)
             setTimeout(checkOrientation, 300);
         }
 
@@ -215,7 +254,6 @@
             var pressed = false;
 
             function fireKey(type) {
-                // Bevy/winit captures keyboard events on the canvas element
                 canvas.dispatchEvent(new KeyboardEvent(type, {
                     key: key, code: code, bubbles: true, cancelable: true
                 }));
@@ -255,14 +293,24 @@
     </script>
 
     <script type="module">
+        var isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        var isSmallScreen = window.innerWidth < 768 || (isMobile && window.innerWidth < 1024);
+        var useMobileVersion = isMobile || isSmallScreen;
+
         try {
-            var mod = await import('/games/cyberpunk/game.js');
-            await mod.default({ module_or_path: '/games/cyberpunk/game_bg.wasm' });
+            var mod;
+            if (useMobileVersion) {
+                mod = await import('/games/cyberpunk_mobile/cyberpunk_rpg-ee32df92de054409.js');
+                await mod.default({ module_or_path: '/games/cyberpunk_mobile/cyberpunk_rpg-ee32df92de054409_bg.wasm' });
+            } else {
+                mod = await import('/games/cyberpunk/game.js');
+                await mod.default({ module_or_path: '/games/cyberpunk/game_bg.wasm' });
+            }
+
             document.getElementById('loading').classList.add('hidden');
 
-            // Auto-request fullscreen + landscape on mobile after game loads
-            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                // Give the user a moment, then check orientation
+            // Auto-check orientation on mobile after game loads
+            if (isMobile) {
                 setTimeout(function() {
                     if (window.innerHeight > window.innerWidth) {
                         document.getElementById('rotate-prompt').style.display = 'flex';
