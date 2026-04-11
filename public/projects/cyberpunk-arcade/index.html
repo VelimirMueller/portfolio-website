@@ -9,8 +9,8 @@
     <meta name="description" content="A neon-drenched arcade shooter built with Rust and Bevy, compiled to WebAssembly. Play in your browser." />
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace; }
-        canvas { display: block; width: 100vw; height: 100vh; touch-action: none; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace; touch-action: none; }
+        canvas { display: block; width: 100vw; height: 100vh; touch-action: none; will-change: transform; contain: strict; }
 
         /* ── Top bar ── */
         .top-bar {
@@ -18,8 +18,9 @@
             display: flex; align-items: center; justify-content: space-between;
             padding: 12px 16px;
             padding-top: max(12px, env(safe-area-inset-top));
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            background: rgba(0,0,0,0.6);
             pointer-events: none;
+            contain: layout style;
         }
         .back-link {
             display: flex; align-items: center; gap: 6px;
@@ -29,6 +30,8 @@
         .back-link:hover { color: #fff; }
         .back-link svg { width: 14px; height: 14px; }
         .controls-hint { color: rgba(255,255,255,0.3); font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .top-bar.auto-hide { opacity: 0; transition: opacity 1s ease-out; }
+        .top-bar.auto-hide:hover, .top-bar.auto-hide:active { opacity: 1; transition: opacity 0.2s; }
 
         /* ── Loading overlay ── */
         #loading {
@@ -136,6 +139,7 @@
             padding: 8px 20px;
             padding-bottom: max(14px, env(safe-area-inset-bottom));
             pointer-events: none;
+            contain: layout style;
         }
         .touch-inner {
             display: flex; align-items: flex-end; justify-content: space-between;
@@ -155,14 +159,10 @@
             display: flex; align-items: center; justify-content: center;
             user-select: none; touch-action: none;
             -webkit-tap-highlight-color: transparent;
-            transition: background 0.08s, border-color 0.08s, box-shadow 0.08s;
-            will-change: background, border-color, box-shadow;
-            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
         }
         .touch-btn.active {
-            background: rgba(249,115,22,0.2);
-            border-color: rgba(249,115,22,0.45);
-            box-shadow: 0 0 14px rgba(249,115,22,0.25), inset 0 0 6px rgba(249,115,22,0.08);
+            background: rgba(249,115,22,0.25);
+            border-color: rgba(249,115,22,0.5);
             color: #fff;
         }
         .touch-btn.fire {
@@ -172,9 +172,8 @@
             border-color: rgba(239,68,68,0.25);
         }
         .touch-btn.fire.active {
-            background: rgba(239,68,68,0.3);
-            border-color: rgba(239,68,68,0.55);
-            box-shadow: 0 0 18px rgba(239,68,68,0.35), inset 0 0 8px rgba(239,68,68,0.12);
+            background: rgba(239,68,68,0.35);
+            border-color: rgba(239,68,68,0.6);
         }
         .touch-btn.start-btn {
             width: 48px; height: 48px;
@@ -183,9 +182,8 @@
             border-color: rgba(34,197,94,0.2);
         }
         .touch-btn.start-btn.active {
-            background: rgba(34,197,94,0.25);
+            background: rgba(34,197,94,0.3);
             border-color: rgba(34,197,94,0.5);
-            box-shadow: 0 0 14px rgba(34,197,94,0.25);
         }
 
         @media (pointer: coarse), (hover: none) {
@@ -267,12 +265,10 @@
 
         /* ── PERF: Cap devicePixelRatio on mobile ──
          * A 3x iPhone renders 9x more pixels than CSS pixels.
-         * Capping DPR to 1.5 reduces GPU load ~4x while staying sharp enough. */
+         * Capping DPR to 1.0 gives maximum perf — still sharp on small screens. */
         if (useMobileVersion) {
-            var _nativeDPR = window.devicePixelRatio || 1;
-            var _cappedDPR = Math.min(_nativeDPR, 1.5);
             Object.defineProperty(window, 'devicePixelRatio', {
-                get: function() { return _cappedDPR; },
+                get: function() { return 1; },
                 configurable: true
             });
         }
@@ -379,8 +375,7 @@
             });
         })();
 
-        /* Prevent scroll/zoom on game area */
-        document.body.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+        /* scroll/zoom prevention handled by CSS touch-action:none on body — no JS listener needed */
     </script>
 
     <script type="module">
@@ -460,6 +455,11 @@
             var loading = document.getElementById('loading');
             loading.classList.add('hidden');
             setTimeout(function() { loading.style.display = 'none'; }, 500);
+
+            /* Auto-hide top bar after 3s to free up a compositor layer */
+            setTimeout(function() {
+                document.querySelector('.top-bar').classList.add('auto-hide');
+            }, 3000);
 
             if (isMobile) {
                 setTimeout(function() {
