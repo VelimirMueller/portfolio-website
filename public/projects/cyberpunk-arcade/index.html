@@ -262,6 +262,57 @@
         var useMobileVersion = isMobile || isSmallScreen;
         var canvas = document.getElementById('game-canvas');
         var rotatePrompt = document.getElementById('rotate-prompt');
+        var wasmCrashed = false;
+
+        /* ── FIX: Disable Web Audio on mobile ──
+         * The Bevy WASM build panics in bevy_audio when decoding audio assets
+         * (UnrecognizedFormat). Without AudioContext, Bevy's audio output system
+         * skips playback entirely, preventing the fatal WASM trap.
+         * Procedural audio (SineWave/Pitch) is also skipped — no sound on mobile
+         * but no crash either. */
+        if (useMobileVersion) {
+            window.AudioContext = undefined;
+            window.webkitAudioContext = undefined;
+        }
+
+        /* ── FIX: Intercept fetch for missing audio assets ──
+         * Bevy's asset server fetches audio via HTTP. If files are missing,
+         * the server may return HTML (404 page) which the decoder can't parse.
+         * Return a proper 404 so Bevy handles it as NotFound instead of decoding garbage. */
+        (function() {
+            var _origFetch = window.fetch;
+            window.fetch = function(input) {
+                var url = typeof input === 'string' ? input : (input && input.url ? input.url : '');
+                var isAssetReq = /\/(assets|sounds?|audio|sfx|music)\//i.test(url)
+                    || /\.(ogg|mp3|wav|flac|opus)(\?|$)/i.test(url);
+                if (!isAssetReq) return _origFetch.apply(this, arguments);
+                return _origFetch.apply(this, arguments).then(function(resp) {
+                    var ct = (resp.headers.get('content-type') || '');
+                    if (ct.includes('text/html') || ct.includes('application/json')) {
+                        return new Response(null, { status: 404, statusText: 'Not Found' });
+                    }
+                    return resp;
+                }).catch(function() {
+                    return new Response(null, { status: 404, statusText: 'Not Found' });
+                });
+            };
+        })();
+
+        /* ── FIX: Catch WASM crashes to prevent cascade errors ──
+         * Once WASM hits 'unreachable', the instance is dead. Catching the
+         * RuntimeError prevents the secondary BorrowMutError from winit. */
+        window.addEventListener('error', function(e) {
+            if (e.error instanceof WebAssembly.RuntimeError) {
+                e.preventDefault();
+                wasmCrashed = true;
+            }
+        });
+        window.addEventListener('unhandledrejection', function(e) {
+            if (e.reason instanceof WebAssembly.RuntimeError) {
+                e.preventDefault();
+                wasmCrashed = true;
+            }
+        });
 
         /* ── PERF: Cap devicePixelRatio on mobile ──
          * A 3x iPhone renders 9x more pixels than CSS pixels.
@@ -335,25 +386,43 @@
             var buttons = document.querySelectorAll('.touch-btn');
 
             function fireKey(type, key, code) {
+                if (wasmCrashed) return;
                 canvas.dispatchEvent(new KeyboardEvent(type, {
                     key: key, code: code, bubbles: true, cancelable: true
                 }));
             }
 
+            function clearAllKeys() {
+                Object.keys(activeKeys).forEach(function(k) {
+                    clearInterval(activeKeys[k]);
+                    delete activeKeys[k];
+                });
+                buttons.forEach(function(b) { b.classList.remove('active'); });
+            }
+
             buttons.forEach(function(btn) {
                 var key = btn.dataset.key;
                 var code = btn.dataset.code;
+                /* Enter/Space are one-shot presses, not hold-to-repeat.
+                 * WASD movement keys repeat for continuous input. */
+                var isOneShot = (code === 'Enter' || code === 'Space');
 
                 function startPress(e) {
                     e.preventDefault();
                     e.stopPropagation();
+                    if (wasmCrashed) return;
                     if (activeKeys[code]) return;
                     btn.classList.add('active');
                     if (navigator.vibrate) navigator.vibrate(12);
                     fireKey('keydown', key, code);
-                    activeKeys[code] = setInterval(function() {
-                        fireKey('keydown', key, code);
-                    }, 60);
+                    if (!isOneShot) {
+                        activeKeys[code] = setInterval(function() {
+                            if (wasmCrashed) { clearAllKeys(); return; }
+                            fireKey('keydown', key, code);
+                        }, 60);
+                    } else {
+                        activeKeys[code] = true;
+                    }
                 }
 
                 function endPress(e) {
@@ -361,7 +430,7 @@
                     e.stopPropagation();
                     if (!activeKeys[code]) return;
                     btn.classList.remove('active');
-                    clearInterval(activeKeys[code]);
+                    if (typeof activeKeys[code] === 'number') clearInterval(activeKeys[code]);
                     delete activeKeys[code];
                     fireKey('keyup', key, code);
                 }
