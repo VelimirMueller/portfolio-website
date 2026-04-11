@@ -274,11 +274,11 @@ export default function ProjectsContent() {
                     <span className="px-3 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400 text-[10px] font-mono border border-rose-500/20 uppercase">Startup</span>
                     <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white text-[10px] font-mono border border-black/10 dark:border-white/20 uppercase">Featured in Press</span>
                  </div>
-                 <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.bewerbermappe.title')}</h2>
+                 <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">{t('projects.bewerbermappe.title')}</h2>
                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                     {t('projects.bewerbermappe.desc')}
                  </p>
-                 <div className="flex items-center gap-4 mb-6">
+                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
                     <div className="bg-white dark:bg-[#0a0a0a] border border-black/5 dark:border-white/5 rounded-lg px-4 py-3 flex items-center gap-3">
                        <div className="text-3xl font-mono font-black text-black dark:text-white">{t('projects.bewerbermappe.metricValue')}</div>
                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('projects.bewerbermappe.metric')}</div>

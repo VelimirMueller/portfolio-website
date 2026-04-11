@@ -9,13 +9,13 @@
         html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
         canvas { display: block; width: 100%; height: 100%; }
     </style>
-<link rel="modulepreload" href="/games/cyberpunk_mobile/cyberpunk_rpg-d4da93eb63bc5ffa.js" crossorigin="anonymous"><link rel="preload" href="/games/cyberpunk_mobile/cyberpunk_rpg-d4da93eb63bc5ffa_bg.wasm" crossorigin="anonymous" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/cyberpunk_rpg-e038910870e956ef.js" crossorigin="anonymous"><link rel="preload" href="/cyberpunk_rpg-e038910870e956ef_bg.wasm" crossorigin="anonymous" as="fetch" type="application/wasm"></head>
 <body>
     <canvas id="game-canvas"></canvas>
     
 <script type="module">
-import init, * as bindings from '/games/cyberpunk_mobile/cyberpunk_rpg-d4da93eb63bc5ffa.js';
-const wasm = await init({ module_or_path: '/games/cyberpunk_mobile/cyberpunk_rpg-d4da93eb63bc5ffa_bg.wasm' });
+import init, * as bindings from '/cyberpunk_rpg-e038910870e956ef.js';
+const wasm = await init({ module_or_path: '/cyberpunk_rpg-e038910870e956ef_bg.wasm' });
 
 
 window.wasmBindings = bindings;
