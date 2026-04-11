@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>Cyberpunk Arcade Shooter — Velimir Müller</title>
     <meta name="description" content="A neon-drenched arcade shooter built with Rust and Bevy, compiled to WebAssembly. Play in your browser." />
     <style>
@@ -10,11 +12,12 @@
         html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace; }
         canvas { display: block; width: 100vw; height: 100vh; touch-action: none; }
 
-        /* Top bar */
+        /* ── Top bar ── */
         .top-bar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 20;
             display: flex; align-items: center; justify-content: space-between;
             padding: 12px 16px;
+            padding-top: max(12px, env(safe-area-inset-top));
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
             pointer-events: none;
         }
@@ -27,39 +30,44 @@
         .back-link svg { width: 14px; height: 14px; }
         .controls-hint { color: rgba(255,255,255,0.3); font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; }
 
-        /* Loading overlay */
+        /* ── Loading overlay ── */
         #loading {
             position: fixed; inset: 0; z-index: 10;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: #000; gap: 16px;
+            background: #000; gap: 20px;
+            transition: opacity 0.4s ease-out;
         }
-        #loading.hidden { display: none; }
-        .spinner {
-            width: 32px; height: 32px;
-            border: 3px solid rgba(249,115,22,0.2);
-            border-top-color: #f97316;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        #loading.hidden { opacity: 0; pointer-events: none; }
+
+        /* Scanline overlay */
+        #loading::before {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg, transparent, transparent 2px,
+                rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 4px
+            );
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .load-text { color: rgba(255,255,255,0.5); font-size: 13px; }
-        .load-sub { color: rgba(255,255,255,0.25); font-size: 10px; }
+
+        .game-title {
+            font-size: 16px; font-weight: 700; letter-spacing: 6px;
+            text-transform: uppercase; color: rgba(255,255,255,0.85);
+            text-shadow: 0 0 20px rgba(249,115,22,0.4), 0 0 60px rgba(249,115,22,0.1);
+        }
 
         /* Version badge */
         .version-badge {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 4px 12px; border-radius: 999px;
-            font-size: 11px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px;
-            margin-bottom: 4px;
+            font-size: 10px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1.5px;
         }
         .version-badge.desktop {
-            background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
-            color: rgba(129,140,248,0.9);
+            background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.25);
+            color: rgba(129,140,248,0.85);
         }
         .version-badge.mobile {
-            background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.3);
-            color: rgba(251,146,60,0.9);
+            background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25);
+            color: rgba(251,146,60,0.85);
         }
         .version-badge .dot {
             width: 6px; height: 6px; border-radius: 50%;
@@ -67,25 +75,51 @@
         }
         .version-badge.desktop .dot { background: #818cf8; }
         .version-badge.mobile .dot { background: #fb923c; }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* Error state */
+        /* Progress bar */
+        .progress-wrap {
+            width: min(300px, 75vw);
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+        }
+        .progress-track {
+            width: 100%; height: 3px;
+            background: rgba(255,255,255,0.06); border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; width: 0%; border-radius: 2px;
+            background: linear-gradient(90deg, #f97316, #fb923c);
+            box-shadow: 0 0 10px rgba(249,115,22,0.5), 0 0 30px rgba(249,115,22,0.15);
+            transition: width 0.2s ease-out;
+        }
+        .progress-fill.pulse {
+            animation: bar-pulse 1.6s ease-in-out infinite;
+        }
+        @keyframes bar-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .load-info {
+            display: flex; flex-direction: column; align-items: center; gap: 3px;
+        }
+        .load-text { color: rgba(255,255,255,0.45); font-size: 11px; letter-spacing: 0.3px; }
+        .load-detail { color: rgba(255,255,255,0.2); font-size: 10px; }
+
+        /* Error */
         #error { display: none; flex-direction: column; align-items: center; gap: 12px; }
         #error.show { display: flex; }
         .error-text { color: #f87171; font-size: 14px; }
-        .error-detail { color: rgba(255,255,255,0.3); font-size: 11px; max-width: 400px; text-align: center; }
+        .error-detail { color: rgba(255,255,255,0.3); font-size: 11px; max-width: 400px; text-align: center; word-break: break-word; }
         .reload-btn {
-            margin-top: 8px; padding: 8px 20px; background: #1a1a1a;
-            border: 1px solid #333; color: #aaa; border-radius: 8px;
-            cursor: pointer; font-family: inherit; font-size: 12px;
-            transition: border-color 0.2s;
+            padding: 8px 20px; background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.5);
+            border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 12px;
+            transition: all 0.2s;
         }
-        .reload-btn:hover { border-color: #666; }
+        .reload-btn:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
 
-        /* Rotate prompt for portrait mobile */
+        /* ── Rotate prompt ── */
         #rotate-prompt {
             display: none; position: fixed; inset: 0; z-index: 100;
             background: #000; color: #fff;
@@ -94,46 +128,65 @@
         #rotate-prompt .rotate-icon { font-size: 48px; animation: wiggle 1.5s ease-in-out infinite; }
         #rotate-prompt .rotate-text { font-size: 14px; color: rgba(255,255,255,0.6); }
         #rotate-prompt .rotate-sub { font-size: 11px; color: rgba(255,255,255,0.3); }
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-15deg); }
-            75% { transform: rotate(15deg); }
-        }
+        @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
 
-        /* Mobile touch controls */
+        /* ── Touch controls ── */
         .touch-controls {
             display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
-            padding: 12px 16px 24px;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 8px 20px;
+            padding-bottom: max(14px, env(safe-area-inset-bottom));
             pointer-events: none;
         }
         .touch-inner {
             display: flex; align-items: flex-end; justify-content: space-between;
-            max-width: 560px; margin: 0 auto;
+            max-width: 600px; margin: 0 auto;
             pointer-events: auto;
         }
         .dpad { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .dpad-row { display: flex; gap: 4px; }
-        .actions { display: flex; align-items: center; gap: 10px; }
+        .actions { display: flex; align-items: center; gap: 12px; }
+
         .touch-btn {
-            width: 52px; height: 52px; border-radius: 12px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.8);
-            font-size: 13px; font-weight: bold; font-family: inherit;
+            width: 56px; height: 56px; border-radius: 14px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.6);
+            font-size: 13px; font-weight: 700; font-family: inherit;
             display: flex; align-items: center; justify-content: center;
             user-select: none; touch-action: none;
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.08s, border-color 0.08s, box-shadow 0.08s;
+            will-change: background, border-color, box-shadow;
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
         }
-        .touch-btn.active { background: rgba(255,255,255,0.3); transform: scale(0.9); }
-        .touch-btn.large {
-            width: 68px; height: 68px; font-size: 18px;
-            background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.4);
+        .touch-btn.active {
+            background: rgba(249,115,22,0.2);
+            border-color: rgba(249,115,22,0.45);
+            box-shadow: 0 0 14px rgba(249,115,22,0.25), inset 0 0 6px rgba(249,115,22,0.08);
+            color: #fff;
         }
-        .touch-btn.large.active { background: rgba(239,68,68,0.5); }
+        .touch-btn.fire {
+            width: 72px; height: 72px; border-radius: 50%;
+            font-size: 20px;
+            background: rgba(239,68,68,0.1);
+            border-color: rgba(239,68,68,0.25);
+        }
+        .touch-btn.fire.active {
+            background: rgba(239,68,68,0.3);
+            border-color: rgba(239,68,68,0.55);
+            box-shadow: 0 0 18px rgba(239,68,68,0.35), inset 0 0 8px rgba(239,68,68,0.12);
+        }
         .touch-btn.start-btn {
-            width: 52px; height: 52px;
-            background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.3);
+            width: 48px; height: 48px;
+            font-size: 15px;
+            background: rgba(34,197,94,0.08);
+            border-color: rgba(34,197,94,0.2);
         }
-        .touch-btn.start-btn.active { background: rgba(34,197,94,0.4); }
+        .touch-btn.start-btn.active {
+            background: rgba(34,197,94,0.25);
+            border-color: rgba(34,197,94,0.5);
+            box-shadow: 0 0 14px rgba(34,197,94,0.25);
+        }
 
         @media (pointer: coarse), (hover: none) {
             .touch-controls { display: block; }
@@ -142,7 +195,7 @@
     </style>
 </head>
 <body>
-    <!-- Rotate prompt for portrait mobile -->
+    <!-- Rotate prompt -->
     <div id="rotate-prompt">
         <div class="rotate-icon">📱↻</div>
         <div class="rotate-text">Rotate to landscape</div>
@@ -166,9 +219,16 @@
             <span class="dot"></span>
             <span id="version-label">Desktop</span>
         </div>
-        <div class="spinner"></div>
-        <div class="load-text">Loading <span id="load-version">Desktop</span> Build...</div>
-        <div class="load-sub" id="load-detail">~36MB · Rust + Bevy Engine</div>
+        <div class="game-title">Cyberpunk Arcade</div>
+        <div class="progress-wrap">
+            <div class="progress-track">
+                <div class="progress-fill pulse" id="progress-fill"></div>
+            </div>
+            <div class="load-info">
+                <div class="load-text" id="load-text">Initializing...</div>
+                <div class="load-detail" id="load-detail">Rust + Bevy Engine</div>
+            </div>
+        </div>
         <div id="error">
             <div class="error-text">Failed to load game</div>
             <div class="error-detail" id="error-msg"></div>
@@ -176,10 +236,10 @@
         </div>
     </div>
 
-    <!-- Game canvas — Bevy looks for #game-canvas -->
+    <!-- Game canvas — Bevy targets #game-canvas -->
     <canvas id="game-canvas"></canvas>
 
-    <!-- Mobile touch controls -->
+    <!-- Touch controls -->
     <div class="touch-controls" id="touch-controls">
         <div class="touch-inner">
             <div class="dpad">
@@ -192,33 +252,61 @@
             </div>
             <div class="actions">
                 <button class="touch-btn start-btn" data-key="Enter" data-code="Enter">▶</button>
-                <button class="touch-btn large" data-key=" " data-code="Space">⊕</button>
+                <button class="touch-btn fire" data-key=" " data-code="Space">⊕</button>
             </div>
         </div>
     </div>
 
     <script>
+        /* ── Device detection ── */
         var isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         var isSmallScreen = window.innerWidth < 768 || (isMobile && window.innerWidth < 1024);
         var useMobileVersion = isMobile || isSmallScreen;
         var canvas = document.getElementById('game-canvas');
         var rotatePrompt = document.getElementById('rotate-prompt');
 
-        // Update loading screen to reflect which version is loading
+        /* ── PERF: Cap devicePixelRatio on mobile ──
+         * A 3x iPhone renders 9x more pixels than CSS pixels.
+         * Capping DPR to 1.5 reduces GPU load ~4x while staying sharp enough. */
+        if (useMobileVersion) {
+            var _nativeDPR = window.devicePixelRatio || 1;
+            var _cappedDPR = Math.min(_nativeDPR, 1.5);
+            Object.defineProperty(window, 'devicePixelRatio', {
+                get: function() { return _cappedDPR; },
+                configurable: true
+            });
+        }
+
+        /* ── PERF: Mobile-optimized WebGL context ──
+         * Intercept getContext before Bevy/wgpu creates its context.
+         * antialias:false is a huge GPU win; desynchronized reduces latency. */
+        if (useMobileVersion) {
+            var _origGetCtx = HTMLCanvasElement.prototype.getContext;
+            HTMLCanvasElement.prototype.getContext = function(type, attrs) {
+                if (type === 'webgl2' || type === 'webgl') {
+                    attrs = Object.assign({}, attrs || {}, {
+                        antialias: false,
+                        powerPreference: 'high-performance',
+                        desynchronized: true,
+                        preserveDrawingBuffer: false
+                    });
+                }
+                return _origGetCtx.call(this, type, attrs);
+            };
+        }
+
+        /* ── Loading screen version ── */
         if (useMobileVersion) {
             document.getElementById('version-badge').className = 'version-badge mobile';
             document.getElementById('version-label').textContent = 'Mobile';
-            document.getElementById('load-version').textContent = 'Mobile';
-            document.getElementById('load-detail').textContent = '~14MB · Optimized Mobile Build';
         }
 
-        // Mobile setup
+        /* ── Orientation + fullscreen (mobile only) ── */
         if (isMobile) {
             document.getElementById('touch-hint').style.display = '';
-            var desktopHint = document.querySelector('.controls-hint-desktop');
-            if (desktopHint) desktopHint.style.display = 'none';
+            var dh = document.querySelector('.controls-hint-desktop');
+            if (dh) dh.style.display = 'none';
 
-            // Fullscreen + landscape lock
             document.getElementById('fullscreen-btn').addEventListener('click', function() {
                 var el = document.documentElement;
                 var rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
@@ -232,7 +320,6 @@
                 rotatePrompt.style.display = 'none';
             });
 
-            // Show rotate prompt in portrait
             function checkOrientation() {
                 if (!document.fullscreenElement && window.innerHeight > window.innerWidth) {
                     rotatePrompt.style.display = 'flex';
@@ -246,49 +333,53 @@
             setTimeout(checkOrientation, 300);
         }
 
-        // Touch controls — dispatch to CANVAS (where Bevy/winit listens)
-        document.querySelectorAll('.touch-btn').forEach(function(btn) {
-            var key = btn.dataset.key;
-            var code = btn.dataset.code;
-            var interval = null;
-            var pressed = false;
+        /* ── Touch controls ── */
+        (function() {
+            var activeKeys = {};
+            var buttons = document.querySelectorAll('.touch-btn');
 
-            function fireKey(type) {
+            function fireKey(type, key, code) {
                 canvas.dispatchEvent(new KeyboardEvent(type, {
                     key: key, code: code, bubbles: true, cancelable: true
                 }));
             }
 
-            function startPress(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (pressed) return;
-                pressed = true;
-                btn.classList.add('active');
-                fireKey('keydown');
-                interval = setInterval(function() { fireKey('keydown'); }, 60);
-            }
+            buttons.forEach(function(btn) {
+                var key = btn.dataset.key;
+                var code = btn.dataset.code;
 
-            function endPress(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (!pressed) return;
-                pressed = false;
-                btn.classList.remove('active');
-                fireKey('keyup');
-                clearInterval(interval);
-                interval = null;
-            }
+                function startPress(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (activeKeys[code]) return;
+                    btn.classList.add('active');
+                    if (navigator.vibrate) navigator.vibrate(12);
+                    fireKey('keydown', key, code);
+                    activeKeys[code] = setInterval(function() {
+                        fireKey('keydown', key, code);
+                    }, 60);
+                }
 
-            btn.addEventListener('touchstart', startPress, { passive: false });
-            btn.addEventListener('touchend', endPress, { passive: false });
-            btn.addEventListener('touchcancel', endPress, { passive: false });
-            btn.addEventListener('mousedown', startPress);
-            btn.addEventListener('mouseup', endPress);
-            btn.addEventListener('mouseleave', endPress);
-        });
+                function endPress(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!activeKeys[code]) return;
+                    btn.classList.remove('active');
+                    clearInterval(activeKeys[code]);
+                    delete activeKeys[code];
+                    fireKey('keyup', key, code);
+                }
 
-        // Prevent default touch actions on the game area to avoid scrolling
+                btn.addEventListener('touchstart', startPress, { passive: false });
+                btn.addEventListener('touchend', endPress, { passive: false });
+                btn.addEventListener('touchcancel', endPress, { passive: false });
+                btn.addEventListener('mousedown', startPress);
+                btn.addEventListener('mouseup', endPress);
+                btn.addEventListener('mouseleave', endPress);
+            });
+        })();
+
+        /* Prevent scroll/zoom on game area */
         document.body.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
     </script>
 
@@ -297,19 +388,79 @@
         var isSmallScreen = window.innerWidth < 768 || (isMobile && window.innerWidth < 1024);
         var useMobileVersion = isMobile || isSmallScreen;
 
-        try {
-            var mod;
-            if (useMobileVersion) {
-                mod = await import('/games/cyberpunk_mobile/cyberpunk_rpg-2d7ec96c04b7370c.js');
-                await mod.default({ module_or_path: '/games/cyberpunk_mobile/cyberpunk_rpg-2d7ec96c04b7370c_bg.wasm' });
-            } else {
-                mod = await import('/games/cyberpunk/game.js');
-                await mod.default({ module_or_path: '/games/cyberpunk/game_bg.wasm' });
+        var progressFill = document.getElementById('progress-fill');
+        var loadText = document.getElementById('load-text');
+        var loadDetail = document.getElementById('load-detail');
+
+        function mb(bytes) { return (bytes / 1048576).toFixed(1); }
+
+        /**
+         * Fetch with real-time download progress.
+         * Falls back to opaque fetch if content-length or ReadableStream is unavailable.
+         */
+        async function fetchWasm(url) {
+            var resp = await fetch(url);
+            var total = parseInt(resp.headers.get('content-length') || '0', 10);
+
+            if (!total || !resp.body || !resp.body.getReader) {
+                loadText.textContent = 'Downloading...';
+                return await resp.arrayBuffer();
             }
 
-            document.getElementById('loading').classList.add('hidden');
+            progressFill.classList.remove('pulse');
+            var reader = resp.body.getReader();
+            var chunks = [];
+            var received = 0;
+            var t0 = performance.now();
 
-            // Auto-check orientation on mobile after game loads
+            for (;;) {
+                var r = await reader.read();
+                if (r.done) break;
+                chunks.push(r.value);
+                received += r.value.length;
+
+                var pct = received / total;
+                var speed = received / ((performance.now() - t0) / 1000);
+
+                progressFill.style.width = (pct * 100) + '%';
+                loadText.textContent = Math.round(pct * 100) + '%  ·  ' + mb(received) + ' / ' + mb(total) + ' MB';
+                loadDetail.textContent = mb(speed) + ' MB/s';
+            }
+
+            var buf = new Uint8Array(received);
+            var off = 0;
+            for (var i = 0; i < chunks.length; i++) { buf.set(chunks[i], off); off += chunks[i].length; }
+            return buf.buffer;
+        }
+
+        try {
+            var jsPath, wasmPath;
+            if (useMobileVersion) {
+                jsPath  = '/games/cyberpunk_mobile/cyberpunk_rpg-2d7ec96c04b7370c.js';
+                wasmPath = '/games/cyberpunk_mobile/cyberpunk_rpg-2d7ec96c04b7370c_bg.wasm';
+            } else {
+                jsPath  = '/games/cyberpunk/game.js';
+                wasmPath = '/games/cyberpunk/game_bg.wasm';
+            }
+
+            /* Phase 1 — download WASM with progress */
+            loadText.textContent = 'Downloading ' + (useMobileVersion ? 'mobile' : 'desktop') + ' build...';
+            var wasmBytes = await fetchWasm(wasmPath);
+
+            /* Phase 2 — compile + initialize */
+            progressFill.style.width = '100%';
+            progressFill.classList.add('pulse');
+            loadText.textContent = 'Compiling WebAssembly...';
+            loadDetail.textContent = 'almost ready';
+
+            var mod = await import(jsPath);
+            await mod.default({ module_or_path: wasmBytes });
+
+            /* Phase 3 — reveal game */
+            var loading = document.getElementById('loading');
+            loading.classList.add('hidden');
+            setTimeout(function() { loading.style.display = 'none'; }, 500);
+
             if (isMobile) {
                 setTimeout(function() {
                     if (window.innerHeight > window.innerWidth) {
@@ -319,9 +470,8 @@
             }
         } catch (e) {
             console.error('WASM init failed:', e);
-            document.querySelector('.spinner').style.display = 'none';
-            document.querySelector('.load-text').style.display = 'none';
-            document.querySelector('.load-sub').style.display = 'none';
+            document.querySelector('.progress-wrap').style.display = 'none';
+            document.querySelector('.game-title').style.display = 'none';
             document.getElementById('error-msg').textContent = e.message || 'Unknown error';
             document.getElementById('error').classList.add('show');
         }
