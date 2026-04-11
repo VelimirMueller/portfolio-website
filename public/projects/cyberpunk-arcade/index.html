@@ -264,15 +264,78 @@
         var rotatePrompt = document.getElementById('rotate-prompt');
         var wasmCrashed = false;
 
-        /* ── FIX: Disable Web Audio on mobile ──
-         * The Bevy WASM build panics in bevy_audio when decoding audio assets
-         * (UnrecognizedFormat). Without AudioContext, Bevy's audio output system
-         * skips playback entirely, preventing the fatal WASM trap.
-         * Procedural audio (SineWave/Pitch) is also skipped — no sound on mobile
-         * but no crash either. */
+        /* ── FIX: Silent AudioContext stub for mobile ──
+         * The Bevy WASM build panics in bevy_audio when decoding audio
+         * (UnrecognizedFormat). Setting AudioContext=undefined caused a worse
+         * problem: unprotected bindings (currentTime, start, connect) threw
+         * TypeErrors inside the game loop, aborting every frame that tried
+         * to play sound — so shooting never worked.
+         *
+         * This stub provides a fully functional but silent AudioContext.
+         * All Web Audio API calls succeed (returning no-op nodes), the game
+         * loop never panics, and bullets spawn normally. No audio on mobile. */
         if (useMobileVersion) {
-            window.AudioContext = undefined;
-            window.webkitAudioContext = undefined;
+            (function() {
+                function SilentNode() {
+                    this.numberOfInputs = 1;
+                    this.numberOfOutputs = 1;
+                    this.channelCount = 2;
+                    this.buffer = null;
+                    this.loop = false;
+                    this.onended = null;
+                }
+                SilentNode.prototype.connect = function() { return this; };
+                SilentNode.prototype.disconnect = function() {};
+                SilentNode.prototype.start = function() {
+                    var self = this;
+                    if (self.onended) setTimeout(function() { if (self.onended) self.onended(); }, 0);
+                };
+                SilentNode.prototype.stop = function() {};
+                SilentNode.prototype.addEventListener = function() {};
+                SilentNode.prototype.removeEventListener = function() {};
+
+                function SilentDestination() {
+                    this.maxChannelCount = 2;
+                    this.channelCount = 2;
+                    this.numberOfInputs = 1;
+                    this.numberOfOutputs = 0;
+                }
+                SilentDestination.prototype.connect = function() { return this; };
+                SilentDestination.prototype.disconnect = function() {};
+
+                function SilentAudioContext() {
+                    this.state = 'running';
+                    this.sampleRate = 44100;
+                    this._t0 = performance.now();
+                    this.destination = new SilentDestination();
+                }
+                Object.defineProperty(SilentAudioContext.prototype, 'currentTime', {
+                    get: function() { return (performance.now() - this._t0) / 1000; }
+                });
+                var p = SilentAudioContext.prototype;
+                p.createBuffer = function(ch, len, rate) {
+                    var s = rate || this.sampleRate;
+                    var l = len || 1;
+                    var buf = { sampleRate: s, length: l, numberOfChannels: ch || 1, duration: l / s };
+                    buf.getChannelData = function() { return new Float32Array(l); };
+                    buf.copyToChannel = function() {};
+                    return buf;
+                };
+                p.createBufferSource = function() {
+                    return new SilentNode();
+                };
+                p.decodeAudioData = function(buf, ok, err) {
+                    var silent = this.createBuffer(1, 1, this.sampleRate);
+                    if (ok) { ok(silent); return; }
+                    return Promise.resolve(silent);
+                };
+                p.resume = function() { this.state = 'running'; return Promise.resolve(); };
+                p.suspend = function() { this.state = 'suspended'; return Promise.resolve(); };
+                p.close = function() { this.state = 'closed'; return Promise.resolve(); };
+
+                window.AudioContext = SilentAudioContext;
+                window.webkitAudioContext = SilentAudioContext;
+            })();
         }
 
         /* ── FIX: Intercept fetch for missing audio assets ──
@@ -403,9 +466,10 @@
             buttons.forEach(function(btn) {
                 var key = btn.dataset.key;
                 var code = btn.dataset.code;
-                /* Enter/Space are one-shot presses, not hold-to-repeat.
-                 * WASD movement keys repeat for continuous input. */
-                var isOneShot = (code === 'Enter' || code === 'Space');
+                /* Enter is one-shot (start/restart). Space (fire) repeats
+                 * like WASD so the game sees the key as held — matches
+                 * physical keyboard auto-repeat and enables continuous fire. */
+                var isOneShot = (code === 'Enter');
 
                 function startPress(e) {
                     e.preventDefault();
