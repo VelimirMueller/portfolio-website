@@ -1,34 +1,54 @@
-```
-velimir-portfolio
-=================
-Senior Frontend Engineer / Product Engineer -- Portfolio & Services
-```
+<div align="center">
 
-<br>
+# velimir-portfolio
 
-Personal portfolio and service platform for **Velimir Mueller**, built to showcase end-to-end product engineering: from requirements analysis and UX/UI design through frontend development to automated deployment.
+**Senior Frontend Engineer / Product Engineer**
 
-**Live:** [velimir-mueller.com](https://velimir-mueller.com)
+Personal portfolio and service platform showcasing end-to-end product engineering — from requirements analysis and UX/UI design through frontend development to automated deployment.
 
-<br>
+[![Live Site](https://img.shields.io/badge/Live-velimir--mueller.com-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://velimir-mueller.com)
+[![CI](https://img.shields.io/github/actions/workflow/status/VelimirMueller/portfolio-website/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/VelimirMueller/portfolio-website/actions)
+
+![Next.js](https://img.shields.io/badge/Next.js_14-000000?style=flat-square&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white)
+![Storybook](https://img.shields.io/badge/Storybook-FF4785?style=flat-square&logo=storybook&logoColor=white)
+
+</div>
 
 ---
 
-<br>
+## Table of Contents
+
+- [Stack](#stack)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Scripts](#scripts)
+- [Testing](#testing)
+- [Storybook](#storybook)
+- [CI / CD](#ci--cd)
+- [Pages](#pages)
+- [Design](#design)
+- [Deployment](#deployment)
+
+---
 
 ## Stack
 
 | Layer | Technology |
-|:------|:-----------|
+| :--- | :--- |
 | Framework | Next.js 14 (App Router) |
 | Language | TypeScript (strict) |
 | Styling | Tailwind CSS |
 | Backend | Supabase |
 | Deployment | Vercel |
-| Testing | Jest + React Testing Library + Playwright |
+| Testing | Jest · React Testing Library · Playwright |
 | AI Tooling | Claude AI |
 
-<br>
+---
 
 ## Architecture
 
@@ -36,180 +56,188 @@ The project follows **Atomic Design** with a clear separation between presentati
 
 ```
 src/
-  app/
-    (main)/
-      page.tsx             # Bento grid homepage
-      about/page.tsx       # Profile, skills, experience timeline
-      services/page.tsx    # End-to-end service offerings
-      projects/page.tsx    # Work & interactive demos
-      contact/page.tsx     # Contact form & social links
-    projects/
-      dashboard-demo/      # Live CRM dashboard demo
-  components/
-    atoms/                 # Button, Input, Icon, Typography
-    molecules/             # BentoCard, SectionHeader, SearchBar
-    organisms/             # NavigationBar, LoginForm
-    templates/             # Page layouts
-  containers/              # Smart components (state, side effects, API)
-  utils/
-    supabase/
-      server.ts            # SSR Supabase client
-      client.ts            # CSR Supabase client
-  hooks/
-  types/
+├── app/
+│   ├── (main)/
+│   │   ├── page.tsx              # Bento grid homepage
+│   │   ├── about/page.tsx        # Profile, skills, experience timeline
+│   │   ├── services/page.tsx     # End-to-end service offerings
+│   │   ├── projects/page.tsx     # Work & interactive demos
+│   │   └── contact/page.tsx      # Contact form & social links
+│   └── projects/
+│       └── dashboard-demo/       # Live CRM dashboard demo
+├── components/
+│   ├── atoms/                    # Button, Input, Icon, Typography
+│   ├── molecules/                # BentoCard, SectionHeader, SearchBar
+│   ├── organisms/                # NavigationBar, LoginForm
+│   └── templates/                # Page layouts
+├── containers/                   # Smart components (state, side effects, API)
+├── utils/
+│   └── supabase/
+│       ├── server.ts             # SSR Supabase client
+│       └── client.ts             # CSR Supabase client
+├── hooks/
+└── types/
 ```
 
-**Presentational components** receive data via props, contain no business logic, and are easy to test.
-**Container components** manage state, handle side effects, and pass data down.
+> **Presentational components** receive data via props, contain no business logic, and are easy to test.
+> **Container components** manage state, handle side effects, and pass data down.
 
-<br>
+---
 
-## Getting started
+## Getting Started
 
 ```bash
-# Clone
+# Clone the repository
 git clone https://github.com/VelimirMueller/velimir-portfolio.git
 cd velimir-portfolio
 
-# Install
+# Install dependencies
 npm install
 
-# Environment
+# Set up environment variables
 cp .env.example .env.local
-# Add your Supabase URL and anon key to .env.local
+# → Add your Supabase URL and anon key to .env.local
 
-# Dev server
+# Start the dev server
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000).
+Open **[localhost:3000](http://localhost:3000)** to view the app.
 
-<br>
+---
 
 ## Scripts
 
 | Command | Description |
-|:--------|:------------|
+| :--- | :--- |
 | `npm run dev` | Start development server |
 | `npm run build` | Production build |
 | `npm run start` | Serve production build |
 | `npm run lint` | ESLint check |
-| `npm test` | Run Jest tests |
+| `npm test` | Run Jest unit tests |
 | `npm run test:watch` | Jest in watch mode |
 | `npm run test:coverage` | Jest with coverage report |
 | `npm run type-check` | TypeScript type check (no emit) |
-| `npm run storybook` | Start Storybook dev server on port 6006 |
+| `npm run storybook` | Start Storybook on port 6006 |
 | `npm run build-storybook` | Build static Storybook site |
-| `npm run test:visual` | Run Playwright visual regression tests against Storybook |
-| `npm run test:e2e` | Run Playwright E2E tests against the app |
+| `npm run test:visual` | Playwright visual regression tests |
+| `npm run test:e2e` | Playwright E2E tests |
 
-<br>
+---
+
+## Testing
+
+### Unit & Integration Tests
+
+Jest with React Testing Library for component and utility testing.
+
+```bash
+npm test                  # Run all tests
+npm run test:watch        # Watch mode
+npm run test:coverage     # Generate coverage report
+```
+
+### Visual Regression Tests
+
+Playwright screenshots every Storybook story and compares against baselines.
+
+```bash
+npm run test:visual -- --update-snapshots   # Generate baselines
+npm run test:visual                          # Run comparison
+```
+
+> Config: `playwright-storybook.config.ts` · Tests: `e2e/storybook-visual.spec.ts`
+
+### End-to-End Tests
+
+Full E2E tests using [Playwright](https://playwright.dev/) against the production build — covering navigation, theme/language toggle, contact form, service pages, project demos, and 404 handling.
+
+```bash
+npm run test:e2e                        # Run all E2E tests
+npm run test:e2e -- --grep "Navigation" # Run specific tests
+```
+
+> Config: `playwright.config.ts` · Tests: `e2e/app.spec.ts`
+
+---
 
 ## Storybook
 
-Component library and visual documentation using [Storybook 8](https://storybook.js.org/).
+Component library and visual documentation powered by [Storybook 8](https://storybook.js.org/).
 
 ```bash
-npm run storybook
+npm run storybook   # → localhost:6006
 ```
 
-Open [localhost:6006](http://localhost:6006). Components are organized by Atomic Design:
+Components are organized by Atomic Design:
 
-- **Atoms** -- Button, CodeBlock, LanguageToggle
-- **Molecules** -- BentoCard, SectionHeader
-- **Organisms** -- Navigation, Footer
+- **Atoms** — Button, CodeBlock, LanguageToggle
+- **Molecules** — BentoCard, SectionHeader
+- **Organisms** — Navigation, Footer
 
-Features: autodocs, controls panel, dark/light mode toolbar toggle, responsive viewport presets, accessibility audit panel (a11y).
+Features include autodocs, controls panel, dark/light mode toolbar toggle, responsive viewport presets, and accessibility audit panel (a11y).
 
-### Visual Regression Testing
+---
 
-Uses Playwright to screenshot every Storybook story and compare against baselines.
-
-```bash
-# Generate baseline screenshots (first run)
-npm run test:visual -- --update-snapshots
-
-# Run regression comparison
-npm run test:visual
-```
-
-Config: `playwright-storybook.config.ts` | Tests: `e2e/storybook-visual.spec.ts`
-
-<br>
-
-## E2E Testing
-
-End-to-end tests using [Playwright](https://playwright.dev/) against the production build. Covers all pages, navigation, theme/language toggle, contact form, service detail pages, project demos, and 404 handling.
-
-```bash
-# Run all E2E tests (builds app automatically)
-npm run test:e2e
-
-# Run specific test file
-npm run test:e2e -- --grep "Navigation"
-```
-
-Config: `playwright.config.ts` | Tests: `e2e/app.spec.ts`
-
-<br>
-
-## CI
+## CI / CD
 
 GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and PR to `main`:
 
-| Job | What it does |
-|:----|:-------------|
+| Job | Description |
+| :--- | :--- |
 | **Lint & Type Check** | ESLint + `tsc --noEmit` |
 | **Unit Tests** | Jest with coverage |
 | **Build** | Next.js production build |
 | **Storybook Build** | Verifies all stories compile |
-| **E2E Tests** | Playwright against production build (after Build passes) |
+| **E2E Tests** | Playwright against production build |
 
-<br>
+---
 
 ## Pages
 
-**Home** -- Bento grid layout with impact metrics (auto-rotating), tech stack overview, personal quote, and service teaser.
+| Page | Highlights |
+| :--- | :--- |
+| **Home** | Bento grid layout, auto-rotating impact metrics, tech stack overview, service teaser |
+| **About** | Professional summary, skills terminal (JSON-style), experience timeline (2017–present) |
+| **Services** | Requirements Engineering, UX/UI & Branding, Frontend Dev, Project Planning, Modern Stack consulting |
+| **Projects** | Interactive CRM dashboard demo (CSS/SVG charts, responsive sidebar, micro-interactions), case studies |
+| **Contact** | Contact form, email, LinkedIn, GitHub links |
 
-**About** -- Professional summary, skills terminal (JSON-style), and experience timeline (2017 - present).
-
-**Services** -- End-to-end offering: Requirements Engineering, UX/UI & Branding, Frontend Development, Project Planning & Delivery, Modern Stack consulting.
-
-**Projects** -- Featured interactive CRM dashboard demo (CSS/SVG only charts, responsive sidebar, micro-interactions), enterprise workflow case study, SaaS platform & brand identity case study.
-
-**Contact** -- Contact form, email, LinkedIn, and GitHub links.
-
-<br>
+---
 
 ## Design
 
-The UI follows a **monochrome + accent** design system with full dark mode support. Key patterns:
+The UI follows a **monochrome + accent** design system with full dark mode support.
 
-- Bento grid layouts with `rounded-[1.5rem]` cards
-- Monospace typography for labels and data
-- Subtle grid backgrounds and blur gradients
-- Micro-interactions on hover (translate, scale, color transitions)
-- Green pulse indicators for status/availability
+| Pattern | Detail |
+| :--- | :--- |
+| Layout | Bento grid with `rounded-[1.5rem]` cards |
+| Typography | Monospace for labels and data |
+| Backgrounds | Subtle grid backgrounds and blur gradients |
+| Interactions | Hover micro-animations (translate, scale, color transitions) |
+| Status | Green pulse indicators for availability |
 
-<br>
+---
 
 ## Deployment
 
-Connected to **Vercel** via GitHub. Environment variables configured in the Vercel dashboard:
+Connected to **Vercel** via GitHub — every push to `main` triggers an automatic production deployment.
+
+Required environment variables (configured in the Vercel dashboard):
 
 ```
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
 ```
 
-Every push to `main` triggers an automatic production deployment.
-
-<br>
-
 ---
 
-<p align="center">
-  <a href="https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175">LinkedIn</a>&ensp;&middot;&ensp;
-  <a href="mailto:velimir.mueller@googlemail.com">Email</a>&ensp;&middot;&ensp;
-  <a href="https://github.com/VelimirMueller">GitHub</a>
-</p>
+<div align="center">
+
+**[velimir-mueller.com](https://velimir-mueller.com)**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175)
+[![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:velimir.mueller@googlemail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/VelimirMueller)
+
+</div>
