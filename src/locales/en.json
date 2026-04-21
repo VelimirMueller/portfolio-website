@@ -269,8 +269,8 @@
       "solution": "Built a complete arcade shooter with Bevy's entity-component-system, compiled to WASM via wasm-bindgen, and wrapped it in a Next.js page with custom touch controls for mobile. Zero runtime dependencies in the browser.",
       "impact1Value": "Rust",
       "impact1Label": "Built With",
-      "impact2Value": "Bevy",
-      "impact2Label": "Engine",
+      "impact2Value": "60fps",
+      "impact2Label": "In Browser",
       "impact3Value": "WASM",
       "impact3Label": "No Plugins",
       "metric": "Built With",
@@ -319,7 +319,7 @@
       "tag": "Startup · bewerbermappe.com",
       "company": "Housy GmbH",
       "date": "Mar 2021 - Oct 2021",
-      "desc": "Co-developed a digital application portfolio platform (bewerbermappe.com) featured in Welt, NTV, and Berliner Zeitung. Built a complex multi-plugin WordPress architecture with custom theme development. Shaped the user journey from landing page to checkout. Close collaboration within the agency team from concept to launch."
+      "desc": "Co-developed a digital application portfolio platform (bewerbermappe.com) featured in BILD, Die Zeit, and n-tv. Built a complex multi-plugin WordPress architecture with custom theme development. Shaped the user journey from landing page to checkout. Close collaboration within the agency team from concept to launch."
     },
     "exp4": {
       "title": "Web Developer",
