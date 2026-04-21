@@ -355,7 +355,7 @@
     "metaDesc": "Get in touch for collaboration, consulting, or project inquiries.",
     "title": "CONTACT.",
     "subtitle": "Get In Touch",
-    "intro": "Open for projects and roles where I own the full product lifecycle — from requirements analysis through UX/UI design to full-stack development with React, Vue, Node.js, Laravel, Quarkus to and cloud deployment.",
+    "intro": "Open for product-engineering roles where the brief runs from requirements through UX, frontend (React, Vue, Next.js, Nuxt), backend (Laravel, Node, Quarkus), to Terraform-managed cloud deployment. Contract or full-time.",
     "nameLabel": "Name",
     "namePlaceholder": "Your Name",
     "emailLabel": "Email",
