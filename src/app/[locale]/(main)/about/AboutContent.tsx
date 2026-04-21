@@ -35,7 +35,7 @@ export default function AboutContent() {
 
            <div className="mt-8 pt-8 border-t border-black/5 dark:border-white/5 grid grid-cols-3 gap-4">
               <div>
-                 <div className="text-2xl font-mono font-bold text-black dark:text-white">9+</div>
+                 <div className="text-2xl font-mono font-bold text-black dark:text-white">4</div>
                  <div className="text-xs text-gray-500 uppercase tracking-widest">{t('about.yearsExp')}</div>
               </div>
               <div>
