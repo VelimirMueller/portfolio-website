@@ -30,6 +30,7 @@ Personal portfolio and service platform showcasing end-to-end product engineerin
 - [Testing](#testing)
 - [Storybook](#storybook)
 - [CI / CD](#ci--cd)
+- [Commit Convention](#commit-convention)
 - [Pages](#pages)
 - [Design](#design)
 - [Deployment](#deployment)
@@ -190,6 +191,22 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and PR t
 | **Build** | Next.js production build |
 | **Storybook Build** | Verifies all stories compile |
 | **E2E Tests** | Playwright against production build |
+
+---
+
+## Commit Convention
+
+Commits follow [Conventional Commits](https://www.conventionalcommits.org/), enforced locally by a husky `commit-msg` hook running commitlint:
+
+```
+type(scope?): subject
+
+feat(contact): add honeypot field
+fix(theme): honor system light preference
+chore(release): v1.2.8
+```
+
+Common types: `feat`, `fix`, `chore`, `docs`, `test`, `refactor`, `perf`, `ci`. The hook installs automatically via the `prepare` script on `npm install`.
 
 ---
 
