@@ -15,6 +15,9 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:6006',
     screenshot: 'only-on-failure',
+    // Baselines are captured in dark theme; pin it so the system-preference
+    // logic in ThemeProvider cannot flip renders between environments.
+    colorScheme: 'dark',
   },
   projects: [
     {
