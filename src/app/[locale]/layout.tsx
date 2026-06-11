@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { pickClientMessages } from '@/i18n/clientMessages';
 import { VercelInsights } from '@/components/VercelInsights';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { SITE_URL } from '@/config/site';
@@ -71,7 +72,11 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
 
+  // Full catalog stays on the server (content components are RSCs reading it
+  // via useTranslations); the client provider receives only the namespaces
+  // client components actually consume.
   const messages = (await import(`@/locales/${locale}.json`)).default;
+  const clientMessages = pickClientMessages(messages);
 
   return (
     <html
@@ -84,7 +89,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body className={`${inter.className} bg-light-bg dark:bg-dark-bg`}>
         <ThemeProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
+          <NextIntlClientProvider locale={locale} messages={clientMessages}>
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>

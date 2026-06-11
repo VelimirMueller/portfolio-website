@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Code2, Database, Layout, Terminal, Box, Globe, Package } from 'lucide-react';
