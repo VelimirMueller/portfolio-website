@@ -6,7 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './e2e',
-  testMatch: ['app.spec.ts', 'a11y.spec.ts'],
+  testMatch: ['app.spec.ts', 'a11y.spec.ts', 'headers.spec.ts'],
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,

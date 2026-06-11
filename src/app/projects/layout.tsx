@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { VercelInsights } from '@/components/VercelInsights';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { SITE_URL } from '@/config/site';
 import { inter, spaceMono, themeInitScript } from '../shared-layout';
@@ -43,6 +44,7 @@ export default function DemoLayout({
       </head>
       <body className={`${inter.className} bg-light-bg dark:bg-dark-bg`}>
         <ThemeProvider>{children}</ThemeProvider>
+        <VercelInsights />
       </body>
     </html>
   );
