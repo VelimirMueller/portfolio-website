@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { VercelInsights } from '@/components/VercelInsights';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { SITE_URL } from '@/config/site';
 import { inter, spaceMono, themeInitScript } from '../shared-layout';
@@ -87,6 +88,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>
+        <VercelInsights />
       </body>
     </html>
   );
