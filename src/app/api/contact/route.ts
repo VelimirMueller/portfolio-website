@@ -1,17 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
+import { parseContactPayload } from './validation';
+import { checkContactRateLimit } from './rateLimit';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, message, hCaptchaToken } = await request.json();
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      request.headers.get('x-real-ip') ||
+      'unknown';
 
-    if (!name || !email || !message || !hCaptchaToken) {
+    if (!checkContactRateLimit(ip)) {
       return NextResponse.json(
-        { error: 'All fields are required' },
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid request body' },
         { status: 400 }
       );
     }
+
+    const parsed = parseContactPayload(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
+    }
+
+    const { name, email, message, hCaptchaToken } = parsed.data;
 
     // Verify hCaptcha token server-side
     const secret = process.env.HCAPTCHA_SECRET;

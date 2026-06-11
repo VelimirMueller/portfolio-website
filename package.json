@@ -1,6 +1,6 @@
 {
   "name": "velimir-portfolio",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -27,7 +27,8 @@
     "react-dom": "^18.3.1",
     "resend": "^6.9.1",
     "supabase": "^2.76.4",
-    "vlm-code-context-mcp": "^0.2.9"
+    "vlm-code-context-mcp": "^0.2.9",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
