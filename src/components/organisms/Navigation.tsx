@@ -106,7 +106,7 @@ export const Navigation = () => {
             <button
                 onClick={toggleTheme}
                 className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                aria-label={t('nav.toggleTheme')}
               >
               {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
             </button>
@@ -118,7 +118,7 @@ export const Navigation = () => {
       </nav>
 
       {isOpen && (
-        <div role="dialog" aria-modal="true" aria-label="Navigation menu" className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-[60] flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
+        <div role="dialog" aria-modal="true" aria-label={t('nav.menuLabel')} className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-[60] flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
           <div className="flex justify-end mb-8">
             <button onClick={() => setIsOpen(false)} className="p-2 bg-white dark:bg-[#121214] rounded-full text-black dark:text-white border border-light-border dark:border-dark-border" aria-label={t('nav.closeMenu')}>
               <X size={24} aria-hidden="true" />

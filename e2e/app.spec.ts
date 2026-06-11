@@ -27,6 +27,16 @@ test.describe('Page rendering', () => {
     await expect(page).toHaveTitle(/Velimir Müller/i);
   });
 
+  test('html lang reflects the German locale', async ({ page }) => {
+    await page.goto('/de');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'de');
+  });
+
+  test('html lang reflects the English locale', async ({ page }) => {
+    await page.goto('/en');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  });
+
   test('homepage displays hero content', async ({ page }) => {
     await page.goto('/de');
     await expect(page.locator('h1')).toContainText('VELIMIR');
@@ -154,13 +164,9 @@ test.describe('Theme', () => {
   test('theme toggle switches to light mode', async ({ page }) => {
     await page.goto('/de');
     const html = page.locator('html');
-    if (isMobile(page)) {
-      // Mobile has its own visible theme toggle with hardcoded aria-label
-      await page.getByRole('button', { name: /switch to light mode/i }).click();
-    } else {
-      // Desktop uses translated aria-label
-      await page.getByRole('button', { name: /theme umschalten|toggle theme/i }).first().click();
-    }
+    // Desktop and mobile toggles share the same translated aria-label;
+    // only the visible one is exposed to the accessibility tree.
+    await page.getByRole('button', { name: /theme umschalten|toggle theme/i }).click();
     await expect(html).toHaveClass(/light/);
   });
 });

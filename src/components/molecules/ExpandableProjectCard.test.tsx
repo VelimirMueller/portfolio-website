@@ -46,4 +46,25 @@ describe('ExpandableProjectCard', () => {
     fireEvent.click(screen.getByRole('button'));
     expect(screen.getByRole('link', { name: /view live demo/i })).toHaveAttribute('href', '/projects/dashboard-demo');
   });
+
+  it('renders localized section labels when provided', () => {
+    render(
+      <ExpandableProjectCard
+        {...props}
+        challengeLabel="Herausforderung"
+        solutionLabel="Lösung"
+      />
+    );
+    fireEvent.click(screen.getByRole('button'));
+    expect(screen.getByText('Herausforderung')).toBeInTheDocument();
+    expect(screen.getByText('Lösung')).toBeInTheDocument();
+    expect(screen.queryByText('Challenge')).not.toBeInTheDocument();
+  });
+
+  it('falls back to English section labels by default', () => {
+    render(<ExpandableProjectCard {...props} />);
+    fireEvent.click(screen.getByRole('button'));
+    expect(screen.getByText('Challenge')).toBeInTheDocument();
+    expect(screen.getByText('Solution')).toBeInTheDocument();
+  });
 });
