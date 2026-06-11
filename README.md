@@ -6,7 +6,7 @@
 
 Personal portfolio and service platform showcasing end-to-end product engineering — from requirements analysis and UX/UI design through frontend development to automated deployment.
 
-[![Live Site](https://img.shields.io/badge/Live-velimir--mueller.com-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://velimir-mueller.com)
+[![Live Site](https://img.shields.io/badge/Live-www.velimir--mueller.de-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://www.velimir-mueller.de)
 [![CI](https://img.shields.io/github/actions/workflow/status/VelimirMueller/portfolio-website/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/VelimirMueller/portfolio-website/actions)
 
 ![Next.js](https://img.shields.io/badge/Next.js_14-000000?style=flat-square&logo=next.js&logoColor=white)
@@ -30,6 +30,7 @@ Personal portfolio and service platform showcasing end-to-end product engineerin
 - [Testing](#testing)
 - [Storybook](#storybook)
 - [CI / CD](#ci--cd)
+- [Commit Convention](#commit-convention)
 - [Pages](#pages)
 - [Design](#design)
 - [Deployment](#deployment)
@@ -193,6 +194,22 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and PR t
 
 ---
 
+## Commit Convention
+
+Commits follow [Conventional Commits](https://www.conventionalcommits.org/), enforced locally by a husky `commit-msg` hook running commitlint:
+
+```
+type(scope?): subject
+
+feat(contact): add honeypot field
+fix(theme): honor system light preference
+chore(release): v1.2.8
+```
+
+Common types: `feat`, `fix`, `chore`, `docs`, `test`, `refactor`, `perf`, `ci`. The hook installs automatically via the `prepare` script on `npm install`.
+
+---
+
 ## Pages
 
 | Page | Highlights |
@@ -234,7 +251,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
 
 <div align="center">
 
-**[velimir-mueller.com](https://velimir-mueller.com)**
+**[www.velimir-mueller.de](https://www.velimir-mueller.de)**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175)
 [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:velimir.mueller@googlemail.com)

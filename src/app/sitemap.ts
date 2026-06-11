@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
+import { SITE_URL } from '@/config/site';
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://velimir-mueller.vercel.app';
+const baseUrl = SITE_URL;
 
 const paths = [
   '',

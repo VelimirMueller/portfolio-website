@@ -3,13 +3,30 @@ import { Resend } from 'npm:resend'
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
 
+// Mirrored verbatim from src/utils/escapeHtml.ts (tested there via Jest) —
+// Deno functions cannot import from src/. Keep both copies in sync.
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 serve(async (req) => {
   try {
     const { record } = await req.json()
 
+    // User-controlled values must never reach the HTML template unescaped
+    const name = escapeHtml(String(record.name ?? ''))
+    const email = escapeHtml(String(record.email ?? ''))
+    const message = escapeHtml(String(record.message ?? ''))
+    const firstName = escapeHtml(String(record.name ?? '').split(' ')[0])
+
     // Send email with Resend
     const data = await resend.emails.send({
-          from: "onboardin@resend.dev",
+          from: "onboarding@resend.dev",
           to: 'velimir.mueller@googlemail.com', // Changed to your verified email
           subject: 'New Contact Form Submission',
           html: `
@@ -46,7 +63,7 @@ serve(async (req) => {
                             <tr>
                               <td style="background-color: #f9fafb; border-left: 3px solid #667eea; padding: 12px 16px; border-radius: 4px;">
                                 <p style="margin: 0; font-size: 16px; color: #111827; font-weight: 500;">
-                                  ${record.name}
+                                  ${name}
                                 </p>
                               </td>
                             </tr>
@@ -63,8 +80,8 @@ serve(async (req) => {
                             </tr>
                             <tr>
                               <td style="background-color: #f9fafb; border-left: 3px solid #667eea; padding: 12px 16px; border-radius: 4px;">
-                                <a href="mailto:${record.email}" style="margin: 0; font-size: 16px; color: #667eea; font-weight: 500; text-decoration: none;">
-                                  ${record.email}
+                                <a href="mailto:${email}" style="margin: 0; font-size: 16px; color: #667eea; font-weight: 500; text-decoration: none;">
+                                  ${email}
                                 </a>
                               </td>
                             </tr>
@@ -82,7 +99,7 @@ serve(async (req) => {
                             <tr>
                               <td style="background-color: #f9fafb; border-left: 3px solid #667eea; padding: 16px; border-radius: 4px;">
                                 <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.7; white-space: pre-wrap;">
-            ${record.message}
+            ${message}
                                 </p>
                               </td>
                             </tr>
@@ -92,8 +109,8 @@ serve(async (req) => {
                           <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 32px;">
                             <tr>
                               <td align="center">
-                                <a href="mailto:${record.email}?subject=Re: Your inquiry" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);">
-                                  Reply to ${record.name.split(' ')[0]}
+                                <a href="mailto:${email}?subject=Re: Your inquiry" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);">
+                                  Reply to ${firstName}
                                 </a>
                               </td>
                             </tr>
@@ -127,9 +144,10 @@ serve(async (req) => {
       status: 200,
     })
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error('send-contact-email failed:', error)
+    return new Response(JSON.stringify({ error: 'Failed to send email' }), {
       headers: { 'Content-Type': 'application/json' },
-      status: 400,
+      status: 500,
     })
   }
 })

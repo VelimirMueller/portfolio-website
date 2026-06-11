@@ -19,7 +19,8 @@
       "frontendDevelopment": "Full-Stack Development",
       "projectDelivery": "Project Delivery",
       "modernStack": "Modern Stack"
-    }
+    },
+    "menuLabel": "Navigation menu"
   },
   "home": {
     "metaTitle": "Velimir Müller | Senior Product Engineer",
@@ -92,12 +93,30 @@
         "Communication gaps between business and development"
       ],
       "process": [
-        { "title": "Stakeholder Interviews", "desc": "Structured conversations to capture business goals." },
-        { "title": "Requirements Analysis", "desc": "User stories, acceptance criteria, and prioritization." },
-        { "title": "Feasibility Check", "desc": "Technical assessment and effort estimation." },
-        { "title": "Specification", "desc": "Documented requirements as a foundation for design and development." }
+        {
+          "title": "Stakeholder Interviews",
+          "desc": "Structured conversations to capture business goals."
+        },
+        {
+          "title": "Requirements Analysis",
+          "desc": "User stories, acceptance criteria, and prioritization."
+        },
+        {
+          "title": "Feasibility Check",
+          "desc": "Technical assessment and effort estimation."
+        },
+        {
+          "title": "Specification",
+          "desc": "Documented requirements as a foundation for design and development."
+        }
       ],
-      "tech": ["User Stories", "Stakeholder Mapping", "Figma", "Notion", "Claude AI"],
+      "tech": [
+        "User Stories",
+        "Stakeholder Mapping",
+        "Figma",
+        "Notion",
+        "Claude AI"
+      ],
       "cta": "Start Requirements Analysis"
     },
     "ux-ui-branding": {
@@ -111,12 +130,30 @@
         "Missing design systems for scalable products"
       ],
       "process": [
-        { "title": "Brand Analysis", "desc": "Understanding brand identity and translating it into design principles." },
-        { "title": "UX Conception", "desc": "Wireframes and user flows based on requirements." },
-        { "title": "UI Design", "desc": "High-fidelity designs in Figma, consistent with the brand." },
-        { "title": "Design System", "desc": "Scalable component library as single source of truth." }
+        {
+          "title": "Brand Analysis",
+          "desc": "Understanding brand identity and translating it into design principles."
+        },
+        {
+          "title": "UX Conception",
+          "desc": "Wireframes and user flows based on requirements."
+        },
+        {
+          "title": "UI Design",
+          "desc": "High-fidelity designs in Figma, consistent with the brand."
+        },
+        {
+          "title": "Design System",
+          "desc": "Scalable component library as single source of truth."
+        }
       ],
-      "tech": ["Figma", "Design Tokens", "Tailwind CSS", "Radix UI", "Storybook"],
+      "tech": [
+        "Figma",
+        "Design Tokens",
+        "Tailwind CSS",
+        "Radix UI",
+        "Storybook"
+      ],
       "cta": "Discuss UX/UI Project"
     },
     "frontend-development": {
@@ -130,12 +167,35 @@
         "Insufficient test coverage and code quality"
       ],
       "process": [
-        { "title": "Architecture Setup", "desc": "Next.js / Nuxt App Router, component structure, and best practices." },
-        { "title": "Component Development", "desc": "Atomic design pattern with TypeScript and Tailwind." },
-        { "title": "Backend Integration", "desc": "Node.js, Laravel, Quarkus or Supabase for auth, DB, and APIs." },
-        { "title": "Testing & QA", "desc": "Automated tests with Jest, Playwright, and CI/CD." }
+        {
+          "title": "Architecture Setup",
+          "desc": "Next.js / Nuxt App Router, component structure, and best practices."
+        },
+        {
+          "title": "Component Development",
+          "desc": "Atomic design pattern with TypeScript and Tailwind."
+        },
+        {
+          "title": "Backend Integration",
+          "desc": "Node.js, Laravel, Quarkus or Supabase for auth, DB, and APIs."
+        },
+        {
+          "title": "Testing & QA",
+          "desc": "Automated tests with Jest, Playwright, and CI/CD."
+        }
       ],
-      "tech": ["Next.js", "React", "Vue", "Nuxt", "Node.js", "TypeScript", "Laravel", "Quarkus", "Supabase", "Tailwind CSS"],
+      "tech": [
+        "Next.js",
+        "React",
+        "Vue",
+        "Nuxt",
+        "Node.js",
+        "TypeScript",
+        "Laravel",
+        "Quarkus",
+        "Supabase",
+        "Tailwind CSS"
+      ],
       "cta": "Start Development"
     },
     "project-delivery": {
@@ -149,12 +209,30 @@
         "No monitoring after launch"
       ],
       "process": [
-        { "title": "Project Planning", "desc": "Scope, milestones, and tech stack decisions." },
-        { "title": "Sprint Structure", "desc": "Iterative development with clear deliverables." },
-        { "title": "CI/CD Setup", "desc": "GitHub Actions, automated tests, and preview deployments." },
-        { "title": "Go-Live & Monitoring", "desc": "Vercel deployment, performance monitoring, and iteration." }
+        {
+          "title": "Project Planning",
+          "desc": "Scope, milestones, and tech stack decisions."
+        },
+        {
+          "title": "Sprint Structure",
+          "desc": "Iterative development with clear deliverables."
+        },
+        {
+          "title": "CI/CD Setup",
+          "desc": "GitHub Actions, automated tests, and preview deployments."
+        },
+        {
+          "title": "Go-Live & Monitoring",
+          "desc": "Vercel deployment, performance monitoring, and iteration."
+        }
       ],
-      "tech": ["GitHub Actions", "Vercel", "CI/CD", "Playwright", "Analytics"],
+      "tech": [
+        "GitHub Actions",
+        "Vercel",
+        "CI/CD",
+        "Playwright",
+        "Analytics"
+      ],
       "cta": "Plan Project"
     },
     "modern-stack": {
@@ -168,12 +246,35 @@
         "Manual, repetitive development work without AI support"
       ],
       "process": [
-        { "title": "Stack Assessment", "desc": "Evaluation of current tools and migration options." },
-        { "title": "Backend Setup", "desc": "Node.js, Laravel, Quarkus, or Supabase — the right tool for the job." },
-        { "title": "Vercel Deployment", "desc": "Preview deployments, edge functions, and analytics." },
-        { "title": "AI Integration", "desc": "Claude AI for code reviews, testing, and documentation." }
+        {
+          "title": "Stack Assessment",
+          "desc": "Evaluation of current tools and migration options."
+        },
+        {
+          "title": "Backend Setup",
+          "desc": "Node.js, Laravel, Quarkus, or Supabase — the right tool for the job."
+        },
+        {
+          "title": "Vercel Deployment",
+          "desc": "Preview deployments, edge functions, and analytics."
+        },
+        {
+          "title": "AI Integration",
+          "desc": "Claude AI for code reviews, testing, and documentation."
+        }
       ],
-      "tech": ["Next.js", "Vue", "Nuxt", "Node.js", "Laravel", "Quarkus", "Supabase", "Vercel", "Claude AI", "GitHub Actions"],
+      "tech": [
+        "Next.js",
+        "Vue",
+        "Nuxt",
+        "Node.js",
+        "Laravel",
+        "Quarkus",
+        "Supabase",
+        "Vercel",
+        "Claude AI",
+        "GitHub Actions"
+      ],
       "cta": "Request Stack Consultation"
     }
   },
@@ -282,7 +383,9 @@
         "Mobile Touch Controls",
         "60fps Rendering Pipeline"
       ]
-    }
+    },
+    "challengeLabel": "Challenge",
+    "solutionLabel": "Solution"
   },
   "about": {
     "metaTitle": "About — Velimir Müller",
@@ -410,7 +513,11 @@
     "s3Title": "3. Contact Form",
     "s3Text": "When you contact me via the contact form, the information you provide will be processed and stored.",
     "s3DataTitle": "Processed data:",
-    "s3Data": ["Name", "Email address", "Message"],
+    "s3Data": [
+      "Name",
+      "Email address",
+      "Message"
+    ],
     "s3Purpose": "Purpose of processing:",
     "s3PurposeText": "Handling your inquiry and contacting you.",
     "s3Legal": "Legal basis:",
@@ -452,5 +559,8 @@
     "home": "Home",
     "projects": "Projects",
     "contact": "Contact"
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content"
   }
 }

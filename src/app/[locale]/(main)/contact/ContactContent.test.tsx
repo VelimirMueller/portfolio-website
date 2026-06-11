@@ -1,8 +1,14 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import ContactContent from './ContactContent';
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
+}));
+
+const mockLocalePush = jest.fn();
+jest.mock('@/i18n/navigation', () => ({
+  useRouter: () => ({ push: mockLocalePush, replace: jest.fn() }),
+  usePathname: () => '/contact',
 }));
 
 jest.mock('next-intl', () => ({
@@ -76,5 +82,50 @@ describe('ContactContent validation', () => {
     fireEvent.change(nameInput, { target: { value: 'Velimir', name: 'name' } });
     fireEvent.blur(nameInput);
     expect(screen.queryByText('Please enter at least 2 characters')).not.toBeInTheDocument();
+  });
+});
+
+describe('ContactContent success redirect', () => {
+  beforeEach(() => {
+    mockLocalePush.mockClear();
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true }),
+    }) as jest.Mock;
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('redirects home via the locale-aware router after the countdown', async () => {
+    jest.useFakeTimers();
+    render(<ContactContent />);
+
+    fireEvent.change(screen.getByPlaceholderText('Your name'), {
+      target: { value: 'Velimir', name: 'name' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('you@example.com'), {
+      target: { value: 'v@example.com', name: 'email' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('Your message'), {
+      target: { value: 'A sufficiently long message.', name: 'message' },
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Send' }));
+    });
+
+    expect(screen.getByText('Message sent')).toBeInTheDocument();
+
+    // Countdown ticks once per second; after 5 ticks it must push the
+    // locale-aware home route (staying on the visitor's language).
+    for (let i = 0; i < 6; i++) {
+      await act(async () => {
+        jest.advanceTimersByTime(1000);
+      });
+    }
+
+    expect(mockLocalePush).toHaveBeenCalledWith('/');
   });
 });

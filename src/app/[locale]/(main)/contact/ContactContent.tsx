@@ -6,7 +6,7 @@ import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import type HCaptchaClass from '@hcaptcha/react-hcaptcha';
 
 type HCaptchaComponent = typeof HCaptchaClass;
