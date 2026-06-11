@@ -265,26 +265,27 @@ describe("Navigation", () => {
     expect(desktopLink?.className).toContain("text-light-sub");
   });
 
-  it("shows correct mobile theme toggle aria-label for dark mode", async () => {
+  it("uses the translated aria-label on both theme toggles", async () => {
     await renderWithProviders(<Navigation />);
 
-    // Default theme is dark, so mobile toggle should say "Switch to light mode"
-    const mobileThemeBtn = screen.getByLabelText("Switch to light mode");
-    expect(mobileThemeBtn).toBeInTheDocument();
+    // Desktop and mobile toggles must share the localized label —
+    // no hardcoded English on the German site.
+    const themeButtons = screen.getAllByLabelText("Theme umschalten");
+    expect(themeButtons).toHaveLength(2);
+    expect(screen.queryByLabelText(/switch to (light|dark) mode/i)).not.toBeInTheDocument();
   });
 
-  it("shows correct mobile theme toggle aria-label after toggling to light", async () => {
+  it("gives the mobile menu dialog a translated accessible name", async () => {
     await renderWithProviders(<Navigation />);
 
-    // Toggle theme to light via the desktop toggle button
-    const desktopThemeBtns = screen.getAllByLabelText("Theme umschalten");
+    const openButton = screen.getByLabelText("Navigationsmenü öffnen");
     await act(async () => {
-      fireEvent.click(desktopThemeBtns[0]);
+      fireEvent.click(openButton);
     });
 
-    // Now mobile toggle should say "Switch to dark mode"
-    const mobileThemeBtn = screen.getByLabelText("Switch to dark mode");
-    expect(mobileThemeBtn).toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: "Navigationsmenü" })
+    ).toBeInTheDocument();
   });
 
   it("highlights service child routes", async () => {
