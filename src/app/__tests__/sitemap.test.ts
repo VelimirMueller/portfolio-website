@@ -1,5 +1,6 @@
 import sitemap from '../sitemap';
 import { routing } from '@/i18n/routing';
+import { SITE_URL } from '@/config/site';
 
 describe('sitemap', () => {
   const entries = sitemap();
@@ -25,9 +26,9 @@ describe('sitemap', () => {
     }
   });
 
-  it('uses one absolute base URL for all entries', () => {
+  it('derives every URL from the central SITE_URL config', () => {
     const origins = new Set(entries.map((e) => new URL(e.url).origin));
-    expect(origins.size).toBe(1);
+    expect([...origins]).toEqual([new URL(SITE_URL).origin]);
   });
 
   it('gives the homepage the highest priority', () => {
