@@ -16,7 +16,7 @@ const HighlightStatement = () => {
       <div className="relative w-full h-full min-h-[320px] flex flex-col justify-center items-center text-center px-6">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         <div className="relative z-10 flex flex-col items-center gap-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-600 dark:text-emerald-500 text-[10px] font-mono uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-700 dark:text-emerald-500 text-[10px] font-mono uppercase tracking-wider">
             <Package size={10} />
             {t('home.highlightTag')}
           </div>
@@ -63,7 +63,7 @@ const TechStackGrid = () => {
           <div key={i} className="flex flex-col p-3 rounded-lg bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border hover:border-brand-500/30 dark:hover:border-brand-500/30 transition-all duration-200 ease-out group">
             <div className="flex items-center justify-between mb-1.5">
               <item.icon size={14} className="text-light-sub dark:text-dark-sub group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors duration-200" aria-hidden="true"/>
-              <span className="text-[9px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-wide">{item.cat}</span>
+              <span className="text-[9px] font-mono text-gray-600 dark:text-gray-500 uppercase tracking-wide">{item.cat}</span>
             </div>
             <span className="text-[13px] font-bold text-light-text dark:text-dark-text group-hover:translate-x-0.5 transition-transform duration-200">{item.label}</span>
           </div>
@@ -74,7 +74,7 @@ const TechStackGrid = () => {
             <span className="text-xs text-gray-500">{t('home.systemStatus')}</span>
             <span className="flex items-center gap-1.5">
                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-               <span className="text-[10px] font-mono text-green-600 dark:text-green-500 uppercase">{t('home.operational')}</span>
+               <span className="text-[10px] font-mono text-green-700 dark:text-green-500 uppercase">{t('home.operational')}</span>
             </span>
          </div>
       </div>
@@ -105,7 +105,7 @@ export default function HomeContent() {
           <div className="relative z-10 flex flex-col h-full justify-between">
             <div>
               <div className="flex items-center gap-3 mb-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-green-500/20 bg-green-500/5 text-green-600 dark:text-green-500 text-[10px] font-mono uppercase tracking-wider backdrop-blur-sm">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-green-500/20 bg-green-500/5 text-green-700 dark:text-green-500 text-[10px] font-mono uppercase tracking-wider backdrop-blur-sm">
                   <span className="w-1.5 h-1.5 bg-green-600 dark:bg-green-500 rounded-full animate-pulse"></span>
                   {t('home.badge')}
                 </div>
@@ -122,7 +122,7 @@ export default function HomeContent() {
                    <p className="font-mono text-sm md:text-lg text-light-sub dark:text-dark-sub uppercase tracking-widest font-medium">
                       {t('home.subtitle')}
                    </p>
-                   <p className="font-mono text-[10px] md:text-xs text-light-sub/60 dark:text-dark-sub/60 uppercase tracking-widest mt-0.5">
+                   <p className="font-mono text-[10px] md:text-xs text-light-sub dark:text-dark-sub/60 uppercase tracking-widest mt-0.5">
                       {t('home.subtitleSecondary')}
                    </p>
                  </div>

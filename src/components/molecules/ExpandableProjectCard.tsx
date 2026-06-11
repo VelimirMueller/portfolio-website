@@ -35,18 +35,18 @@ const accentClasses = {
     link: 'text-blue-600 dark:text-blue-400',
   },
   emerald: {
-    badge: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
-    metric: 'text-emerald-600 dark:text-emerald-400',
-    label: 'text-emerald-600 dark:text-emerald-400',
+    badge: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20',
+    metric: 'text-emerald-700 dark:text-emerald-400',
+    label: 'text-emerald-700 dark:text-emerald-400',
     impact: 'border-emerald-500/10',
-    link: 'text-emerald-600 dark:text-emerald-400',
+    link: 'text-emerald-700 dark:text-emerald-400',
   },
   orange: {
-    badge: 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20',
-    metric: 'text-orange-600 dark:text-orange-400',
-    label: 'text-orange-600 dark:text-orange-400',
+    badge: 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20',
+    metric: 'text-orange-700 dark:text-orange-400',
+    label: 'text-orange-700 dark:text-orange-400',
     impact: 'border-orange-500/10',
-    link: 'text-orange-600 dark:text-orange-400',
+    link: 'text-orange-700 dark:text-orange-400',
   },
 };
 
