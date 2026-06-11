@@ -26,8 +26,6 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "resend": "^6.9.1",
-    "supabase": "^2.76.4",
-    "vlm-code-context-mcp": "^0.2.9",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -53,8 +51,10 @@
     "jest-environment-jsdom": "^30.2.0",
     "postcss": "^8.4.35",
     "storybook": "^8.6.15",
+    "supabase": "^2.76.4",
     "tailwindcss": "^3.4.1",
     "ts-jest": "^29.4.6",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "vlm-code-context-mcp": "^0.2.9"
   }
 }
