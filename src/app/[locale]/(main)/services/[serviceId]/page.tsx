@@ -1,3 +1,4 @@
+import { SITE_URL } from '@/config/site';
 import { getTranslations } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import { ServiceDetailContent } from './ServiceDetailContent';
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props) {
     title: `${t(`${serviceId}.title`)} — Velimir Müller`,
     description: t(`${serviceId}.description`),
     alternates: {
-      canonical: `https://www.velimir-mueller.de/${locale}/services/${serviceId}`,
+      canonical: `${SITE_URL}/${locale}/services/${serviceId}`,
     },
   };
 }
@@ -48,8 +49,8 @@ export default async function ServiceDetailPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: `https://www.velimir-mueller.de/${locale}` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `https://www.velimir-mueller.de/${locale}/services` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/${locale}` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/${locale}/services` },
       { '@type': 'ListItem', position: 3, name: serviceName },
     ],
   };

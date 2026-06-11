@@ -15,7 +15,7 @@ export const Footer = () => {
           <h3 className="font-mono font-bold text-xl text-black dark:text-white mb-3">Velimir Müller</h3>
           <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-w-sm">
             {t('footer.tagline')}<br/>
-            <span className="text-gray-400 text-xs leading-relaxed">{t('footer.taglineSecondary')}</span><br/>
+            <span className="text-gray-600 dark:text-gray-400 text-xs leading-relaxed">{t('footer.taglineSecondary')}</span><br/>
             <span className="text-gray-600 dark:text-gray-400">{t('footer.taglineDesc')}</span>
           </p>
         </div>

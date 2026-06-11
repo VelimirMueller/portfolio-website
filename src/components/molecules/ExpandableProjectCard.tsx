@@ -21,6 +21,9 @@ interface ExpandableProjectCardProps {
   demoHref: string;
   demoLabel: string;
   accentColor: 'blue' | 'emerald' | 'orange';
+  /** Localized section headings — molecules stay dumb, the caller translates. */
+  challengeLabel?: string;
+  solutionLabel?: string;
 }
 
 const accentClasses = {
@@ -32,18 +35,18 @@ const accentClasses = {
     link: 'text-blue-600 dark:text-blue-400',
   },
   emerald: {
-    badge: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
-    metric: 'text-emerald-600 dark:text-emerald-400',
-    label: 'text-emerald-600 dark:text-emerald-400',
+    badge: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20',
+    metric: 'text-emerald-700 dark:text-emerald-400',
+    label: 'text-emerald-700 dark:text-emerald-400',
     impact: 'border-emerald-500/10',
-    link: 'text-emerald-600 dark:text-emerald-400',
+    link: 'text-emerald-700 dark:text-emerald-400',
   },
   orange: {
-    badge: 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20',
-    metric: 'text-orange-600 dark:text-orange-400',
-    label: 'text-orange-600 dark:text-orange-400',
+    badge: 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20',
+    metric: 'text-orange-700 dark:text-orange-400',
+    label: 'text-orange-700 dark:text-orange-400',
     impact: 'border-orange-500/10',
-    link: 'text-orange-600 dark:text-orange-400',
+    link: 'text-orange-700 dark:text-orange-400',
   },
 };
 
@@ -59,6 +62,8 @@ export function ExpandableProjectCard({
   demoHref,
   demoLabel,
   accentColor,
+  challengeLabel = 'Challenge',
+  solutionLabel = 'Solution',
 }: ExpandableProjectCardProps) {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -117,11 +122,11 @@ export function ExpandableProjectCard({
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-5 sm:mb-6">
                 <div>
-                  <div className={`text-[11px] font-mono uppercase tracking-wider mb-2 ${colors.label}`}>Challenge</div>
+                  <div className={`text-[11px] font-mono uppercase tracking-wider mb-2 ${colors.label}`}>{challengeLabel}</div>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{challenge}</p>
                 </div>
                 <div>
-                  <div className={`text-[11px] font-mono uppercase tracking-wider mb-2 ${colors.label}`}>Solution</div>
+                  <div className={`text-[11px] font-mono uppercase tracking-wider mb-2 ${colors.label}`}>{solutionLabel}</div>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{solution}</p>
                 </div>
               </div>

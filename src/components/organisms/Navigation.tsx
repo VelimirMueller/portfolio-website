@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePathname } from '@/i18n/navigation';
 import { Menu, X, ChevronDown, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/atoms/Button';
@@ -8,11 +8,16 @@ import { useTheme } from '@/components/theme/ThemeProvider';
 import { useTranslations } from 'next-intl';
 import { LanguageToggle } from '@/components/atoms/LanguageToggle';
 
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled])';
+
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname() ?? '/';
   const { theme, toggleTheme } = useTheme();
   const t = useTranslations();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
 
   const isActive = (path: string) => {
     if (path === '/') return pathname === '/';
@@ -22,6 +27,48 @@ export const Navigation = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
+  // Mobile dialog keyboard contract: focus moves in on open, Escape closes,
+  // Tab cycles inside (aria-modal alone does not trap focus).
+  useEffect(() => {
+    if (!isOpen) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const focusables = () =>
+      dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+    focusables()[0]?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const elements = focusables();
+      if (elements.length === 0) return;
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
+
+  // Hand focus back to the trigger when the dialog closes.
+  useEffect(() => {
+    if (wasOpenRef.current && !isOpen) {
+      menuTriggerRef.current?.focus();
+    }
+    wasOpenRef.current = isOpen;
+  }, [isOpen]);
 
   const navItems = [
     { path: '/', label: t('nav.home'), mobileLabel: `// ${t('nav.home')}`, mobileDesc: t('nav.homeDesc') },
@@ -67,7 +114,7 @@ export const Navigation = () => {
                 </Link>
 
                 {item.children && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-[#18181b] border border-light-border dark:border-dark-border rounded-xl p-2 shadow-xl opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 ease-out transform origin-top z-50">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-[#18181b] border border-light-border dark:border-dark-border rounded-xl p-2 shadow-xl opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-200 ease-out transform origin-top z-50">
                     {item.children.map((child) => (
                       <Link
                         key={child.path}
@@ -106,11 +153,11 @@ export const Navigation = () => {
             <button
                 onClick={toggleTheme}
                 className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                aria-label={t('nav.toggleTheme')}
               >
               {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
             </button>
-            <button onClick={() => setIsOpen(true)} className="p-3 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full" aria-label={t('nav.openMenu')}>
+            <button ref={menuTriggerRef} onClick={() => setIsOpen(true)} className="p-3 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full" aria-label={t('nav.openMenu')}>
               <Menu size={20} aria-hidden="true" />
             </button>
           </div>
@@ -118,7 +165,7 @@ export const Navigation = () => {
       </nav>
 
       {isOpen && (
-        <div role="dialog" aria-modal="true" aria-label="Navigation menu" className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-[60] flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
+        <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('nav.menuLabel')} className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-[60] flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
           <div className="flex justify-end mb-8">
             <button onClick={() => setIsOpen(false)} className="p-2 bg-white dark:bg-[#121214] rounded-full text-black dark:text-white border border-light-border dark:border-dark-border" aria-label={t('nav.closeMenu')}>
               <X size={24} aria-hidden="true" />

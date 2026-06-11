@@ -27,6 +27,16 @@ test.describe('Page rendering', () => {
     await expect(page).toHaveTitle(/Velimir Müller/i);
   });
 
+  test('html lang reflects the German locale', async ({ page }) => {
+    await page.goto('/de');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'de');
+  });
+
+  test('html lang reflects the English locale', async ({ page }) => {
+    await page.goto('/en');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  });
+
   test('homepage displays hero content', async ({ page }) => {
     await page.goto('/de');
     await expect(page.locator('h1')).toContainText('VELIMIR');
@@ -105,6 +115,21 @@ test.describe('Navigation', () => {
     await expect(page).toHaveURL(/\/de\/contact/);
   });
 
+  test('services submenu is reachable by keyboard', async ({ page }) => {
+    test.skip(isMobile(page), 'the hover dropdown only exists on desktop');
+    await page.goto('/de');
+    const servicesLink = page
+      .locator('nav')
+      .getByRole('link', { name: /services|Leistungen/i })
+      .first();
+    await servicesLink.focus();
+    // focus-within must reveal the submenu — hover-only menus lock
+    // keyboard users out.
+    await expect(
+      page.getByRole('link', { name: 'Requirements Engineering' }).first()
+    ).toBeVisible();
+  });
+
   test('footer links to imprint and privacy', async ({ page }) => {
     await page.goto('/de');
     const footer = page.locator('footer');
@@ -145,22 +170,34 @@ test.describe('Project demos', () => {
 // ─── Theme Toggle ───────────────────────────────────────────
 
 test.describe('Theme', () => {
-  test('dark mode is active by default', async ({ page }) => {
+  test('dark mode is active for system dark preference', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'dark' });
     await page.goto('/de');
     const html = page.locator('html');
     await expect(html).toHaveClass(/dark/);
   });
 
-  test('theme toggle switches to light mode', async ({ page }) => {
+  test('light mode is honored for system light preference on first visit', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
     await page.goto('/de');
     const html = page.locator('html');
-    if (isMobile(page)) {
-      // Mobile has its own visible theme toggle with hardcoded aria-label
-      await page.getByRole('button', { name: /switch to light mode/i }).click();
-    } else {
-      // Desktop uses translated aria-label
-      await page.getByRole('button', { name: /theme umschalten|toggle theme/i }).first().click();
-    }
+    await expect(html).toHaveClass(/light/);
+  });
+
+  // Note: browsers removed 'no-preference' from prefers-color-scheme — the
+  // dark fallback for that case is covered by the ThemeProvider unit tests.
+
+  test('theme toggle switches from dark to light and persists', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto('/de');
+    const html = page.locator('html');
+    await expect(html).toHaveClass(/dark/);
+    // Desktop and mobile toggles share the same translated aria-label;
+    // only the visible one is exposed to the accessibility tree.
+    await page.getByRole('button', { name: /theme umschalten|toggle theme/i }).click();
+    await expect(html).toHaveClass(/light/);
+    // The explicit choice must survive a reload (persisted to localStorage)
+    await page.reload();
     await expect(html).toHaveClass(/light/);
   });
 });

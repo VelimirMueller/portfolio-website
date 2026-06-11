@@ -46,3 +46,9 @@ test-results/
 playwright-report/
 
 context.db*
+.playwright-artifacts/
+
+# local tool state
+.playwright-mcp/
+supabase/.temp/
+.playwright-artifacts-sb/
