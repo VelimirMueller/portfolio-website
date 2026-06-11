@@ -1,3 +1,4 @@
+import { SITE_URL } from '@/config/site';
 import { getTranslations } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import ContactContent from './ContactContent';
@@ -14,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
     title: t('metaTitle'),
     description: t('metaDesc'),
     alternates: {
-      canonical: `https://www.velimir-mueller.de/${locale}/contact`,
+      canonical: `${SITE_URL}/${locale}/contact`,
     },
   };
 }

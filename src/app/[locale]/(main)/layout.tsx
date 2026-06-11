@@ -1,5 +1,6 @@
 import { Navigation } from '@/components/organisms/Navigation';
 import { Footer } from '@/components/organisms/Footer';
+import { SITE_URL } from '@/config/site';
 
 type Props = {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ export default async function MainLayout({ children, params }: Props) {
       jobTitle: 'Senior Product Engineer',
       description:
         'Senior Product Engineer & AI Agentic Developer specializing in end-to-end product ownership, MCP server development, and full-stack engineering with Next.js and Claude Code.',
-      url: 'https://velimir-mueller.vercel.app',
+      url: SITE_URL,
       sameAs: [
         'https://www.linkedin.com/in/velimir-müller-07b460175',
         'https://github.com/VelimirMueller',
@@ -51,7 +52,7 @@ export default async function MainLayout({ children, params }: Props) {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Velimir Müller',
-      url: 'https://velimir-mueller.vercel.app',
+      url: SITE_URL,
       description:
         'Portfolio of Velimir Müller — Senior Product Engineer, AI Agentic Developer, and MCP server developer.',
       inLanguage: ['de', 'en'],
