@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { ArrowUpRight, Cpu, Check, BrainCircuit, Newspaper, ExternalLink } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
