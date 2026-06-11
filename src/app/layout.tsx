@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Space_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { SITE_URL } from '@/config/site';
 import './globals.css';
 
 const inter = Inter({
@@ -30,9 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://velimir-mueller.vercel.app'
-  ),
+  metadataBase: new URL(SITE_URL),
   title: 'Velimir Müller | Senior Product Engineer & AI Agentic Developer',
   description:
     'Senior Product Engineer & AI Agentic Developer — end-to-end product ownership, MCP server development, and full-stack engineering with Next.js, React, and Claude Code.',
