@@ -19,7 +19,8 @@
       "frontendDevelopment": "Full-Stack Development",
       "projectDelivery": "Projektplanung",
       "modernStack": "Modern Stack"
-    }
+    },
+    "menuLabel": "Navigationsmenü"
   },
   "home": {
     "metaTitle": "Velimir Müller | Senior Product Engineer",
@@ -92,12 +93,30 @@
         "Kommunikationslücken zwischen Business und Entwicklung"
       ],
       "process": [
-        { "title": "Stakeholder Interviews", "desc": "Strukturierte Gespräche zur Erfassung der Business-Ziele." },
-        { "title": "Anforderungsanalyse", "desc": "User Stories, Acceptance Criteria und Priorisierung." },
-        { "title": "Machbarkeitscheck", "desc": "Technische Bewertung und Aufwandsschätzung." },
-        { "title": "Spezifikation", "desc": "Dokumentierte Requirements als Grundlage für Design und Entwicklung." }
+        {
+          "title": "Stakeholder Interviews",
+          "desc": "Strukturierte Gespräche zur Erfassung der Business-Ziele."
+        },
+        {
+          "title": "Anforderungsanalyse",
+          "desc": "User Stories, Acceptance Criteria und Priorisierung."
+        },
+        {
+          "title": "Machbarkeitscheck",
+          "desc": "Technische Bewertung und Aufwandsschätzung."
+        },
+        {
+          "title": "Spezifikation",
+          "desc": "Dokumentierte Requirements als Grundlage für Design und Entwicklung."
+        }
       ],
-      "tech": ["User Stories", "Stakeholder Mapping", "Figma", "Notion", "Claude AI"],
+      "tech": [
+        "User Stories",
+        "Stakeholder Mapping",
+        "Figma",
+        "Notion",
+        "Claude AI"
+      ],
       "cta": "Anforderungsanalyse starten"
     },
     "ux-ui-branding": {
@@ -111,12 +130,30 @@
         "Fehlende Design-Systematik für skalierbare Produkte"
       ],
       "process": [
-        { "title": "Brand Analysis", "desc": "Markenidentität verstehen und in Design-Prinzipien übersetzen." },
-        { "title": "UX Konzeption", "desc": "Wireframes und User Flows basierend auf den Requirements." },
-        { "title": "UI Design", "desc": "High-Fidelity Designs in Figma, konsistent mit der Brand." },
-        { "title": "Design System", "desc": "Skalierbare Komponentenbibliothek als Single Source of Truth." }
+        {
+          "title": "Brand Analysis",
+          "desc": "Markenidentität verstehen und in Design-Prinzipien übersetzen."
+        },
+        {
+          "title": "UX Konzeption",
+          "desc": "Wireframes und User Flows basierend auf den Requirements."
+        },
+        {
+          "title": "UI Design",
+          "desc": "High-Fidelity Designs in Figma, konsistent mit der Brand."
+        },
+        {
+          "title": "Design System",
+          "desc": "Skalierbare Komponentenbibliothek als Single Source of Truth."
+        }
       ],
-      "tech": ["Figma", "Design Tokens", "Tailwind CSS", "Radix UI", "Storybook"],
+      "tech": [
+        "Figma",
+        "Design Tokens",
+        "Tailwind CSS",
+        "Radix UI",
+        "Storybook"
+      ],
       "cta": "UX/UI Projekt besprechen"
     },
     "frontend-development": {
@@ -130,12 +167,35 @@
         "Mangelnde Testabdeckung und Code-Qualität"
       ],
       "process": [
-        { "title": "Architecture Setup", "desc": "Next.js / Nuxt App Router, Komponentenstruktur und Best Practices." },
-        { "title": "Component Development", "desc": "Atomic Design Pattern mit TypeScript und Tailwind." },
-        { "title": "Backend Integration", "desc": "Node.js, Laravel, Quarkus oder Supabase für Auth, DB und APIs." },
-        { "title": "Testing & QA", "desc": "Automatisierte Tests mit Jest, Playwright und CI/CD." }
+        {
+          "title": "Architecture Setup",
+          "desc": "Next.js / Nuxt App Router, Komponentenstruktur und Best Practices."
+        },
+        {
+          "title": "Component Development",
+          "desc": "Atomic Design Pattern mit TypeScript und Tailwind."
+        },
+        {
+          "title": "Backend Integration",
+          "desc": "Node.js, Laravel, Quarkus oder Supabase für Auth, DB und APIs."
+        },
+        {
+          "title": "Testing & QA",
+          "desc": "Automatisierte Tests mit Jest, Playwright und CI/CD."
+        }
       ],
-      "tech": ["Next.js", "React", "Vue", "Nuxt", "Node.js", "TypeScript", "Laravel", "Quarkus", "Supabase", "Tailwind CSS"],
+      "tech": [
+        "Next.js",
+        "React",
+        "Vue",
+        "Nuxt",
+        "Node.js",
+        "TypeScript",
+        "Laravel",
+        "Quarkus",
+        "Supabase",
+        "Tailwind CSS"
+      ],
       "cta": "Entwicklung starten"
     },
     "project-delivery": {
@@ -149,12 +209,30 @@
         "Kein Monitoring nach dem Launch"
       ],
       "process": [
-        { "title": "Projektplanung", "desc": "Scope, Meilensteine und Tech-Stack-Entscheidung." },
-        { "title": "Sprint-Struktur", "desc": "Iterative Entwicklung mit klaren Deliverables." },
-        { "title": "CI/CD Setup", "desc": "GitHub Actions, automatisierte Tests und Preview Deployments." },
-        { "title": "Go-Live & Monitoring", "desc": "Vercel Deployment, Performance-Monitoring und Iteration." }
+        {
+          "title": "Projektplanung",
+          "desc": "Scope, Meilensteine und Tech-Stack-Entscheidung."
+        },
+        {
+          "title": "Sprint-Struktur",
+          "desc": "Iterative Entwicklung mit klaren Deliverables."
+        },
+        {
+          "title": "CI/CD Setup",
+          "desc": "GitHub Actions, automatisierte Tests und Preview Deployments."
+        },
+        {
+          "title": "Go-Live & Monitoring",
+          "desc": "Vercel Deployment, Performance-Monitoring und Iteration."
+        }
       ],
-      "tech": ["GitHub Actions", "Vercel", "CI/CD", "Playwright", "Analytics"],
+      "tech": [
+        "GitHub Actions",
+        "Vercel",
+        "CI/CD",
+        "Playwright",
+        "Analytics"
+      ],
       "cta": "Projekt planen"
     },
     "modern-stack": {
@@ -168,12 +246,35 @@
         "Manuelle, repetitive Entwicklungsarbeit ohne AI-Unterstützung"
       ],
       "process": [
-        { "title": "Stack Assessment", "desc": "Bewertung der aktuellen Tools und Migrationsmöglichkeiten." },
-        { "title": "Supabase Setup", "desc": "Auth, Datenbank, Storage und Realtime-Funktionen." },
-        { "title": "Vercel Deployment", "desc": "Preview Deployments, Edge Functions und Analytics." },
-        { "title": "AI Integration", "desc": "Claude AI für Code-Reviews, Testing und Dokumentation." }
+        {
+          "title": "Stack Assessment",
+          "desc": "Bewertung der aktuellen Tools und Migrationsmöglichkeiten."
+        },
+        {
+          "title": "Supabase Setup",
+          "desc": "Auth, Datenbank, Storage und Realtime-Funktionen."
+        },
+        {
+          "title": "Vercel Deployment",
+          "desc": "Preview Deployments, Edge Functions und Analytics."
+        },
+        {
+          "title": "AI Integration",
+          "desc": "Claude AI für Code-Reviews, Testing und Dokumentation."
+        }
       ],
-      "tech": ["Next.js", "Supabase", "Vercel", "Claude AI", "GitHub Actions"],
+      "tech": [
+        "Next.js",
+        "Vue",
+        "Nuxt",
+        "Node.js",
+        "Laravel",
+        "Quarkus",
+        "Supabase",
+        "Vercel",
+        "Claude AI",
+        "GitHub Actions"
+      ],
       "cta": "Stack-Beratung anfragen"
     }
   },
@@ -282,7 +383,9 @@
         "Mobile Touch-Steuerung",
         "60fps Rendering Pipeline"
       ]
-    }
+    },
+    "challengeLabel": "Herausforderung",
+    "solutionLabel": "Lösung"
   },
   "about": {
     "metaTitle": "Über mich — Velimir Müller",
@@ -410,7 +513,11 @@
     "s3Title": "3. Kontaktformular",
     "s3Text": "Wenn Sie mich über das Kontaktformular kontaktieren, werden die von Ihnen gemachten Angaben verarbeitet und gespeichert.",
     "s3DataTitle": "Verarbeitete Daten:",
-    "s3Data": ["Name", "E-Mail-Adresse", "Nachricht"],
+    "s3Data": [
+      "Name",
+      "E-Mail-Adresse",
+      "Nachricht"
+    ],
     "s3Purpose": "Zweck der Verarbeitung:",
     "s3PurposeText": "Bearbeitung Ihrer Anfrage und Kontaktaufnahme.",
     "s3Legal": "Rechtsgrundlage:",
@@ -452,5 +559,8 @@
     "home": "Startseite",
     "projects": "Projekte",
     "contact": "Kontakt"
+  },
+  "a11y": {
+    "skipToContent": "Zum Inhalt springen"
   }
 }

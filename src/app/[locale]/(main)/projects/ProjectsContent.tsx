@@ -28,6 +28,8 @@ export default function ProjectsContent() {
 
         <AnimateIn from="bottom" delay={100}>
           <ExpandableProjectCard
+            challengeLabel={t('projects.challengeLabel')}
+            solutionLabel={t('projects.solutionLabel')}
             title={t('projects.mcp.title')}
             category="Developer Tool"
             techStack={['Node.js', 'TypeScript', 'SQLite', 'MCP']}
@@ -48,6 +50,8 @@ export default function ProjectsContent() {
 
         <AnimateIn from="bottom" delay={200}>
           <ExpandableProjectCard
+            challengeLabel={t('projects.challengeLabel')}
+            solutionLabel={t('projects.solutionLabel')}
             title={t('projects.dashboard.title')}
             category="UI Showcase"
             techStack={['React', 'TypeScript', 'CSS/SVG', 'Next.js']}
@@ -68,6 +72,8 @@ export default function ProjectsContent() {
 
         <AnimateIn from="bottom" delay={300}>
           <ExpandableProjectCard
+            challengeLabel={t('projects.challengeLabel')}
+            solutionLabel={t('projects.solutionLabel')}
             title={t('projects.arcade.title')}
             category="Game Dev"
             techStack={['Rust', 'Bevy', 'WebAssembly', 'Touch Controls']}
