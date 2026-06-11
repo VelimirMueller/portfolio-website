@@ -105,11 +105,11 @@ describe("ThemeProvider", () => {
     expect(screen.getByTestId("theme-value")).toHaveTextContent("light");
   });
 
-  it("falls back to light when system prefers light and no saved theme", async () => {
-    // Override matchMedia to return light preference
+  it("honors a system light preference when no theme is saved", async () => {
+    // Mirror of the no-flash script in the layout: explicit light → light
     (window.matchMedia as jest.Mock).mockImplementationOnce(
       (query: string) => ({
-        matches: false, // prefers-color-scheme: dark => false => light system
+        matches: query === "(prefers-color-scheme: light)",
         media: query,
         addEventListener: jest.fn(),
         removeEventListener: jest.fn(),
@@ -124,9 +124,43 @@ describe("ThemeProvider", () => {
       );
     });
 
-    // Default is 'dark', and system prefers light but the code only sets dark if matches
-    // So it stays 'dark' (the initial useState value)
+    expect(screen.getByTestId("theme-value")).toHaveTextContent("light");
+    expect(document.documentElement.classList.contains("light")).toBe(true);
+  });
+
+  it("stays dark when the system expresses no explicit light preference", async () => {
+    (window.matchMedia as jest.Mock).mockImplementationOnce(
+      (query: string) => ({
+        matches: false,
+        media: query,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      })
+    );
+
+    await act(async () => {
+      render(
+        <ThemeProvider>
+          <ThemeConsumer />
+        </ThemeProvider>
+      );
+    });
+
     expect(screen.getByTestId("theme-value")).toHaveTextContent("dark");
+  });
+
+  it("does not persist a theme the visitor never chose", async () => {
+    await act(async () => {
+      render(
+        <ThemeProvider>
+          <ThemeConsumer />
+        </ThemeProvider>
+      );
+    });
+
+    // Persisting on mount would cement a default over a future change in
+    // system preference — only an explicit toggle may write storage.
+    expect(localStorageMock.setItem).not.toHaveBeenCalled();
   });
 
   it("applies theme class to document element", async () => {
