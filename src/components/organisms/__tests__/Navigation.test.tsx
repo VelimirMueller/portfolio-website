@@ -297,3 +297,80 @@ describe("Navigation", () => {
     expect(desktopDropdownLink?.className).toContain("font-bold");
   });
 });
+
+describe("Navigation mobile menu keyboard support", () => {
+  const openMenu = async () => {
+    const openButton = screen.getByLabelText("Navigationsmenü öffnen");
+    await act(async () => {
+      fireEvent.click(openButton);
+    });
+    return openButton;
+  };
+
+  it("closes the menu when Escape is pressed", async () => {
+    await renderWithProviders(<Navigation />);
+    await openMenu();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.keyDown(document, { key: "Escape" });
+    });
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("moves focus into the dialog when it opens", async () => {
+    await renderWithProviders(<Navigation />);
+    await openMenu();
+
+    const dialog = screen.getByRole("dialog");
+    expect(dialog.contains(document.activeElement)).toBe(true);
+  });
+
+  it("restores focus to the trigger when the menu closes", async () => {
+    await renderWithProviders(<Navigation />);
+    const openButton = await openMenu();
+
+    const closeButton = screen.getByLabelText("Navigationsmenü schließen");
+    await act(async () => {
+      fireEvent.click(closeButton);
+    });
+
+    expect(document.activeElement).toBe(openButton);
+  });
+
+  it("wraps Tab focus from the last focusable element to the first", async () => {
+    await renderWithProviders(<Navigation />);
+    await openMenu();
+
+    const dialog = screen.getByRole("dialog");
+    const focusables = dialog.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled])'
+    );
+    const last = focusables[focusables.length - 1];
+    last.focus();
+
+    await act(async () => {
+      fireEvent.keyDown(dialog, { key: "Tab" });
+    });
+
+    expect(document.activeElement).toBe(focusables[0]);
+  });
+
+  it("wraps Shift+Tab focus from the first focusable element to the last", async () => {
+    await renderWithProviders(<Navigation />);
+    await openMenu();
+
+    const dialog = screen.getByRole("dialog");
+    const focusables = dialog.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled])'
+    );
+    focusables[0].focus();
+
+    await act(async () => {
+      fireEvent.keyDown(dialog, { key: "Tab", shiftKey: true });
+    });
+
+    expect(document.activeElement).toBe(focusables[focusables.length - 1]);
+  });
+});

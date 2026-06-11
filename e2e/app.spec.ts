@@ -115,6 +115,21 @@ test.describe('Navigation', () => {
     await expect(page).toHaveURL(/\/de\/contact/);
   });
 
+  test('services submenu is reachable by keyboard', async ({ page }) => {
+    test.skip(isMobile(page), 'the hover dropdown only exists on desktop');
+    await page.goto('/de');
+    const servicesLink = page
+      .locator('nav')
+      .getByRole('link', { name: /services|Leistungen/i })
+      .first();
+    await servicesLink.focus();
+    // focus-within must reveal the submenu — hover-only menus lock
+    // keyboard users out.
+    await expect(
+      page.getByRole('link', { name: 'Requirements Engineering' }).first()
+    ).toBeVisible();
+  });
+
   test('footer links to imprint and privacy', async ({ page }) => {
     await page.goto('/de');
     const footer = page.locator('footer');
