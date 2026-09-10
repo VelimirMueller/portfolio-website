@@ -2,9 +2,9 @@
 
 # velimir-portfolio
 
-**Senior Frontend Engineer / Product Engineer**
+**Senior Fullstack Engineer / Product Engineer**
 
-Personal portfolio and service platform showcasing end-to-end product engineering — from requirements analysis and UX/UI design through frontend development to automated deployment.
+Personal portfolio and service platform showcasing end-to-end product engineering — from requirements analysis and UX/UI design through full-stack development to automated deployment.
 
 [![Live Site](https://img.shields.io/badge/Live-www.velimir--mueller.de-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://www.velimir-mueller.de)
 [![CI](https://img.shields.io/github/actions/workflow/status/VelimirMueller/portfolio-website/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/VelimirMueller/portfolio-website/actions)
