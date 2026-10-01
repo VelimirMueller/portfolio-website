@@ -20,6 +20,9 @@ export default function ContactContent() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaKey, setCaptchaKey] = useState(0);
   const [HCaptcha, setHCaptcha] = useState<HCaptchaComponent | null>(null);
+  // hCaptcha (a US service) is loaded only once the visitor sends the form,
+  // never on page view — see the privacy policy, section on hCaptcha.
+  const [captchaRequested, setCaptchaRequested] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [showSuccess, setShowSuccess] = useState(false);
   const [countdown, setCountdown] = useState(5);
@@ -48,10 +51,18 @@ export default function ContactContent() {
   };
 
   useEffect(() => {
-    import('@hcaptcha/react-hcaptcha').then(mod => {
-      setHCaptcha(() => mod.default);
-    });
-  }, []);
+    if (!captchaRequested || HCaptcha) return;
+    import('@hcaptcha/react-hcaptcha')
+      .then(mod => {
+        setHCaptcha(() => mod.default);
+      })
+      .catch(() => {
+        // Reset so the next Send tries to load it again.
+        setCaptchaRequested(false);
+        setIsSubmitting(false);
+        setSubmitStatus('error');
+      });
+  }, [captchaRequested, HCaptcha]);
 
   const submitForm = useCallback(async (token: string) => {
     setIsSubmitting(true);
@@ -78,6 +89,8 @@ export default function ContactContent() {
       setTouched({});
       setCaptchaToken(null);
       setCaptchaKey(k => k + 1);
+      // Unmount the widget: a remount would fire onLoad → execute and submit an empty form.
+      setCaptchaRequested(false);
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
@@ -125,12 +138,10 @@ export default function ContactContent() {
     setIsSubmitting(true);
 
     if (showCaptcha) {
-      if (!captchaRef.current) {
-        setIsSubmitting(false);
-        setSubmitStatus('error');
-        return;
-      }
-      captchaRef.current.execute();
+      // First send: load hCaptcha; its onLoad runs the challenge.
+      // Later sends (e.g. after an error): the widget is already there.
+      if (captchaRef.current) captchaRef.current.execute();
+      else setCaptchaRequested(true);
     } else {
       submitForm('');
     }
@@ -228,11 +239,12 @@ export default function ContactContent() {
                     )}
                   </div>
 
-                  {showCaptcha && HCaptcha && (
+                  {showCaptcha && captchaRequested && HCaptcha && (
                     <HCaptcha
                       ref={captchaRef}
                       key={captchaKey}
                       sitekey={HCAPTCHA_SITEKEY!}
+                      onLoad={() => captchaRef.current?.execute()}
                       onVerify={handleCaptchaVerify}
                       onExpire={() => { setCaptchaToken(null); setIsSubmitting(false); }}
                       onError={handleCaptchaError}

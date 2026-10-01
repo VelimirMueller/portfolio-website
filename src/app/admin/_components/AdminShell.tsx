@@ -121,7 +121,7 @@ export function AdminShell({
             <div className="w-9 h-9 rounded-full bg-gradient-to-r from-gray-700 to-gray-600 border-2 border-[#222] relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Velimir"
+                src="/avatar-velimir.svg"
                 alt=""
                 className="w-full h-full rounded-full"
               />
