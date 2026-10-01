@@ -1,3 +1,4 @@
+import { version } from '../../../../package.json';
 import { requireAdmin } from '@/app/admin/_lib/auth';
 import { AdminShell } from '@/app/admin/_components/AdminShell';
 
@@ -9,7 +10,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     .eq('status', 'new');
 
   return (
-    <AdminShell unread={count ?? 0} email={user.email ?? ''}>
+    <AdminShell unread={count ?? 0} email={user.email ?? ''} version={version}>
       {children}
     </AdminShell>
   );
