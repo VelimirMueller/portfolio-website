@@ -32,6 +32,11 @@ describe('AdminShell', () => {
     expect(screen.getByRole('link', { name: /Inbox/ })).toHaveTextContent(/^Inbox$/);
   });
 
+  it('shows the app version under the logo when given', () => {
+    render(<AdminShell unread={0} email="" version="2.0.0">content</AdminShell>);
+    expect(screen.getByText('v2.0.0')).toBeInTheDocument();
+  });
+
   it('opens and closes the mobile menu', () => {
     render(<AdminShell unread={0} email="">content</AdminShell>);
     fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));

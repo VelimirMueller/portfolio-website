@@ -19,10 +19,13 @@ const NAV = [
 export function AdminShell({
   unread,
   email,
+  version,
   children,
 }: {
   unread: number;
   email: string;
+  /** App version from package.json, shown under the logo. */
+  version?: string;
   children: ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -47,6 +50,11 @@ export function AdminShell({
             <span className="font-bold text-xl tracking-tight">
               Velimir<span className="text-gray-600">Admin</span>
             </span>
+            {version && (
+              <span className="ml-auto px-1.5 py-0.5 rounded-md border border-[#222] text-[9px] font-mono text-gray-500">
+                v{version}
+              </span>
+            )}
           </div>
 
           <nav className="space-y-2">
