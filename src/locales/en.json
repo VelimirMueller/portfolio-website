@@ -526,7 +526,7 @@
     "s4Text": "The data submitted via the contact form is stored in a database provided by Supabase.",
     "s4Provider": "Provider:",
     "s4ProviderText": "Supabase, Inc., USA",
-    "s4Detail": "Supabase is used as a data processor. A data processing agreement exists in accordance with Art. 28 GDPR. Data transfer to a third country is based on EU Standard Contractual Clauses in accordance with Art. 46 GDPR.",
+    "s4Detail": "Supabase processes the data as a service provider on my behalf. A transfer of personal data to the USA cannot be ruled out.",
     "s5Title": "10. Storage Duration",
     "s5Text": "The data submitted via the contact form will only be stored for as long as is necessary to process the inquiry or as long as statutory retention obligations exist. After that, the data will be deleted.",
     "s6Title": "11. Your Rights",
