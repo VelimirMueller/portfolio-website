@@ -67,8 +67,14 @@ describe('updateStatuses', () => {
   });
 
   it('updates every given message in one call', async () => {
+    inFilter.mockResolvedValue({ error: null, count: 2 });
     await updateStatuses([ID, ID2], 'archived');
     expect(inFilter).toHaveBeenCalledWith('id', [ID, ID2]);
+  });
+
+  it('fails loudly when RLS skipped some rows', async () => {
+    inFilter.mockResolvedValue({ error: null, count: 1 });
+    await expect(updateStatuses([ID, ID2], 'read')).rejects.toThrow('Could not update');
   });
 
   it('surfaces a database error', async () => {
