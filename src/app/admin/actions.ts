@@ -19,13 +19,15 @@ export async function sendMagicLink(formData: FormData) {
   if (email.success) {
     const origin = await loginOrigin();
     const supabase = createClient(await cookies());
-    await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithOtp({
       email: email.data,
       options: {
         shouldCreateUser: false,
         emailRedirectTo: `${origin}/admin/auth/callback`,
       },
     });
+    // Server log only (Vercel); the visitor still gets the neutral reply.
+    if (error) console.error('[admin] magic link not sent:', error.status, error.message);
   }
   redirect('/admin/login?sent=1');
 }
@@ -48,7 +50,7 @@ export async function signOut() {
 }
 
 export async function setStatus(formData: FormData) {
-  const supabase = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const id = messageIdSchema.parse(formData.get('id'));
   const status = statusSchema.parse(formData.get('status'));
   const { error } = await supabase.from('contact_messages').update({ status }).eq('id', id);
@@ -58,7 +60,7 @@ export async function setStatus(formData: FormData) {
 }
 
 export async function deleteMessage(formData: FormData) {
-  const supabase = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const id = messageIdSchema.parse(formData.get('id'));
   // RLS turns a forbidden delete into "0 rows", not an error — count it.
   const { error, count } = await supabase
