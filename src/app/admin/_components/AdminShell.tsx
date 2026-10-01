@@ -1,17 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
-import { ArrowUpRight, Inbox, LogOut, Menu, Search, X } from 'lucide-react';
+import { ArrowUpRight, BarChart3, Inbox, LogOut, Menu, X } from 'lucide-react';
 import { signOut } from '../actions';
 
 /**
- * App frame copied from the CRM demo: fixed sidebar, blurred header with a
- * search pill, scrolling content area. Sections beyond the inbox get a
+ * App frame copied from the CRM demo: fixed sidebar, blurred header,
+ * scrolling content area. Search lives in each section (the inbox list). Sections beyond the inbox get a
  * NAV entry here when they exist.
  */
-const NAV = [{ href: '/admin', label: 'Inbox', icon: Inbox }] as const;
+const NAV = [
+  { href: '/admin', label: 'Inbox', icon: Inbox, exact: true },
+  { href: '/admin/kpis', label: 'KPIs', icon: BarChart3, exact: false },
+] as const;
 
 export function AdminShell({
   unread,
@@ -24,9 +27,6 @@ export function AdminShell({
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const query = searchParams.get('q') ?? '';
-  const status = searchParams.get('status');
 
   return (
     <div className="flex h-screen bg-[#050505] text-[#E2E2E2] font-sans overflow-hidden">
@@ -50,8 +50,9 @@ export function AdminShell({
           </div>
 
           <nav className="space-y-2">
-            {NAV.map(({ href, label, icon: Icon }) => {
-              const active = pathname === href || pathname.startsWith(`${href}/`);
+            {NAV.map(({ href, label, icon: Icon, exact }) => {
+              // Inbox owns /admin and message links; other sections own their subtree.
+              const active = exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
               return (
                 <Link
                   key={href}
@@ -64,7 +65,7 @@ export function AdminShell({
                 >
                   <Icon size={20} aria-hidden="true" />
                   <span className="font-medium text-sm flex-1">{label}</span>
-                  {unread > 0 && (
+                  {href === '/admin' && unread > 0 && (
                     <span className="min-w-5 h-5 px-1.5 rounded bg-blue-600 text-white text-[10px] flex items-center justify-center font-bold">
                       {unread}
                     </span>
@@ -106,19 +107,6 @@ export function AdminShell({
               {sidebarOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
             </button>
 
-            <form action="/admin" method="get" role="search" className="relative w-full hidden md:block">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" size={18} aria-hidden="true" />
-              {status && <input type="hidden" name="status" value={status} />}
-              <input
-                key={query}
-                type="search"
-                name="q"
-                defaultValue={query}
-                aria-label="Search messages"
-                placeholder="Search messages..."
-                className="w-full bg-[#111] border border-[#222] rounded-full py-2.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
-              />
-            </form>
           </div>
 
           <div className="flex items-center gap-3 pl-6 border-l border-[#222]">
