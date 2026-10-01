@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { ADMIN_USER_ID } from '@/config/admin';
+import { isAdminUser } from '@/config/admin';
 import { createClient } from '@/utils/supabase/server';
 
 /**
@@ -11,7 +11,7 @@ import { createClient } from '@/utils/supabase/server';
 export async function requireAdmin() {
   const supabase = createClient(await cookies());
   const { data } = await supabase.auth.getUser();
-  if (data.user?.id !== ADMIN_USER_ID) {
+  if (!isAdminUser(data.user)) {
     redirect('/admin/login');
   }
   return supabase;

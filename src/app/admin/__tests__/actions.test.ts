@@ -84,6 +84,24 @@ describe('sendMagicLink', () => {
     });
   });
 
+  it('uses SITE_URL in production, whatever the Host header says', async () => {
+    const env = process.env as Record<string, string | undefined>;
+    const before = env.NODE_ENV;
+    env.NODE_ENV = 'production';
+    try {
+      await expect(sendMagicLink(form({ email: 'me@example.com' }))).rejects.toThrow('?sent=1');
+    } finally {
+      env.NODE_ENV = before;
+    }
+    expect(signInWithOtp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          emailRedirectTo: 'https://www.velimir-mueller.de/admin/auth/callback',
+        }),
+      })
+    );
+  });
+
   it('shows the same confirmation for an invalid address without calling Supabase', async () => {
     await expect(sendMagicLink(form({ email: 'nope' }))).rejects.toThrow('?sent=1');
     expect(signInWithOtp).not.toHaveBeenCalled();

@@ -31,10 +31,15 @@ export default async function AdminMessagePage({ params }: { params: { id: strin
   if (!data) notFound();
   const message = data as ContactMessage;
 
+  // Runs on a real visit only: the page is force-dynamic with no loading.tsx,
+  // so <Link> prefetching never renders it. A failed write keeps the old status.
   const next = statusAfterOpening(message.status);
   if (next && next !== message.status) {
-    await supabase.from('contact_messages').update({ status: next }).eq('id', message.id);
-    message.status = next;
+    const { error } = await supabase
+      .from('contact_messages')
+      .update({ status: next })
+      .eq('id', message.id);
+    if (!error) message.status = next;
   }
 
   return (
