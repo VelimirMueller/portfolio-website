@@ -18,7 +18,7 @@ const STATUS_META = {
  */
 export function KpisView({ messages, error }: { messages: MessageKpis; error: boolean }) {
   // 5-day buckets: daily counts on a contact form are mostly 0/1 and look like noise.
-  const spark = Array.from({ length: KPI_WINDOW_DAYS / 5 }, (_, i) =>
+  const spark = Array.from({ length: Math.ceil(KPI_WINDOW_DAYS / 5) }, (_, i) =>
     messages.daily.slice(i * 5, i * 5 + 5).reduce((sum, d) => sum + d.count, 0)
   );
   const dayLabels = messages.daily.map((d) => `${d.date.slice(8, 10)}.${d.date.slice(5, 7)}.`);
