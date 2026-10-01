@@ -56,11 +56,12 @@ export async function updateStatuses(ids: string[], status: string) {
   const { supabase } = await requireAdmin();
   const validIds = idsSchema.parse(ids);
   const validStatus = statusSchema.parse(status);
-  const { error } = await supabase
+  // Like delete: RLS reports rows it skips as "0 affected", not as an error.
+  const { error, count } = await supabase
     .from('contact_messages')
-    .update({ status: validStatus })
+    .update({ status: validStatus }, { count: 'exact' })
     .in('id', validIds);
-  if (error) throw new Error('Could not update the messages');
+  if (error || count !== validIds.length) throw new Error('Could not update the messages');
   revalidatePath('/admin', 'layout');
 }
 
