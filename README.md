@@ -32,6 +32,7 @@ Personal portfolio and service platform showcasing end-to-end product engineerin
 - [CI / CD](#ci--cd)
 - [Commit Convention](#commit-convention)
 - [Pages](#pages)
+- [Admin (v2)](#admin-v2)
 - [Design](#design)
 - [Deployment](#deployment)
 
@@ -203,7 +204,7 @@ type(scope?): subject
 
 feat(contact): add honeypot field
 fix(theme): honor system light preference
-chore(release): v1.2.8
+chore(release): v2.0.0
 ```
 
 Common types: `feat`, `fix`, `chore`, `docs`, `test`, `refactor`, `perf`, `ci`. The hook installs automatically via the `prepare` script on `npm install`.
@@ -219,6 +220,26 @@ Common types: `feat`, `fix`, `chore`, `docs`, `test`, `refactor`, `perf`, `ci`. 
 | **Services** | Requirements Engineering, UX/UI & Branding, Frontend Dev, Project Planning, Modern Stack consulting |
 | **Projects** | Interactive CRM dashboard demo (CSS/SVG charts, responsive sidebar, micro-interactions), case studies |
 | **Contact** | Contact form, email, LinkedIn, GitHub links |
+| **Admin** (`/admin`, private) | Contact inbox and KPIs — see [Admin (v2)](#admin-v2) |
+
+---
+
+## Admin (v2)
+
+A private area at `/admin`, introduced in **v2.0.0**, in the same visual language as the CRM demo. English-only, outside `[locale]`, `noindex` and disallowed in `robots.txt`.
+
+| Section | What it does |
+| :--- | :--- |
+| **Inbox** | Mail-client split view for contact-form messages: status tabs (unread / read / archived / spam / all), search, hover quick actions, multi-select bulk bar, auto-advance, keyboard shortcuts (`j`/`k` · `e` · `s` · `u` · `r` · `x` · `/` · `Esc`) |
+| **KPIs** | One section per data source; **Messages** first — 30-day volume and trend, unread, spam rate, messages per day, status breakdown, busiest weekdays (Europe/Berlin) |
+
+**Access.** Supabase Auth magic link for a single admin user (sign-ups off, `shouldCreateUser: false`). Three layers check the admin: middleware, `requireAdmin()` in every page and server action, and Postgres RLS via `public.is_admin()`. The admin's user UUID lives in `src/config/admin.ts` **and** in the migration — change both together. No service-role key is used.
+
+**Database.** `supabase/migrations/` versions the `contact_messages` table, its `status` column and the RLS policies. Apply new migrations in the Supabase SQL editor.
+
+**Supabase Auth settings** (dashboard, not in the repo): Site URL `https://www.velimir-mueller.de`; redirect URLs `https://www.velimir-mueller.de/admin/auth/callback` and `http://localhost:3000/admin/auth/callback`; custom SMTP via Resend for the login mails.
+
+**Local note.** Under `next dev` the CSP blocks `eval`, so client components (counters, keyboard shortcuts) do not hydrate locally. Check interactive behaviour against `npm run build && npm start`.
 
 ---
 

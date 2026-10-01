@@ -1,7 +1,7 @@
 # Admin Inbox Design
 
 **Date:** 2026-09-30
-**Status:** Approved — decisions settled 2026-09-30
+**Status:** Implemented — shipped in v2.0.0 (PRs #18–#21, 2026-10-01). The single-page inbox described below was later replaced by the split-view workspace and a KPI page; see README → Admin (v2).
 
 ## Goal
 

@@ -1,4 +1,4 @@
-import { filterMessages, initials, summarize, timeAgo } from '../inbox';
+import { countByStatus, filterMessages, initials, nextAfter, step, timeAgo, visibleMessages } from '../inbox';
 import type { ContactMessage } from '../messages';
 
 const NOW = new Date('2026-10-01T12:00:00Z');
@@ -10,36 +10,6 @@ const msg = (over: Partial<ContactMessage>): ContactMessage => ({
   status: 'new',
   created_at: '2026-10-01T09:00:00Z',
   ...over,
-});
-
-describe('summarize', () => {
-  const messages = [
-    msg({ status: 'new' }),
-    msg({ status: 'new', created_at: '2026-09-30T23:00:00Z' }),
-    msg({ status: 'read', created_at: '2026-09-18T10:00:00Z' }), // first sparkline day
-    msg({ status: 'read', created_at: '2026-09-17T10:00:00Z' }), // outside the 14 days
-    msg({ status: 'spam', created_at: null }),
-  ];
-  const byStatus = Object.fromEntries(summarize(messages, NOW).map((s) => [s.status, s]));
-
-  it('counts every status, including empty ones', () => {
-    expect(byStatus.new.count).toBe(2);
-    expect(byStatus.read.count).toBe(2);
-    expect(byStatus.archived.count).toBe(0);
-    expect(byStatus.spam.count).toBe(1);
-  });
-
-  it('buckets the last 14 days, today last', () => {
-    expect(byStatus.new.daily).toHaveLength(14);
-    expect(byStatus.new.daily[13]).toBe(1);
-    expect(byStatus.new.daily[12]).toBe(1);
-    expect(byStatus.read.daily[0]).toBe(1);
-    expect(byStatus.read.daily.reduce((a, b) => a + b, 0)).toBe(1);
-  });
-
-  it('skips messages without a date in the sparkline', () => {
-    expect(byStatus.spam.daily.every((d) => d === 0)).toBe(true);
-  });
 });
 
 describe('filterMessages', () => {
@@ -91,5 +61,46 @@ describe('timeAgo', () => {
 
   it('falls back to a date after a week', () => {
     expect(timeAgo('2026-09-01T12:00:00Z', NOW)).toBe('1.9.2026');
+  });
+});
+
+describe('nextAfter', () => {
+  const list = [{ id: 'a' }, { id: 'b' }, { id: 'c' }, { id: 'd' }];
+  it('takes the next remaining message below', () => {
+    expect(nextAfter(list, 'b', ['b'])).toBe('c');
+    expect(nextAfter(list, 'b', ['b', 'c'])).toBe('d');
+  });
+  it('goes up when nothing is left below', () => {
+    expect(nextAfter(list, 'd', ['d'])).toBe('c');
+  });
+  it('returns null when the list is emptied or the message is unknown', () => {
+    expect(nextAfter(list, 'a', ['a', 'b', 'c', 'd'])).toBeNull();
+    expect(nextAfter(list, 'zz', ['zz'])).toBeNull();
+  });
+});
+
+describe('step', () => {
+  const list = [{ id: 'a' }, { id: 'b' }];
+  it('starts at the top or bottom when nothing is open', () => {
+    expect(step(list, null, 1)).toBe('a');
+    expect(step(list, null, -1)).toBe('b');
+  });
+  it('clamps at the ends', () => {
+    expect(step(list, 'b', 1)).toBe('b');
+    expect(step(list, 'a', -1)).toBe('a');
+  });
+  it('is null for an empty list', () => {
+    expect(step([], null, 1)).toBeNull();
+  });
+});
+
+describe('visibleMessages and countByStatus', () => {
+  const all = [msg({ id: 'a', status: 'new' }), msg({ id: 'b', status: 'read' }), msg({ id: 'c', status: 'new' })];
+  it('keeps the open message in place after it stops matching', () => {
+    expect(visibleMessages(all, 'new', '', 'b').map((m) => m.id)).toEqual(['a', 'b', 'c']);
+    expect(visibleMessages(all, 'new', '', null).map((m) => m.id)).toEqual(['a', 'c']);
+  });
+  it('counts per status plus all', () => {
+    expect(countByStatus(all)).toEqual({ new: 2, read: 1, archived: 0, spam: 0, all: 3 });
   });
 });
