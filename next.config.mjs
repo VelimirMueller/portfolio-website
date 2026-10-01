@@ -3,8 +3,9 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 // Allowances map 1:1 to what the app uses: hCaptcha (contact form),
-// Supabase (contact API), Vercel insights (analytics/vitals), dicebear
-// (demo avatars), wasm-unsafe-eval (the cyberpunk wasm demos).
+// Supabase (contact API), Vercel insights (analytics/vitals),
+// wasm-unsafe-eval (the cyberpunk wasm demos). Images are same-origin only
+// (the avatar is self-hosted in public/ so no third party sees visitor IPs).
 // 'unsafe-inline' in script-src is a Next 14 constraint (inline runtime +
 // theme bootstrap script, no nonce support without dynamic rendering).
 // Framing is same-origin only: /projects/mcp-demo embeds the standalone
@@ -15,7 +16,7 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://js.hcaptcha.com https://*.hcaptcha.com https://va.vercel-scripts.com",
   "style-src 'self' 'unsafe-inline' https://*.hcaptcha.com",
-  "img-src 'self' data: blob: https://api.dicebear.com",
+  "img-src 'self' data: blob:",
   "font-src 'self' data:",
   "connect-src 'self' https://*.supabase.co https://*.hcaptcha.com https://vitals.vercel-insights.com",
   "frame-src 'self' https://*.hcaptcha.com",
