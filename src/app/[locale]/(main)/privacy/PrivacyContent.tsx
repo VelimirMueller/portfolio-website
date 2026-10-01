@@ -3,6 +3,26 @@ import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
 
+/** One processing activity: what happens, who does it, and on which legal basis. */
+function ProcessingSection({ id }: { id: 'hosting' | 'captcha' | 'mail' | 'analytics' | 'storage' }) {
+  const t = useTranslations();
+  const provider = t(`privacy.${id}.provider`);
+  return (
+    <section>
+      <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t(`privacy.${id}.title`)}</h2>
+      <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{t(`privacy.${id}.text`)}</p>
+      {provider && (
+        <>
+          <p className="text-sm font-bold text-black dark:text-white mb-1">{provider}</p>
+          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{t(`privacy.${id}.providerText`)}</p>
+        </>
+      )}
+      <p className="text-sm font-bold text-black dark:text-white mb-1">{t(`privacy.${id}.legal`)}</p>
+      <p className="text-gray-600 dark:text-gray-400 text-sm">{t(`privacy.${id}.legalText`)}</p>
+    </section>
+  );
+}
+
 export default function PrivacyContent() {
   const t = useTranslations();
   const s3Data = t.raw('privacy.s3Data') as string[];
@@ -17,7 +37,7 @@ export default function PrivacyContent() {
       <AnimateIn from="bottom" delay={100}>
       <div className="bg-white dark:bg-[#111] p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 space-y-10">
 
-        {/* 1. Verantwortlicher */}
+        {/* Verantwortlicher */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s1Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{t('privacy.s1Text')}</p>
@@ -30,13 +50,15 @@ export default function PrivacyContent() {
           </div>
         </section>
 
-        {/* 2. Allgemeine Hinweise */}
+        {/* Allgemeine Hinweise */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s2Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm whitespace-pre-line">{t('privacy.s2Text')}</p>
         </section>
 
-        {/* 3. Kontaktformular */}
+        <ProcessingSection id="hosting" />
+
+        {/* Kontaktformular */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s3Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{t('privacy.s3Text')}</p>
@@ -53,7 +75,9 @@ export default function PrivacyContent() {
           <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s3LegalText')}</p>
         </section>
 
-        {/* 4. Speicherung */}
+        <ProcessingSection id="captcha" />
+
+        {/* Speicherung (Supabase) */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s4Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{t('privacy.s4Text')}</p>
@@ -64,13 +88,17 @@ export default function PrivacyContent() {
           <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s4Detail')}</p>
         </section>
 
-        {/* 5. Speicherdauer */}
+        <ProcessingSection id="mail" />
+        <ProcessingSection id="analytics" />
+        <ProcessingSection id="storage" />
+
+        {/* Speicherdauer */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s5Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s5Text')}</p>
         </section>
 
-        {/* 6. Ihre Rechte */}
+        {/* Ihre Rechte */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s6Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">{t('privacy.s6Text')}</p>
@@ -80,13 +108,13 @@ export default function PrivacyContent() {
           <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s6Contact')}</p>
         </section>
 
-        {/* 7. Beschwerderecht */}
+        {/* Beschwerderecht */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s7Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s7Text')}</p>
         </section>
 
-        {/* 8. SSL */}
+        {/* SSL */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s8Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s8Text')}</p>
