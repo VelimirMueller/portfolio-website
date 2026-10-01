@@ -49,25 +49,29 @@ export async function signOut() {
   redirect('/admin/login');
 }
 
-export async function setStatus(formData: FormData) {
+const idsSchema = z.array(messageIdSchema).min(1).max(200);
+
+/** Sets one status on one or many messages (list quick actions, bulk bar, keyboard). */
+export async function updateStatuses(ids: string[], status: string) {
   const { supabase } = await requireAdmin();
-  const id = messageIdSchema.parse(formData.get('id'));
-  const status = statusSchema.parse(formData.get('status'));
-  const { error } = await supabase.from('contact_messages').update({ status }).eq('id', id);
-  if (error) throw new Error('Could not update the message');
-  revalidatePath('/admin');
-  revalidatePath(`/admin/${id}`);
+  const validIds = idsSchema.parse(ids);
+  const validStatus = statusSchema.parse(status);
+  const { error } = await supabase
+    .from('contact_messages')
+    .update({ status: validStatus })
+    .in('id', validIds);
+  if (error) throw new Error('Could not update the messages');
+  revalidatePath('/admin', 'layout');
 }
 
-export async function deleteMessage(formData: FormData) {
+/** Hard delete. RLS turns a forbidden delete into "0 rows", not an error — count them. */
+export async function deleteMessages(ids: string[]) {
   const { supabase } = await requireAdmin();
-  const id = messageIdSchema.parse(formData.get('id'));
-  // RLS turns a forbidden delete into "0 rows", not an error — count it.
+  const validIds = idsSchema.parse(ids);
   const { error, count } = await supabase
     .from('contact_messages')
     .delete({ count: 'exact' })
-    .eq('id', id);
-  if (error || count !== 1) throw new Error('Could not delete the message');
-  revalidatePath('/admin');
-  redirect('/admin');
+    .in('id', validIds);
+  if (error || count !== validIds.length) throw new Error('Could not delete the messages');
+  revalidatePath('/admin', 'layout');
 }

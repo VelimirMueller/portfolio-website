@@ -1,33 +1,4 @@
-import { MESSAGE_STATUSES, type ContactMessage, type MessageStatus } from './messages';
-
-export const SPARKLINE_DAYS = 14;
-
-export interface StatusSummary {
-  status: MessageStatus;
-  count: number;
-  /** Messages received per day over the last SPARKLINE_DAYS days, oldest first. */
-  daily: number[];
-}
-
-const DAY_MS = 24 * 60 * 60 * 1000;
-
-/** Per-status counts plus a received-per-day series for the KPI sparklines. */
-export function summarize(messages: ContactMessage[], now: Date = new Date()): StatusSummary[] {
-  const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-  const firstDay = today - (SPARKLINE_DAYS - 1) * DAY_MS;
-
-  return MESSAGE_STATUSES.map((status) => {
-    const ofStatus = messages.filter((m) => m.status === status);
-    const daily = new Array<number>(SPARKLINE_DAYS).fill(0);
-    for (const m of ofStatus) {
-      if (!m.created_at) continue;
-      const t = new Date(m.created_at).getTime();
-      const index = Math.floor((t - firstDay) / DAY_MS);
-      if (index >= 0 && index < SPARKLINE_DAYS) daily[index] += 1;
-    }
-    return { status, count: ofStatus.length, daily };
-  });
-}
+import type { ContactMessage, MessageStatus } from './messages';
 
 /** Status filter plus a case-insensitive search over name, email and message. */
 export function filterMessages(
@@ -63,4 +34,46 @@ export function timeAgo(iso: string | null, now: Date = new Date()): string {
   const days = Math.floor(hours / 24);
   if (days < 7) return `${days}d ago`;
   return new Date(iso).toLocaleDateString('de-DE');
+}
+
+/**
+ * The message to open after `ids` leave the list (archive, spam, delete):
+ * the first remaining one below the current, else the nearest above, else none.
+ */
+export function nextAfter(list: { id: string }[], currentId: string | null, removed: string[]): string | null {
+  const gone = new Set(removed);
+  const start = currentId ? list.findIndex((m) => m.id === currentId) : -1;
+  if (start === -1) return null;
+  for (let i = start + 1; i < list.length; i++) if (!gone.has(list[i].id)) return list[i].id;
+  for (let i = start - 1; i >= 0; i--) if (!gone.has(list[i].id)) return list[i].id;
+  return null;
+}
+
+/** Previous/next message for j/k navigation; stays put at the ends. */
+export function step(list: { id: string }[], currentId: string | null, delta: 1 | -1): string | null {
+  if (list.length === 0) return null;
+  const i = currentId ? list.findIndex((m) => m.id === currentId) : -1;
+  if (i === -1) return list[delta === 1 ? 0 : list.length - 1].id;
+  return list[Math.min(Math.max(i + delta, 0), list.length - 1)].id;
+}
+
+/**
+ * The visible list for the inbox: status filter + search, but the open
+ * message stays in place even after it stops matching (e.g. it was just
+ * marked read while the "new" tab is shown) — like a mail client.
+ */
+export function visibleMessages(
+  all: ContactMessage[],
+  status: MessageStatus | 'all',
+  query: string,
+  openId: string | null
+): ContactMessage[] {
+  const matching = new Set(filterMessages(all, status, query).map((m) => m.id));
+  return all.filter((m) => matching.has(m.id) || m.id === openId);
+}
+
+export function countByStatus(all: ContactMessage[]): Record<MessageStatus | 'all', number> {
+  const counts = { new: 0, read: 0, archived: 0, spam: 0, all: all.length };
+  for (const m of all) counts[m.status] += 1;
+  return counts;
 }
