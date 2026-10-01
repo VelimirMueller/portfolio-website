@@ -526,7 +526,7 @@
     "s4Text": "Die über das Kontaktformular übermittelten Daten werden in einer Datenbank des Dienstleisters Supabase gespeichert.",
     "s4Provider": "Anbieter:",
     "s4ProviderText": "Supabase, Inc., USA",
-    "s4Detail": "Supabase wird als Auftragsverarbeiter eingesetzt. Es besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO. Die Datenübermittlung in ein Drittland erfolgt auf Grundlage der EU-Standardvertragsklauseln gemäß Art. 46 DSGVO.",
+    "s4Detail": "Supabase verarbeitet die Daten als Dienstleister in meinem Auftrag. Eine Übermittlung personenbezogener Daten in die USA kann dabei nicht ausgeschlossen werden.",
     "s5Title": "10. Speicherdauer",
     "s5Text": "Die über das Kontaktformular übermittelten Daten werden nur so lange gespeichert, wie dies zur Bearbeitung der Anfrage erforderlich ist oder gesetzliche Aufbewahrungspflichten bestehen. Danach werden die Daten gelöscht.",
     "s6Title": "11. Ihre Rechte",
