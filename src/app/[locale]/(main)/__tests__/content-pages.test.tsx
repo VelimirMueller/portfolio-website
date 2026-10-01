@@ -124,6 +124,30 @@ describe('content pages render with the real German catalog', () => {
     expect(screen.getByText(de.privacy.s3Data[0])).toBeInTheDocument();
   });
 
+  it('PrivacyContent covers every service the site uses, in order', () => {
+    render(<PrivacyContent />);
+    const titles = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
+    expect(titles).toEqual([
+      de.privacy.s1Title,
+      de.privacy.s2Title,
+      de.privacy.hosting.title,
+      de.privacy.s3Title,
+      de.privacy.captcha.title,
+      de.privacy.s4Title,
+      de.privacy.mail.title,
+      de.privacy.analytics.title,
+      de.privacy.storage.title,
+      de.privacy.s5Title,
+      de.privacy.s6Title,
+      de.privacy.s7Title,
+      de.privacy.s8Title,
+    ]);
+    // Section numbers run 1..13 without gaps.
+    expect(titles.map((t) => Number(t?.split('.')[0]))).toEqual(Array.from({ length: 13 }, (_, i) => i + 1));
+    // The theme section has no provider block.
+    expect(screen.getAllByText(de.privacy.hosting.provider).length).toBe(4 + 1); // 4 new + Supabase
+  });
+
   it('ImprintContent renders the imprint details', () => {
     render(<ImprintContent />);
     expect(screen.getByText(de.imprint.title)).toBeInTheDocument();
