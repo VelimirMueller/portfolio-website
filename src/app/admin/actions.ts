@@ -4,6 +4,7 @@ import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { SITE_URL } from '@/config/site';
 import { createClient } from '@/utils/supabase/server';
 import { requireAdmin } from './_lib/auth';
 import { messageIdSchema, statusSchema } from './_lib/messages';
@@ -16,8 +17,7 @@ import { messageIdSchema, statusSchema } from './_lib/messages';
 export async function sendMagicLink(formData: FormData) {
   const email = z.string().email().safeParse(formData.get('email'));
   if (email.success) {
-    const h = headers();
-    const origin = `${h.get('x-forwarded-proto') ?? 'https'}://${h.get('host')}`;
+    const origin = await loginOrigin();
     const supabase = createClient(await cookies());
     await supabase.auth.signInWithOtp({
       email: email.data,
@@ -28,6 +28,17 @@ export async function sendMagicLink(formData: FormData) {
     });
   }
   redirect('/admin/login?sent=1');
+}
+
+/**
+ * Production links always point at SITE_URL, never at a request header.
+ * Outside production the request origin is used so localhost works; Supabase
+ * still rejects any redirect URL that is not on its allow-list.
+ */
+async function loginOrigin() {
+  if (process.env.NODE_ENV === 'production') return SITE_URL;
+  const h = headers();
+  return `${h.get('x-forwarded-proto') ?? 'http'}://${h.get('host')}`;
 }
 
 export async function signOut() {

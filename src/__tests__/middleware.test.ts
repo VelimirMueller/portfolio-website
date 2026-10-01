@@ -42,6 +42,11 @@ describe('middleware', () => {
     expect(await run(path)).toBe(passThrough);
   });
 
+  it('does not make lookalikes of the public paths public', async () => {
+    const res = await run('/admin/login-anything');
+    expect(res.headers.get('location')).toBe('https://example.test/admin/login');
+  });
+
   it('does not treat lookalike paths as admin', async () => {
     await run('/administrator');
     expect(intl).toHaveBeenCalled();
