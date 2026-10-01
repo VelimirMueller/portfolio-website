@@ -1,4 +1,6 @@
+import { Mail } from 'lucide-react';
 import { sendMagicLink } from '../actions';
+import { SubmitButton } from '../_components/SubmitButton';
 
 export default function AdminLoginPage({
   searchParams,
@@ -6,39 +8,51 @@ export default function AdminLoginPage({
   searchParams: { sent?: string; error?: string };
 }) {
   return (
-    <section className="mx-auto mt-16 max-w-sm">
-      <h1 className="mb-6 font-mono text-xl font-bold">Admin</h1>
+    <main className="min-h-screen flex items-center justify-center p-4 bg-[#050505]">
+      <div className="w-full max-w-sm bg-[#111111] rounded-[2rem] p-8 border border-[#222] animate-fade-in-up">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white">
+            V
+          </div>
+          <span className="font-bold text-xl tracking-tight text-white">
+            Velimir<span className="text-gray-600">Admin</span>
+          </span>
+        </div>
 
-      {searchParams.sent ? (
-        <p role="status" className="text-sm text-light-sub dark:text-dark-sub">
-          If that address may sign in, a login link is on its way. Open it in this browser.
-        </p>
-      ) : (
-        <form action={sendMagicLink} className="flex flex-col gap-3">
-          {searchParams.error && (
-            <p role="alert" className="text-sm text-red-500">
-              That login link did not work. Request a new one.
+        {searchParams.sent ? (
+          <div role="status" className="flex items-start gap-3 p-3 rounded-xl border border-blue-500/20 bg-blue-500/5">
+            <Mail size={16} className="text-blue-400 mt-0.5 shrink-0" aria-hidden="true" />
+            <p className="text-xs text-gray-300 leading-relaxed">
+              If that address may sign in, a login link is on its way. Open it in this browser.
             </p>
-          )}
-          <label htmlFor="email" className="text-sm font-medium">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            className="rounded-lg border border-light-border bg-light-card px-3 py-2 dark:border-dark-border dark:bg-dark-card"
-          />
-          <button
-            type="submit"
-            className="rounded-full bg-black px-6 py-3 font-mono text-sm font-bold text-white dark:bg-white dark:text-black"
-          >
-            Send login link
-          </button>
-        </form>
-      )}
-    </section>
+          </div>
+        ) : (
+          <form action={sendMagicLink} className="flex flex-col gap-3">
+            {searchParams.error && (
+              <p role="alert" className="text-xs text-red-300 p-3 rounded-xl border border-red-500/20 bg-red-500/5">
+                That login link did not work. Request a new one.
+              </p>
+            )}
+            <label htmlFor="email" className="text-[10px] font-mono uppercase tracking-wider text-gray-500">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              className="w-full bg-[#0a0a0a] border border-[#222] rounded-xl py-2.5 px-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+            />
+            <SubmitButton
+              pendingLabel="Sending…"
+              className="mt-2 w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-blue-900/20 transition-colors"
+            >
+              Send login link
+            </SubmitButton>
+          </form>
+        )}
+      </div>
+    </main>
   );
 }

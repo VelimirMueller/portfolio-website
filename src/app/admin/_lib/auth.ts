@@ -11,8 +11,8 @@ import { createClient } from '@/utils/supabase/server';
 export async function requireAdmin() {
   const supabase = createClient(await cookies());
   const { data } = await supabase.auth.getUser();
-  if (!isAdminUser(data.user)) {
+  if (!data.user || !isAdminUser(data.user)) {
     redirect('/admin/login');
   }
-  return supabase;
+  return { supabase, user: data.user };
 }
