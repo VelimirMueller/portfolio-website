@@ -42,6 +42,13 @@ describe('computeMessageKpis', () => {
     expect(k.byStatus.find((s) => s.status === 'archived')).toEqual({ status: 'archived', count: 0, pct: 0 });
   });
 
+  it('counts days and weekdays in Berlin time, not UTC', () => {
+    // 2026-09-27 22:30 UTC is Monday 28 Sep, 00:30 in Berlin (CEST, UTC+2).
+    const k = computeMessageKpis([m('2026-09-27T22:30:00Z')], NOW);
+    expect(k.byWeekday[0]).toBe(1);
+    expect(k.daily.find((d) => d.date === '2026-09-28')?.count).toBe(1);
+  });
+
   it('counts weekdays Monday first', () => {
     const k = computeMessageKpis([m('2026-09-28T10:00:00Z'), m('2026-10-04T10:00:00Z')], NOW); // Mon, Sun
     expect(k.byWeekday[0]).toBe(1);

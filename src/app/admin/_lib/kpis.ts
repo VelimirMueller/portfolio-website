@@ -1,6 +1,8 @@
 import { MESSAGE_STATUSES, type ContactMessage, type MessageStatus } from './messages';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
+/** Days and weekdays are counted in the site owner's time zone, not UTC. */
+export const KPI_TIME_ZONE = 'Europe/Berlin';
 export const KPI_WINDOW_DAYS = 30;
 export const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
 
@@ -22,14 +24,30 @@ export interface MessageKpis {
   spamRate: number;
   daily: DayPoint[];
   byStatus: { status: MessageStatus; count: number; pct: number }[];
-  /** Received per weekday (Mon–Sun) over all time. */
+  /** Received per weekday (Mon–Sun, Berlin time) over all time. */
   byWeekday: number[];
 }
 
-const dayStart = (d: Date) => Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+const localParts = new Intl.DateTimeFormat('en-CA', {
+  timeZone: KPI_TIME_ZONE,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  weekday: 'short',
+});
+const WEEKDAY_INDEX: Record<string, number> = { Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 5, Sun: 6 };
+
+/** Calendar day in KPI_TIME_ZONE as a UTC-midnight timestamp, plus its weekday (0 = Monday). */
+function localDay(d: Date): { day: number; weekday: number } {
+  const parts = Object.fromEntries(localParts.formatToParts(d).map((p) => [p.type, p.value]));
+  return {
+    day: Date.UTC(Number(parts.year), Number(parts.month) - 1, Number(parts.day)),
+    weekday: WEEKDAY_INDEX[parts.weekday],
+  };
+}
 
 export function computeMessageKpis(messages: ContactMessage[], now: Date = new Date()): MessageKpis {
-  const today = dayStart(now);
+  const today = localDay(now).day;
   const windowStart = today - (KPI_WINDOW_DAYS - 1) * DAY_MS;
   const previousStart = windowStart - KPI_WINDOW_DAYS * DAY_MS;
 
@@ -43,15 +61,14 @@ export function computeMessageKpis(messages: ContactMessage[], now: Date = new D
 
   for (const m of messages) {
     if (!m.created_at) continue;
-    const t = new Date(m.created_at);
-    const day = dayStart(t);
+    const { day, weekday } = localDay(new Date(m.created_at));
     if (day >= windowStart && day <= today) {
       current += 1;
       daily[Math.round((day - windowStart) / DAY_MS)].count += 1;
     } else if (day >= previousStart && day < windowStart) {
       previous += 1;
     }
-    byWeekday[(t.getUTCDay() + 6) % 7] += 1; // getUTCDay: 0 = Sunday → index 6
+    byWeekday[weekday] += 1;
   }
 
   const total = messages.length;
