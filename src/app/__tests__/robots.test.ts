@@ -12,6 +12,11 @@ describe('robots', () => {
     expect(rules.disallow).toContain('/projects/dashboard-demo');
   });
 
+  it('disallows the admin area', () => {
+    const rules = Array.isArray(result.rules) ? result.rules[0] : result.rules;
+    expect(rules.disallow).toContain('/admin');
+  });
+
   it('points to an absolute sitemap URL', () => {
     expect(result.sitemap).toMatch(/^https:\/\/.+\/sitemap\.xml$/);
   });
