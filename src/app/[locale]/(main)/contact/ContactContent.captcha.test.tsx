@@ -22,7 +22,14 @@ jest.mock('@/components/atoms/Button', () => ({
 
 const execute = jest.fn();
 let mounted = 0;
+let failLoads = 1; // the first load fails, see the retry test
 jest.mock('@hcaptcha/react-hcaptcha', () => {
+  // A throwing factory rejects the dynamic import(), like a failed chunk load.
+  // Jest does not cache a module whose factory threw, so the next import() succeeds.
+  if (failLoads > 0) {
+    failLoads -= 1;
+    throw new Error('chunk load failed');
+  }
   const R = jest.requireActual('react') as typeof React;
   const Fake = R.forwardRef(function Fake(props: { onLoad?: () => void }, ref: React.Ref<unknown>) {
     R.useImperativeHandle(ref, () => ({ execute }));
@@ -53,6 +60,26 @@ describe('ContactContent hCaptcha loading', () => {
   beforeEach(() => {
     execute.mockClear();
     mounted = 0;
+  });
+
+  // Must run before any other test loads @hcaptcha/react-hcaptcha (see the mock).
+  it('tries again on the next Send when loading hCaptcha failed', async () => {
+    render(<ContactContent />);
+    fill();
+    const form = () => screen.getByLabelText(/contact.nameLabel/).closest('form')!;
+    await act(async () => {
+      fireEvent.submit(form());
+    });
+    await act(async () => {});
+    expect(screen.getByText('contact.errorMessage')).toBeInTheDocument();
+    expect(screen.queryByTestId('hcaptcha')).not.toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.submit(form());
+    });
+    await act(async () => {});
+    expect(screen.getByTestId('hcaptcha')).toBeInTheDocument();
+    expect(execute).toHaveBeenCalledTimes(1);
   });
 
   it('does not load hCaptcha on page view', async () => {

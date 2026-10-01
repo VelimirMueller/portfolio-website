@@ -57,6 +57,8 @@ export default function ContactContent() {
         setHCaptcha(() => mod.default);
       })
       .catch(() => {
+        // Reset so the next Send tries to load it again.
+        setCaptchaRequested(false);
         setIsSubmitting(false);
         setSubmitStatus('error');
       });
