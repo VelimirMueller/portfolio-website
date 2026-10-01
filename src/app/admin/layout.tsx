@@ -13,6 +13,7 @@ import '../globals.css';
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  themeColor: '#050505',
 };
 
 export const metadata: Metadata = {
@@ -33,12 +34,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body
-        className={`${inter.className} min-h-screen bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text`}
-      >
-        <ThemeProvider>
-          <main className="mx-auto max-w-3xl px-4 py-10">{children}</main>
-        </ThemeProvider>
+      <body className={`${inter.className} min-h-screen bg-[#050505] text-[#E2E2E2]`}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
