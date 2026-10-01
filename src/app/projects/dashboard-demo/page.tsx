@@ -1037,7 +1037,7 @@ const SettingsView = () => {
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                 <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 border-4 border-[#111] relative flex-shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Velimir" alt="Avatar" className="w-full h-full rounded-full" />
+                  <img src="/avatar-velimir.svg" alt="Avatar" className="w-full h-full rounded-full" />
                   <button className="absolute bottom-0 right-0 p-1.5 bg-blue-600 rounded-full text-white border-2 border-[#111]" aria-label="Change profile picture">
                     <Edit3 size={12} aria-hidden="true" />
                   </button>
@@ -1449,7 +1449,7 @@ export default function DashboardDemoPage() {
             <div className="flex items-center gap-3 pl-6 border-l border-[#222]">
               <div className="w-9 h-9 rounded-full bg-gradient-to-r from-gray-700 to-gray-600 border-2 border-[#222] relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Velimir" alt="User" className="w-full h-full rounded-full" />
+                <img src="/avatar-velimir.svg" alt="User" className="w-full h-full rounded-full" />
                 <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#111] rounded-full"></div>
               </div>
               <div className="hidden md:block">

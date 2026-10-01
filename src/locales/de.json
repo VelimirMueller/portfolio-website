@@ -510,7 +510,7 @@
     "s1Text": "Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO):",
     "s2Title": "2. Allgemeine Hinweise",
     "s2Text": "Der Schutz Ihrer persönlichen Daten ist mir wichtig. Personenbezogene Daten werden auf dieser Website nur im notwendigen Umfang und gemäß den Vorgaben der Datenschutz-Grundverordnung (DSGVO) verarbeitet.\n\nPersonenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.",
-    "s3Title": "3. Kontaktformular",
+    "s3Title": "4. Kontaktformular",
     "s3Text": "Wenn Sie mich über das Kontaktformular kontaktieren, werden die von Ihnen gemachten Angaben verarbeitet und gespeichert.",
     "s3DataTitle": "Verarbeitete Daten:",
     "s3Data": [
@@ -522,14 +522,14 @@
     "s3PurposeText": "Bearbeitung Ihrer Anfrage und Kontaktaufnahme.",
     "s3Legal": "Rechtsgrundlage:",
     "s3LegalText": "Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen), da die Anfrage im Zusammenhang mit meiner professionellen Tätigkeit steht.",
-    "s4Title": "4. Speicherung der Daten (Supabase)",
+    "s4Title": "6. Speicherung der Daten (Supabase)",
     "s4Text": "Die über das Kontaktformular übermittelten Daten werden in einer Datenbank des Dienstleisters Supabase gespeichert.",
     "s4Provider": "Anbieter:",
     "s4ProviderText": "Supabase, Inc., USA",
     "s4Detail": "Supabase wird als Auftragsverarbeiter eingesetzt. Es besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO. Die Datenübermittlung in ein Drittland erfolgt auf Grundlage der EU-Standardvertragsklauseln gemäß Art. 46 DSGVO.",
-    "s5Title": "5. Speicherdauer",
+    "s5Title": "10. Speicherdauer",
     "s5Text": "Die über das Kontaktformular übermittelten Daten werden nur so lange gespeichert, wie dies zur Bearbeitung der Anfrage erforderlich ist oder gesetzliche Aufbewahrungspflichten bestehen. Danach werden die Daten gelöscht.",
-    "s6Title": "6. Ihre Rechte",
+    "s6Title": "11. Ihre Rechte",
     "s6Text": "Sie haben jederzeit das Recht auf:",
     "s6Rights": [
       "Auskunft über Ihre gespeicherten personenbezogenen Daten (Art. 15 DSGVO)",
@@ -539,10 +539,50 @@
       "Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)"
     ],
     "s6Contact": "Zur Ausübung Ihrer Rechte genügt eine formlose Mitteilung per E-Mail.",
-    "s7Title": "7. Beschwerderecht",
+    "s7Title": "12. Beschwerderecht",
     "s7Text": "Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig ist in der Regel die Datenschutzbehörde Ihres Bundeslandes.",
-    "s8Title": "8. SSL-Verschlüsselung",
-    "s8Text": "Diese Website nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung, um übermittelte Daten zu schützen."
+    "s8Title": "13. SSL-Verschlüsselung",
+    "s8Text": "Diese Website nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung, um übermittelte Daten zu schützen.",
+    "hosting": {
+      "title": "3. Hosting (Vercel)",
+      "text": "Diese Website wird bei Vercel gehostet. Beim Aufruf der Website verarbeitet Vercel technisch notwendige Daten, die Ihr Browser automatisch übermittelt: IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Referrer, Browsertyp und Betriebssystem (Server-Logfiles). Diese Daten werden nicht mit anderen Datenquellen zusammengeführt.",
+      "provider": "Anbieter:",
+      "providerText": "Vercel Inc., USA",
+      "legal": "Rechtsgrundlage:",
+      "legalText": "Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse liegt in der sicheren und stabilen Bereitstellung der Website. Die Übermittlung in die USA stützt sich auf den Angemessenheitsbeschluss zum EU-US Data Privacy Framework bzw. auf EU-Standardvertragsklauseln (Art. 46 DSGVO)."
+    },
+    "captcha": {
+      "title": "5. Spamschutz (hCaptcha)",
+      "text": "Zum Schutz des Kontaktformulars vor automatisierten Anfragen (Spam) setze ich hCaptcha ein. hCaptcha wird erst geladen, wenn Sie auf „Senden“ klicken – nicht bereits beim Aufruf der Seite. Dabei verarbeitet hCaptcha insbesondere Ihre IP-Adresse, Browser- und Geräteinformationen sowie Daten zur Interaktion mit der Prüfung und kann hierfür Informationen in Ihrem Browser speichern.",
+      "provider": "Anbieter:",
+      "providerText": "Intuition Machines, Inc., USA",
+      "legal": "Rechtsgrundlage:",
+      "legalText": "Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse liegt im Schutz des Kontaktformulars vor Missbrauch. Der Zugriff auf Ihr Endgerät ist für den von Ihnen ausdrücklich gewünschten Versand der Nachricht unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG)."
+    },
+    "mail": {
+      "title": "7. E-Mail-Benachrichtigung (Resend)",
+      "text": "Über neue Nachrichten aus dem Kontaktformular werde ich per E-Mail benachrichtigt. Hierfür werden Name, E-Mail-Adresse und Nachricht an den E-Mail-Dienst Resend übermittelt, der die Benachrichtigung ausschließlich an mich versendet.",
+      "provider": "Anbieter:",
+      "providerText": "Resend (Plus Five Five, Inc.), USA",
+      "legal": "Rechtsgrundlage:",
+      "legalText": "Art. 6 Abs. 1 lit. b DSGVO (Bearbeitung Ihrer Anfrage) sowie Art. 6 Abs. 1 lit. f DSGVO (zeitnahe Reaktion auf Anfragen). Die Übermittlung in die USA stützt sich auf EU-Standardvertragsklauseln (Art. 46 DSGVO)."
+    },
+    "analytics": {
+      "title": "8. Reichweitenmessung (Vercel Web Analytics & Speed Insights)",
+      "text": "Um die Nutzung und Ladegeschwindigkeit der Website zu verstehen, nutze ich Vercel Web Analytics und Vercel Speed Insights. Es werden keine Cookies gesetzt und keine Informationen dauerhaft auf Ihrem Endgerät gespeichert. Erfasst werden aufgerufene Seiten, Referrer, Land, Browser, Betriebssystem, Gerätetyp sowie Messwerte zur Ladezeit. Besuche werden nur innerhalb eines Tages über einen nicht umkehrbaren Hash zusammengefasst; eine Wiedererkennung über Tage oder Websites hinweg findet nicht statt.",
+      "provider": "Anbieter:",
+      "providerText": "Vercel Inc., USA",
+      "legal": "Rechtsgrundlage:",
+      "legalText": "Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse liegt in einer datensparsamen, anonymisierten Auswertung der Website-Nutzung und -Performance."
+    },
+    "storage": {
+      "title": "9. Lokale Speicherung im Browser",
+      "text": "Wenn Sie zwischen hellem und dunklem Design wechseln, wird Ihre Auswahl unter dem Schlüssel „theme“ im lokalen Speicher (localStorage) Ihres Browsers abgelegt. Der Wert enthält keine personenbezogenen Daten, wird nicht an mich übermittelt und kann jederzeit über die Browsereinstellungen gelöscht werden.",
+      "provider": "",
+      "providerText": "",
+      "legal": "Rechtsgrundlage:",
+      "legalText": "§ 25 Abs. 2 Nr. 2 TDDDG – die Speicherung ist für die von Ihnen gewünschte Darstellung unbedingt erforderlich."
+    }
   },
   "notFound": {
     "title": "404",

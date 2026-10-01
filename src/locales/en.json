@@ -510,7 +510,7 @@
     "s1Text": "Controller within the meaning of the General Data Protection Regulation (GDPR):",
     "s2Title": "2. General Information",
     "s2Text": "The protection of your personal data is important to me. Personal data is only processed on this website to the extent necessary and in accordance with the provisions of the General Data Protection Regulation (GDPR).\n\nPersonal data is any data that can be used to personally identify you.",
-    "s3Title": "3. Contact Form",
+    "s3Title": "4. Contact Form",
     "s3Text": "When you contact me via the contact form, the information you provide will be processed and stored.",
     "s3DataTitle": "Processed data:",
     "s3Data": [
@@ -522,14 +522,14 @@
     "s3PurposeText": "Handling your inquiry and contacting you.",
     "s3Legal": "Legal basis:",
     "s3LegalText": "Processing is carried out in accordance with Art. 6(1)(b) GDPR (pre-contractual measures), as the inquiry is related to my professional activity.",
-    "s4Title": "4. Data Storage (Supabase)",
+    "s4Title": "6. Data Storage (Supabase)",
     "s4Text": "The data submitted via the contact form is stored in a database provided by Supabase.",
     "s4Provider": "Provider:",
     "s4ProviderText": "Supabase, Inc., USA",
     "s4Detail": "Supabase is used as a data processor. A data processing agreement exists in accordance with Art. 28 GDPR. Data transfer to a third country is based on EU Standard Contractual Clauses in accordance with Art. 46 GDPR.",
-    "s5Title": "5. Storage Duration",
+    "s5Title": "10. Storage Duration",
     "s5Text": "The data submitted via the contact form will only be stored for as long as is necessary to process the inquiry or as long as statutory retention obligations exist. After that, the data will be deleted.",
-    "s6Title": "6. Your Rights",
+    "s6Title": "11. Your Rights",
     "s6Text": "You have the right at any time to:",
     "s6Rights": [
       "Access your stored personal data (Art. 15 GDPR)",
@@ -539,10 +539,50 @@
       "Object to processing (Art. 21 GDPR)"
     ],
     "s6Contact": "To exercise your rights, an informal notification by email is sufficient.",
-    "s7Title": "7. Right to Lodge a Complaint",
+    "s7Title": "12. Right to Lodge a Complaint",
     "s7Text": "You have the right to lodge a complaint with a data protection supervisory authority. The responsible authority is usually the data protection authority of your federal state.",
-    "s8Title": "8. SSL Encryption",
-    "s8Text": "For security reasons, this website uses SSL or TLS encryption to protect transmitted data."
+    "s8Title": "13. SSL Encryption",
+    "s8Text": "For security reasons, this website uses SSL or TLS encryption to protect transmitted data.",
+    "hosting": {
+      "title": "3. Hosting (Vercel)",
+      "text": "This website is hosted by Vercel. When you visit the website, Vercel processes technically necessary data that your browser transmits automatically: IP address, date and time of access, page requested, referrer, browser type and operating system (server log files). This data is not combined with other data sources.",
+      "provider": "Provider:",
+      "providerText": "Vercel Inc., USA",
+      "legal": "Legal basis:",
+      "legalText": "Art. 6(1)(f) GDPR. My legitimate interest is the secure and stable provision of the website. The transfer to the USA is based on the adequacy decision for the EU-US Data Privacy Framework or on EU Standard Contractual Clauses (Art. 46 GDPR)."
+    },
+    "captcha": {
+      "title": "5. Spam Protection (hCaptcha)",
+      "text": "To protect the contact form from automated requests (spam), I use hCaptcha. hCaptcha is only loaded when you click “Send” — not when the page is opened. hCaptcha processes in particular your IP address, browser and device information and data about your interaction with the check, and may store information in your browser for this purpose.",
+      "provider": "Provider:",
+      "providerText": "Intuition Machines, Inc., USA",
+      "legal": "Legal basis:",
+      "legalText": "Art. 6(1)(f) GDPR. My legitimate interest is protecting the contact form from abuse. Access to your device is strictly necessary for sending the message you explicitly requested (Section 25(2) No. 2 TDDDG)."
+    },
+    "mail": {
+      "title": "7. Email Notification (Resend)",
+      "text": "I am notified by email about new messages from the contact form. For this purpose, your name, email address and message are transmitted to the email service Resend, which sends the notification to me only.",
+      "provider": "Provider:",
+      "providerText": "Resend (Plus Five Five, Inc.), USA",
+      "legal": "Legal basis:",
+      "legalText": "Art. 6(1)(b) GDPR (processing your inquiry) and Art. 6(1)(f) GDPR (responding to inquiries promptly). The transfer to the USA is based on EU Standard Contractual Clauses (Art. 46 GDPR)."
+    },
+    "analytics": {
+      "title": "8. Analytics (Vercel Web Analytics & Speed Insights)",
+      "text": "To understand how the website is used and how fast it loads, I use Vercel Web Analytics and Vercel Speed Insights. No cookies are set and no information is stored permanently on your device. Pages visited, referrer, country, browser, operating system, device type and loading-time metrics are collected. Visits are grouped only within a single day using a non-reversible hash; you are not recognised across days or websites.",
+      "provider": "Provider:",
+      "providerText": "Vercel Inc., USA",
+      "legal": "Legal basis:",
+      "legalText": "Art. 6(1)(f) GDPR. My legitimate interest is a data-minimising, anonymised evaluation of website usage and performance."
+    },
+    "storage": {
+      "title": "9. Local Storage in Your Browser",
+      "text": "When you switch between light and dark mode, your choice is stored under the key “theme” in your browser’s local storage. The value contains no personal data, is not transmitted to me and can be deleted at any time via your browser settings.",
+      "provider": "",
+      "providerText": "",
+      "legal": "Legal basis:",
+      "legalText": "Section 25(2) No. 2 TDDDG — the storage is strictly necessary to provide the display you requested."
+    }
   },
   "notFound": {
     "title": "404",
