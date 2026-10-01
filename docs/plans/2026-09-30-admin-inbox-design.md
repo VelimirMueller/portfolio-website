@@ -62,7 +62,10 @@ A private `/admin` area on velimir-mueller.de where Velimir signs in and works t
 | `message` | `text not null` |
 | `created_at` | `timestamptz default now()` (nullable) |
 
-Two `AFTER INSERT` triggers exist: `create_email_hook` and `on_new_contact_message`. If both call `send-contact-email`, every submission sends two emails — check the full definitions before versioning them, and keep only one.
+Two `AFTER INSERT` triggers exist (read in full 2026-09-30):
+
+- `on_new_contact_message` → `public.trigger_send_contact_email()` → `net.http_post` to the `send-contact-email` Edge Function with a hard-coded Bearer key and `{record: NEW}`. **This is the one that sends the email.**
+- `create_email_hook` → dashboard webhook `supabase_functions.http_request` to `https://velimir-mueller.de/api/send-contact-email` with body `{}`. The route was removed in `3c7c2a9`; the apex answers 308 → www → 404. **Dead — dropped by the migration.**
 
 ### Data — first migration `supabase/migrations/<ts>_contact_messages_admin.sql`
 
@@ -72,7 +75,7 @@ Two `AFTER INSERT` triggers exist: `create_email_hook` and `on_new_contact_messa
   - `anon`: INSERT only.
   - `authenticated` + `is_admin()`: SELECT and UPDATE (UPDATE limited to `status`).
   - `authenticated` + `is_admin()`: DELETE (hard delete, behind a confirm step in the UI).
-- Capture the webhook to `send-contact-email` in the migration too, so the whole contact pipeline is versioned.
+- `on_new_contact_message` stays untouched for now: its body holds a Bearer key that must not land in a public repo. Follow-up: store the key in Supabase Vault and version the function reading it from there.
 
 ### Routes — outside `[locale]`, English-only
 
@@ -85,6 +88,8 @@ Two `AFTER INSERT` triggers exist: `create_email_hook` and `on_new_contact_messa
 
 - Middleware: `/admin` is excluded from `next-intl` (same pattern as the demos) and gets its own session guard. Unauthenticated → `/admin/login`.
 - `robots.ts`: add `/admin` to `disallow`. Admin layout sets `robots: { index: false }` metadata. Do **not** add a second `headers()` entry in `next.config.mjs` — two CSP headers intersect (see the header contract).
+
+**Applied to production 2026-10-01** (SQL Editor, one transaction). External probe with the publishable key: select → `[]`, count → `*/0`, PATCH `status` → `[]`, DELETE → `[]`, `rpc/is_admin` → `false`.
 
 ## Tests
 
