@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { act, render } from '@testing-library/react';
-import { Hyperspace, type HyperspaceHandle } from '../Hyperspace';
+import { Starfield, type StarfieldHandle } from '../Starfield';
 
 function stubContext() {
   const calls = { fillRect: 0, stroke: 0, gradient: 0 };
@@ -21,7 +21,7 @@ function stubContext() {
   return calls;
 }
 
-describe('Hyperspace', () => {
+describe('Starfield', () => {
   let frames: FrameRequestCallback[] = [];
   let now = 0;
   beforeEach(() => {
@@ -45,8 +45,8 @@ describe('Hyperspace', () => {
 
   it('drifts as dots, then streaks and flashes during a jump', () => {
     const calls = stubContext();
-    const ref = createRef<HyperspaceHandle>();
-    render(<Hyperspace ref={ref} />);
+    const ref = createRef<StarfieldHandle>();
+    render(<Starfield ref={ref} />);
     for (let i = 0; i < 30; i++) tick(16);
     expect(calls.fillRect).toBeGreaterThan(0);
     expect(calls.stroke).toBe(0);
@@ -66,8 +66,8 @@ describe('Hyperspace', () => {
   it('draws one still frame and never jumps with reduced motion', () => {
     window.matchMedia = jest.fn(() => ({ matches: true })) as unknown as typeof window.matchMedia;
     const calls = stubContext();
-    const ref = createRef<HyperspaceHandle>();
-    render(<Hyperspace ref={ref} />);
+    const ref = createRef<StarfieldHandle>();
+    render(<Starfield ref={ref} />);
     expect(frames).toHaveLength(0);
     act(() => ref.current?.jump(400));
     expect(calls.stroke).toBe(0);
