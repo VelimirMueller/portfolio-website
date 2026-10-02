@@ -226,18 +226,28 @@ Common types: `feat`, `fix`, `chore`, `docs`, `test`, `refactor`, `perf`, `ci`. 
 
 ## Admin (v2)
 
-A private area at `/admin`, introduced in **v2.0.0**, in the same visual language as the CRM demo. English-only, outside `[locale]`, `noindex` and disallowed in `robots.txt`.
+A private area at `/admin`, introduced in **v2.0.0** (traffic KPIs since **v2.1.0**), in the same visual language as the CRM demo. English-only, outside `[locale]`, `noindex` and disallowed in `robots.txt`.
 
 | Section | What it does |
 | :--- | :--- |
 | **Inbox** | Mail-client split view for contact-form messages: status tabs (unread / read / archived / spam / all), search, hover quick actions, multi-select bulk bar, auto-advance, keyboard shortcuts (`j`/`k` · `e` · `s` · `u` · `r` · `x` · `/` · `Esc`) |
-| **KPIs** | One section per data source; **Messages** first — 30-day volume and trend, unread, spam rate, messages per day, status breakdown, busiest weekdays (Europe/Berlin) |
+| **KPIs** | One section per data source. **Traffic** (v2.1.0) first: live visitors, visitors / page views / clicks / bounce rate / session length with trends, time series with previous-period comparison, weekday × hour heatmap, top pages, sources and audience (click any row to filter), a flow explorer (came from → page → went to, walkable page by page) and a click leaderboard. Range, filters, metric and flow focus live in the URL. Keyboard: `1`–`4` range · `v`/`p`/`c` metric · `r` refresh · `⌫` drop newest filter · `⌘K` command palette. Then **Messages** — 30-day volume and trend, unread, spam rate, messages per day, status breakdown, busiest weekdays (Europe/Berlin) |
 
 **Access.** Supabase Auth magic link for a single admin user (sign-ups off, `shouldCreateUser: false`). Three layers check the admin: middleware, `requireAdmin()` in every page and server action, and Postgres RLS via `public.is_admin()`. The admin's user UUID lives in `src/config/admin.ts` **and** in the migration — change both together. No service-role key is used.
 
 **Database.** `supabase/migrations/` versions the `contact_messages` table, its `status` column and the RLS policies. Apply new migrations in the Supabase SQL editor.
 
 **Supabase Auth settings** (dashboard, not in the repo): Site URL `https://www.velimir-mueller.de`; redirect URLs `https://www.velimir-mueller.de/admin/auth/callback` and `http://localhost:3000/admin/auth/callback`; custom SMTP via Resend for the login mails.
+
+**Analytics (v2.1.0).** First-party and cookieless, replacing Vercel Web Analytics (Speed Insights stays). The client sends a beacon per page view (with the previous page) and per click to `/api/collect`; clicks are labelled by `data-track`, then link target, then button name — form fields are never read. The database stores no IP: a visitor is `sha256(daily salt + IP + user agent)`, computed inside `record_analytics_event()`, and the salt rotates every UTC day. Raw events are kept 90 days. Bots, Do Not Track / Global Privacy Control and the signed-in admin are not counted. The privacy policy (section 8) describes exactly this — change both together.
+
+Setup after applying `20261002120000_analytics_events.sql`:
+
+1. Generate a secret: `openssl rand -hex 32`.
+2. In the Supabase SQL editor: `insert into analytics_private.ingest_secret (secret_sha256) values (encode(extensions.digest('<secret>', 'sha256'), 'hex'));`
+3. In Vercel: `ANALYTICS_INGEST_SECRET=<secret>` (Production), then redeploy. Without it `/api/collect` answers 204 and stores nothing.
+
+**No cookies on a visit.** `next-intl` runs with `localeCookie: false`, and `e2e/headers.spec.ts` asserts that public pages set no cookie — the reason the site needs no consent banner. hCaptcha loads only when the contact form is sent.
 
 **Local note.** Under `next dev` the CSP blocks `eval`, so client components (counters, keyboard shortcuts) do not hydrate locally. Check interactive behaviour against `npm run build && npm start`.
 
