@@ -8,6 +8,9 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
  * so every view is shareable, survives reloads and works with back/forward.
  * Updates run in a transition: the current render stays on screen (dimmed)
  * until the server sends the new numbers — no skeleton, no layout jump.
+ *
+ * One set() per user action: it builds on the params of the current render,
+ * so put everything that changes together into one patch.
  */
 export function useTrafficNav() {
   const router = useRouter();
