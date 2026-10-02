@@ -22,10 +22,19 @@ function send(beacon: Beacon) {
   fetch(ENDPOINT, { method: 'POST', body, keepalive: true }).catch(() => {});
 }
 
-/** Where the visitor came from: an explicit campaign tag beats the browser referrer. */
+/**
+ * Where the visitor came from: an explicit campaign tag beats the browser
+ * referrer. Only the referrer's origin leaves the browser — its path and
+ * query are not needed and may be personal.
+ */
 function landingReferrer(): string | undefined {
-  const campaign = new URLSearchParams(window.location.search).get('utm_source') ?? undefined;
-  return campaign || document.referrer || undefined;
+  const campaign = new URLSearchParams(window.location.search).get('utm_source');
+  if (campaign) return campaign;
+  try {
+    return document.referrer ? new URL(document.referrer).origin : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /**

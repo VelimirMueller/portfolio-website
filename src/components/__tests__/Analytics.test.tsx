@@ -26,7 +26,7 @@ describe('Analytics', () => {
     sendBeacon.mockClear().mockReturnValue(true);
     Object.defineProperty(navigator, 'sendBeacon', { value: sendBeacon, configurable: true });
     Object.defineProperty(navigator, 'doNotTrack', { value: null, configurable: true });
-    Object.defineProperty(document, 'referrer', { value: 'https://www.google.com/', configurable: true });
+    Object.defineProperty(document, 'referrer', { value: 'https://www.google.com/search?q=velimir', configurable: true });
   });
 
   it('sends the landing page view with the referrer, then navigations with the previous path', async () => {
@@ -35,7 +35,7 @@ describe('Analytics', () => {
     rerender(<Analytics />);
     expect(sendBeacon).toHaveBeenCalledWith('/api/collect', expect.any(Blob));
     expect(await sent()).toEqual([
-      { t: 'pageview', p: '/de', r: 'https://www.google.com/' },
+      { t: 'pageview', p: '/de', r: 'https://www.google.com' },
       { t: 'pageview', p: '/de/contact', v: '/de' },
     ]);
   });

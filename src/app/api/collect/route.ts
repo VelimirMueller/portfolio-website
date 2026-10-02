@@ -79,7 +79,12 @@ export async function POST(request: NextRequest) {
     p_device: deviceOf(userAgent),
     p_browser: browserOf(userAgent),
     })
-    .abortSignal(AbortSignal.timeout(RPC_TIMEOUT_MS));
+    .abortSignal(AbortSignal.timeout(RPC_TIMEOUT_MS))
+    // A timeout or network failure must not turn the beacon into a 500.
+    .then(
+      (result) => result,
+      (thrown: unknown) => ({ error: { code: undefined, message: thrown instanceof Error ? thrown.name : 'rejected' } })
+    );
   if (error) console.error('analytics: record_analytics_event failed:', error.code ?? error.message);
 
   return done();
