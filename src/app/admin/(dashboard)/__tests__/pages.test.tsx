@@ -8,6 +8,8 @@ const push = jest.fn();
 jest.mock('next/navigation', () => ({
   redirect: (url: string) => redirect(url),
   useRouter: () => ({ push, replace: jest.fn(), refresh: jest.fn() }),
+  usePathname: () => '/admin/kpis',
+  useSearchParams: () => new URLSearchParams(),
 }));
 jest.mock('@/app/admin/actions', () => ({ updateStatuses: jest.fn(), deleteMessages: jest.fn() }));
 
@@ -20,8 +22,19 @@ const query = {
   then: (resolve: (v: unknown) => void) => resolve({ data: rows, error: listError }),
   update,
 };
+let events: unknown[] = [];
+let eventsError: unknown = null;
+const eventsQuery = {
+  select: () => eventsQuery,
+  gte: () => eventsQuery,
+  order: () => eventsQuery,
+  range: async () => ({ data: events, error: eventsError }),
+};
 jest.mock('@/app/admin/_lib/auth', () => ({
-  requireAdmin: async () => ({ supabase: { from: () => query }, user: { id: 'x', email: 'me@example.com' } }),
+  requireAdmin: async () => ({
+    supabase: { from: (table: string) => (table === 'analytics_events' ? eventsQuery : query) },
+    user: { id: 'x', email: 'me@example.com' },
+  }),
 }));
 
 import AdminInboxPage from '../page';
@@ -43,6 +56,8 @@ const row = (over: Partial<ContactMessage>): ContactMessage => ({
 beforeEach(() => {
   rows = [];
   listError = null;
+  events = [];
+  eventsError = null;
   update.mockClear();
 });
 
@@ -92,18 +107,42 @@ describe('legacy message URL', () => {
 });
 
 describe('KPI page', () => {
-  it('starts with the Messages section', async () => {
+  it('starts with Traffic, followed by Messages', async () => {
     rows = [row({}), row({ id: B, status: 'spam' })];
-    render(await AdminKpisPage());
-    const sections = screen.getAllByRole('region');
-    expect(within(sections[0]).getByRole('heading', { name: 'Messages' })).toBeInTheDocument();
+    render(await AdminKpisPage({}));
+    const headings = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
+    expect(headings.indexOf('Traffic')).toBeLessThan(headings.indexOf('Messages'));
+    const messages = screen.getByRole('region', { name: 'Messages' });
+    expect(within(messages).getByRole('heading', { name: 'Messages' })).toBeInTheDocument();
     expect(screen.getByText('Busiest weekdays')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Open inbox' })).toHaveAttribute('href', '/admin');
   });
 
   it('reports a failed load', async () => {
     listError = { message: 'boom' };
-    render(await AdminKpisPage());
+    render(await AdminKpisPage({}));
     expect(screen.getByText('Could not load messages.')).toBeInTheDocument();
+  });
+
+  it('shows the setup steps before the first event', async () => {
+    render(await AdminKpisPage({}));
+    expect(screen.getByRole('heading', { name: 'No events collected yet' })).toBeInTheDocument();
+  });
+
+  it('renders traffic from the analytics events and reads the range from the URL', async () => {
+    const at = new Date(Date.now() - 60_000).toISOString();
+    events = [
+      { created_at: at, type: 'pageview', visitor: 'a'.repeat(64), path: '/de', prev_path: null, referrer: 'google.com', target: null, country: 'DE', device: 'desktop', browser: 'Chrome' },
+    ];
+    render(await AdminKpisPage({ searchParams: { range: '24h' } }));
+    expect(screen.getByRole('radio', { name: '24h' })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('heading', { name: 'Flow explorer' })).toBeInTheDocument();
+    expect(screen.getAllByText('google.com').length).toBeGreaterThan(0);
+  });
+
+  it('reports a failed analytics load', async () => {
+    eventsError = { message: 'relation does not exist' };
+    render(await AdminKpisPage({}));
+    expect(screen.getByRole('alert')).toHaveTextContent('Could not load analytics events');
   });
 });
