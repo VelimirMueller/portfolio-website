@@ -6,6 +6,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import de from '@/locales/de.json';
+import en from '@/locales/en.json';
+import { LEGAL_CONTACT, SUPERVISORY_AUTHORITY } from '@/config/legal';
 
 import HomeContent from '../HomeContent';
 import AboutContent from '../about/AboutContent';
@@ -139,11 +141,12 @@ describe('content pages render with the real German catalog', () => {
       de.privacy.storage.title,
       de.privacy.s5Title,
       de.privacy.s6Title,
+      de.privacy.objection.title,
       de.privacy.s7Title,
       de.privacy.s8Title,
     ]);
-    // Section numbers run 1..13 without gaps.
-    expect(titles.map((t) => Number(t?.split('.')[0]))).toEqual(Array.from({ length: 13 }, (_, i) => i + 1));
+    // Section numbers run 1..14 without gaps.
+    expect(titles.map((t) => Number(t?.split('.')[0]))).toEqual(Array.from({ length: 14 }, (_, i) => i + 1));
     // The theme section has no provider block.
     expect(screen.getAllByText(de.privacy.hosting.provider).length).toBe(4 + 1); // 4 new + Supabase
   });
@@ -151,6 +154,27 @@ describe('content pages render with the real German catalog', () => {
   it('ImprintContent renders the imprint details', () => {
     render(<ImprintContent />);
     expect(screen.getByText(de.imprint.title)).toBeInTheDocument();
+  });
+
+  it('ImprintContent names the operator and a fast electronic contact (§ 5 DDG)', () => {
+    render(<ImprintContent />);
+    expect(screen.getByText(de.imprint.subtitle)).toHaveTextContent('§ 5 DDG');
+    expect(screen.getByText(LEGAL_CONTACT.name)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: LEGAL_CONTACT.email })).toHaveAttribute('href', `mailto:${LEGAL_CONTACT.email}`);
+    expect(screen.getByRole('link', { name: de.imprint.formLink })).toBeInTheDocument();
+  });
+
+  it('PrivacyContent and ImprintContent name the same operator', () => {
+    const { unmount } = render(<PrivacyContent />);
+    expect(screen.getByText(LEGAL_CONTACT.name)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: LEGAL_CONTACT.email })).toBeInTheDocument();
+    expect(screen.getByText(SUPERVISORY_AUTHORITY.name)).toBeInTheDocument();
+    unmount();
+  });
+
+  it('privacy rights list includes data portability', () => {
+    expect(de.privacy.s6Rights.some((r: string) => r.includes('Art. 20'))).toBe(true);
+    expect(en.privacy.s6Rights.some((r: string) => r.includes('Art. 20'))).toBe(true);
   });
 
   it('ProjectsContent renders title and project check lists', () => {
