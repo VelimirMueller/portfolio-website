@@ -37,6 +37,7 @@ const config: Config = {
         'spin-slow': 'spin 12s linear infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'fade-in-up': 'fade-in-up 0.6s ease-out both',
+        'warp-in': 'warp-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both',
         'scale-in': 'scale-in 0.5s ease-out both',
         'fill-bar': 'fill-bar 1.2s ease-out both',
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
@@ -58,6 +59,12 @@ const config: Config = {
         'border-glow': 'border-glow 3s ease-in-out infinite',
       },
       keyframes: {
+        // KPI section switch: drop out of hyperspace — stretched, blurred, then settled.
+        'warp-in': {
+          '0%': { opacity: '0', transform: 'perspective(900px) translateZ(-120px) scaleY(1.04)', filter: 'blur(8px) brightness(1.6)' },
+          '60%': { opacity: '1', filter: 'blur(0) brightness(1.15)' },
+          '100%': { opacity: '1', transform: 'none', filter: 'none' },
+        },
         'fade-in-up': {
           '0%': { opacity: '0', transform: 'translateY(16px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
