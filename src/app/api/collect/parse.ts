@@ -103,7 +103,7 @@ export function browserOf(userAgent: string): string {
   return 'Other';
 }
 
-/** Vercel's geo header is an ISO country code; anything else is ignored. */
+/** Vercel's geo header is a two-letter country code; anything not shaped like one is ignored. */
 export function countryOf(header: string | null): string | null {
   const code = header?.trim().toUpperCase();
   return code && /^[A-Z]{2}$/.test(code) ? code : null;
@@ -117,7 +117,12 @@ export function optedOut(headers: Headers): boolean {
   return headers.get('dnt') === '1' || headers.get('sec-gpc') === '1';
 }
 
-/** The site owner's own visits while signed in to /admin are not counted. */
+/**
+ * The site owner's own visits while signed in to /admin are not counted.
+ * Only the cookie name is checked (no network call per beacon). A visitor who
+ * fakes such a cookie only removes their own events — the same effect as
+ * Do Not Track — so this is an accepted opt-out, not a hole.
+ */
 export function isAdminSession(cookieNames: string[]): boolean {
   return cookieNames.some((name) => name.startsWith('sb-') && name.includes('-auth-token'));
 }

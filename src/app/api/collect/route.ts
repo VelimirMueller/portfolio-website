@@ -25,9 +25,13 @@ export async function POST(request: NextRequest) {
   if (isBot(userAgent) || optedOut(request.headers)) return done();
   if (isAdminSession(request.cookies.getAll().map((c) => c.name))) return done();
 
+  // On Vercel, request.ip and these headers come from the platform edge, which
+  // overwrites client-sent values — so neither the rate limit nor the visitor
+  // hash can be steered by a forged header in production.
   const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    request.ip ||
     request.headers.get('x-real-ip') ||
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     '';
   if (!ip || !checkCollectRateLimit(ip)) return done();
 
