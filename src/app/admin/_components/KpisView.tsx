@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 import { KPI_WINDOW_DAYS, WEEKDAYS, type MessageKpis } from '../_lib/kpis';
 import { BarChart, Donut } from './kpi/charts';
@@ -13,10 +14,10 @@ const STATUS_META = {
 } as const;
 
 /**
- * KPI overview. Each data source is one section; Messages is the first.
- * Further sections (traffic, deploys, …) are appended below it.
+ * KPI overview, one section per data source: Traffic (passed in as
+ * `traffic`, since v2.1.0) first, then Messages.
  */
-export function KpisView({ messages, error }: { messages: MessageKpis; error: boolean }) {
+export function KpisView({ messages, error, traffic }: { messages: MessageKpis; error: boolean; traffic?: ReactNode }) {
   // 5-day buckets: daily counts on a contact form are mostly 0/1 and look like noise.
   const spark = Array.from({ length: Math.ceil(KPI_WINDOW_DAYS / 5) }, (_, i) =>
     messages.daily.slice(i * 5, i * 5 + 5).reduce((sum, d) => sum + d.count, 0)
@@ -31,10 +32,12 @@ export function KpisView({ messages, error }: { messages: MessageKpis; error: bo
         <p className="text-gray-500 text-sm">How the site is doing, one section per source</p>
       </div>
 
-      <section aria-labelledby="kpi-messages" className="space-y-4">
+      {traffic}
+
+      <section id="kpi-messages" aria-labelledby="kpi-messages-title" className="scroll-mt-24 space-y-4">
         <div className="flex items-end justify-between">
           <div>
-            <h2 id="kpi-messages" className="text-sm font-bold text-white">Messages</h2>
+            <h2 id="kpi-messages-title" className="text-sm font-bold text-white">Messages</h2>
             <p className="text-[10px] font-mono uppercase tracking-wider text-gray-500">Contact form · last {KPI_WINDOW_DAYS} days</p>
           </div>
           <Link href="/admin" className="text-[10px] text-blue-400 font-bold hover:text-blue-300">
