@@ -172,6 +172,14 @@ describe('content pages render with the real German catalog', () => {
     unmount();
   });
 
+  it('PrivacyContent offers the one-click statistics switch in section 8', () => {
+    const { container } = render(<PrivacyContent />);
+    const anchor = container.querySelector('#analytics-settings') as HTMLElement;
+    expect(anchor.closest('section')).toHaveTextContent(de.privacy.analytics.title);
+    expect(anchor).toContainElement(screen.getByRole('switch', { name: de.privacy.analytics.toggle.title }));
+    expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+  });
+
   it('privacy rights list includes data portability', () => {
     expect(de.privacy.s6Rights.some((r: string) => r.includes('Art. 20'))).toBe(true);
     expect(en.privacy.s6Rights.some((r: string) => r.includes('Art. 20'))).toBe(true);
