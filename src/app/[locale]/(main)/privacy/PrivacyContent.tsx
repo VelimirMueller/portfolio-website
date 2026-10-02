@@ -3,9 +3,16 @@ import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
 import { LEGAL_CONTACT, SUPERVISORY_AUTHORITY } from '@/config/legal';
+import { AnalyticsToggle } from '@/components/molecules/AnalyticsToggle';
 
 /** One processing activity: what happens, who does it, and on which legal basis. */
-function ProcessingSection({ id }: { id: 'hosting' | 'captcha' | 'mail' | 'analytics' | 'storage' }) {
+function ProcessingSection({
+  id,
+  children,
+}: {
+  id: 'hosting' | 'captcha' | 'mail' | 'analytics' | 'storage';
+  children?: React.ReactNode;
+}) {
   const t = useTranslations();
   const provider = t(`privacy.${id}.provider`);
   return (
@@ -20,6 +27,12 @@ function ProcessingSection({ id }: { id: 'hosting' | 'captcha' | 'mail' | 'analy
       )}
       <p className="text-sm font-bold text-black dark:text-white mb-1">{t(`privacy.${id}.legal`)}</p>
       <p className="text-gray-600 dark:text-gray-400 text-sm">{t(`privacy.${id}.legalText`)}</p>
+      {/* The footer's "privacy settings" link lands here, on the control itself. */}
+      {children && (
+        <div id={`${id}-settings`} className="mt-5 scroll-mt-32">
+          {children}
+        </div>
+      )}
     </section>
   );
 }
@@ -95,7 +108,17 @@ export default function PrivacyContent() {
         </section>
 
         <ProcessingSection id="mail" />
-        <ProcessingSection id="analytics" />
+        <ProcessingSection id="analytics">
+          <AnalyticsToggle
+            labels={{
+              title: t('privacy.analytics.toggle.title'),
+              on: t('privacy.analytics.toggle.on'),
+              off: t('privacy.analytics.toggle.off'),
+              browser: t('privacy.analytics.toggle.browser'),
+              blocked: t('privacy.analytics.toggle.blocked'),
+            }}
+          />
+        </ProcessingSection>
         <ProcessingSection id="storage" />
 
         {/* Speicherdauer */}

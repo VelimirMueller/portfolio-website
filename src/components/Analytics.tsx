@@ -3,15 +3,19 @@
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { describeClickTarget } from '@/utils/analytics/describeClickTarget';
+import { browserSignalsOptOut, isOptedOut } from '@/utils/analytics/optOut';
 
 const ENDPOINT = '/api/collect';
 
 type Beacon = { t: 'pageview' | 'click'; p: string; v?: string; r?: string; e?: string };
 
-/** Do Not Track / Global Privacy Control: send nothing at all. */
+/**
+ * Send nothing when the browser signals Do Not Track / Global Privacy
+ * Control or the visitor switched statistics off on the privacy page.
+ * Checked on every beacon, so switching off takes effect immediately.
+ */
 export function trackingAllowed(nav: Navigator = navigator): boolean {
-  const n = nav as Navigator & { globalPrivacyControl?: boolean };
-  return n.doNotTrack !== '1' && n.globalPrivacyControl !== true;
+  return !browserSignalsOptOut(nav) && !isOptedOut();
 }
 
 function send(beacon: Beacon) {
@@ -40,8 +44,9 @@ function landingReferrer(): string | undefined {
 /**
  * First-party, cookieless analytics: one beacon per page view (with the
  * previous page, for navigation flows) and one per meaningful click.
- * Nothing is stored in the browser — the previous path lives in a ref and is
- * gone on reload. The server hashes visitors per day; see /api/collect.
+ * Nothing is stored in the browser for tracking — the previous path lives in
+ * a ref and is gone on reload; only an opt-out is remembered (see optOut.ts).
+ * The server hashes visitors per day; see /api/collect.
  */
 export function Analytics() {
   const pathname = usePathname();
@@ -61,8 +66,8 @@ export function Analytics() {
   }, [pathname]);
 
   useEffect(() => {
-    if (!trackingAllowed()) return;
     const onClick = (event: MouseEvent) => {
+      if (!trackingAllowed()) return;
       const target = describeClickTarget(event.target);
       if (target) send({ t: 'click', p: window.location.pathname, e: target });
     };

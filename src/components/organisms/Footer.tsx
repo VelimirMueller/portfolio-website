@@ -46,9 +46,10 @@ export const Footer = () => {
       </div>
       <div className="mt-12 pt-8 border-t border-black/5 dark:border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 dark:text-gray-400 font-mono gap-2">
         <span>© {new Date().getFullYear()} Velimir Müller.</span>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
           <Link href="/imprint" className="hover:text-black dark:hover:text-white transition-colors duration-200">{t('footer.imprint')}</Link>
           <Link href="/privacy" className="hover:text-black dark:hover:text-white transition-colors duration-200">{t('footer.privacy')}</Link>
+          <Link href="/privacy#analytics-settings" className="hover:text-black dark:hover:text-white transition-colors duration-200">{t('footer.privacySettings')}</Link>
         </div>
         <span>{t('footer.builtWith')}</span>
       </div>

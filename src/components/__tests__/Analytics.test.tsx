@@ -69,6 +69,29 @@ describe('Analytics', () => {
     expect(fetchMock).toHaveBeenCalledWith('/api/collect', expect.objectContaining({ method: 'POST', keepalive: true }));
   });
 
+  it('stops sending as soon as the visitor opts out, without a reload', async () => {
+    const { getByText } = render(
+      <div>
+        <Analytics />
+        <button data-track="hero:contact">Contact</button>
+      </div>
+    );
+    sendBeacon.mockClear();
+    window.localStorage.setItem('analytics-opt-out', '1');
+    fireEvent.click(getByText('Contact'));
+    expect(sendBeacon).not.toHaveBeenCalled();
+    window.localStorage.clear();
+    fireEvent.click(getByText('Contact'));
+    expect(await sent()).toEqual([{ t: 'click', p: window.location.pathname, e: 'hero:contact' }]);
+  });
+
+  it('sends no page view for a visitor who opted out earlier', () => {
+    window.localStorage.setItem('analytics-opt-out', '1');
+    render(<Analytics />);
+    expect(sendBeacon).not.toHaveBeenCalled();
+    window.localStorage.clear();
+  });
+
   it('sends nothing with Do Not Track', () => {
     Object.defineProperty(navigator, 'doNotTrack', { value: '1', configurable: true });
     const { container } = render(<Analytics />);
