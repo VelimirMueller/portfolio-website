@@ -145,7 +145,11 @@ export function TrafficDashboard({
   const audienceRows = audience === 'country' ? data.countries : audience === 'device' ? data.devices : data.browsers;
 
   return (
-    <section aria-labelledby="kpi-traffic" className="relative space-y-4">
+    <section aria-labelledby="kpi-traffic" aria-describedby="traffic-shortcuts" className="relative space-y-4">
+      <p id="traffic-shortcuts" className="sr-only">
+        Keyboard shortcuts: 1 to 4 choose the time range, V, P and C choose the charted metric, R refreshes, Backspace removes the newest
+        filter, Control or Command K opens the command palette.
+      </p>
       {/* Grid backdrop at ~5% — atmosphere, never competing with data. */}
       <div
         aria-hidden="true"

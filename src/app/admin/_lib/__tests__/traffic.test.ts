@@ -131,6 +131,7 @@ describe('computeTraffic', () => {
     expect(t.series[6]).toMatchObject({ label: '02.10.', visitors: 3, pageviews: 5, clicks: 1 });
     expect(t.series[5]).toMatchObject({ visitors: 1, pageviews: 1 });
     expect(t.previousSeries.reduce((n, p) => n + p.visitors, 0)).toBe(2);
+    expect(t.previousSeries[6]).toMatchObject({ label: '25.09.', start: '2026-09-25' });
     // v1 at 11:00 Berlin on Friday (weekday 4).
     expect(t.heatmap[4][11]).toBe(1);
     expect(t.heatmap.flat().reduce((a, b) => a + b, 0)).toBe(4);

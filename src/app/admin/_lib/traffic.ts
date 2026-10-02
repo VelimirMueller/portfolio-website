@@ -6,8 +6,10 @@ import { KPI_TIME_ZONE } from './kpis';
  * events, so the server page stays a loader and every number is unit-tested.
  *
  * Model:
- * - A visitor is a daily hash (it rotates every UTC day by design), so
- *   "visitors" over several days is the number of daily-unique visitors.
+ * - A visitor is a daily hash (it rotates every UTC day by design): the same
+ *   person has a different hash each day. Counting distinct hashes over a
+ *   window therefore gives daily-unique visitors summed over its days — no
+ *   (visitor, day) pairing is needed, the hash already is one.
  * - A session is a visitor's run of events without a gap of 30 minutes.
  * - Filters select sessions (by source, country, device, browser, or "saw
  *   this page"), and every figure below is computed from the same selection,
@@ -425,7 +427,7 @@ export function computeTraffic(
 
   // Series (current and previous window, aligned by bucket index).
   const emptySeries = (offset: number): SeriesPoint[] =>
-    Array.from({ length: count }, (_, i) => ({ label: win.labelOf(i), start: win.startOf(i + offset), visitors: 0, pageviews: 0, clicks: 0 }));
+    Array.from({ length: count }, (_, i) => ({ label: win.labelOf(i + offset), start: win.startOf(i + offset), visitors: 0, pageviews: 0, clicks: 0 }));
   const series = emptySeries(0);
   const previousSeries = emptySeries(-count);
   const fill = (list: Session[], target: SeriesPoint[], offset: number) => {
