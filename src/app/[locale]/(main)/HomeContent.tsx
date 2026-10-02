@@ -132,8 +132,8 @@ export default function HomeContent() {
             </div>
 
             <div className="flex flex-wrap gap-3 mt-12">
-               <Button to="/projects" className="bg-brand-600 hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-gray-200">{t('home.ctaProjects')}</Button>
-               <Button to="/contact" variant="outline" className="border-light-border dark:border-dark-border text-light-text dark:text-dark-text">{t('home.ctaContact')}</Button>
+               <Button to="/projects" track="hero:projects" className="bg-brand-600 hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-gray-200">{t('home.ctaProjects')}</Button>
+               <Button to="/contact" track="hero:contact" variant="outline" className="border-light-border dark:border-dark-border text-light-text dark:text-dark-text">{t('home.ctaContact')}</Button>
             </div>
           </div>
         </BentoCard>
