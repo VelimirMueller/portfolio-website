@@ -34,10 +34,10 @@ export function internalLinkOrigin(event: MouseEvent): { x: number; y: number } 
  */
 export function SiteHyperspace() {
   const field = useRef<StarfieldHandle>(null);
-  const [stars, setStars] = useState(90);
+  // Decided once on the client; the count only feeds the canvas, never markup.
+  const [stars] = useState(() => (typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 90));
 
   useEffect(() => {
-    if (window.innerWidth < 640) setStars(40);
     const onClick = (e: MouseEvent) => {
       const origin = internalLinkOrigin(e);
       if (origin) field.current?.jump(origin.x, origin.y);
@@ -84,8 +84,14 @@ export function PageWarp({ children }: { children: ReactNode }) {
     el.classList.add('motion-safe:animate-warp-in');
   }, [pathname]);
 
+  // Drop the class when done, so no transform/filter stays on the page's ancestor
+  // (either would make it the containing block for position: fixed children).
+  const onAnimationEnd = (e: React.AnimationEvent) => {
+    if (e.target === e.currentTarget) e.currentTarget.classList.remove('motion-safe:animate-warp-in');
+  };
+
   return (
-    <div ref={ref} data-page-warp="">
+    <div ref={ref} data-page-warp="" onAnimationEnd={onAnimationEnd}>
       {children}
     </div>
   );
