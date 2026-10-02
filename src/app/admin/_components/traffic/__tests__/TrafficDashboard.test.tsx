@@ -195,8 +195,11 @@ describe('TrafficDashboard', () => {
     expect(screen.getByRole('heading', { name: 'Traffic', hidden: true }).closest('[hidden]')).not.toBeNull();
     fireEvent.keyDown(window, { key: '1' });
     expect(replace).not.toHaveBeenCalled();
-    // ⌘K still works outside the traffic section.
+    // ⌘K and / still open the palette outside the traffic section.
     fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    fireEvent.keyDown(within(screen.getByRole('dialog')).getByRole('combobox'), { key: 'Escape' });
+    fireEvent.keyDown(window, { key: '/' });
     expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
