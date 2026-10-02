@@ -27,6 +27,8 @@ export interface AnalyticsEvent {
  */
 export function normalizePath(raw: string): string | null {
   if (!raw.startsWith('/') || raw.startsWith('//')) return null;
+  // eslint-disable-next-line no-control-regex
+  if (/[\u0000-\u001f\u007f]/.test(raw)) return null;
   const path = raw.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
   return path.slice(0, 300);
 }

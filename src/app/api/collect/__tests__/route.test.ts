@@ -1,7 +1,8 @@
 /** @jest-environment node */
 import { NextRequest } from 'next/server';
 
-const rpc = jest.fn();
+const abortSignal = jest.fn();
+const rpc = jest.fn((..._args: unknown[]) => ({ abortSignal }));
 const createClient = jest.fn((..._args: unknown[]) => ({ rpc }));
 jest.mock('@supabase/supabase-js', () => ({ createClient: (...args: unknown[]) => createClient(...args) }));
 
@@ -28,7 +29,8 @@ describe('POST /api/collect', () => {
   const env = process.env;
 
   beforeEach(() => {
-    rpc.mockReset().mockResolvedValue({ error: null });
+    abortSignal.mockReset().mockResolvedValue({ error: null });
+    rpc.mockClear();
     createClient.mockClear();
     process.env = {
       ...env,
@@ -83,7 +85,14 @@ describe('POST /api/collect', () => {
     delete process.env.ANALYTICS_INGEST_SECRET;
     const res = await POST(beacon({ t: 'pageview', p: '/de' }));
     expect(res.status).toBe(204);
-    expect(createClient).not.toHaveBeenCalled();
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it('reuses one client and bounds the database call with a timeout', async () => {
+    await POST(beacon({ t: 'pageview', p: '/de' }));
+    await POST(beacon({ t: 'pageview', p: '/de' }));
+    expect(createClient.mock.calls.length).toBeLessThanOrEqual(1);
+    expect(abortSignal).toHaveBeenCalledWith(expect.any(AbortSignal));
   });
 
   it('rate-limits a single IP', async () => {
@@ -96,10 +105,10 @@ describe('POST /api/collect', () => {
 
   it('logs and still answers 204 when the database refuses', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    rpc.mockResolvedValue({ error: { message: 'forbidden' } });
+    abortSignal.mockResolvedValue({ error: { code: '42501', message: 'forbidden' } });
     const res = await POST(beacon({ t: 'pageview', p: '/de' }));
     expect(res.status).toBe(204);
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('analytics'), 'forbidden');
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('analytics'), '42501');
     spy.mockRestore();
   });
 });
