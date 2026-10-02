@@ -30,6 +30,11 @@ describe('normalizePath', () => {
     expect(normalizePath('//evil.test/x')).toBeNull();
   });
 
+  it('rejects control characters', () => {
+    expect(normalizePath('/de\u0000')).toBeNull();
+    expect(normalizePath('/de\nx')).toBeNull();
+  });
+
   it('caps the length', () => {
     expect(normalizePath(`/${'a'.repeat(400)}`)).toHaveLength(300);
   });
