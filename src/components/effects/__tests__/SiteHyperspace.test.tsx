@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 let mockPath = '/de';
 jest.mock('next/navigation', () => ({ usePathname: () => mockPath }));
@@ -22,9 +22,10 @@ describe('internalLinkOrigin', () => {
   });
 
   it('uses the link centre for keyboard activation', () => {
-    document.body.innerHTML = '';
+    const rect = jest.spyOn(HTMLAnchorElement.prototype, 'getBoundingClientRect').mockReturnValue({ left: 100, top: 20, width: 80, height: 30 } as DOMRect);
     const origin = clickOn('<a data-hit href="/de/about">About</a>', { detail: 0, clientX: 0, clientY: 0 });
-    expect(origin).toEqual({ x: 0, y: 0 }); // jsdom layout is all zeros, but the branch ran
+    expect(origin).toEqual({ x: 140, y: 35 });
+    rect.mockRestore();
   });
 
   it.each([
@@ -70,5 +71,8 @@ describe('SiteHyperspace / PageWarp', () => {
     );
     expect(wrap).toHaveClass('motion-safe:animate-warp-in');
     expect(screen.getByText('n1')).toBeInTheDocument();
+    // Removed when done, so no transform lingers above the page.
+    fireEvent.animationEnd(wrap);
+    expect(wrap).not.toHaveClass('motion-safe:animate-warp-in');
   });
 });
