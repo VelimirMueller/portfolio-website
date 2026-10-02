@@ -81,6 +81,7 @@ export function ExpandableProjectCard({
       <button
         onClick={() => setExpanded(!expanded)}
         aria-expanded={expanded}
+        data-track={`project:${title}`}
         className="w-full p-4 sm:p-5 md:p-6 text-left"
       >
         {/* Mobile: stack vertically. Desktop: horizontal row */}

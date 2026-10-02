@@ -140,10 +140,11 @@ export const Navigation = () => {
               onClick={toggleTheme}
               className="w-9 h-9 flex items-center justify-center rounded-full text-light-sub dark:text-dark-sub hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               aria-label={t('nav.toggleTheme')}
+              data-track="nav:theme"
             >
               {theme === 'dark' ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
             </button>
-            <Button to="/contact" variant="primary" className="!px-5 !py-2 !text-xs !h-9 bg-brand-600 hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-gray-200 border-none shadow-lg shadow-brand-500/20 dark:shadow-white/10">
+            <Button to="/contact" track="nav:contact" variant="primary" className="!px-5 !py-2 !text-xs !h-9 bg-brand-600 hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-gray-200 border-none shadow-lg shadow-brand-500/20 dark:shadow-white/10">
               {t('nav.contact')}
             </Button>
           </div>
@@ -154,10 +155,11 @@ export const Navigation = () => {
                 onClick={toggleTheme}
                 className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                 aria-label={t('nav.toggleTheme')}
+                data-track="nav:theme"
               >
               {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
             </button>
-            <button ref={menuTriggerRef} onClick={() => setIsOpen(true)} className="p-3 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full" aria-label={t('nav.openMenu')}>
+            <button ref={menuTriggerRef} onClick={() => setIsOpen(true)} className="p-3 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full" aria-label={t('nav.openMenu')} data-track="nav:menu">
               <Menu size={20} aria-hidden="true" />
             </button>
           </div>

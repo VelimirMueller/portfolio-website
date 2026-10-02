@@ -529,12 +529,12 @@
     "s3Legal": "Rechtsgrundlage:",
     "s3LegalText": "Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen), da die Anfrage im Zusammenhang mit meiner professionellen Tätigkeit steht.",
     "s4Title": "6. Speicherung der Daten (Supabase)",
-    "s4Text": "Die über das Kontaktformular übermittelten Daten werden in einer Datenbank des Dienstleisters Supabase gespeichert.",
+    "s4Text": "Die über das Kontaktformular übermittelten Daten und die Daten der Reichweitenmessung (Abschnitt 8) werden in einer Datenbank des Dienstleisters Supabase gespeichert.",
     "s4Provider": "Anbieter:",
     "s4ProviderText": "Supabase, Inc., USA",
     "s4Detail": "Supabase verarbeitet die Daten als Dienstleister in meinem Auftrag. Eine Übermittlung personenbezogener Daten in die USA kann dabei nicht ausgeschlossen werden.",
     "s5Title": "10. Speicherdauer",
-    "s5Text": "Nachrichten aus dem Kontaktformular lösche ich spätestens sechs Monate nach Abschluss der Anfrage. Führt eine Anfrage zu einem Auftrag, bewahre ich die Korrespondenz so lange auf, wie es handels- und steuerrechtliche Aufbewahrungspflichten verlangen (bis zu zehn Jahre, § 147 AO, § 257 HGB). Server-Logfiles speichert Vercel nur kurzzeitig zur Fehleranalyse und Missbrauchsabwehr.",
+    "s5Text": "Nachrichten aus dem Kontaktformular lösche ich spätestens sechs Monate nach Abschluss der Anfrage. Führt eine Anfrage zu einem Auftrag, bewahre ich die Korrespondenz so lange auf, wie es handels- und steuerrechtliche Aufbewahrungspflichten verlangen (bis zu zehn Jahre, § 147 AO, § 257 HGB). Server-Logfiles speichert Vercel nur kurzzeitig zur Fehleranalyse und Missbrauchsabwehr. Statistikdaten der Reichweitenmessung werden nach 90 Tagen automatisch gelöscht.",
     "s6Title": "11. Ihre Rechte",
     "s6Text": "Sie haben jederzeit das Recht auf:",
     "s6Rights": [
@@ -579,12 +579,12 @@
       "legalText": "Art. 6 Abs. 1 lit. b DSGVO (Bearbeitung Ihrer Anfrage) sowie Art. 6 Abs. 1 lit. f DSGVO (zeitnahe Reaktion auf Anfragen). Die Übermittlung in die USA stützt sich auf EU-Standardvertragsklauseln (Art. 46 DSGVO)."
     },
     "analytics": {
-      "title": "8. Reichweitenmessung (Vercel Web Analytics & Speed Insights)",
-      "text": "Um die Nutzung und Ladegeschwindigkeit der Website zu verstehen, nutze ich Vercel Web Analytics und Vercel Speed Insights. Es werden keine Cookies gesetzt und keine Informationen dauerhaft auf Ihrem Endgerät gespeichert. Erfasst werden aufgerufene Seiten, Referrer, Land, Browser, Betriebssystem, Gerätetyp sowie Messwerte zur Ladezeit. Besuche werden nur innerhalb eines Tages über einen nicht umkehrbaren Hash zusammengefasst; eine Wiedererkennung über Tage oder Websites hinweg findet nicht statt.",
+      "title": "8. Reichweitenmessung (eigene Statistik & Vercel Speed Insights)",
+      "text": "Um zu verstehen, wie die Website genutzt wird, erfasse ich Seitenaufrufe und Klicks mit einer eigenen, cookielosen Statistik. Gespeichert werden: aufgerufene Seite (ohne URL-Parameter), vorherige Seite auf dieser Website, Herkunft (nur der Domainname der verweisenden Seite oder eine Kampagnenkennung), Bezeichnung des angeklickten Elements (z. B. der Kontakt-Button – Eingaben in Formularfelder werden nie erfasst), Land, Gerätetyp, Browser und Zeitpunkt. Ihre IP-Adresse wird nicht gespeichert: Aus IP-Adresse und Browserkennung wird zusammen mit einem täglich wechselnden Zufallswert ein nicht umkehrbarer Hash gebildet. Der Zufallswert des Vortags wird gelöscht, sodass Besuche nur innerhalb eines Tages zusammengefasst werden und eine Wiedererkennung über Tage hinweg nicht möglich ist. Es werden keine Cookies gesetzt und keine Informationen auf Ihrem Endgerät gespeichert oder ausgelesen. Sendet Ihr Browser „Do Not Track“ oder „Global Privacy Control“, wird nichts erfasst. Die Daten liegen in meiner Supabase-Datenbank (Abschnitt 6) und werden nach 90 Tagen automatisch gelöscht. Zusätzlich misst Vercel Speed Insights die Ladezeit der Seiten (Messwerte, aufgerufene Seite, Gerätetyp), ebenfalls ohne Cookies.",
       "provider": "Anbieter:",
-      "providerText": "Vercel Inc., USA",
+      "providerText": "Eigene Statistik, gespeichert bei Supabase, Inc. (Abschnitt 6); Speed Insights: Vercel Inc., USA",
       "legal": "Rechtsgrundlage:",
-      "legalText": "Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse liegt in einer datensparsamen, anonymisierten Auswertung der Website-Nutzung und -Performance."
+      "legalText": "Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse liegt darin, mit möglichst wenigen Daten zu verstehen, welche Inhalte genutzt werden und wie schnell die Website lädt, um sie zu verbessern. Da nichts auf Ihrem Endgerät gespeichert oder ausgelesen wird, ist keine Einwilligung nach § 25 TDDDG erforderlich. Sie können jederzeit widersprechen (Abschnitt 12) – am einfachsten, indem Sie in Ihrem Browser „Do Not Track“ oder „Global Privacy Control“ aktivieren."
     },
     "storage": {
       "title": "9. Lokale Speicherung im Browser",

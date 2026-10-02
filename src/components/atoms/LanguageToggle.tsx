@@ -19,6 +19,7 @@ export const LanguageToggle = () => {
       onClick={handleLanguageToggle}
       className="w-9 h-9 flex items-center justify-center rounded-full text-light-sub dark:text-dark-sub hover:bg-black/5 dark:hover:bg-white/5 transition-colors font-mono text-xs font-bold tracking-tight"
       aria-label={locale === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln'}
+      data-track={`nav:language-${otherLocale}`}
     >
       {locale === 'de' ? 'EN' : 'DE'}
     </button>
