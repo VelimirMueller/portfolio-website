@@ -48,7 +48,7 @@ export default function PrivacyContent() {
             <p>{LEGAL_CONTACT.street}</p>
             <p>{LEGAL_CONTACT.city}</p>
             <p className="mt-3">
-              E-Mail:{' '}
+              {t('privacy.email')}{' '}
               <a href={`mailto:${LEGAL_CONTACT.email}`} className="underline hover:text-black dark:hover:text-white">
                 {LEGAL_CONTACT.email}
               </a>
