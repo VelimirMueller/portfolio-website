@@ -24,18 +24,13 @@ import { CommandPalette, type PaletteAction } from './CommandPalette';
 import { Panel } from './Panel';
 import { isTyping, useNow, useTrafficNav } from './hooks';
 import { countryName, flagOf, formatAgo, sourceLabel } from './format';
+import { KPI_VIEWS, KpiSection, isVisible, useKpiView } from '../kpi/views';
 
 const REFRESH_MS = 30_000;
 const METRIC_KEYS: Record<string, Metric> = { v: 'visitors', p: 'pageviews', c: 'clicks' };
 const METRIC_LABEL: Record<Metric, string> = { visitors: 'Visitors', pageviews: 'Page views', clicks: 'Clicks' };
 type AudienceTab = 'country' | 'device' | 'browser';
 
-const SECTIONS = [
-  { id: 'traffic-trend', label: 'Trend' },
-  { id: 'traffic-heatmap', label: 'When' },
-  { id: 'traffic-flow', label: 'Flow' },
-  { id: 'traffic-clicks', label: 'Clicks' },
-];
 
 function LivePulse({ count }: { count: number }) {
   return (
@@ -80,12 +75,13 @@ export function TrafficDashboard({
   const [palette, setPalette] = useState(false);
   const [audience, setAudience] = useState<AudienceTab>('country');
   const now = useNow(5_000);
+  const { view, setView } = useKpiView();
+  const trafficShown = isVisible(view, 'traffic');
 
   const setFilter = useCallback((key: FilterKey, value: string | null) => set({ [key]: value, ...(key === 'page' ? { focus: null } : {}) }), [set]);
   const clearFilters = useCallback(() => set(Object.fromEntries([...FILTER_KEYS, 'focus'].map((k) => [k, null]))), [set]);
   const setRange = useCallback((range: string) => set({ range: range === '7d' ? null : range }), [set]);
   const setMetric = useCallback((m: Metric) => set({ metric: m === 'visitors' ? null : m }), [set]);
-  const jump = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   // Auto-refresh while the tab is visible.
   useEffect(() => {
@@ -108,7 +104,11 @@ export function TrafficDashboard({
       if (e.key === '/') {
         e.preventDefault();
         setPalette(true);
-      } else if (/^[1-4]$/.test(e.key)) {
+        return;
+      }
+      // Traffic shortcuts only while traffic is on screen (not in the Messages view).
+      if (!trafficShown) return;
+      if (/^[1-4]$/.test(e.key)) {
         setRange(RANGE_KEYS[Number(e.key) - 1]);
       } else if (METRIC_KEYS[e.key]) {
         setMetric(METRIC_KEYS[e.key]);
@@ -121,7 +121,7 @@ export function TrafficDashboard({
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [palette, filters, setRange, setMetric, setFilter, refresh]);
+  }, [palette, trafficShown, filters, setRange, setMetric, setFilter, refresh]);
 
   const actions = useMemo<PaletteAction[]>(() => {
     const list: PaletteAction[] = [
@@ -130,21 +130,22 @@ export function TrafficDashboard({
       { id: 'compare', group: 'Chart', label: compare ? 'Hide previous period' : 'Compare with previous period', run: () => setCompare((c) => !c) },
       ...data.pages.map((p) => ({ id: `page-${p.key}`, group: 'Filter by page', label: p.key, run: () => setFilter('page', p.key) })),
       ...data.sources.map((s) => ({ id: `source-${s.key}`, group: 'Filter by source', label: sourceLabel(s.key), run: () => setFilter('source', s.key) })),
-      ...data.pages.map((p) => ({ id: `focus-${p.key}`, group: 'Explore flow of', label: p.key, run: () => (set({ focus: p.key }), jump('traffic-flow')) })),
-      ...SECTIONS.map((s) => ({ id: `jump-${s.id}`, group: 'Go to', label: s.label, run: () => jump(s.id) })),
-      { id: 'jump-messages', group: 'Go to', label: 'Messages', run: () => jump('kpi-messages') },
+      ...data.pages.map((p) => ({ id: `focus-${p.key}`, group: 'Explore flow of', label: p.key, run: () => (set({ focus: p.key }), setView('flow')) })),
+      ...KPI_VIEWS.map((v) => ({ id: `view-${v.id}`, group: 'Show section', label: `${v.label} — ${v.hint}`, run: () => setView(v.id) })),
       { id: 'refresh', group: 'Data', label: 'Refresh now', hint: 'r', run: refresh },
       { id: 'live', group: 'Data', label: live ? 'Pause auto-refresh' : 'Resume auto-refresh', run: () => setLive((l) => !l) },
     ];
     if (FILTER_KEYS.some((k) => filters[k])) list.unshift({ id: 'clear', group: 'Filters', label: 'Clear all filters', hint: '⌫', run: clearFilters });
     return list;
-  }, [data.pages, data.sources, compare, live, filters, set, setRange, setMetric, setFilter, clearFilters, refresh]);
+  }, [data.pages, data.sources, compare, live, filters, set, setRange, setMetric, setFilter, clearFilters, refresh, setView]);
 
   const hasFilters = FILTER_KEYS.some((k) => filters[k]);
   const empty = data.rawEvents === 0 && !hasFilters;
   const audienceRows = audience === 'country' ? data.countries : audience === 'device' ? data.devices : data.browsers;
 
   return (
+    <>
+    <KpiSection id="traffic">
     <section aria-labelledby="kpi-traffic" aria-describedby="traffic-shortcuts" className="relative space-y-4">
       <p id="traffic-shortcuts" className="sr-only">
         Keyboard shortcuts: 1 to 4 choose the time range, V, P and C choose the charted metric, R refreshes, Backspace removes the newest
@@ -192,25 +193,13 @@ export function TrafficDashboard({
       </div>
 
       {/* One filter row above everything it scopes. */}
-      <div className="sticky top-0 z-20 -mx-1 flex flex-wrap items-center gap-3 rounded-2xl border border-white/[0.06] bg-[#050505]/80 px-2 py-2 backdrop-blur-md">
+      <div className="sticky top-[4.25rem] z-20 -mx-1 flex flex-wrap items-center gap-3 rounded-2xl border border-white/[0.06] bg-[#050505]/80 px-2 py-2 backdrop-blur-md">
         <RangeControl value={filters.range} onChange={setRange} />
         <FilterChips filters={filters} onRemove={(k) => setFilter(k, null)} onClear={clearFilters} />
-        <nav aria-label="Traffic sections" className="ml-auto hidden items-center gap-1 lg:flex">
-          {SECTIONS.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              onClick={() => jump(s.id)}
-              className="rounded-full px-2.5 py-1 font-mono text-[11px] text-gray-400 transition-colors hover:bg-white/[0.04] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
-            >
-              {s.label}
-            </button>
-          ))}
-        </nav>
         <button
           type="button"
           onClick={() => setPalette(true)}
-          className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/40 px-3 py-1.5 text-xs text-gray-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 lg:ml-0 ml-auto"
+          className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/40 px-3 py-1.5 text-xs text-gray-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ml-auto"
         >
           <Command size={12} aria-hidden="true" />
           <span className="hidden sm:inline">Commands</span>
@@ -231,8 +220,6 @@ export function TrafficDashboard({
       )}
 
       <div className={`relative space-y-4 transition-opacity duration-200 ${pending ? 'opacity-60' : 'opacity-100'}`} aria-busy={pending}>
-        <StatTiles data={data} metric={metric} onMetric={setMetric} />
-
         {empty ? (
           <Panel id="traffic-empty" kicker="Setup" title="No events collected yet">
             <ol className="list-decimal space-y-1.5 pl-5 text-sm text-gray-400">
@@ -248,6 +235,8 @@ export function TrafficDashboard({
           </Panel>
         ) : (
           <>
+            <KpiSection id="overview" className="space-y-4">
+            <StatTiles data={data} metric={metric} onMetric={setMetric} />
             <Panel
               id="traffic-trend"
               kicker={`Last ${RANGES[filters.range].label}`}
@@ -275,7 +264,9 @@ export function TrafficDashboard({
                 previousTotal={data.previous[metric]}
               />
             </Panel>
+            </KpiSection>
 
+            <KpiSection id="when">
             <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-3">
               <Panel id="traffic-heatmap" kicker="Berlin time" title="When visitors come" className="xl:col-span-2">
                 <Heatmap grid={data.heatmap} />
@@ -286,7 +277,9 @@ export function TrafficDashboard({
                 </div>
               </Panel>
             </div>
+            </KpiSection>
 
+            <KpiSection id="audience">
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
               <Panel id="traffic-pages" kicker="Click to filter" title="Top pages">
                 <BarList
@@ -329,7 +322,9 @@ export function TrafficDashboard({
                 </div>
               </Panel>
             </div>
+            </KpiSection>
 
+            <KpiSection id="flow">
             <Panel id="traffic-flow" kicker="Navigation" title="Flow explorer">
               <FlowExplorer
                 flow={data.flow}
@@ -338,10 +333,13 @@ export function TrafficDashboard({
                 onSource={(source) => setFilter('source', source)}
               />
             </Panel>
+            </KpiSection>
 
+            <KpiSection id="clicks">
             <Panel id="traffic-clicks" kicker="Interaction" title="What people click">
               <ClickBoard rows={data.clicks} onPage={(path) => setFilter('page', path)} />
             </Panel>
+            </KpiSection>
           </>
         )}
       </div>
@@ -352,7 +350,11 @@ export function TrafficDashboard({
           .join(', ')}
       </p>
 
-      <CommandPalette open={palette} onClose={() => setPalette(false)} actions={actions} />
     </section>
+    </KpiSection>
+
+    {/* Outside the traffic section: ⌘K works in every view, including Messages. */}
+    <CommandPalette open={palette} onClose={() => setPalette(false)} actions={actions} />
+    </>
   );
 }

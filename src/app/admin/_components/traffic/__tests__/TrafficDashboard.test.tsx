@@ -11,6 +11,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 import { TrafficDashboard } from '../TrafficDashboard';
+import { KpiViewProvider } from '../../kpi/views';
 
 const NOW = new Date('2026-10-02T12:30:00Z');
 const ev = (at: string, over: Partial<TrafficEvent> = {}): TrafficEvent => ({
@@ -36,6 +37,7 @@ const EVENTS = [
 
 function setup(query: Record<string, string> = {}, events = EVENTS) {
   search = new URLSearchParams(query).toString();
+  window.history.replaceState(null, '', `/admin/kpis${search ? `?${search}` : ''}`);
   const params = parseTrafficParams(query);
   const data = computeTraffic(events, params, NOW);
   return render(<TrafficDashboard data={data} params={params} loadError={false} capped={false} generatedAt={NOW.toISOString()} />);
@@ -174,6 +176,31 @@ describe('TrafficDashboard', () => {
     fireEvent.focus(grid);
     fireEvent.keyDown(grid, { key: 'ArrowRight' });
     expect(screen.getByText(/Fri 12:00–13:00: \d visitors/)).toBeInTheDocument();
+  });
+
+  it('switches sections from the palette and ignores traffic shortcuts in the Messages view', () => {
+    search = '';
+    window.history.replaceState(null, '', '/admin/kpis');
+    const params = parseTrafficParams({});
+    render(
+      <KpiViewProvider initial="all">
+        <TrafficDashboard data={computeTraffic(EVENTS, params, NOW)} params={params} loadError={false} capped={false} generatedAt={NOW.toISOString()} />
+      </KpiViewProvider>
+    );
+    fireEvent.keyDown(window, { key: 'k', ctrlKey: true });
+    const input = within(screen.getByRole('dialog')).getByRole('combobox');
+    fireEvent.change(input, { target: { value: 'show messages' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(window.location.search).toBe('?view=messages');
+    expect(screen.getByRole('heading', { name: 'Traffic', hidden: true }).closest('[hidden]')).not.toBeNull();
+    fireEvent.keyDown(window, { key: '1' });
+    expect(replace).not.toHaveBeenCalled();
+    // ⌘K and / still open the palette outside the traffic section.
+    fireEvent.keyDown(window, { key: 'k', metaKey: true });
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    fireEvent.keyDown(within(screen.getByRole('dialog')).getByRole('combobox'), { key: 'Escape' });
+    fireEvent.keyDown(window, { key: '/' });
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   it('narrows the click board as you type', () => {
