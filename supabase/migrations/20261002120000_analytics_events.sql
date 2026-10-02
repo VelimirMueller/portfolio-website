@@ -9,7 +9,8 @@
 --
 -- Only /api/collect writes, through record_analytics_event(). The function
 -- checks a shared ingest secret, so a direct REST call with the public key
--- cannot forge events. Setup after applying (secret value only in Vercel env
+-- cannot forge events. The secret must be high-entropy (openssl rand -hex 32).
+-- Setup after applying (secret value only in Vercel env
 -- ANALYTICS_INGEST_SECRET, never in git):
 --   insert into analytics_private.ingest_secret (secret_sha256)
 --   values (encode(extensions.digest('<secret>', 'sha256'), 'hex'));
@@ -104,6 +105,12 @@ begin
     select salt into v_salt from analytics_private.salts where day = v_today;
     delete from analytics_private.salts where day < v_today;
     delete from public.analytics_events where created_at < now() - interval '90 days';
+  end if;
+
+  -- Unreachable in practice (today's row is never deleted above); fail loudly
+  -- rather than store a null visitor.
+  if v_salt is null then
+    raise exception 'no salt for %', v_today;
   end if;
 
   insert into public.analytics_events (type, visitor, path, prev_path, referrer, target, country, device, browser)
