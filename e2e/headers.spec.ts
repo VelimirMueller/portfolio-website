@@ -21,6 +21,15 @@ test.describe('Security headers', () => {
     expect(headers['strict-transport-security']).toContain('max-age=');
   });
 
+  // The privacy policy promises "no cookies on a visit" — banner-free depends on it.
+  test('a visit sets no cookies', async ({ page, context }) => {
+    for (const path of ['/', '/de', '/en/about', '/de/contact']) {
+      const response = await page.goto(path);
+      expect(response!.headers()['set-cookie'], path).toBeUndefined();
+    }
+    expect(await context.cookies()).toEqual([]);
+  });
+
   for (const path of [
     '/de',
     '/de/contact',

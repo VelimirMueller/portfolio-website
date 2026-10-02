@@ -497,9 +497,14 @@
     "metaTitle": "Imprint — Velimir Müller",
     "metaDesc": "Legal notice and imprint information.",
     "title": "IMPRINT.",
-    "subtitle": "Legal Notice",
-    "responsibleTitle": "Responsible",
-    "address": "Postal Address"
+    "subtitle": "Information pursuant to Section 5 DDG",
+    "address": "Postal Address",
+    "contactTitle": "Contact",
+    "email": "Email:",
+    "form": "Contact form:",
+    "formLink": "velimir-mueller.de/contact",
+    "disputeTitle": "Consumer Dispute Resolution",
+    "disputeText": "I am neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board."
   },
   "privacy": {
     "metaTitle": "Privacy Policy — Velimir Müller",
@@ -509,7 +514,7 @@
     "s1Title": "1. Controller",
     "s1Text": "Controller within the meaning of the General Data Protection Regulation (GDPR):",
     "s2Title": "2. General Information",
-    "s2Text": "The protection of your personal data is important to me. Personal data is only processed on this website to the extent necessary and in accordance with the provisions of the General Data Protection Regulation (GDPR).\n\nPersonal data is any data that can be used to personally identify you.",
+    "s2Text": "The protection of your personal data is important to me. Personal data is only processed on this website to the extent necessary and in accordance with the provisions of the General Data Protection Regulation (GDPR).\n\nPersonal data is any data that can be used to personally identify you.\n\nYou are under no legal or contractual obligation to provide personal data. Without the details in the contact form, however, I cannot answer your inquiry. There is no automated decision-making, including profiling (Art. 22 GDPR).",
     "s3Title": "4. Contact Form",
     "s3Text": "When you contact me via the contact form, the information you provide will be processed and stored.",
     "s3DataTitle": "Processed data:",
@@ -528,7 +533,7 @@
     "s4ProviderText": "Supabase, Inc., USA",
     "s4Detail": "Supabase processes the data as a service provider on my behalf. A transfer of personal data to the USA cannot be ruled out.",
     "s5Title": "10. Storage Duration",
-    "s5Text": "The data submitted via the contact form will only be stored for as long as is necessary to process the inquiry or as long as statutory retention obligations exist. After that, the data will be deleted.",
+    "s5Text": "I delete contact form messages no later than six months after the inquiry is closed. If an inquiry leads to an engagement, I keep the correspondence for as long as commercial and tax retention obligations require (up to ten years, Section 147 AO, Section 257 HGB). Vercel keeps server log files only briefly, for error analysis and abuse prevention.",
     "s6Title": "11. Your Rights",
     "s6Text": "You have the right at any time to:",
     "s6Rights": [
@@ -536,12 +541,17 @@
       "Rectification of inaccurate data (Art. 16 GDPR)",
       "Erasure of your data (Art. 17 GDPR)",
       "Restriction of processing (Art. 18 GDPR)",
+      "Data portability (Art. 20 GDPR)",
       "Object to processing (Art. 21 GDPR)"
     ],
     "s6Contact": "To exercise your rights, an informal notification by email is sufficient.",
-    "s7Title": "12. Right to Lodge a Complaint",
-    "s7Text": "You have the right to lodge a complaint with a data protection supervisory authority. The responsible authority is usually the data protection authority of your federal state.",
-    "s8Title": "13. SSL Encryption",
+    "objection": {
+      "title": "12. Right to Object (Art. 21 GDPR)",
+      "text": "Where I process data on the basis of legitimate interests (Art. 6(1)(f) GDPR), you may object to this processing at any time on grounds relating to your particular situation. I will then stop processing your data unless I can demonstrate compelling legitimate grounds that override your interests, or the processing serves the establishment, exercise or defence of legal claims. An informal email is sufficient."
+    },
+    "s7Title": "13. Right to Lodge a Complaint",
+    "s7Text": "You have the right to lodge a complaint with a data protection supervisory authority, in particular in the member state of your habitual residence, place of work or the place of the alleged infringement (Art. 77 GDPR). The authority responsible for me is:",
+    "s8Title": "14. SSL Encryption",
     "s8Text": "For security reasons, this website uses SSL or TLS encryption to protect transmitted data.",
     "hosting": {
       "title": "3. Hosting (Vercel)",
@@ -549,7 +559,7 @@
       "provider": "Provider:",
       "providerText": "Vercel Inc., USA",
       "legal": "Legal basis:",
-      "legalText": "Art. 6(1)(f) GDPR. My legitimate interest is the secure and stable provision of the website. The transfer to the USA is based on the adequacy decision for the EU-US Data Privacy Framework or on EU Standard Contractual Clauses (Art. 46 GDPR)."
+      "legalText": "Art. 6(1)(f) GDPR. My legitimate interest is the secure and stable provision of the website. The transfer to the USA is based on the adequacy decision for the EU-US Data Privacy Framework (Art. 45 GDPR), under which Vercel is certified."
     },
     "captcha": {
       "title": "5. Spam Protection (hCaptcha)",
@@ -577,12 +587,13 @@
     },
     "storage": {
       "title": "9. Local Storage in Your Browser",
-      "text": "When you switch between light and dark mode, your choice is stored under the key “theme” in your browser’s local storage. The value contains no personal data, is not transmitted to me and can be deleted at any time via your browser settings.",
+      "text": "No cookies are set when you visit this website. When you switch between light and dark mode, your choice is stored under the key “theme” in your browser’s local storage. The value contains no personal data, is not transmitted to me and can be deleted at any time via your browser settings.",
       "provider": "",
       "providerText": "",
       "legal": "Legal basis:",
       "legalText": "Section 25(2) No. 2 TDDDG — the storage is strictly necessary to provide the display you requested."
-    }
+    },
+    "asOf": "As of: October 2026"
   },
   "notFound": {
     "title": "404",

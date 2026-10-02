@@ -2,6 +2,7 @@ import React from 'react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
+import { LEGAL_CONTACT, SUPERVISORY_AUTHORITY } from '@/config/legal';
 
 /** One processing activity: what happens, who does it, and on which legal basis. */
 function ProcessingSection({ id }: { id: 'hosting' | 'captcha' | 'mail' | 'analytics' | 'storage' }) {
@@ -42,11 +43,16 @@ export default function PrivacyContent() {
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s1Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{t('privacy.s1Text')}</p>
           <div className="text-gray-600 dark:text-gray-400 text-sm font-mono space-y-1">
-            <p className="font-bold text-black dark:text-white">Velimir Müller</p>
-            <p>C/O RYSE Group GmbH</p>
-            <p>Wildenbruchstraße 69</p>
-            <p>12045 Berlin</p>
-            <p className="mt-3">E-Mail: velimir.mueller@googlemail.com</p>
+            <p className="font-bold text-black dark:text-white">{LEGAL_CONTACT.name}</p>
+            <p>{LEGAL_CONTACT.careOf}</p>
+            <p>{LEGAL_CONTACT.street}</p>
+            <p>{LEGAL_CONTACT.city}</p>
+            <p className="mt-3">
+              E-Mail:{' '}
+              <a href={`mailto:${LEGAL_CONTACT.email}`} className="underline hover:text-black dark:hover:text-white">
+                {LEGAL_CONTACT.email}
+              </a>
+            </p>
           </div>
         </section>
 
@@ -108,10 +114,26 @@ export default function PrivacyContent() {
           <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s6Contact')}</p>
         </section>
 
+        {/* Widerspruchsrecht — Art. 21(4) GDPR wants it separate from other information */}
+        <section className="border-l-2 border-black dark:border-white pl-4">
+          <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.objection.title')}</h2>
+          <p className="text-black dark:text-white text-sm font-medium">{t('privacy.objection.text')}</p>
+        </section>
+
         {/* Beschwerderecht */}
         <section>
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s7Title')}</h2>
-          <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s7Text')}</p>
+          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{t('privacy.s7Text')}</p>
+          <div className="text-gray-600 dark:text-gray-400 text-sm font-mono space-y-1">
+            <p className="font-bold text-black dark:text-white">{SUPERVISORY_AUTHORITY.name}</p>
+            <p>{SUPERVISORY_AUTHORITY.street}</p>
+            <p>{SUPERVISORY_AUTHORITY.city}</p>
+            <p>
+              <a href={SUPERVISORY_AUTHORITY.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-black dark:hover:text-white">
+                {SUPERVISORY_AUTHORITY.url.replace('https://', '')}
+              </a>
+            </p>
+          </div>
         </section>
 
         {/* SSL */}
@@ -119,6 +141,8 @@ export default function PrivacyContent() {
           <h2 className="text-lg font-mono font-bold text-black dark:text-white mb-4">{t('privacy.s8Title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm">{t('privacy.s8Text')}</p>
         </section>
+
+        <p className="text-xs font-mono text-gray-500">{t('privacy.asOf')}</p>
 
       </div>
       </AnimateIn>
