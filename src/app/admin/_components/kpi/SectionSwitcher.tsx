@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 import { KPI_VIEWS, useKpiView, type KpiView } from './views';
-import { Hyperspace, type HyperspaceHandle } from './Hyperspace';
+import { Starfield, type StarfieldHandle } from '@/components/effects/Starfield';
 
 /**
  * The KPI page's section switcher: a radio group of glowing pills over a
@@ -14,7 +14,7 @@ export function SectionSwitcher({ counts = {} }: { counts?: Partial<Record<KpiVi
   const { view, setView } = useKpiView();
   const refs = useRef<Record<string, HTMLButtonElement | null>>({});
   const barRef = useRef<HTMLDivElement>(null);
-  const hyperspace = useRef<HyperspaceHandle>(null);
+  const hyperspace = useRef<StarfieldHandle>(null);
   const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
 
   useLayoutEffect(() => {
@@ -56,7 +56,7 @@ export function SectionSwitcher({ counts = {} }: { counts?: Partial<Record<KpiVi
       ref={barRef}
       className="sticky top-0 z-30 -mx-1 overflow-hidden rounded-2xl border border-white/[0.08] bg-[#030308]/90 shadow-[0_0_40px_rgba(14,165,198,0.08)] backdrop-blur-md"
     >
-      <Hyperspace ref={hyperspace} />
+      <Starfield ref={hyperspace} />
       {/* Scanline + edge glow: atmosphere at a few percent. */}
       <div
         aria-hidden="true"

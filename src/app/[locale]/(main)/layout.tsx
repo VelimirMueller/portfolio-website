@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { Navigation } from '@/components/organisms/Navigation';
 import { Footer } from '@/components/organisms/Footer';
 import { SITE_URL } from '@/config/site';
+import { PageWarp, SiteHyperspace } from '@/components/effects/SiteHyperspace';
 
 type Props = {
   children: React.ReactNode;
@@ -70,9 +71,10 @@ export default async function MainLayout({ children, params }: Props) {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-bold">
         {t('skipToContent')}
       </a>
+      <SiteHyperspace />
       <Navigation />
       <main id="main-content" className="flex-grow">
-        {children}
+        <PageWarp>{children}</PageWarp>
       </main>
       <Footer />
     </div>
