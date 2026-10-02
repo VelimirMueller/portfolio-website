@@ -10,6 +10,8 @@ interface ButtonProps {
   onClick?: () => void;
   external?: boolean;
   disabled?: boolean;
+  /** Analytics label (data-track); see describeClickTarget. */
+  track?: string;
 }
 
 export const Button = ({
@@ -20,7 +22,8 @@ export const Button = ({
   to = '',
   onClick,
   type = 'button',
-  external = false
+  external = false,
+  track
 }: ButtonProps) => {
   const baseStyle = "inline-flex items-center justify-center font-mono text-xs md:text-sm font-bold tracking-tight transition-all duration-200 ease-out rounded-full px-6 py-3 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 active:scale-[0.97]";
 
@@ -36,20 +39,20 @@ export const Button = ({
   if (to) {
     if (external) {
       return (
-        <a href={to} target="_blank" rel="noopener noreferrer" className={combinedClassName}>
+        <a href={to} target="_blank" rel="noopener noreferrer" className={combinedClassName} data-track={track}>
           {children}
         </a>
       );
     }
     return (
-      <Link href={to} className={combinedClassName}>
+      <Link href={to} className={combinedClassName} data-track={track}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button onClick={onClick} type={type} disabled={disabled} className={combinedClassName}>
+    <button onClick={onClick} type={type} disabled={disabled} className={combinedClassName} data-track={track}>
       {children}
     </button>
   );

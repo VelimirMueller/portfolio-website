@@ -262,6 +262,7 @@ export default function ContactContent() {
                   <div className="flex justify-end">
                     <Button
                       type="submit"
+                      track="contact:submit"
                       disabled={isSubmitting || !isFormValid}
                       className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 px-8 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
