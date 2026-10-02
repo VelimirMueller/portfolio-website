@@ -42,7 +42,7 @@ export const Hyperspace = forwardRef<HyperspaceHandle>(function Hyperspace(_, ha
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
-    reduced.current = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    reduced.current = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
 
     let w = 0;
     let h = 0;

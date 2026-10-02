@@ -100,12 +100,15 @@ export function TrafficDashboard({
         setPalette((o) => !o);
         return;
       }
-      // Traffic shortcuts only while traffic is on screen (not in the Messages view).
-      if (palette || !trafficShown || e.metaKey || e.ctrlKey || e.altKey || isTyping(e.target)) return;
+      if (palette || e.metaKey || e.ctrlKey || e.altKey || isTyping(e.target)) return;
       if (e.key === '/') {
         e.preventDefault();
         setPalette(true);
-      } else if (/^[1-4]$/.test(e.key)) {
+        return;
+      }
+      // Traffic shortcuts only while traffic is on screen (not in the Messages view).
+      if (!trafficShown) return;
+      if (/^[1-4]$/.test(e.key)) {
         setRange(RANGE_KEYS[Number(e.key) - 1]);
       } else if (METRIC_KEYS[e.key]) {
         setMetric(METRIC_KEYS[e.key]);

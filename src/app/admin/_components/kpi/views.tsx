@@ -34,7 +34,10 @@ export function KpiViewProvider({ initial, children }: { initial: KpiView; child
   }, []);
 
   useEffect(() => {
-    const onPop = () => setViewState(parseView(new URL(window.location.href).searchParams.get('view')));
+    const onPop = () => {
+      setViewState(parseView(new URL(window.location.href).searchParams.get('view')));
+      setGeneration((g) => g + 1);
+    };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
