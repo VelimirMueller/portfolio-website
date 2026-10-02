@@ -103,6 +103,17 @@ describe('POST /api/collect', () => {
     expect(rpc).not.toHaveBeenCalled();
   });
 
+  it('still answers 204 when the database call times out', async () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const timeout = new Error('timed out');
+    timeout.name = 'TimeoutError';
+    abortSignal.mockRejectedValue(timeout);
+    const res = await POST(beacon({ t: 'pageview', p: '/de' }));
+    expect(res.status).toBe(204);
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('analytics'), 'TimeoutError');
+    spy.mockRestore();
+  });
+
   it('logs and still answers 204 when the database refuses', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     abortSignal.mockResolvedValue({ error: { code: '42501', message: 'forbidden' } });

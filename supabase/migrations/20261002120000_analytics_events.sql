@@ -36,8 +36,8 @@ create table if not exists public.analytics_events (
   created_at timestamptz not null default now(),
   type       text not null check (type in ('pageview', 'click')),
   visitor    text not null check (char_length(visitor) = 64),
-  path       text not null check (char_length(path) between 1 and 300),
-  prev_path  text check (char_length(prev_path) <= 300),
+  path       text not null check (char_length(path) between 1 and 300 and path like '/%'),
+  prev_path  text check (char_length(prev_path) <= 300 and prev_path like '/%'),
   referrer   text check (char_length(referrer) <= 200),
   target     text check (char_length(target) <= 120),
   country    text check (country ~ '^[A-Z]{2}$'),
@@ -64,7 +64,8 @@ create policy "Admin can delete analytics"
 -- No insert/update policy: API roles cannot write rows directly.
 revoke insert, update on public.analytics_events from anon, authenticated;
 
--- 3. Ingest.
+-- 3. Ingest. Every argument is still checked by the table constraints above;
+-- the route normalises values first, so a violation means a forged call.
 create or replace function public.record_analytics_event(
   p_secret     text,
   p_ip         text,
