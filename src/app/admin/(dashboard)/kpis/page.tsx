@@ -5,6 +5,7 @@ import { computeTraffic, parseTrafficParams, trafficWindow } from '@/app/admin/_
 import { loadTrafficEvents } from '@/app/admin/_lib/trafficQuery';
 import { KpisView } from '@/app/admin/_components/KpisView';
 import { TrafficDashboard } from '@/app/admin/_components/traffic/TrafficDashboard';
+import { parseView } from '@/app/admin/_components/kpi/viewModel';
 
 export default async function AdminKpisPage({
   searchParams = {},
@@ -20,13 +21,18 @@ export default async function AdminKpisPage({
     loadTrafficEvents(supabase, trafficWindow(params.filters.range, now).since),
   ]);
 
+  const data = computeTraffic(traffic.events, params, now);
+  const view = parseView(Array.isArray(searchParams.view) ? searchParams.view[0] : searchParams.view);
+
   return (
     <KpisView
       messages={computeMessageKpis((messages.data ?? []) as ContactMessage[])}
       error={Boolean(messages.error)}
+      view={view}
+      counts={{ overview: data.totals.visitors, clicks: data.totals.clicks }}
       traffic={
         <TrafficDashboard
-          data={computeTraffic(traffic.events, params, now)}
+          data={data}
           params={params}
           loadError={traffic.error}
           capped={traffic.capped}

@@ -20,7 +20,9 @@ export function useTrafficNav() {
 
   const set = useCallback(
     (patch: Record<string, string | null | undefined>) => {
-      const next = new URLSearchParams(searchParams?.toString() ?? '');
+      // From the live URL, not useSearchParams: the section switcher writes
+      // ?view= with history.replaceState, which a render may not have seen yet.
+      const next = new URLSearchParams(typeof window === 'undefined' ? searchParams?.toString() ?? '' : window.location.search);
       for (const [key, value] of Object.entries(patch)) {
         if (value === null || value === undefined || value === '') next.delete(key);
         else next.set(key, value);

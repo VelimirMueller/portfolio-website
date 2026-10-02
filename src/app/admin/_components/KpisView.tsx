@@ -5,6 +5,8 @@ import { KPI_WINDOW_DAYS, WEEKDAYS, type MessageKpis } from '../_lib/kpis';
 import { BarChart, Donut } from './kpi/charts';
 import { KpiCard } from './kpi/KpiCard';
 import { Card } from './ui';
+import { KpiSection, KpiViewProvider, type KpiView } from './kpi/views';
+import { SectionSwitcher } from './kpi/SectionSwitcher';
 
 const STATUS_META = {
   new: { label: 'Unread', color: '#3b82f6' },
@@ -15,9 +17,22 @@ const STATUS_META = {
 
 /**
  * KPI overview, one section per data source: Traffic (passed in as
- * `traffic`, since v2.1.0) first, then Messages.
+ * `traffic`, since v2.1.0) first, then Messages. The section switcher on top
+ * shows everything or one part at a time (?view=).
  */
-export function KpisView({ messages, error, traffic }: { messages: MessageKpis; error: boolean; traffic?: ReactNode }) {
+export function KpisView({
+  messages,
+  error,
+  traffic,
+  view = 'all',
+  counts,
+}: {
+  messages: MessageKpis;
+  error: boolean;
+  traffic?: ReactNode;
+  view?: KpiView;
+  counts?: Partial<Record<KpiView, number>>;
+}) {
   // 5-day buckets: daily counts on a contact form are mostly 0/1 and look like noise.
   const spark = Array.from({ length: Math.ceil(KPI_WINDOW_DAYS / 5) }, (_, i) =>
     messages.daily.slice(i * 5, i * 5 + 5).reduce((sum, d) => sum + d.count, 0)
@@ -26,13 +41,18 @@ export function KpisView({ messages, error, traffic }: { messages: MessageKpis; 
   const busiest = messages.byWeekday.indexOf(Math.max(...messages.byWeekday));
 
   return (
-    <div className="space-y-8">
+    <KpiViewProvider initial={view}>
+    <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-white mb-1">KPIs</h1>
         <p className="text-gray-500 text-sm">How the site is doing, one section per source</p>
       </div>
 
+      <SectionSwitcher counts={{ messages: messages.unread, ...counts }} />
+
       {traffic}
+
+      <KpiSection id="messages">
 
       <section id="kpi-messages" aria-labelledby="kpi-messages-title" className="scroll-mt-24 space-y-4">
         <div className="flex items-end justify-between">
@@ -131,6 +151,8 @@ export function KpisView({ messages, error, traffic }: { messages: MessageKpis; 
           <BarChart values={messages.byWeekday} labels={WEEKDAYS} label={`Messages per weekday: ${WEEKDAYS.map((d, i) => `${d} ${messages.byWeekday[i]}`).join(', ')}`} />
         </Card>
       </section>
+      </KpiSection>
     </div>
+    </KpiViewProvider>
   );
 }
