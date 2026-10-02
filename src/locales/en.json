@@ -529,12 +529,12 @@
     "s3Legal": "Legal basis:",
     "s3LegalText": "Processing is carried out in accordance with Art. 6(1)(b) GDPR (pre-contractual measures), as the inquiry is related to my professional activity.",
     "s4Title": "6. Data Storage (Supabase)",
-    "s4Text": "The data submitted via the contact form is stored in a database provided by Supabase.",
+    "s4Text": "The data submitted via the contact form and the analytics data (section 8) are stored in a database provided by Supabase.",
     "s4Provider": "Provider:",
     "s4ProviderText": "Supabase, Inc., USA",
     "s4Detail": "Supabase processes the data as a service provider on my behalf. A transfer of personal data to the USA cannot be ruled out.",
     "s5Title": "10. Storage Duration",
-    "s5Text": "I delete contact form messages no later than six months after the inquiry is closed. If an inquiry leads to an engagement, I keep the correspondence for as long as commercial and tax retention obligations require (up to ten years, Section 147 AO, Section 257 HGB). Vercel keeps server log files only briefly, for error analysis and abuse prevention.",
+    "s5Text": "I delete contact form messages no later than six months after the inquiry is closed. If an inquiry leads to an engagement, I keep the correspondence for as long as commercial and tax retention obligations require (up to ten years, Section 147 AO, Section 257 HGB). Vercel keeps server log files only briefly, for error analysis and abuse prevention. Analytics data is deleted automatically after 90 days.",
     "s6Title": "11. Your Rights",
     "s6Text": "You have the right at any time to:",
     "s6Rights": [
@@ -579,12 +579,12 @@
       "legalText": "Art. 6(1)(b) GDPR (processing your inquiry) and Art. 6(1)(f) GDPR (responding to inquiries promptly). The transfer to the USA is based on EU Standard Contractual Clauses (Art. 46 GDPR)."
     },
     "analytics": {
-      "title": "8. Analytics (Vercel Web Analytics & Speed Insights)",
-      "text": "To understand how the website is used and how fast it loads, I use Vercel Web Analytics and Vercel Speed Insights. No cookies are set and no information is stored permanently on your device. Pages visited, referrer, country, browser, operating system, device type and loading-time metrics are collected. Visits are grouped only within a single day using a non-reversible hash; you are not recognised across days or websites.",
+      "title": "8. Analytics (own statistics & Vercel Speed Insights)",
+      "text": "To understand how the website is used, I record page views and clicks with my own cookieless statistics. Stored are: the page visited (without URL parameters), the previous page on this website, the origin (only the domain name of the referring site or a campaign tag), the name of the clicked element (e.g. the contact button — input in form fields is never recorded), country, device type, browser and time. Your IP address is not stored: a non-reversible hash is formed from the IP address and browser identifier together with a random value that changes daily. The previous day's random value is deleted, so visits are only grouped within a single day and you cannot be recognised across days. No cookies are set and no information is stored on or read from your device. If your browser sends “Do Not Track” or “Global Privacy Control”, nothing is recorded. The data is kept in my Supabase database (section 6) and deleted automatically after 90 days. In addition, Vercel Speed Insights measures page loading times (metrics, page visited, device type), also without cookies.",
       "provider": "Provider:",
-      "providerText": "Vercel Inc., USA",
+      "providerText": "Own statistics, stored with Supabase, Inc. (section 6); Speed Insights: Vercel Inc., USA",
       "legal": "Legal basis:",
-      "legalText": "Art. 6(1)(f) GDPR. My legitimate interest is a data-minimising, anonymised evaluation of website usage and performance."
+      "legalText": "Art. 6(1)(f) GDPR. My legitimate interest is understanding, with as little data as possible, which content is used and how fast the website loads, in order to improve it. As nothing is stored on or read from your device, no consent under Section 25 TDDDG is required. You can object at any time (section 12) — most simply by enabling “Do Not Track” or “Global Privacy Control” in your browser."
     },
     "storage": {
       "title": "9. Local Storage in Your Browser",
