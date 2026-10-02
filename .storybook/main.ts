@@ -23,6 +23,11 @@ const config: StorybookConfig = {
     disableTelemetry: true,
   },
   async viteFinal(config) {
+    // staticDirs already copies ../public into storybook-static. Vite's own
+    // publicDir copy of the same folder ran in parallel and raced on mkdir
+    // (EEXIST './storybook-static/games/cyberpunk', CI on main 2026-10-02).
+    config.publicDir = false;
+
     config.resolve = config.resolve || {};
     // Vite aliases can be an array or object — normalise to array for safe merging
     const existing = config.resolve.alias;
