@@ -49,6 +49,26 @@ test.describe('Analytics beacons', () => {
     expect(response.headers()['set-cookie']).toBeUndefined();
   });
 
+  test('the privacy switch stops all beacons and the choice survives a reload', async ({ page }) => {
+    await page.addInitScript(RECORD_BEACONS);
+    await page.goto('/de');
+    await page.getByRole('contentinfo').getByRole('link', { name: 'Privatsphäre-Einstellungen' }).click();
+    await page.waitForURL('**/de/privacy#analytics-settings');
+    const toggle = page.getByRole('switch', { name: 'Anonyme Statistik' });
+    await expect(toggle).toHaveAttribute('aria-checked', 'true');
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-checked', 'false');
+
+    const before = (await beacons(page)).length;
+    await page.getByRole('contentinfo').getByRole('link', { name: 'Impressum' }).click();
+    await page.waitForURL('**/de/imprint');
+    expect(await beacons(page)).toHaveLength(before);
+
+    await page.goto('/de/privacy');
+    await expect(page.getByRole('switch', { name: 'Anonyme Statistik' })).toHaveAttribute('aria-checked', 'false');
+    expect(await beacons(page)).toEqual([]);
+  });
+
   test('Do Not Track sends nothing', async ({ browser }) => {
     const context = await browser.newContext();
     await context.addInitScript(() => Object.defineProperty(navigator, 'doNotTrack', { get: () => '1' }));
