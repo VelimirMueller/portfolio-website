@@ -27,6 +27,17 @@ const contentSecurityPolicy = [
   "frame-ancestors 'self'",
 ].join('; ');
 
+// The admin Magic section shows card images from Scryfall's CDN. Only that
+// subtree allows it, so public pages stay same-origin for images. Next applies
+// the later of two matching headers with the same key.
+const magicContentSecurityPolicy = contentSecurityPolicy.replace(
+  "img-src 'self' data: blob:",
+  "img-src 'self' data: blob: https://cards.scryfall.io"
+);
+if (!magicContentSecurityPolicy.includes('cards.scryfall.io')) {
+  throw new Error('next.config: img-src changed; update the Magic CSP override');
+}
+
 const securityHeaders = [
   { key: 'Content-Security-Policy', value: contentSecurityPolicy },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -59,6 +70,10 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: securityHeaders,
+      },
+      {
+        source: '/admin/magic/:path*',
+        headers: [{ key: 'Content-Security-Policy', value: magicContentSecurityPolicy }],
       },
     ];
   },
