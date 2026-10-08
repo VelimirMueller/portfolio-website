@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
-import { ArrowUpRight, BarChart3, Inbox, LogOut, Menu, X } from 'lucide-react';
+import { ArrowUpRight, BarChart3, Inbox, LogOut, Menu, Sparkles, X } from 'lucide-react';
 import { signOut } from '../actions';
 
 /**
@@ -14,6 +14,7 @@ import { signOut } from '../actions';
 const NAV = [
   { href: '/admin', label: 'Inbox', icon: Inbox, exact: true },
   { href: '/admin/kpis', label: 'KPIs', icon: BarChart3, exact: false },
+  { href: '/admin/magic', label: 'Magic', icon: Sparkles, exact: false },
 ] as const;
 
 export function AdminShell({
