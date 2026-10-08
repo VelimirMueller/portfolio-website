@@ -226,7 +226,7 @@ Common types: `feat`, `fix`, `chore`, `docs`, `test`, `refactor`, `perf`, `ci`. 
 
 ## Admin (v2)
 
-A private area at `/admin`, introduced in **v2.0.0** (traffic KPIs since **v2.1.0**), in the same visual language as the CRM demo. English-only, outside `[locale]`, `noindex` and disallowed in `robots.txt`.
+A private area at `/admin`, introduced in **v2.0.0** (traffic KPIs since **v2.1.0**, Magic since **v2.2.0**), in the same visual language as the CRM demo. English-only, outside `[locale]`, `noindex` and disallowed in `robots.txt`.
 
 | Section | What it does |
 | :--- | :--- |
