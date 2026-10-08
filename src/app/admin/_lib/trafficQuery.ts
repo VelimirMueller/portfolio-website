@@ -16,6 +16,20 @@ export interface LoadedEvents {
 }
 
 /**
+ * When the newest stored event happened, or null when none ever was. Tells
+ * "collection not set up" apart from "no visitors in the chosen period".
+ */
+export async function loadLastEventAt(supabase: SupabaseClient): Promise<string | null> {
+  const { data } = await supabase
+    .from('analytics_events')
+    .select('created_at')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  return (data as { created_at: string } | null)?.created_at ?? null;
+}
+
+/**
  * All events since `since`, newest first, paged through PostgREST's row limit.
  * Newest first so that, if the cap is hit, it is the oldest part of the
  * comparison window that goes missing — not today.

@@ -2,7 +2,7 @@ import { requireAdmin } from '@/app/admin/_lib/auth';
 import { computeMessageKpis } from '@/app/admin/_lib/kpis';
 import type { ContactMessage } from '@/app/admin/_lib/messages';
 import { computeTraffic, parseTrafficParams, trafficWindow } from '@/app/admin/_lib/traffic';
-import { loadTrafficEvents } from '@/app/admin/_lib/trafficQuery';
+import { loadLastEventAt, loadTrafficEvents } from '@/app/admin/_lib/trafficQuery';
 import { KpisView } from '@/app/admin/_components/KpisView';
 import { TrafficDashboard } from '@/app/admin/_components/traffic/TrafficDashboard';
 import { parseView } from '@/app/admin/_components/kpi/viewModel';
@@ -16,9 +16,10 @@ export default async function AdminKpisPage({
   const params = parseTrafficParams(searchParams);
   const now = new Date();
 
-  const [messages, traffic] = await Promise.all([
+  const [messages, traffic, lastEventAt] = await Promise.all([
     supabase.from('contact_messages').select('id, name, email, message, status, created_at'),
     loadTrafficEvents(supabase, trafficWindow(params.filters.range, now).since),
+    loadLastEventAt(supabase),
   ]);
 
   const data = computeTraffic(traffic.events, params, now);
@@ -37,6 +38,7 @@ export default async function AdminKpisPage({
           loadError={traffic.error}
           capped={traffic.capped}
           generatedAt={now.toISOString()}
+          lastEventAt={lastEventAt}
         />
       }
     />

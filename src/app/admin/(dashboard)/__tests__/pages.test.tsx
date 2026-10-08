@@ -29,6 +29,8 @@ const eventsQuery = {
   gte: () => eventsQuery,
   order: () => eventsQuery,
   range: async () => ({ data: events, error: eventsError }),
+  limit: () => eventsQuery,
+  maybeSingle: async () => ({ data: events[0] ?? null, error: null }),
 };
 jest.mock('@/app/admin/_lib/auth', () => ({
   requireAdmin: async () => ({
