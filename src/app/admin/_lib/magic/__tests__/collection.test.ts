@@ -72,11 +72,12 @@ describe('magic collection helpers', () => {
     expect(manaSymbols(null)).toEqual([]);
   });
 
-  it('switches the Scryfall image size in the URL', () => {
-    const url = 'https://cards.scryfall.io/normal/front/1/4/x.jpg?123';
-    expect(cardImage(url, 'small')).toBe('https://cards.scryfall.io/small/front/1/4/x.jpg?123');
-    expect(cardImage(url)).toBe(url);
+  it('points images at the cached same-origin route, in the wanted size', () => {
+    const url = 'https://cards.scryfall.io/normal/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b.jpg?123';
+    expect(cardImage(url, 'small')).toBe('/admin/magic/img/small/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b');
+    expect(cardImage(url)).toBe('/admin/magic/img/normal/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b');
     expect(cardImage(null)).toBeNull();
+    expect(cardImage('https://evil.example.com/normal/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b.jpg')).toBeNull();
   });
 
   it('adds up copies per name, e.g. basic and full-art Islands', () => {

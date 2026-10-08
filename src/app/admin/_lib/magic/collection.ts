@@ -1,3 +1,5 @@
+import { cachedImagePath } from './imageCache';
+
 // Velimir's Magic: The Gathering pool (public.mtg_collection) and the Scryfall
 // catalog (public.mtg_catalog). Pure helpers only; queries live in the pages.
 
@@ -127,11 +129,11 @@ export function manaSymbols(cost: string | null): string[] {
 }
 
 /**
- * Scryfall serves every image size under the same path; only the size
- * segment differs. "small" (146×204) keeps a 200-card grid light.
+ * Where the page loads a card image from: our cached route, never Scryfall
+ * directly. "small" (146×204) keeps a 200-card grid light.
  */
 export function cardImage(url: string | null, size: 'small' | 'normal' | 'large' = 'normal'): string | null {
-  return url ? url.replace(/\/(small|normal|large)\//, `/${size}/`) : null;
+  return cachedImagePath(url, size);
 }
 
 /** Copies per card name across the pool (basic and full-art Islands add up). */

@@ -17,7 +17,7 @@ export const poolCard = (over: Partial<PoolCard> = {}): PoolCard => ({
   short: 'A flier.',
   status: 'scryfall',
   note: null,
-  image_url: 'https://cards.scryfall.io/normal/front/a/b/ab.jpg?1',
+  image_url: 'https://cards.scryfall.io/normal/front/a/b/ab000000-0000-4000-8000-000000000001.jpg?1',
   scryfall_uri: 'https://scryfall.com/card/fra/1/test',
   ...over,
 });
@@ -36,7 +36,7 @@ export const catalogCard = (over: Partial<CatalogCard> = {}): CatalogCard => ({
   set_code: 'rtr',
   set_name: 'Return to Ravnica',
   released_at: '2012-10-05',
-  image_url: 'https://cards.scryfall.io/normal/front/c/r/cr.jpg?1',
+  image_url: 'https://cards.scryfall.io/normal/front/c/0/c0000000-0000-4000-8000-000000000002.jpg?1',
   scryfall_uri: 'https://scryfall.com/card/rtr/35/cyclonic-rift',
   ...over,
 });

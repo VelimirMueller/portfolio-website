@@ -51,8 +51,8 @@ export function frameGradient(colors: ManaColor[]): string {
 }
 
 /**
- * Card image from Scryfall's CDN, or a framed placeholder for cards Scryfall
- * does not know. Clicking opens the large image in a new tab.
+ * Card image (cached in the database on first view), or a framed placeholder
+ * for cards Scryfall does not know. Clicking opens the large image in a new tab.
  */
 export function CardImage({
   name,
@@ -68,7 +68,9 @@ export function CardImage({
   className?: string;
 }) {
   const box = `aspect-[488/680] rounded-[4.75%/3.5%] overflow-hidden shrink-0 ${className}`;
-  if (!url) {
+  const src = cardImage(url, size);
+  const large = cardImage(url, 'large');
+  if (!src || !large) {
     return (
       <div className={`${box} border border-[#333] bg-[#0b0b0b] flex flex-col`} role="img" aria-label={`${name} (no image)`}>
         <div className="h-1.5 shrink-0" style={{ background: frameGradient(colors) }} />
@@ -77,10 +79,10 @@ export function CardImage({
     );
   }
   return (
-    <a href={cardImage(url, 'large') ?? url} target="_blank" rel="noreferrer" className={`${box} block bg-[#0b0b0b]`}>
-      {/* eslint-disable-next-line @next/next/no-img-element -- Scryfall CDN, already sized */}
+    <a href={large} target="_blank" rel="noreferrer" className={`${box} block bg-[#0b0b0b]`}>
+      {/* eslint-disable-next-line @next/next/no-img-element -- cached card image, already sized */}
       <img
-        src={cardImage(url, size) ?? url}
+        src={src}
         alt={name}
         loading="lazy"
         decoding="async"

@@ -248,11 +248,11 @@ Setup after applying `20261002120000_analytics_events.sql`:
 2. In the Supabase SQL editor: `insert into analytics_private.ingest_secret (secret_sha256) values (encode(extensions.digest('<secret>', 'sha256'), 'hex'));`
 3. In Vercel: `ANALYTICS_INGEST_SECRET=<secret>` (Production), then redeploy. Without it `/api/collect` answers 204 and stores nothing.
 
-**Magic.** Two tables, admin-only by RLS: `mtg_catalog` (every paper card from Scryfall's *Oracle Cards* bulk file, ~33k rows, no images — rows keep the CDN URL) and `mtg_collection` (the pool; card fields are a snapshot taken when a card is added, so the pool never depends on the catalog). Card images load from `cards.scryfall.io`; only `/admin/magic/*` allows that in its CSP, public pages stay same-origin for images. The deck plan is code: `src/app/admin/_lib/magic/deck.ts`.
+**Magic.** Two tables, admin-only by RLS: `mtg_catalog` (every paper card from Scryfall's *Oracle Cards* bulk file, ~33k rows, no images — rows keep the CDN URL) and `mtg_collection` (the pool; card fields are a snapshot taken when a card is added, so the pool never depends on the catalog). Card images are same-origin: `/admin/magic/img/<size>/<face>/…` serves them from `mtg_image_cache` and fetches from Scryfall's CDN only on the first view of each image (then the browser keeps it a year). No third-party image host in the CSP. The deck plan is code: `src/app/admin/_lib/magic/deck.ts`.
 
 Setup:
 
-1. Apply `20261008120000_magic.sql`, then `20261008120100_magic_seed.sql` (the pool as of 2026-10-08, 140 entries; it does nothing when the pool already has rows).
+1. Apply `20261008120000_magic.sql`, `20261008120100_magic_seed.sql`, then `20261008130000_magic_image_cache.sql` (the pool as of 2026-10-08, 140 entries; it does nothing when the pool already has rows).
 2. Load the catalog (also the refresh, any time — Scryfall updates daily):
    ```bash
    node scripts/mtg/build-catalog.mjs /tmp/mtg-catalog.csv
