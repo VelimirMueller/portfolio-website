@@ -4,17 +4,17 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const TABS = [
-  { href: '/admin/magic', label: 'Pool' },
-  { href: '/admin/magic/deck', label: 'Deck: Stapelbruch' },
-  { href: '/admin/magic/add', label: 'Add card' },
+  { href: '/admin/magic', label: 'Pool', exact: true },
+  { href: '/admin/magic/decks', label: 'Decks', exact: false },
+  { href: '/admin/magic/add', label: 'Add card', exact: true },
 ] as const;
 
 export function MagicTabs() {
   const pathname = usePathname();
   return (
     <nav aria-label="Magic sections" className="flex flex-wrap gap-2 border-b border-[#222] pb-4">
-      {TABS.map(({ href, label }) => {
-        const active = pathname === href;
+      {TABS.map(({ href, label, exact }) => {
+        const active = exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
         return (
           <Link
             key={href}

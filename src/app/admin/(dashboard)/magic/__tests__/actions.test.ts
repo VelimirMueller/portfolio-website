@@ -10,13 +10,14 @@ jest.mock('next/cache', () => ({ revalidatePath: (...a: unknown[]) => revalidate
 let rpcResult: { data: unknown; error: unknown } = { data: null, error: null };
 const rpc = jest.fn(async (..._args: unknown[]) => rpcResult);
 let addedName: string | null = 'Cyclonic Rift';
-const pool = {
-  select: () => pool,
-  eq: () => pool,
+const from = jest.fn();
+const catalog = {
+  select: () => catalog,
+  eq: () => catalog,
   single: async () => ({ data: addedName ? { name: addedName } : null, error: null }),
 };
 jest.mock('@/app/admin/_lib/auth', () => ({
-  requireAdmin: async () => ({ supabase: { rpc, from: () => pool }, user: { id: 'admin' } }),
+  requireAdmin: async () => ({ supabase: { rpc, from: (t: string) => (from(t), catalog) }, user: { id: 'admin' } }),
 }));
 
 import { addToPool, changeQty } from '../actions';
@@ -48,6 +49,7 @@ describe('addToPool', () => {
       p_name_de: null,
       p_note: 'foil',
     });
+    expect(from).toHaveBeenCalledWith('mtg_catalog');
     expect(revalidatePath).toHaveBeenCalledWith('/admin/magic', 'layout');
   });
 

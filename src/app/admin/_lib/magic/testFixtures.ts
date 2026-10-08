@@ -1,29 +1,11 @@
 // Test data shared by the Magic tests. Not imported by app code.
-import type { CatalogCard, PoolCard } from './collection';
+import type { CatalogCard, Deck, DeckCard, PoolEntry } from './types';
 
-export const poolCard = (over: Partial<PoolCard> = {}): PoolCard => ({
-  id: '00000000-0000-4000-8000-000000000001',
-  oracle_id: '10000000-0000-4000-8000-000000000001',
-  name: 'Test Card',
-  name_de: null,
-  owned_qty: 1,
-  copies_de: 0,
-  colors: ['U'],
-  type_line: 'Creature — Wizard',
-  mana_cost: '{1}{U}',
-  mana_value: 2,
-  power_toughness: '1/1',
-  oracle_text: 'Flying.',
-  short: 'A flier.',
-  status: 'scryfall',
-  note: null,
-  image_url: 'https://cards.scryfall.io/normal/front/a/b/ab000000-0000-4000-8000-000000000001.jpg?1',
-  scryfall_uri: 'https://scryfall.com/card/fra/1/test',
-  ...over,
-});
+let seq = 0;
+const uuid = () => `00000000-0000-4000-8000-${String(++seq).padStart(12, '0')}`;
 
 export const catalogCard = (over: Partial<CatalogCard> = {}): CatalogCard => ({
-  oracle_id: '20000000-0000-4000-8000-000000000001',
+  oracle_id: uuid(),
   name: 'Cyclonic Rift',
   mana_cost: '{1}{U}',
   mana_value: 2,
@@ -38,5 +20,40 @@ export const catalogCard = (over: Partial<CatalogCard> = {}): CatalogCard => ({
   released_at: '2012-10-05',
   image_url: 'https://cards.scryfall.io/normal/front/c/0/c0000000-0000-4000-8000-000000000002.jpg?1',
   scryfall_uri: 'https://scryfall.com/card/rtr/35/cyclonic-rift',
+  ...over,
+});
+
+export const poolEntry = (card: Partial<CatalogCard> = {}, over: Partial<Omit<PoolEntry, 'card'>> = {}): PoolEntry => ({
+  id: uuid(),
+  owned_qty: 1,
+  copies_de: 0,
+  name_de: null,
+  note: null,
+  card: catalogCard(card),
+  ...over,
+});
+
+export const deckCard = (card: CatalogCard, over: Partial<Omit<DeckCard, 'card'>> = {}): DeckCard => ({
+  id: uuid(),
+  section: 'main',
+  position: 1,
+  qty: 1,
+  note: '',
+  swap_out: null,
+  price_eur: null,
+  card,
+  ...over,
+});
+
+export const deck = (cards: DeckCard[], over: Partial<Omit<Deck, 'cards'>> = {}): Deck => ({
+  id: uuid(),
+  slug: 'testdeck',
+  name: 'Testdeck',
+  summary: 'A test.',
+  colors: ['U'],
+  main_size: 60,
+  sideboard_size: 15,
+  shipping_eur: 8,
+  cards,
   ...over,
 });

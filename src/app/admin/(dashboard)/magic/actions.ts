@@ -26,9 +26,8 @@ const addSchema = z
   .refine((v) => v.copies_de <= v.owned_qty, { message: 'More German copies than copies.' });
 
 /**
- * Adds a catalog card to the pool: onto its existing row, or as a new row
- * with a snapshot of the catalog fields. One SQL function does it in one
- * transaction, so a double submit cannot create two rows (see migration).
+ * Adds copies of a catalog card to the pool. One SQL upsert (one row per
+ * card), so a double submit only adds copies, never a second row.
  */
 export async function addToPool(formData: FormData) {
   const { supabase } = await requireAdmin();
@@ -56,10 +55,10 @@ export async function addToPool(formData: FormData) {
     p_name_de: input.name_de ?? null,
     p_note: input.note ?? null,
   });
-  // null: the card is not in the catalog, or RLS let nothing through.
+  // No id: RLS let nothing through. A card missing from the catalog fails the foreign key.
   if (error || !rowId) throw new Error('Could not add the card');
 
-  const { data: card } = await supabase.from('mtg_collection').select('name').eq('id', rowId).single();
+  const { data: card } = await supabase.from('mtg_catalog').select('name').eq('oracle_id', input.oracle_id).single();
 
   revalidatePath('/admin/magic', 'layout');
   const params = new URLSearchParams({ added: card?.name ?? 'The card' });
