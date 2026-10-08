@@ -27,11 +27,14 @@ describe('magic queries', () => {
     expect(String(calls[1][1])).toContain('card:mtg_catalog(');
   });
 
-  it('reports a failed read as error with empty data', async () => {
-    const { client } = fakeSupabase({ error: { message: 'boom' } });
+  it('reports a failed read as error with empty data, and logs the reason', async () => {
+    const log = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const { client } = fakeSupabase({ error: { code: 'PGRST205', message: 'table missing' } });
     await expect(loadPool(client)).resolves.toEqual({ data: [], error: true });
     await expect(loadDecks(client)).resolves.toEqual({ data: [], error: true });
     await expect(loadDeck(client, 'x')).resolves.toEqual({ data: null, error: true });
+    expect(log).toHaveBeenCalledWith('[admin] magic: load pool failed:', 'PGRST205', 'table missing');
+    log.mockRestore();
   });
 
   it('maps owned copies by card id', async () => {
