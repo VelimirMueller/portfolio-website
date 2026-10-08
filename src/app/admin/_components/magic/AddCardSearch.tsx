@@ -1,7 +1,8 @@
-import { CheckCircle2, ExternalLink, Search } from 'lucide-react';
+import { CheckCircle2, Search } from 'lucide-react';
 import { Badge, Card } from '../ui';
-import { CardImage, ManaCost } from './parts';
-import type { CatalogCard } from '../../_lib/magic/collection';
+import { CardImage } from './CardImage';
+import { CardHeader, CardRules } from './CardText';
+import type { CatalogCard } from '../../_lib/magic/types';
 
 /**
  * Search over the Scryfall catalog (every paper card) and one add form per
@@ -10,7 +11,7 @@ import type { CatalogCard } from '../../_lib/magic/collection';
 export function AddCardSearch({
   query,
   results,
-  truncated = false,
+  more = false,
   owned,
   added,
   formError,
@@ -21,7 +22,7 @@ export function AddCardSearch({
   query: string;
   results: CatalogCard[];
   /** More cards matched than are shown. */
-  truncated?: boolean;
+  more?: boolean;
   /** Copies already in the pool, per oracle_id. */
   owned: Map<string, number>;
   added?: string;
@@ -74,7 +75,7 @@ export function AddCardSearch({
       )}
       {error && (
         <p role="alert" className="text-sm text-red-400">
-          The search failed.
+          Could not load the search or your pool counts. Try again.
         </p>
       )}
 
@@ -82,7 +83,7 @@ export function AddCardSearch({
         <p className="text-xs text-gray-500" aria-live="polite">
           {!results.length
             ? `No card matches “${query}”.`
-            : truncated
+            : more
               ? `First ${results.length} matches for “${query}” — type more to narrow it down`
               : `${results.length} matches for “${query}”`}
         </p>
@@ -94,35 +95,15 @@ export function AddCardSearch({
           return (
             <Card key={card.oracle_id} flush className="overflow-hidden">
               <div className="p-4 flex gap-4">
-                <CardImage name={card.name} url={card.image_url} colors={card.colors} className="w-28" />
+                <CardImage card={card} className="w-28" />
                 <div className="min-w-0 flex-1 flex flex-col gap-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-bold text-white leading-tight">{card.name}</h3>
-                    <ManaCost cost={card.mana_cost} />
-                  </div>
-                  <p className="text-[11px] text-gray-400">
-                    {card.type_line}
-                    {card.power_toughness && ` · ${card.power_toughness}`}
-                    {card.loyalty && ` · Loyalty ${card.loyalty}`}
-                  </p>
-                  <details className="text-xs text-gray-400">
-                    <summary className="cursor-pointer text-blue-400 hover:text-blue-300 select-none">Text</summary>
-                    <p className="mt-2 leading-relaxed whitespace-pre-line">{card.oracle_text}</p>
-                  </details>
-                  <div className="flex flex-wrap items-center gap-2 text-[11px] text-gray-500">
-                    {card.set_name && <span>{card.set_name}</span>}
-                    {card.scryfall_uri && (
-                      <a
-                        href={card.scryfall_uri}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300"
-                      >
-                        Scryfall <ExternalLink size={11} aria-hidden="true" />
-                      </a>
-                    )}
-                    {have > 0 && <Badge color="green">in pool ×{have}</Badge>}
-                  </div>
+                  <CardHeader card={card} />
+                  <CardRules card={card} />
+                  {have > 0 && (
+                    <div>
+                      <Badge color="green">in pool ×{have}</Badge>
+                    </div>
+                  )}
 
                   <form action={action} className="mt-auto pt-2 flex flex-wrap items-end gap-2">
                     <input type="hidden" name="oracle_id" value={card.oracle_id} />

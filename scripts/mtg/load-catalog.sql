@@ -1,7 +1,7 @@
 -- Loads the CSV from build-catalog.mjs into public.mtg_catalog.
 --   psql "$SUPABASE_DB_URL" -v csv=/path/catalog.csv -f scripts/mtg/load-catalog.sql
--- Upserts every row and removes cards Scryfall no longer lists. Pool rows keep
--- their own snapshot, so nothing in mtg_collection changes.
+-- Upserts every row and removes cards Scryfall no longer lists. Pool and decks
+-- reference the catalog, so a refresh also updates their text and images.
 \set ON_ERROR_STOP on
 begin;
 
@@ -41,8 +41,24 @@ on conflict (oracle_id) do update set
   image_url = excluded.image_url,
   scryfall_uri = excluded.scryfall_uri;
 
-delete from public.mtg_catalog c
-where not exists (select 1 from mtg_catalog_import i where i.oracle_id = c.oracle_id);
+-- Cards Scryfall dropped go too, unless the pool or a deck still uses them
+-- (the foreign keys would refuse that delete anyway). On a new database the
+-- first load runs before the v2 migration creates mtg_deck_card; PL/pgSQL
+-- plans a branch only when it runs, so the deck check is skipped until then.
+do $prune$
+begin
+  if to_regclass('public.mtg_deck_card') is null then
+    delete from public.mtg_catalog c
+     where not exists (select 1 from mtg_catalog_import i where i.oracle_id = c.oracle_id)
+       and not exists (select 1 from public.mtg_collection p where p.oracle_id = c.oracle_id);
+  else
+    delete from public.mtg_catalog c
+     where not exists (select 1 from mtg_catalog_import i where i.oracle_id = c.oracle_id)
+       and not exists (select 1 from public.mtg_collection p where p.oracle_id = c.oracle_id)
+       and not exists (select 1 from public.mtg_deck_card d where d.oracle_id = c.oracle_id);
+  end if;
+end
+$prune$;
 
 select count(*) as catalog_cards from public.mtg_catalog;
 commit;

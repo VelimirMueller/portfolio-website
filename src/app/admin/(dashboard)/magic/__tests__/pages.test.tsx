@@ -1,88 +1,104 @@
 import { render, screen } from '@testing-library/react';
-import { catalogCard, poolCard } from '@/app/admin/_lib/magic/testFixtures';
+import { catalogCard, deck, deckCard, poolEntry } from '@/app/admin/_lib/magic/testFixtures';
 
-jest.mock('next/navigation', () => ({ usePathname: () => '/admin/magic', redirect: jest.fn() }));
+const notFound = jest.fn(() => {
+  throw new Error('NEXT_NOT_FOUND');
+});
+jest.mock('next/navigation', () => ({ usePathname: () => '/admin/magic', notFound: () => notFound() }));
 jest.mock('../actions', () => ({ addToPool: jest.fn(), changeQty: jest.fn() }));
+jest.mock('@/app/admin/_lib/auth', () => ({ requireAdmin: async () => ({ supabase: {}, user: { id: 'admin' } }) }));
 
-type Result = { data?: unknown; error?: unknown; count?: number | null };
-let results: Record<string, Result> = {};
-const ilikes: string[] = [];
-function builder(table: string) {
-  const q: Record<string, unknown> = {
-    select: () => q,
-    order: () => q,
-    limit: () => q,
-    in: () => q,
-    ilike: (_c: string, p: string) => (ilikes.push(p), q),
-    then: (res: (v: unknown) => unknown) => res({ data: [], error: null, count: null, ...results[table] }),
-  };
-  return q;
-}
-jest.mock('@/app/admin/_lib/auth', () => ({
-  requireAdmin: async () => ({ supabase: { from: (t: string) => builder(t) }, user: { id: 'admin' } }),
+const ok = <T,>(data: T) => ({ data, error: false });
+const failed = <T,>(data: T) => ({ data, error: true });
+const queries = {
+  loadPool: jest.fn(),
+  loadOwned: jest.fn(),
+  loadDecks: jest.fn(),
+  loadDeck: jest.fn(),
+  searchCatalog: jest.fn(),
+  catalogSize: jest.fn(),
+};
+jest.mock('@/app/admin/_lib/magic/queries', () => ({
+  loadPool: (...a: unknown[]) => queries.loadPool(...a),
+  loadOwned: (...a: unknown[]) => queries.loadOwned(...a),
+  loadDecks: (...a: unknown[]) => queries.loadDecks(...a),
+  loadDeck: (...a: unknown[]) => queries.loadDeck(...a),
+  searchCatalog: (...a: unknown[]) => queries.searchCatalog(...a),
+  catalogSize: (...a: unknown[]) => queries.catalogSize(...a),
 }));
 
 import PoolPage from '../page';
-import DeckPage from '../deck/page';
+import DecksPage from '../decks/page';
+import DeckPage from '../decks/[slug]/page';
 import AddPage from '../add/page';
 
+const opt = catalogCard({ name: 'Opt' });
+const stapelbruch = deck([deckCard(opt, { qty: 4 })], { slug: 'stapelbruch', name: 'Stapelbruch' });
+
 beforeEach(() => {
-  results = {};
-  ilikes.length = 0;
+  jest.clearAllMocks();
+  queries.loadOwned.mockResolvedValue(ok(new Map([[opt.oracle_id, 1]])));
+  queries.searchCatalog.mockResolvedValue(ok({ cards: [], more: false }));
+  queries.catalogSize.mockResolvedValue(32823);
 });
 
 describe('magic pages', () => {
   it('pool page lists the pool', async () => {
-    results = { mtg_collection: { data: [poolCard({ name: 'Countersculpt', owned_qty: 4 })] } };
+    queries.loadPool.mockResolvedValue(ok([poolEntry({ name: 'Countersculpt' }, { owned_qty: 4 })]));
     render(await PoolPage());
     expect(screen.getByRole('heading', { name: 'Countersculpt' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Add card/ })).toHaveAttribute('href', '/admin/magic/add');
   });
 
   it('pool page reports a load error', async () => {
-    results = { mtg_collection: { error: { message: 'boom' } } };
+    queries.loadPool.mockResolvedValue(failed([]));
     render(await PoolPage());
     expect(screen.getByRole('alert')).toHaveTextContent('Could not load the pool.');
   });
 
-  it('deck page shows ownership from the pool', async () => {
-    results = {
-      mtg_collection: { data: [poolCard({ name: 'Countersculpt', owned_qty: 4 }), poolCard({ name: 'Island', owned_qty: 11 })] },
-      mtg_catalog: { data: [catalogCard({ name: 'Opt', mana_cost: '{U}' })] },
-    };
-    render(await DeckPage());
+  it('decks page lists decks with ownership', async () => {
+    queries.loadDecks.mockResolvedValue(ok([stapelbruch]));
+    render(await DecksPage());
+    expect(screen.getByRole('link', { name: /Stapelbruch/ })).toBeInTheDocument();
+    expect(screen.getByText('owned 1/4 · buy 3')).toBeInTheDocument();
+  });
+
+  it('decks page reports a load error', async () => {
+    queries.loadDecks.mockResolvedValue(ok([]));
+    queries.loadOwned.mockResolvedValue(failed(new Map()));
+    render(await DecksPage());
+    expect(screen.getByRole('alert')).toHaveTextContent('Could not load the decks.');
+  });
+
+  it('deck page shows one deck by slug', async () => {
+    queries.loadDeck.mockResolvedValue(ok(stapelbruch));
+    render(await DeckPage({ params: { slug: 'stapelbruch' } }));
+    expect(queries.loadDeck).toHaveBeenCalledWith({}, 'stapelbruch');
     expect(screen.getByRole('heading', { name: 'Stapelbruch' })).toBeInTheDocument();
-    expect(screen.getAllByText('owned 4/4').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('11/24 · buy 13').length).toBeGreaterThan(0);
-    expect(screen.getByText('Main deck has 61 cards, the plan says 60.')).toBeInTheDocument();
   });
 
-  it('deck page reports a failed catalog query instead of missing data', async () => {
-    results = { mtg_catalog: { error: { message: 'boom' } } };
-    render(await DeckPage());
-    expect(screen.getByRole('alert')).toHaveTextContent('Could not load the card catalog.');
+  it('deck page answers 404 for an unknown slug and an alert for a failed read', async () => {
+    queries.loadDeck.mockResolvedValue(ok(null));
+    await expect(DeckPage({ params: { slug: 'nope' } })).rejects.toThrow('NEXT_NOT_FOUND');
+    queries.loadDeck.mockResolvedValue(failed(null));
+    render(await DeckPage({ params: { slug: 'x' } }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Could not load the deck.');
   });
 
-  it('add page searches by prefix and substring, best match first', async () => {
-    results = {
-      mtg_catalog: { data: [catalogCard({ oracle_id: '1', name: 'Adopt' }), catalogCard({ oracle_id: '2', name: 'Opt' })], count: 32823 },
-    };
-    render(await AddPage({ searchParams: { q: ' opt ' } }));
-    expect(ilikes).toEqual(['opt%', '%opt%']);
-    expect(screen.getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['Opt', 'Adopt']);
-    expect(screen.getByText('2 matches for “opt”')).toBeInTheDocument();
+  it('add page searches and passes results, pool counts and messages on', async () => {
+    const rift = catalogCard({ name: 'Cyclonic Rift' });
+    queries.searchCatalog.mockResolvedValue(ok({ cards: [rift], more: true }));
+    queries.loadOwned.mockResolvedValue(ok(new Map([[rift.oracle_id, 2]])));
+    render(await AddPage({ searchParams: { q: ' rift ', added: 'Opt', error: 'Bad input.' } }));
+    expect(queries.searchCatalog).toHaveBeenCalledWith({}, 'rift');
+    expect(screen.getByText(/First 1 matches for “rift”/)).toBeInTheDocument();
+    expect(screen.getByText('in pool ×2')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Opt is in your pool.');
+    expect(screen.getByText('Not added: Bad input.')).toBeInTheDocument();
   });
 
-  it('add page says when it shows only the first matches', async () => {
-    const many = Array.from({ length: 30 }, (_, i) => catalogCard({ oracle_id: String(i), name: `Rift ${i}` }));
-    results = { mtg_catalog: { data: many, count: 30 } };
+  it('add page reports a failed pool read instead of hiding the pool counts', async () => {
+    queries.loadOwned.mockResolvedValue(failed(new Map()));
     render(await AddPage({ searchParams: { q: 'rift' } }));
-    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(24);
-    expect(screen.getByText(/First 24 matches for “rift”/)).toBeInTheDocument();
-  });
-
-  it('add page does not search for one letter', async () => {
-    render(await AddPage({ searchParams: { q: 'o' } }));
-    expect(ilikes).toEqual([]);
+    expect(screen.getByText(/Could not load the search or your pool counts/)).toBeInTheDocument();
   });
 });

@@ -1,59 +1,63 @@
 import { render, screen, within } from '@testing-library/react';
 import { DeckView } from '../DeckView';
-import { deckOwnership, type DeckPlan } from '../../../_lib/magic/deck';
+import { deckOwnership } from '../../../_lib/magic/deck';
+import { catalogCard, deck, deckCard } from '../../../_lib/magic/testFixtures';
 
-const plan: DeckPlan = {
-  name: 'Testdeck',
-  summary: 'A test.',
-  colors: ['U'],
-  mainSize: 60,
-  sideboardSize: 15,
-  main: [
-    { qty: 4, name: 'Opt', role: 'Dig.' },
-    { qty: 3, name: 'Unsummon', role: 'Bounce.' },
-    { qty: 1, name: 'Icy Reception', label: 'Eisiger Empfang', role: 'Counter.' },
-  ],
-  sideboard: [{ qty: 1, name: 'Multiply by Zero', against: 'Big creature', swapOut: '1 Opt' }],
-  buy: [{ qty: 4, name: 'Opt', role: 'Dig', eur: 1.5 }],
-  shippingEur: 8,
-  upgrades: [{ stage: 1, name: 'Mana Drain', replaces: '1 Opt', why: 'Better.' }],
-};
+const opt = catalogCard({ name: 'Opt' });
+const unsummon = catalogCard({ name: 'Unsummon' });
+const icy = catalogCard({ name: 'Icy Reception' });
+const lastGasp = catalogCard({ name: 'Last Gasp', colors: ['B'] });
+const drain = catalogCard({ name: 'Mana Drain' });
 
-const info = (name: string, colors: ('U' | 'B')[] = ['U']) =>
-  [name, { name, colors, mana_cost: '{U}', type_line: 'Instant', image_url: null }] as const;
-const cards = new Map([info('Opt'), info('Unsummon'), info('Icy Reception'), info('Multiply by Zero', ['B'])]);
+const d = deck([
+  deckCard(opt, { position: 1, qty: 4, note: 'Dig.', price_eur: 0.38 }),
+  deckCard(unsummon, { position: 2, qty: 3, note: 'Bounce.', price_eur: 0.25 }),
+  deckCard(icy, { position: 3, qty: 1, note: 'Counter.' }),
+  deckCard(lastGasp, { section: 'sideboard', position: 1, note: 'Big creature', swap_out: '1 Opt', price_eur: 0.1 }),
+  deckCard(drain, { section: 'upgrade', position: 1, note: 'Better.', swap_out: '1 Countersculpt' }),
+]);
+const owned = new Map([
+  [unsummon.oracle_id, 1],
+  [icy.oracle_id, 1],
+]);
+const view = () => render(<DeckView deck={d} analysis={deckOwnership(d.cards, owned)} />);
+const row = (name: string) => screen.getAllByText(name)[0].closest('tr')!;
 
 describe('DeckView', () => {
-  const pool = [
-    { name: 'Unsummon', owned_qty: 1 },
-    { name: 'Icy Reception', owned_qty: 1 },
-  ];
-
-  it('shows per card what you own and what to buy', () => {
-    render(<DeckView plan={plan} ownership={deckOwnership(plan, pool)} cards={cards} />);
-    const row = (name: string) => screen.getAllByText(name)[0].closest('tr')!;
-    expect(within(row('Opt')).getAllByText('buy 4')).toHaveLength(2);
+  it('marks per card what you own and what to buy', () => {
+    view();
+    expect(within(row('Opt')).getAllByText('buy 4')).toHaveLength(2); // table cell + phone layout
     expect(within(row('Unsummon')).getAllByText('1/3 · buy 2')).toHaveLength(2);
     expect(within(row('Icy Reception')).getAllByText('owned 1/1')).toHaveLength(2);
-    expect(screen.getByText('Eisiger Empfang ·')).toBeInTheDocument();
+  });
+
+  it('lists what is still to buy, priced, with shipping', () => {
+    view();
     const toBuy = screen.getByRole('heading', { name: 'Still to buy' }).closest('section')!;
-    expect(within(toBuy).getAllByRole('listitem').map((li) => li.textContent)).toEqual([
-      'Opt×4',
-      'Unsummon×2',
-      'Multiply by Zero×1',
+    // toLocaleString puts a no-break space before the euro sign.
+    expect(within(toBuy).getAllByRole('listitem').map((li) => li.textContent?.replace(/\u00a0/g, ' '))).toEqual([
+      'Opt×41,52 €',
+      'Unsummon×20,50 €',
+      'Last Gasp×10,10 €',
     ]);
+    expect(within(toBuy).getByText(/About 10,12 € incl. 8,00 € shipping/)).toBeInTheDocument();
   });
 
-  it('warns about deck size, off-color cards and missing catalog data', () => {
-    render(<DeckView plan={plan} ownership={deckOwnership(plan, pool)} cards={new Map([...cards].filter(([n]) => n !== 'Opt'))} />);
+  it('warns when the plan is off', () => {
+    view();
     expect(screen.getByText('Main deck has 8 cards, the plan says 60.')).toBeInTheDocument();
-    expect(screen.getByText('Sideboard has 1 cards, the plan says 15.')).toBeInTheDocument();
-    expect(screen.getByText(/Not U: Multiply by Zero/)).toBeInTheDocument();
-    expect(screen.getByText('No catalog data yet for: Opt.')).toBeInTheDocument();
+    expect(screen.getByText('Outside the deck colors: Last Gasp.')).toBeInTheDocument();
   });
 
-  it('adds the shipping buffer to the planned budget', () => {
-    render(<DeckView plan={plan} ownership={deckOwnership(plan, pool)} cards={cards} />);
-    expect(screen.getByText(/about 9,50/)).toBeInTheDocument();
+  it('shows the sideboard swap and the upgrade path', () => {
+    view();
+    expect(screen.getAllByText('Big creature · out: 1 Opt')[0]).toBeInTheDocument();
+    expect(within(row('Mana Drain')).getByText('1 Countersculpt')).toBeInTheDocument();
+  });
+
+  it('says so when you own the whole deck', () => {
+    const all = new Map(d.cards.map((c) => [c.card.oracle_id, 9]));
+    render(<DeckView deck={d} analysis={deckOwnership(d.cards, all)} />);
+    expect(screen.getByText('You own every card of the deck.')).toBeInTheDocument();
   });
 });
