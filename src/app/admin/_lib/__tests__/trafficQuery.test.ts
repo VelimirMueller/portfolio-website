@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { MAX_EVENTS, loadTrafficEvents } from '../trafficQuery';
+import { MAX_EVENTS, loadLastEventAt, loadTrafficEvents } from '../trafficQuery';
 
 function client(pages: (number | 'error')[]) {
   const calls: [number, number][] = [];
@@ -42,5 +42,17 @@ describe('loadTrafficEvents', () => {
     const res = await loadTrafficEvents(supabase, new Date());
     expect(res).toMatchObject({ error: true, capped: false });
     expect(res.events).toHaveLength(1000);
+  });
+});
+
+describe('loadLastEventAt', () => {
+  const client = (row: unknown) => {
+    const query = { select: () => query, order: () => query, limit: () => query, maybeSingle: async () => ({ data: row, error: null }) };
+    return { from: () => query } as unknown as SupabaseClient;
+  };
+
+  it('returns the newest event time, or null when nothing was ever stored', async () => {
+    await expect(loadLastEventAt(client({ created_at: '2026-10-02T19:37:25Z' }))).resolves.toBe('2026-10-02T19:37:25Z');
+    await expect(loadLastEventAt(client(null))).resolves.toBeNull();
   });
 });

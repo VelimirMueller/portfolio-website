@@ -35,12 +35,21 @@ const EVENTS = [
   ev('2026-10-02T11:02:00Z', { visitor: 'v2', path: '/de', prev_path: '/de/projects', country: 'US', device: 'mobile' }),
 ];
 
-function setup(query: Record<string, string> = {}, events = EVENTS) {
+function setup(query: Record<string, string> = {}, events = EVENTS, lastEventAt: string | null = null) {
   search = new URLSearchParams(query).toString();
   window.history.replaceState(null, '', `/admin/kpis${search ? `?${search}` : ''}`);
   const params = parseTrafficParams(query);
   const data = computeTraffic(events, params, NOW);
-  return render(<TrafficDashboard data={data} params={params} loadError={false} capped={false} generatedAt={NOW.toISOString()} />);
+  return render(
+    <TrafficDashboard
+      data={data}
+      params={params}
+      loadError={false}
+      capped={false}
+      generatedAt={NOW.toISOString()}
+      lastEventAt={lastEventAt}
+    />
+  );
 }
 
 /** The URL the dashboard navigated to last, as a URLSearchParams. */
@@ -159,6 +168,13 @@ describe('TrafficDashboard', () => {
     setup({}, []);
     expect(screen.getByRole('heading', { name: 'No events collected yet' })).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Flow explorer' })).not.toBeInTheDocument();
+  });
+
+  it('says "no visitors in this period" instead of setup steps once events exist', () => {
+    setup({ range: '24h' }, [], '2026-10-02T19:37:25Z');
+    expect(screen.getByRole('heading', { name: 'No visitors in this period' })).toBeInTheDocument();
+    expect(screen.getByText(/02\.10\.2026, 21:37/)).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'No events collected yet' })).not.toBeInTheDocument();
   });
 
   it('reads chart values from the keyboard', () => {

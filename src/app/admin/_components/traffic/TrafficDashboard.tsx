@@ -61,12 +61,15 @@ export function TrafficDashboard({
   loadError,
   capped,
   generatedAt,
+  lastEventAt = null,
 }: {
   data: TrafficData;
   params: TrafficParams;
   loadError: boolean;
   capped: boolean;
   generatedAt: string;
+  /** Newest stored event ever; null means collection never stored anything. */
+  lastEventAt?: string | null;
 }) {
   const { set, refresh, pending } = useTrafficNav();
   const { filters, metric } = params;
@@ -220,7 +223,20 @@ export function TrafficDashboard({
       )}
 
       <div className={`relative space-y-4 transition-opacity duration-200 ${pending ? 'opacity-60' : 'opacity-100'}`} aria-busy={pending}>
-        {empty ? (
+        {empty && lastEventAt ? (
+          <Panel id="traffic-empty" kicker={`Last ${RANGES[filters.range].label}`} title="No visitors in this period">
+            <div className="space-y-2 text-sm text-gray-400">
+              <p>
+                Collection works; nobody was counted in this period. The last counted visit was{' '}
+                <span className="text-white">
+                  {new Date(lastEventAt).toLocaleString('de-DE', { timeZone: 'Europe/Berlin', dateStyle: 'medium', timeStyle: 'short' })}
+                </span>
+                .
+              </p>
+              <p>Not counted on purpose: your own visits while signed in, bots and headless browsers, and visitors with Do Not Track or Global Privacy Control.</p>
+            </div>
+          </Panel>
+        ) : empty ? (
           <Panel id="traffic-empty" kicker="Setup" title="No events collected yet">
             <ol className="list-decimal space-y-1.5 pl-5 text-sm text-gray-400">
               <li>
