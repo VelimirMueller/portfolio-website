@@ -231,6 +231,7 @@ A private area at `/admin`, introduced in **v2.0.0** (traffic KPIs since **v2.1.
 | Section | What it does |
 | :--- | :--- |
 | **Inbox** | Mail-client split view for contact-form messages: status tabs (unread / read / archived / spam / all), search, hover quick actions, multi-select bulk bar, auto-advance, keyboard shortcuts (`j`/`k` · `e` · `s` · `u` · `r` · `x` · `/` · `Esc`) |
+| **Magic** | Velimir's Magic: The Gathering cards. **Pool**: every owned card with Scryfall image, exact text, copies (± in place), German copies, notes; search plus color and type filters. **Deck: Stapelbruch**: the planned mono-blue deck — main deck, sideboard, shopping plan and upgrade path, each card marked owned / buy N against the pool, plus warnings when the plan is off (card count, off-color cards). **Add card**: search the catalog of every paper card ever printed (Scryfall) and add copies to the pool |
 | **KPIs** | One section per data source. **Traffic** (v2.1.0) first: live visitors, visitors / page views / clicks / bounce rate / session length with trends, time series with previous-period comparison, weekday × hour heatmap, top pages, sources and audience (click any row to filter), a flow explorer (came from → page → went to, walkable page by page) and a click leaderboard. Range, filters, metric and flow focus live in the URL. Keyboard: `1`–`4` range · `v`/`p`/`c` metric · `r` refresh · `⌫` drop newest filter · `⌘K` command palette. Then **Messages** — 30-day volume and trend, unread, spam rate, messages per day, status breakdown, busiest weekdays (Europe/Berlin) |
 
 **Access.** Supabase Auth magic link for a single admin user (sign-ups off, `shouldCreateUser: false`). Three layers check the admin: middleware, `requireAdmin()` in every page and server action, and Postgres RLS via `public.is_admin()`. The admin's user UUID lives in `src/config/admin.ts` **and** in the migration — change both together. No service-role key is used.
@@ -246,6 +247,20 @@ Setup after applying `20261002120000_analytics_events.sql`:
 1. Generate a secret: `openssl rand -hex 32`.
 2. In the Supabase SQL editor: `insert into analytics_private.ingest_secret (secret_sha256) values (encode(extensions.digest('<secret>', 'sha256'), 'hex'));`
 3. In Vercel: `ANALYTICS_INGEST_SECRET=<secret>` (Production), then redeploy. Without it `/api/collect` answers 204 and stores nothing.
+
+**Magic.** Two tables, admin-only by RLS: `mtg_catalog` (every paper card from Scryfall's *Oracle Cards* bulk file, ~33k rows, no images — rows keep the CDN URL) and `mtg_collection` (the pool; card fields are a snapshot taken when a card is added, so the pool never depends on the catalog). Card images are same-origin: `/admin/magic/img/<size>/<face>/…` serves them from `mtg_image_cache` and fetches from Scryfall's CDN only on the first view of each image (then the browser keeps it a year). No third-party image host in the CSP. The deck plan is code: `src/app/admin/_lib/magic/deck.ts`.
+
+Setup:
+
+1. Apply `20261008120000_magic.sql`, `20261008120100_magic_seed.sql`, then `20261008130000_magic_image_cache.sql` (the pool as of 2026-10-08, 140 entries; it does nothing when the pool already has rows).
+2. Load the catalog (also the refresh, any time — Scryfall updates daily):
+   ```bash
+   node scripts/mtg/build-catalog.mjs /tmp/mtg-catalog.csv
+   psql "$SUPABASE_DB_URL" -v csv=/tmp/mtg-catalog.csv -f scripts/mtg/load-catalog.sql
+   ```
+   `SUPABASE_DB_URL` is the session-pooler connection string from the Supabase dashboard (*Connect*). Without the catalog, the pool and deck still work; **Add card** says the catalog is empty.
+
+`scripts/mtg/build-seed.mjs` regenerates the seed from `scripts/mtg/data/my_collection.json` (owner's list, matched to Scryfall by English or German name).
 
 **No cookies on a visit.** `next-intl` runs with `localeCookie: false`, and `e2e/headers.spec.ts` asserts that public pages set no cookie — the reason the site needs no consent banner. hCaptcha loads only when the contact form is sent.
 

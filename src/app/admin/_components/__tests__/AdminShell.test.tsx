@@ -27,6 +27,14 @@ describe('AdminShell', () => {
     pathname = '/admin';
   });
 
+  it('highlights Magic on the collection page', () => {
+    pathname = '/admin/magic';
+    render(<AdminShell unread={0} email="">content</AdminShell>);
+    expect(screen.getByRole('link', { name: 'Magic' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: 'KPIs' })).not.toHaveAttribute('aria-current');
+    pathname = '/admin';
+  });
+
   it('hides the count when nothing is unread', () => {
     render(<AdminShell unread={0} email="">content</AdminShell>);
     expect(screen.getByRole('link', { name: /Inbox/ })).toHaveTextContent(/^Inbox$/);
