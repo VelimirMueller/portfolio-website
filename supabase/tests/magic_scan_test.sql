@@ -122,7 +122,13 @@ set local role authenticated;
 select pg_temp.check((select count(*) = 0 from public.mtg_printing), 'RLS: other user sees no printings');
 select pg_temp.check((select count(*) = 0 from public.mtg_card_name), 'RLS: other user sees no names');
 select pg_temp.check((select count(*) = 0 from public.mtg_deck_ownership), 'RLS: other user sees no ownership');
-select pg_temp.check((select status = 'not_found' from jsonb_to_recordset(public.mtg_match_scan('[{"name": "Testing Mercy"}]'::jsonb)) as x(status text)), 'RLS: matching finds nothing for another user');
+-- mtg_match_scan is security definer (20261009190000) and refuses other users itself.
+do $$ begin
+  perform public.mtg_match_scan('[{"name": "Testing Mercy"}]'::jsonb);
+  raise exception 'FAILED: another user could match';
+exception when insufficient_privilege then null;
+end $$;
+select pg_temp.check(true, 'matching refuses another user');
 reset role;
 set local role anon;
 do $$ begin
