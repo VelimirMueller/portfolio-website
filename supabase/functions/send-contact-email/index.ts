@@ -5,9 +5,29 @@ const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
 
 // Sender and recipient in one place. The domain is verified in Resend;
 // onboarding@resend.dev (Resend's test sender) must never come back.
-const FROM = Deno.env.get('EMAIL_FROM') ?? 'Velimir Müller <noreply@velimir-mueller.de>'
+const FROM = Deno.env.get('EMAIL_FROM') ?? 'Veli <noreply@velimir-mueller.de>'
 const TO = Deno.env.get('CONTACT_TO') ?? 'velimir.mueller@googlemail.com'
 const SITE = 'https://www.velimir-mueller.de'
+
+// Only the database trigger may call this function. It sends this shared secret
+// (from Vault) in x-contact-hook-secret; see migration 20261009170000_contact_email_hook.sql.
+const HOOK_SECRET = Deno.env.get('CONTACT_HOOK_SECRET') ?? ''
+
+/**
+ * Constant-time compare done by the runtime: HMAC of the expected secret under a
+ * random per-instance key, then crypto.subtle.verify() checks the given value
+ * against it. No hand-written loop, nothing that depends on the secret's bytes.
+ */
+const VERIFY_KEY = crypto.subtle.generateKey({ name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify'])
+const encode = (v: string) => new TextEncoder().encode(v)
+async function sameSecret(given: string, expected: string): Promise<boolean> {
+  const key = await VERIFY_KEY
+  const mac = await crypto.subtle.sign('HMAC', key, encode(expected))
+  return crypto.subtle.verify('HMAC', key, mac, encode(given))
+}
+
+const json = (body: unknown, status: number) =>
+  new Response(JSON.stringify(body), { headers: { 'Content-Type': 'application/json' }, status })
 
 // Mirrored verbatim from src/utils/escapeHtml.ts (tested there via Jest) —
 // Deno functions cannot import from src/. Keep both copies in sync.
@@ -116,6 +136,15 @@ export function renderContactEmail(p: { name: string; email: string; message: st
 }
 
 serve(async (req) => {
+  // Fail closed: no secret configured means nobody gets through.
+  if (!HOOK_SECRET) {
+    console.error('send-contact-email: CONTACT_HOOK_SECRET is not set')
+    return json({ error: 'Not configured' }, 500)
+  }
+  if (req.method !== 'POST' || !(await sameSecret(req.headers.get('x-contact-hook-secret') ?? '', HOOK_SECRET))) {
+    return json({ error: 'Unauthorized' }, 401)
+  }
+
   try {
     const { record } = await req.json()
 
@@ -137,15 +166,9 @@ serve(async (req) => {
       html: renderContactEmail({ name, email, message, firstName, received }),
     })
 
-    return new Response(JSON.stringify(data), {
-      headers: { 'Content-Type': 'application/json' },
-      status: 200,
-    })
+    return json(data, 200)
   } catch (error) {
     console.error('send-contact-email failed:', error)
-    return new Response(JSON.stringify({ error: 'Failed to send email' }), {
-      headers: { 'Content-Type': 'application/json' },
-      status: 500,
-    })
+    return json({ error: 'Failed to send email' }, 500)
   }
 })
