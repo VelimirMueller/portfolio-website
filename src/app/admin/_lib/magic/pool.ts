@@ -13,13 +13,22 @@ export function matchesColor(colors: ManaColor[], filter: ColorFilter): boolean 
   return colors.includes(filter);
 }
 
-/** Case-insensitive search over the English and German name, type, text and note. */
+/** Lowercase without accents (ß -> ss), so "starke" finds "Stärke" and "ile" finds "Île". */
+function fold(text: string): string {
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/ß/g, 'ss');
+}
+
+/**
+ * Case- and accent-insensitive search over the English name, the printed names
+ * in every language (German, French …), the entry's German name, type, text and note.
+ */
 export function matchesQuery(entry: PoolEntry, query: string): boolean {
-  const q = query.trim().toLowerCase();
+  const q = fold(query.trim());
   if (!q) return true;
   const { card } = entry;
-  return [card.name, entry.name_de, card.type_line, card.oracle_text, entry.note].some((field) =>
-    field?.toLowerCase().includes(q)
+  const printed = (card.names ?? []).map((n) => n.printed_name);
+  return [card.name, entry.name_de, ...printed, card.type_line, card.oracle_text, entry.note].some(
+    (field) => field != null && fold(field).includes(q)
   );
 }
 

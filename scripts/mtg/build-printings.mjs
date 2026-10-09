@@ -9,10 +9,10 @@
 import { createWriteStream } from 'node:fs';
 import { USER_AGENT, csvField, isPaperCard, readBulk } from './scryfall.mjs';
 
-/** Languages the app reads: English printings for set + number, German for names too. */
-const LANGS = new Set(['en', 'de']);
+/** Languages Velimir owns cards in: printings (set + number) for all three, printed names for German and French. */
+const LANGS = new Set(['en', 'de', 'fr']);
 /** Printed names are kept for these languages (English names come from the catalog). */
-const NAME_LANGS = new Set(['de']);
+const NAME_LANGS = new Set(['de', 'fr']);
 
 const [printingsOut, namesOut, local] = process.argv.slice(2);
 if (!printingsOut || !namesOut) {

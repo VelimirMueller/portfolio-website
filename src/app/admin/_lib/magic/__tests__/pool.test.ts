@@ -24,6 +24,25 @@ describe('pool helpers', () => {
     expect(matchesQuery(e, 'krenko')).toBe(false);
   });
 
+  it('searches the printed names in every language, ignoring accents', () => {
+    const e = poolEntry({
+      name: "Bull's Strength",
+      names: [
+        { lang: 'de', printed_name: 'Stärke des Stiers' },
+        { lang: 'fr', printed_name: 'Force du taureau' },
+      ],
+    });
+    expect(matchesQuery(e, 'Stärke des')).toBe(true);
+    expect(matchesQuery(e, 'starke des stiers')).toBe(true);
+    expect(matchesQuery(e, 'FORCE DU')).toBe(true);
+    expect(matchesQuery(e, 'insel')).toBe(false);
+    const island = poolEntry({ name: 'Island', names: [{ lang: 'fr', printed_name: 'Île' }] });
+    expect(matchesQuery(island, 'ile')).toBe(true);
+    expect(matchesQuery(island, 'Île')).toBe(true);
+    expect(matchesQuery(poolEntry({}, { name_de: 'Großer Zorn' }), 'grosser')).toBe(true);
+    expect(matchesQuery(poolEntry({ names: undefined }), 'rift')).toBe(true);
+  });
+
   it('sorts spells by mana value and name, lands last', () => {
     const entries = [
       poolEntry({ name: 'Island', type_line: 'Basic Land — Island', mana_value: 0 }),

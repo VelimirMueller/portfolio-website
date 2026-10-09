@@ -20,7 +20,8 @@ function failed(what: string, error: DbError): boolean {
 
 export const CATALOG_COLUMNS =
   'oracle_id, name, mana_cost, mana_value, type_line, oracle_text, colors, power_toughness, loyalty, rarity, set_code, set_name, released_at, image_url, scryfall_uri';
-const POOL_SELECT = `id, owned_qty, copies_de, name_de, note, card:mtg_catalog(${CATALOG_COLUMNS})`;
+// The pool also embeds the printed names (mtg_card_name, FK oracle_id) so its search works in DE and FR.
+const POOL_SELECT = `id, owned_qty, copies_de, name_de, note, card:mtg_catalog(${CATALOG_COLUMNS}, names:mtg_card_name(lang, printed_name))`;
 const WISH_SELECT = `id, qty, note, created_at, card:mtg_catalog(${CATALOG_COLUMNS})`;
 const DECK_CARD_SELECT = `id, section, position, qty, note, swap_out, price_eur, card:mtg_catalog(${CATALOG_COLUMNS})`;
 

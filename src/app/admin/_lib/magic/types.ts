@@ -20,7 +20,12 @@ export type CatalogCard = {
   released_at: string | null;
   image_url: string | null;
   scryfall_uri: string | null;
+  /** Printed names in other languages (public.mtg_card_name); only where a select embeds them. */
+  names?: CardName[];
 };
+
+/** public.mtg_card_name — the name printed on a non-English card (lang 'de', 'fr', …). */
+export type CardName = { lang: string; printed_name: string };
 
 /** public.mtg_collection — copies Velimir owns of one card. */
 export type PoolEntry = {
