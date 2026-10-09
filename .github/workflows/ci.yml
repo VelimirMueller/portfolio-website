@@ -43,6 +43,7 @@ jobs:
   storybook-and-visual-regression:
     name: Storybook & Visual Regression
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -51,8 +52,22 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build-storybook
+      # Browsers cached per Playwright version. The system packages (apt, inside
+      # --with-deps) sometimes hang for hours on the runner (twice on 2026-10-09):
+      # each try gets 8 minutes, up to 3 tries.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium webkit
+        timeout-minutes: 26
+        run: |
+          for try in 1 2 3; do
+            timeout 480 npx playwright install --with-deps chromium webkit && exit 0
+            echo "::warning::Playwright install try $try failed or hung; retrying"
+          done
+          exit 1
       - name: Run visual regression tests
         run: npm run test:visual
       - name: Upload visual diff results
@@ -68,6 +83,7 @@ jobs:
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     needs: unit-tests-and-build
     steps:
       - uses: actions/checkout@v4
@@ -76,8 +92,22 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # Browsers cached per Playwright version. The system packages (apt, inside
+      # --with-deps) sometimes hang for hours on the runner (twice on 2026-10-09):
+      # each try gets 8 minutes, up to 3 tries.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium webkit
+        timeout-minutes: 26
+        run: |
+          for try in 1 2 3; do
+            timeout 480 npx playwright install --with-deps chromium webkit && exit 0
+            echo "::warning::Playwright install try $try failed or hung; retrying"
+          done
+          exit 1
       - name: Run E2E tests
         run: npm run test:e2e
       - name: Upload test results
