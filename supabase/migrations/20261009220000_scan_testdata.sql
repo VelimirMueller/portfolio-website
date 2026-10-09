@@ -136,9 +136,9 @@ as $$
 declare
   n integer;
 begin
-  -- Two batches at once cannot share or lose a case: the second UPDATE waits for
-  -- the first one's row locks, re-checks batch_id is null, finds nothing and
-  -- raises below. Cases added meanwhile simply go with the next batch.
+  -- One collection at a time (held until commit), so two batches can never claim
+  -- the same case. Cases added meanwhile simply go with the next batch.
+  perform pg_advisory_xact_lock(hashtext('mtg_collect_test_batch'));
   update public.mtg_test_case
      set batch_id = new.id
    where batch_id is null;
