@@ -16,9 +16,10 @@ const d = deck([
   deckCard(lastGasp, { section: 'sideboard', position: 1, note: 'Big creature', swap_out: '1 Opt', price_eur: 0.1 }),
   deckCard(drain, { section: 'upgrade', position: 1, note: 'Better.', swap_out: '1 Countersculpt' }),
 ]);
+// Owned copies per deck line, as the view mtg_deck_ownership returns them.
 const owned = new Map([
-  [unsummon.oracle_id, 1],
-  [icy.oracle_id, 1],
+  [d.cards[1].id, 1], // Unsummon: 1 of 3
+  [d.cards[2].id, 1], // Icy Reception: 1 of 1
 ]);
 const view = () => render(<DeckView deck={d} analysis={deckOwnership(d.cards, owned)} />);
 const row = (name: string) => screen.getAllByText(name)[0].closest('tr')!;
@@ -56,7 +57,7 @@ describe('DeckView', () => {
   });
 
   it('says so when you own the whole deck', () => {
-    const all = new Map(d.cards.map((c) => [c.card.oracle_id, 9]));
+    const all = new Map(d.cards.map((c) => [c.id, c.qty]));
     render(<DeckView deck={d} analysis={deckOwnership(d.cards, all)} />);
     expect(screen.getByText('You own every card of the deck.')).toBeInTheDocument();
   });

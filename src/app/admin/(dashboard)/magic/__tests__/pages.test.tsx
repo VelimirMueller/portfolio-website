@@ -15,6 +15,7 @@ const queries = {
   loadOwned: jest.fn(),
   loadDecks: jest.fn(),
   loadDeck: jest.fn(),
+  loadDeckOwnership: jest.fn(),
   searchCatalog: jest.fn(),
   catalogSize: jest.fn(),
 };
@@ -23,6 +24,7 @@ jest.mock('@/app/admin/_lib/magic/queries', () => ({
   loadOwned: (...a: unknown[]) => queries.loadOwned(...a),
   loadDecks: (...a: unknown[]) => queries.loadDecks(...a),
   loadDeck: (...a: unknown[]) => queries.loadDeck(...a),
+  loadDeckOwnership: (...a: unknown[]) => queries.loadDeckOwnership(...a),
   searchCatalog: (...a: unknown[]) => queries.searchCatalog(...a),
   catalogSize: (...a: unknown[]) => queries.catalogSize(...a),
 }));
@@ -38,6 +40,7 @@ const stapelbruch = deck([deckCard(opt, { qty: 4 })], { slug: 'stapelbruch', nam
 beforeEach(() => {
   jest.clearAllMocks();
   queries.loadOwned.mockResolvedValue(ok(new Map([[opt.oracle_id, 1]])));
+  queries.loadDeckOwnership.mockResolvedValue(ok(new Map([[stapelbruch.cards[0].id, 1]])));
   queries.searchCatalog.mockResolvedValue(ok({ cards: [], more: false }));
   queries.catalogSize.mockResolvedValue(32823);
 });
@@ -64,7 +67,7 @@ describe('magic pages', () => {
 
   it('decks page reports a load error', async () => {
     queries.loadDecks.mockResolvedValue(ok([]));
-    queries.loadOwned.mockResolvedValue(failed(new Map()));
+    queries.loadDeckOwnership.mockResolvedValue(failed(new Map()));
     render(await DecksPage());
     expect(screen.getByRole('alert')).toHaveTextContent('Could not load the decks.');
   });
@@ -73,6 +76,7 @@ describe('magic pages', () => {
     queries.loadDeck.mockResolvedValue(ok(stapelbruch));
     render(await DeckPage({ params: { slug: 'stapelbruch' } }));
     expect(queries.loadDeck).toHaveBeenCalledWith({}, 'stapelbruch');
+    expect(queries.loadDeckOwnership).toHaveBeenCalledWith({}, stapelbruch.id);
     expect(screen.getByRole('heading', { name: 'Stapelbruch' })).toBeInTheDocument();
   });
 
