@@ -36,6 +36,7 @@ describe('magic queries', () => {
     expect(pool.data).toHaveLength(1);
     expect(calls[0]).toEqual(['from', 'mtg_collection']);
     expect(String(calls[1][1])).toContain('card:mtg_catalog(');
+    expect(String(calls[1][1])).toContain('names:mtg_card_name(lang, printed_name)');
   });
 
   it('reports a failed read as error with empty data, and logs the reason', async () => {
