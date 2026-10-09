@@ -52,3 +52,4 @@ context.db*
 .playwright-mcp/
 supabase/.temp/
 .playwright-artifacts-sb/
+.venv/

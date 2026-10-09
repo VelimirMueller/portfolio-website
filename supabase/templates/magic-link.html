@@ -1,0 +1,136 @@
+<!doctype html>
+<!--
+  Supabase "Magic Link" email (Authentication → Emails → Magic Link).
+  Used for every sign-in: the web admin follows the link, the MTG Scanner app
+  takes the code. Variables: {{ .Token }}, {{ .ConfirmationURL }}, {{ .Email }}.
+  Email-safe on purpose: tables, inline styles, no web fonts required (Inter and
+  Space Mono load where clients allow it, system fonts otherwise).
+  The header image is served from public/email/ on the site.
+-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
+  <title>Your sign-in code</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; padding: 0; background: #09090B; }
+    a { color: #A5B4FC; }
+    @media (max-width: 620px) {
+      .wrap { width: 100% !important; }
+      .pad { padding-left: 24px !important; padding-right: 24px !important; }
+      .code { font-size: 34px !important; letter-spacing: 8px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background:#09090B;">
+  <!-- Preview line in the inbox list; hidden in the email itself. No code here:
+       the preview shows on the lock screen. -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#09090B;">
+    Your sign-in code for the MTG Scanner app, and a link for the website.
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#09090B" style="background:#09090B;">
+    <tr>
+      <td align="center" style="padding:32px 12px;">
+
+        <table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
+
+          <!-- Brand row: the VM monogram and the name, as in the site's navigation. -->
+          <tr>
+            <td style="padding:0 4px 20px 4px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="32" height="32" align="center" valign="middle" bgcolor="#F4F4F5"
+                      style="width:32px;height:32px;border-radius:16px;background:#F4F4F5;color:#09090B;font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-size:11px;font-weight:700;">VM</td>
+                  <td style="padding-left:12px;font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-size:13px;font-weight:700;color:#F4F4F5;letter-spacing:-0.2px;">Velimir Müller</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Card -->
+          <tr>
+            <td bgcolor="#121214" style="background:#121214;border:1px solid #27272A;border-radius:20px;overflow:hidden;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+
+                <!-- Hyperspace header -->
+                <tr>
+                  <td style="line-height:0;font-size:0;">
+                    <img src="https://www.velimir-mueller.de/email/hyperspace-header.png" width="600" alt=""
+                         style="display:block;width:100%;max-width:600px;height:auto;border:0;border-radius:20px 20px 0 0;">
+                  </td>
+                </tr>
+
+                <!-- Code -->
+                <tr>
+                  <td class="pad" style="padding:8px 48px 0 48px;font-family:Inter,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                    <p style="margin:0 0 10px 0;font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#818CF8;letter-spacing:1px;">// sign in</p>
+                    <h1 style="margin:0 0 12px 0;font-size:26px;line-height:1.25;font-weight:700;color:#F4F4F5;">Your sign-in code</h1>
+                    <p style="margin:0 0 24px 0;font-size:15px;line-height:1.6;color:#A1A1AA;">Enter it in the MTG Scanner app. It works once and expires soon.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="pad" align="center" style="padding:0 48px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" bgcolor="#09090B"
+                            style="background:#09090B;border:1px solid #3730A3;border-radius:14px;padding:22px 12px;">
+                          <span class="code" style="font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-size:40px;line-height:1;font-weight:700;letter-spacing:12px;color:#F4F4F5;">{{ .Token }}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td class="pad" style="padding:32px 48px 0 48px;">
+                    <div style="height:1px;line-height:1px;font-size:0;background:#27272A;">&nbsp;</div>
+                  </td>
+                </tr>
+
+                <!-- Website link -->
+                <tr>
+                  <td class="pad" style="padding:28px 48px 0 48px;font-family:Inter,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                    <p style="margin:0 0 10px 0;font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#818CF8;letter-spacing:1px;">// on the website</p>
+                    <p style="margin:0 0 20px 0;font-size:15px;line-height:1.6;color:#A1A1AA;">Signing in on velimir-mueller.de instead? Use the button on the device where you asked for this email.</p>
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td bgcolor="#4F46E5" style="border-radius:999px;background:#4F46E5;background-image:linear-gradient(90deg,#6366F1,#8B5CF6);">
+                          <a href="{{ .ConfirmationURL }}"
+                             style="display:inline-block;padding:13px 28px;font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-size:13px;font-weight:700;color:#FFFFFF;text-decoration:none;border-radius:999px;">Open the admin &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Note -->
+                <tr>
+                  <td class="pad" style="padding:32px 48px 40px 48px;font-family:Inter,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                    <p style="margin:0;font-size:13px;line-height:1.6;color:#71717A;">Somebody asked to sign in as <span style="color:#A1A1AA;">{{ .Email }}</span>. If that wasn't you, ignore this email: nothing happens without the code or the link.</p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding:24px 4px 0 4px;font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:#52525B;letter-spacing:0.5px;">
+              <a href="https://www.velimir-mueller.de" style="color:#52525B;text-decoration:none;">velimir-mueller.de</a>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
