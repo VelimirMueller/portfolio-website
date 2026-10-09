@@ -14,15 +14,16 @@ const SITE = 'https://www.velimir-mueller.de'
 const HOOK_SECRET = Deno.env.get('CONTACT_HOOK_SECRET') ?? ''
 
 /**
- * Constant-time compare: both sides are hashed first, so the loop always walks
- * 32 bytes, whatever the length of the input (no length or prefix leaks).
+ * Constant-time compare done by the runtime: HMAC of the expected secret under a
+ * random per-instance key, then crypto.subtle.verify() checks the given value
+ * against it. No hand-written loop, nothing that depends on the secret's bytes.
  */
+const VERIFY_KEY = crypto.subtle.generateKey({ name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify'])
+const encode = (v: string) => new TextEncoder().encode(v)
 async function sameSecret(given: string, expected: string): Promise<boolean> {
-  const hash = async (v: string) => new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v)))
-  const [a, b] = await Promise.all([hash(given), hash(expected)])
-  let diff = 0
-  for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i]
-  return diff === 0
+  const key = await VERIFY_KEY
+  const mac = await crypto.subtle.sign('HMAC', key, encode(expected))
+  return crypto.subtle.verify('HMAC', key, mac, encode(given))
 }
 
 const json = (body: unknown, status: number) =>
