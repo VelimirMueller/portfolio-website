@@ -37,6 +37,20 @@ export async function loadOwned(supabase: SupabaseClient): Promise<Result<Map<st
   return { data: new Map(rows.map((r) => [r.oracle_id, r.owned_qty])), error: failed('load owned copies', error) };
 }
 
+/**
+ * Owned copies per deck line, computed by the database view mtg_deck_ownership
+ * (main deck before sideboard; the app reads the same view). Keyed by line id.
+ */
+export async function loadDeckOwnership(
+  supabase: SupabaseClient,
+  deckId?: string
+): Promise<Result<Map<string, number>>> {
+  const query = supabase.from('mtg_deck_ownership').select('id, owned');
+  const { data, error } = await (deckId ? query.eq('deck_id', deckId) : query);
+  const rows = (data ?? []) as { id: string; owned: number }[];
+  return { data: new Map(rows.map((r) => [r.id, r.owned])), error: failed('load deck ownership', error) };
+}
+
 export async function loadDecks(supabase: SupabaseClient): Promise<Result<Deck[]>> {
   const { data, error } = await supabase
     .from('mtg_deck')

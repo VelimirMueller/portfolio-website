@@ -256,8 +256,9 @@ Setup after applying `20261002120000_analytics_events.sql`:
 | `mtg_collection` | The pool: one row per owned card → `mtg_catalog`, with copies, German copies, German name, note |
 | `mtg_deck`, `mtg_deck_card` | Decks; each card row is in `main`, `sideboard` or `upgrade` → `mtg_catalog`, with a planned price per copy |
 | `mtg_image_cache` | Card images, stored on first view |
+| `mtg_printing`, `mtg_card_name` | Set + collector number → card, and German printed names (for the MTG Scanner app) |
 
-Card text and images always come from the catalog, so a catalog refresh updates the pool and decks too. Writes go through SQL functions (`mtg_add_to_pool`, `mtg_change_qty`); the add form searches with `mtg_search_catalog`. Images are same-origin: `/admin/magic/img/<size>/<face>/…` serves them from `mtg_image_cache` and fetches from Scryfall's CDN only on the first view of each image (then the browser keeps it a year). No third-party image host in the CSP. Code: queries in `src/app/admin/_lib/magic/queries.ts`, pure logic next to it (`pool.ts`, `deck.ts`, `cards.ts`), UI in `src/app/admin/_components/magic/`.
+Card text and images always come from the catalog, so a catalog refresh updates the pool and decks too. Writes go through SQL functions (`mtg_add_to_pool`, `mtg_change_qty`, `mtg_add_many`); the add form searches with `mtg_search_catalog`; `mtg_match_scan` turns OCR readings from the scanner app into cards (printing → exact English or German name → fuzzy). Deck ownership comes from the view `mtg_deck_ownership`, which web and app share. Names are compared through `mtg_norm()`, the same normalisation as the app's `LineFilter.normalize()`. SQL tests: `supabase/tests/magic_scan_test.sql`. Images are same-origin: `/admin/magic/img/<size>/<face>/…` serves them from `mtg_image_cache` and fetches from Scryfall's CDN only on the first view of each image (then the browser keeps it a year). No third-party image host in the CSP. Code: queries in `src/app/admin/_lib/magic/queries.ts`, pure logic next to it (`pool.ts`, `deck.ts`, `cards.ts`), UI in `src/app/admin/_components/magic/`.
 
 Setup on a new database, in this order:
 
@@ -269,6 +270,12 @@ Setup on a new database, in this order:
    ```
    `SUPABASE_DB_URL` is the session-pooler connection string from the Supabase dashboard (*Connect*). Run the same two commands any time to refresh the catalog (Scryfall updates daily); it refuses a CSV under 98% of the current catalog and keeps cards the pool or a deck uses.
 3. Apply `20261008150000_magic_v2.sql`. It needs the catalog: it links the seeded pool to it and seeds the deck *Stapelbruch*.
+4. Apply `20261009120000_magic_scan.sql`, then load printings and German names (also the refresh, after new sets):
+   ```bash
+   node scripts/mtg/build-printings.mjs /tmp/mtg-printings.csv /tmp/mtg-names.csv
+   psql "$SUPABASE_DB_URL" -v printings=/tmp/mtg-printings.csv -v names=/tmp/mtg-names.csv -f scripts/mtg/load-printings.sql
+   ```
+   The first command streams Scryfall's *All Cards* file (~400 MB, 1–10 minutes depending on the connection). The load refuses a CSV under 98 % of the current tables.
 
 **No cookies on a visit.** `next-intl` runs with `localeCookie: false`, and `e2e/headers.spec.ts` asserts that public pages set no cookie — the reason the site needs no consent banner. hCaptcha loads only when the contact form is sent.
 

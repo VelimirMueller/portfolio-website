@@ -1,4 +1,4 @@
-import { catalogSize, loadDeck, loadDecks, loadOwned, loadPool, searchCatalog, SEARCH_LIMIT } from '../queries';
+import { catalogSize, loadDeck, loadDeckOwnership, loadDecks, loadOwned, loadPool, searchCatalog, SEARCH_LIMIT } from '../queries';
 import { catalogCard } from '../testFixtures';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
@@ -40,6 +40,13 @@ describe('magic queries', () => {
   it('maps owned copies by card id', async () => {
     const { client } = fakeSupabase({ data: [{ oracle_id: 'a', owned_qty: 11 }] });
     expect((await loadOwned(client)).data.get('a')).toBe(11);
+  });
+
+  it('maps owned copies per deck line from the ownership view', async () => {
+    const { client, calls } = fakeSupabase({ data: [{ id: 'line-1', owned: 2 }] });
+    const owned = await loadDeckOwnership(client);
+    expect(calls[0]).toEqual(['from', 'mtg_deck_ownership']);
+    expect(owned.data.get('line-1')).toBe(2);
   });
 
   it('loads one deck by slug with its cards', async () => {
