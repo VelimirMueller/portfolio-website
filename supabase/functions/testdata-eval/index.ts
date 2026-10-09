@@ -52,17 +52,32 @@ async function batch(batchId: unknown): Promise<Response> {
 
   const out = []
   for (const c of cases ?? []) {
-    const { data: signed } = await supabase.storage.from('mtg-testdata').createSignedUrl(c.photo_path, URL_SECONDS)
+    const { data: signed, error: sErr } = await supabase.storage.from('mtg-testdata').createSignedUrl(c.photo_path, URL_SECONDS)
     // A missing photo is reported, not fatal: the OCR lines are enough to replay the rules.
-    out.push({ ...c, photo_url: signed?.signedUrl ?? null })
+    out.push({ ...c, photo_url: signed?.signedUrl ?? null, photo_error: sErr ? sErr.message : null })
   }
   return json({ batch: b, cases: out }, 200)
+}
+
+/** Same shape the app sends (core/scan Reading): optional name, set, number, lang. */
+function validReading(r: unknown): boolean {
+  if (typeof r !== 'object' || r === null || Array.isArray(r)) return false
+  const allowed = new Set(['name', 'set', 'number', 'lang'])
+  for (const [k, v] of Object.entries(r)) {
+    if (!allowed.has(k)) return false
+    if (k === 'number' ? !Number.isInteger(v) || (v as number) < 0 || (v as number) > 99999 : typeof v !== 'string' || v.length > 200) {
+      return false
+    }
+  }
+  return Object.keys(r).length > 0
 }
 
 async function match(readings: unknown): Promise<Response> {
   if (!Array.isArray(readings) || readings.length === 0 || readings.length > MATCH_LIMIT) {
     return json({ error: `readings must be an array of 1 to ${MATCH_LIMIT}` }, 400)
   }
+  const bad = readings.findIndex((r) => !validReading(r))
+  if (bad >= 0) return json({ error: `reading ${bad} must have only name, set, lang (text) and number (integer)` }, 400)
   const { data, error } = await supabase.rpc('mtg_match_scan', { p_readings: readings })
   if (error) return json({ error: 'match failed', code: error.code }, 500)
   return json(data, 200)
