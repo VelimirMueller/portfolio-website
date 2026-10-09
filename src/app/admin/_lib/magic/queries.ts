@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { CatalogCard, Deck, PoolEntry } from './types';
+import type { CatalogCard, Deck, PoolEntry, WishEntry } from './types';
 
 // Every Magic read in one place. The client is untyped (no generated DB
 // types), so the casts to our row types live here and nowhere else.
@@ -21,6 +21,7 @@ function failed(what: string, error: DbError): boolean {
 export const CATALOG_COLUMNS =
   'oracle_id, name, mana_cost, mana_value, type_line, oracle_text, colors, power_toughness, loyalty, rarity, set_code, set_name, released_at, image_url, scryfall_uri';
 const POOL_SELECT = `id, owned_qty, copies_de, name_de, note, card:mtg_catalog(${CATALOG_COLUMNS})`;
+const WISH_SELECT = `id, qty, note, created_at, card:mtg_catalog(${CATALOG_COLUMNS})`;
 const DECK_CARD_SELECT = `id, section, position, qty, note, swap_out, price_eur, card:mtg_catalog(${CATALOG_COLUMNS})`;
 
 export const SEARCH_LIMIT = 24;
@@ -35,6 +36,19 @@ export async function loadOwned(supabase: SupabaseClient): Promise<Result<Map<st
   const { data, error } = await supabase.from('mtg_collection').select('oracle_id, owned_qty');
   const rows = (data ?? []) as { oracle_id: string; owned_qty: number }[];
   return { data: new Map(rows.map((r) => [r.oracle_id, r.owned_qty])), error: failed('load owned copies', error) };
+}
+
+/** The wishlist, oldest wish first. */
+export async function loadWishlist(supabase: SupabaseClient): Promise<Result<WishEntry[]>> {
+  const { data, error } = await supabase.from('mtg_wishlist').select(WISH_SELECT).order('created_at');
+  return { data: (data ?? []) as unknown as WishEntry[], error: failed('load wishlist', error) };
+}
+
+/** Wanted copies per card, for the add form's badges. */
+export async function loadWished(supabase: SupabaseClient): Promise<Result<Map<string, number>>> {
+  const { data, error } = await supabase.from('mtg_wishlist').select('oracle_id, qty');
+  const rows = (data ?? []) as { oracle_id: string; qty: number }[];
+  return { data: new Map(rows.map((r) => [r.oracle_id, r.qty])), error: failed('load wished copies', error) };
 }
 
 /**

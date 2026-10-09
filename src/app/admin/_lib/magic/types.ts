@@ -32,6 +32,15 @@ export type PoolEntry = {
   card: CatalogCard;
 };
 
+/** public.mtg_wishlist — copies Velimir wants but does not own yet. */
+export type WishEntry = {
+  id: string;
+  qty: number;
+  note: string | null;
+  created_at?: string;
+  card: CatalogCard;
+};
+
 export type DeckSection = 'main' | 'sideboard' | 'upgrade';
 
 /**

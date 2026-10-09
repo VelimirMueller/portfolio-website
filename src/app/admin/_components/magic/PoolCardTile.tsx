@@ -9,18 +9,30 @@ import type { PoolEntry } from '../../_lib/magic/types';
 
 export type ChangeQty = (id: string, delta: 1 | -1) => Promise<void>;
 
-function QtyControls({ entry, changeQty }: { entry: PoolEntry; changeQty: ChangeQty }) {
+/** ± copies of one row (pool or wishlist); the last copy asks `removeConfirm` first. */
+export function QtyControls({
+  id,
+  qty,
+  name,
+  changeQty,
+  removeConfirm,
+}: {
+  id: string;
+  qty: number;
+  name: string;
+  changeQty: ChangeQty;
+  removeConfirm: string;
+}) {
   const [pending, startTransition] = useTransition();
   const [failed, setFailed] = useState(false);
-  const { name } = entry.card;
-  const last = entry.owned_qty === 1;
+  const last = qty === 1;
 
   const change = (delta: 1 | -1) => {
-    if (delta === -1 && last && !window.confirm(`Remove ${name} from the pool?`)) return;
+    if (delta === -1 && last && !window.confirm(removeConfirm)) return;
     startTransition(async () => {
       setFailed(false);
       try {
-        await changeQty(entry.id, delta);
+        await changeQty(id, delta);
       } catch {
         setFailed(true);
       }
@@ -40,8 +52,8 @@ function QtyControls({ entry, changeQty }: { entry: PoolEntry; changeQty: Change
       >
         {last ? <Trash2 size={13} aria-hidden="true" /> : <Minus size={13} aria-hidden="true" />}
       </button>
-      <span className="min-w-8 text-center font-mono text-sm text-white" aria-label={`${entry.owned_qty} copies`}>
-        ×{entry.owned_qty}
+      <span className="min-w-8 text-center font-mono text-sm text-white" aria-label={`${qty} copies`}>
+        ×{qty}
       </span>
       <button type="button" className={btn} disabled={pending} aria-label={`One copy more of ${name}`} onClick={() => change(1)}>
         <Plus size={13} aria-hidden="true" />
@@ -65,7 +77,17 @@ export function PoolCardTile({ entry, changeQty }: { entry: PoolEntry; changeQty
           <CardRules card={entry.card} />
           {entry.note && <p className="text-xs text-amber-300/80 border-l-2 border-amber-500/40 pl-2">{entry.note}</p>}
           <div className="mt-auto pt-1 flex flex-wrap items-center gap-2">
-            {changeQty ? <QtyControls entry={entry} changeQty={changeQty} /> : <Badge color="blue">×{entry.owned_qty}</Badge>}
+            {changeQty ? (
+              <QtyControls
+                id={entry.id}
+                qty={entry.owned_qty}
+                name={entry.card.name}
+                changeQty={changeQty}
+                removeConfirm={`Remove ${entry.card.name} from the pool?`}
+              />
+            ) : (
+              <Badge color="blue">×{entry.owned_qty}</Badge>
+            )}
             {entry.copies_de > 0 && <Badge color="purple">{entry.copies_de} DE</Badge>}
           </div>
         </div>

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 const TABS = [
   { href: '/admin/magic', label: 'Pool', exact: true },
   { href: '/admin/magic/decks', label: 'Decks', exact: false },
+  { href: '/admin/magic/wishlist', label: 'Wishlist', exact: true },
   { href: '/admin/magic/add', label: 'Add card', exact: true },
 ] as const;
 

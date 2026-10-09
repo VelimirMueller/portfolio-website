@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { catalogCard, deck, deckCard, poolEntry } from '@/app/admin/_lib/magic/testFixtures';
+import { catalogCard, deck, deckCard, poolEntry, wishEntry } from '@/app/admin/_lib/magic/testFixtures';
 
 const notFound = jest.fn(() => {
   throw new Error('NEXT_NOT_FOUND');
 });
 jest.mock('next/navigation', () => ({ usePathname: () => '/admin/magic', notFound: () => notFound() }));
-jest.mock('../actions', () => ({ addToPool: jest.fn(), changeQty: jest.fn() }));
+jest.mock('../actions', () => ({ addToPool: jest.fn(), changeQty: jest.fn(), changeWishQty: jest.fn(), wishToPool: jest.fn() }));
 jest.mock('@/app/admin/_lib/auth', () => ({ requireAdmin: async () => ({ supabase: {}, user: { id: 'admin' } }) }));
 
 const ok = <T,>(data: T) => ({ data, error: false });
@@ -13,6 +13,8 @@ const failed = <T,>(data: T) => ({ data, error: true });
 const queries = {
   loadPool: jest.fn(),
   loadOwned: jest.fn(),
+  loadWishlist: jest.fn(),
+  loadWished: jest.fn(),
   loadDecks: jest.fn(),
   loadDeck: jest.fn(),
   loadDeckOwnership: jest.fn(),
@@ -22,6 +24,8 @@ const queries = {
 jest.mock('@/app/admin/_lib/magic/queries', () => ({
   loadPool: (...a: unknown[]) => queries.loadPool(...a),
   loadOwned: (...a: unknown[]) => queries.loadOwned(...a),
+  loadWishlist: (...a: unknown[]) => queries.loadWishlist(...a),
+  loadWished: (...a: unknown[]) => queries.loadWished(...a),
   loadDecks: (...a: unknown[]) => queries.loadDecks(...a),
   loadDeck: (...a: unknown[]) => queries.loadDeck(...a),
   loadDeckOwnership: (...a: unknown[]) => queries.loadDeckOwnership(...a),
@@ -33,6 +37,7 @@ import PoolPage from '../page';
 import DecksPage from '../decks/page';
 import DeckPage from '../decks/[slug]/page';
 import AddPage from '../add/page';
+import WishlistPage from '../wishlist/page';
 
 const opt = catalogCard({ name: 'Opt' });
 const stapelbruch = deck([deckCard(opt, { qty: 4 })], { slug: 'stapelbruch', name: 'Stapelbruch' });
@@ -40,6 +45,7 @@ const stapelbruch = deck([deckCard(opt, { qty: 4 })], { slug: 'stapelbruch', nam
 beforeEach(() => {
   jest.clearAllMocks();
   queries.loadOwned.mockResolvedValue(ok(new Map([[opt.oracle_id, 1]])));
+  queries.loadWished.mockResolvedValue(ok(new Map()));
   queries.loadDeckOwnership.mockResolvedValue(ok(new Map([[stapelbruch.cards[0].id, 1]])));
   queries.searchCatalog.mockResolvedValue(ok({ cards: [], more: false }));
   queries.catalogSize.mockResolvedValue(32823);
@@ -67,7 +73,8 @@ describe('magic pages', () => {
 
   it('decks page reports a load error', async () => {
     queries.loadDecks.mockResolvedValue(ok([]));
-    queries.loadDeckOwnership.mockResolvedValue(failed(new Map()));
+    queries.loadWished.mockResolvedValue(ok(new Map()));
+  queries.loadDeckOwnership.mockResolvedValue(failed(new Map()));
     render(await DecksPage());
     expect(screen.getByRole('alert')).toHaveTextContent('Could not load the decks.');
   });
@@ -92,17 +99,43 @@ describe('magic pages', () => {
     const rift = catalogCard({ name: 'Cyclonic Rift' });
     queries.searchCatalog.mockResolvedValue(ok({ cards: [rift], more: true }));
     queries.loadOwned.mockResolvedValue(ok(new Map([[rift.oracle_id, 2]])));
+    queries.loadWished.mockResolvedValue(ok(new Map([[rift.oracle_id, 1]])));
     render(await AddPage({ searchParams: { q: ' rift ', added: 'Opt', error: 'Bad input.' } }));
     expect(queries.searchCatalog).toHaveBeenCalledWith({}, 'rift');
     expect(screen.getByText(/First 1 matches for “rift”/)).toBeInTheDocument();
     expect(screen.getByText('in pool ×2')).toBeInTheDocument();
+    expect(screen.getByText('wished ×1')).toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent('Opt is in your pool.');
     expect(screen.getByText('Not added: Bad input.')).toBeInTheDocument();
+  });
+
+  it('add page confirms a wished card', async () => {
+    render(await AddPage({ searchParams: { wished: 'Opt' } }));
+    expect(screen.getByRole('status')).toHaveTextContent('Opt is on your wishlist.');
+  });
+
+  it('add page reports a failed wishlist read too', async () => {
+    queries.loadWished.mockResolvedValue(failed(new Map()));
+    render(await AddPage({ searchParams: { q: 'rift' } }));
+    expect(screen.getByText(/Could not load the search or your pool and wishlist counts/)).toBeInTheDocument();
+  });
+
+  it('wishlist page lists the wishlist', async () => {
+    queries.loadWishlist.mockResolvedValue(ok([wishEntry({ name: 'Rhystic Study' }, { qty: 2 })]));
+    render(await WishlistPage());
+    expect(screen.getByRole('heading', { name: 'Rhystic Study' })).toBeInTheDocument();
+    expect(screen.getByText('1 card · 2 copies wanted')).toBeInTheDocument();
+  });
+
+  it('wishlist page reports a load error', async () => {
+    queries.loadWishlist.mockResolvedValue(failed([]));
+    render(await WishlistPage());
+    expect(screen.getByRole('alert')).toHaveTextContent('Could not load the wishlist.');
   });
 
   it('add page reports a failed pool read instead of hiding the pool counts', async () => {
     queries.loadOwned.mockResolvedValue(failed(new Map()));
     render(await AddPage({ searchParams: { q: 'rift' } }));
-    expect(screen.getByText(/Could not load the search or your pool counts/)).toBeInTheDocument();
+    expect(screen.getByText(/Could not load the search or your pool and wishlist counts/)).toBeInTheDocument();
   });
 });
