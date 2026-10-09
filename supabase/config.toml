@@ -12,3 +12,12 @@ entrypoint = "./functions/send-contact-email/index.ts"
 # Specifies static files to be bundled with the function. Supports glob patterns.
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/send-contact-email/*.html" ]
+
+[functions.testdata-eval]
+enabled = true
+# No Supabase JWT check: the caller is the mtg-scanner testdata workflow, not a user.
+# The function checks the shared secret in x-testdata-key instead (function secret
+# TESTDATA_EXPORT_KEY = GitHub secret TESTDATA_KEY). Deploy with this file.
+verify_jwt = false
+import_map = "./functions/testdata-eval/deno.json"
+entrypoint = "./functions/testdata-eval/index.ts"
