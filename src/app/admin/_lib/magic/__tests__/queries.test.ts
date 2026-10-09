@@ -1,4 +1,15 @@
-import { catalogSize, loadDeck, loadDeckOwnership, loadDecks, loadOwned, loadPool, searchCatalog, SEARCH_LIMIT } from '../queries';
+import {
+  catalogSize,
+  loadDeck,
+  loadDeckOwnership,
+  loadDecks,
+  loadOwned,
+  loadPool,
+  loadWished,
+  loadWishlist,
+  searchCatalog,
+  SEARCH_LIMIT,
+} from '../queries';
 import { catalogCard } from '../testFixtures';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
@@ -40,6 +51,27 @@ describe('magic queries', () => {
   it('maps owned copies by card id', async () => {
     const { client } = fakeSupabase({ data: [{ oracle_id: 'a', owned_qty: 11 }] });
     expect((await loadOwned(client)).data.get('a')).toBe(11);
+  });
+
+  it('loads the wishlist oldest first, with each card embedded', async () => {
+    const { client, calls } = fakeSupabase({ data: [{ id: 'w1', qty: 2, note: null, card: catalogCard() }] });
+    const wishlist = await loadWishlist(client);
+    expect(wishlist.error).toBe(false);
+    expect(wishlist.data).toHaveLength(1);
+    expect(calls[0]).toEqual(['from', 'mtg_wishlist']);
+    expect(String(calls[1][1])).toContain('card:mtg_catalog(');
+    expect(calls[2]).toEqual(['order', 'created_at']);
+  });
+
+  it('maps wanted copies by card id, and reports a failed wishlist read', async () => {
+    const { client } = fakeSupabase({ data: [{ oracle_id: 'a', qty: 3 }] });
+    expect((await loadWished(client)).data.get('a')).toBe(3);
+    const log = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const broken = fakeSupabase({ error: { code: 'PGRST205', message: 'table missing' } }).client;
+    await expect(loadWishlist(broken)).resolves.toEqual({ data: [], error: true });
+    expect((await loadWished(broken)).error).toBe(true);
+    expect(log).toHaveBeenCalledWith('[admin] magic: load wishlist failed:', 'PGRST205', 'table missing');
+    log.mockRestore();
   });
 
   it('maps owned copies per deck line from the ownership view', async () => {

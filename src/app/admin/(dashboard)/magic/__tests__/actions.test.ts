@@ -20,7 +20,7 @@ jest.mock('@/app/admin/_lib/auth', () => ({
   requireAdmin: async () => ({ supabase: { rpc, from: (t: string) => (from(t), catalog) }, user: { id: 'admin' } }),
 }));
 
-import { addToPool, changeQty } from '../actions';
+import { addToPool, changeQty, changeWishQty, wishToPool } from '../actions';
 
 const ID = '33333333-3333-4333-8333-333333333333';
 const ORACLE = '20000000-0000-4000-8000-000000000001';
@@ -71,6 +71,42 @@ describe('addToPool', () => {
   });
 });
 
+describe('addToPool with intent=wish', () => {
+  it('adds to the wishlist through mtg_add_to_wishlist, ignoring German copies', async () => {
+    rpcResult = { data: ID, error: null };
+    await expect(
+      addToPool(
+        form({ oracle_id: ORACLE, owned_qty: '2', copies_de: '5', name_de: 'Zyklon', note: ' cheap ', q: 'rift', intent: 'wish' })
+      )
+    ).rejects.toThrow('NEXT_REDIRECT /admin/magic/add?wished=Cyclonic+Rift&q=rift');
+    expect(rpc).toHaveBeenCalledTimes(1);
+    expect(rpc).toHaveBeenCalledWith('mtg_add_to_wishlist', { p_oracle_id: ORACLE, p_qty: 2, p_note: 'cheap' });
+    expect(revalidatePath).toHaveBeenCalledWith('/admin/magic', 'layout');
+  });
+
+  it('adds to the pool when intent says so', async () => {
+    rpcResult = { data: ID, error: null };
+    await expect(addToPool(form({ oracle_id: ORACLE, owned_qty: '1', intent: 'pool' }))).rejects.toThrow(
+      'NEXT_REDIRECT /admin/magic/add?added=Cyclonic+Rift'
+    );
+    expect(rpc).toHaveBeenCalledWith('mtg_add_to_pool', expect.anything());
+  });
+
+  it('rejects an unknown intent before calling the database', async () => {
+    await expect(addToPool(form({ oracle_id: ORACLE, owned_qty: '1', intent: 'steal' }))).rejects.toThrow(
+      'NEXT_REDIRECT /admin/magic/add?error='
+    );
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it('fails when nothing was wished (unknown card or RLS)', async () => {
+    await expect(addToPool(form({ oracle_id: ORACLE, owned_qty: '1', intent: 'wish' }))).rejects.toThrow(
+      'Could not add the card'
+    );
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+});
+
 describe('changeQty', () => {
   it('changes the count through mtg_change_qty', async () => {
     rpcResult = { data: 3, error: null };
@@ -91,6 +127,54 @@ describe('changeQty', () => {
   it('rejects other deltas and bad ids', async () => {
     await expect(changeQty(ID, 5 as 1)).rejects.toThrow();
     await expect(changeQty('x', 1)).rejects.toThrow();
+    expect(rpc).not.toHaveBeenCalled();
+  });
+});
+
+describe('changeWishQty', () => {
+  it('changes the count through mtg_change_wish_qty', async () => {
+    rpcResult = { data: 2, error: null };
+    await changeWishQty(ID, -1);
+    expect(rpc).toHaveBeenCalledWith('mtg_change_wish_qty', { p_id: ID, p_delta: -1 });
+    expect(revalidatePath).toHaveBeenCalledWith('/admin/magic', 'layout');
+  });
+
+  it('accepts 0, which means the wish was removed', async () => {
+    rpcResult = { data: 0, error: null };
+    await expect(changeWishQty(ID, -1)).resolves.toBeUndefined();
+  });
+
+  it('fails when the row is gone or hidden, or the database errors', async () => {
+    await expect(changeWishQty(ID, 1)).rejects.toThrow('Could not change the count');
+    rpcResult = { data: null, error: { message: 'boom' } };
+    await expect(changeWishQty(ID, 1)).rejects.toThrow('Could not change the count');
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it('rejects other deltas and bad ids', async () => {
+    await expect(changeWishQty(ID, 2 as 1)).rejects.toThrow();
+    await expect(changeWishQty('x', 1)).rejects.toThrow();
+    expect(rpc).not.toHaveBeenCalled();
+  });
+});
+
+describe('wishToPool', () => {
+  it('moves the wish into the pool through mtg_wish_to_pool', async () => {
+    rpcResult = { data: ID, error: null };
+    await wishToPool(ID);
+    expect(rpc).toHaveBeenCalledWith('mtg_wish_to_pool', { p_id: ID, p_copies_de: 0 });
+    expect(revalidatePath).toHaveBeenCalledWith('/admin/magic', 'layout');
+  });
+
+  it('fails when the wish is gone or hidden, or the database errors', async () => {
+    await expect(wishToPool(ID)).rejects.toThrow('Could not move the card');
+    rpcResult = { data: null, error: { message: 'boom' } };
+    await expect(wishToPool(ID)).rejects.toThrow('Could not move the card');
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it('rejects a bad id', async () => {
+    await expect(wishToPool('x')).rejects.toThrow();
     expect(rpc).not.toHaveBeenCalled();
   });
 });

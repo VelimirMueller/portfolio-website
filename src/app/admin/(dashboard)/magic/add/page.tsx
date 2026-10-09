@@ -1,5 +1,5 @@
 import { requireAdmin } from '@/app/admin/_lib/auth';
-import { catalogSize, loadOwned, searchCatalog } from '@/app/admin/_lib/magic/queries';
+import { catalogSize, loadOwned, loadWished, searchCatalog } from '@/app/admin/_lib/magic/queries';
 import { AddCardSearch } from '@/app/admin/_components/magic/AddCardSearch';
 import { addToPool } from '../actions';
 
@@ -13,10 +13,11 @@ export default async function AdminMagicAddPage({
   const { supabase } = await requireAdmin();
   const query = first(searchParams.q).trim().slice(0, 100);
 
-  const [size, search, owned] = await Promise.all([
+  const [size, search, owned, wished] = await Promise.all([
     catalogSize(supabase),
     searchCatalog(supabase, query),
     loadOwned(supabase),
+    loadWished(supabase),
   ]);
 
   return (
@@ -25,9 +26,11 @@ export default async function AdminMagicAddPage({
       results={search.data.cards}
       more={search.data.more}
       owned={owned.data}
+      wished={wished.data}
       added={first(searchParams.added).slice(0, 200) || undefined}
+      wishedName={first(searchParams.wished).slice(0, 200) || undefined}
       formError={first(searchParams.error).slice(0, 200) || undefined}
-      error={search.error || owned.error}
+      error={search.error || owned.error || wished.error}
       catalogSize={size}
       action={addToPool}
     />

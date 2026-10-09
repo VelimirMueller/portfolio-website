@@ -1,4 +1,4 @@
-import { CheckCircle2, Search } from 'lucide-react';
+import { CheckCircle2, Search, Star } from 'lucide-react';
 import { Badge, Card } from '../ui';
 import { CardImage } from './CardImage';
 import { CardHeader, CardRules } from './CardText';
@@ -7,13 +7,17 @@ import type { CatalogCard } from '../../_lib/magic/types';
 /**
  * Search over the Scryfall catalog (every paper card) and one add form per
  * result. A plain GET form drives the search, so it works without client JS.
+ * Each form has two submit buttons: "Own it" adds to the pool, "Want it" to
+ * the wishlist (the clicked button's name=intent goes with the form).
  */
 export function AddCardSearch({
   query,
   results,
   more = false,
   owned,
+  wished,
   added,
+  wishedName,
   formError,
   error,
   catalogSize,
@@ -25,7 +29,11 @@ export function AddCardSearch({
   more?: boolean;
   /** Copies already in the pool, per oracle_id. */
   owned: Map<string, number>;
+  /** Copies already on the wishlist, per oracle_id. */
+  wished: Map<string, number>;
   added?: string;
+  /** Name of the card just put on the wishlist. */
+  wishedName?: string;
   /** Why the last add was refused (from the server action). */
   formError?: string;
   error?: boolean;
@@ -68,6 +76,11 @@ export function AddCardSearch({
           <CheckCircle2 size={16} aria-hidden="true" /> {added} is in your pool.
         </p>
       )}
+      {wishedName && (
+        <p role="status" className="flex items-center gap-2 text-sm text-amber-400">
+          <Star size={16} aria-hidden="true" /> {wishedName} is on your wishlist.
+        </p>
+      )}
       {formError && (
         <p role="alert" className="text-sm text-red-400">
           Not added: {formError}
@@ -75,7 +88,7 @@ export function AddCardSearch({
       )}
       {error && (
         <p role="alert" className="text-sm text-red-400">
-          Could not load the search or your pool counts. Try again.
+          Could not load the search or your pool and wishlist counts. Try again.
         </p>
       )}
 
@@ -92,6 +105,7 @@ export function AddCardSearch({
       <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
         {results.map((card) => {
           const have = owned.get(card.oracle_id) ?? 0;
+          const want = wished.get(card.oracle_id) ?? 0;
           return (
             <Card key={card.oracle_id} flush className="overflow-hidden">
               <div className="p-4 flex gap-4">
@@ -99,9 +113,10 @@ export function AddCardSearch({
                 <div className="min-w-0 flex-1 flex flex-col gap-2">
                   <CardHeader card={card} />
                   <CardRules card={card} />
-                  {have > 0 && (
-                    <div>
-                      <Badge color="green">in pool ×{have}</Badge>
+                  {(have > 0 || want > 0) && (
+                    <div className="flex flex-wrap gap-2">
+                      {have > 0 && <Badge color="green">in pool ×{have}</Badge>}
+                      {want > 0 && <Badge color="amber">wished ×{want}</Badge>}
                     </div>
                   )}
 
@@ -122,10 +137,21 @@ export function AddCardSearch({
                     </label>
                     <button
                       type="submit"
+                      name="intent"
+                      value="pool"
                       aria-label={`Add ${card.name} to the pool`}
                       className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
                     >
-                      Add
+                      Own it
+                    </button>
+                    <button
+                      type="submit"
+                      name="intent"
+                      value="wish"
+                      aria-label={`Add ${card.name} to the wishlist`}
+                      className="px-3 py-1.5 rounded-lg border border-amber-500/40 text-amber-400 text-sm hover:bg-amber-500/10 hover:border-amber-500/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                    >
+                      Want it
                     </button>
                   </form>
                 </div>

@@ -1,5 +1,5 @@
 // Test data shared by the Magic tests. Not imported by app code.
-import type { CatalogCard, Deck, DeckCard, PoolEntry } from './types';
+import type { CatalogCard, Deck, DeckCard, PoolEntry, WishEntry } from './types';
 
 let seq = 0;
 const uuid = () => `00000000-0000-4000-8000-${String(++seq).padStart(12, '0')}`;
@@ -28,6 +28,14 @@ export const poolEntry = (card: Partial<CatalogCard> = {}, over: Partial<Omit<Po
   owned_qty: 1,
   copies_de: 0,
   name_de: null,
+  note: null,
+  card: catalogCard(card),
+  ...over,
+});
+
+export const wishEntry = (card: Partial<CatalogCard> = {}, over: Partial<Omit<WishEntry, 'card'>> = {}): WishEntry => ({
+  id: uuid(),
+  qty: 1,
   note: null,
   card: catalogCard(card),
   ...over,
