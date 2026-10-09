@@ -117,6 +117,16 @@ select pg_temp.check((select count(*) = 3 from public.mtg_deck_ownership where d
 
 -- 4. Access: another user and anon see and change nothing.
 reset role;
+-- Thresholds as parameters (20261009210000): defaults unchanged, the app can tune them.
+select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Gekko"}]')) r) = 'check',
+  'thresholds: a typo is a check by default');
+select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Gekko"}]', p_sure_min => 0.6)) r) = 'matched',
+  'thresholds: a lower sure-minimum trusts the typo');
+select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Gekko"}]', p_fuzzy_min => 0.95)) r) = 'not_found',
+  'thresholds: a higher fuzzy-minimum drops the typo');
+select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Gekko"}]', p_fuzzy_min => -5, p_sure_min => 7)) r) = 'check',
+  'thresholds: out-of-range values are clamped, not trusted');
+
 set local test.uid = '11111111-1111-4111-8111-111111111111';
 set local role authenticated;
 select pg_temp.check((select count(*) = 0 from public.mtg_printing), 'RLS: other user sees no printings');
