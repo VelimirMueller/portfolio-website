@@ -160,3 +160,20 @@ drop trigger if exists on_new_test_batch on public.mtg_test_batch;
 create trigger on_new_test_batch
   after insert on public.mtg_test_batch
   for each row execute function public.mtg_collect_test_batch();
+
+-- 5. Server-side callers count as admin -------------------------------------------------
+-- The testdata-eval Edge Function replays test cases through mtg_match_scan with the
+-- service-role key. That request has no user, so auth.uid() is null and the admin
+-- check refused it. The service role already bypasses RLS on every table; this only
+-- lets it call the admin RPCs too. The 'role' setting is the API role PostgREST set
+-- (it survives security definer), and no client can set it to service_role: that
+-- needs membership in the role.
+create or replace function public.is_admin()
+returns boolean
+language sql
+stable
+set search_path = ''
+as $$
+  select coalesce((select auth.uid()) = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a'::uuid, false)
+      or coalesce(current_setting('role', true) = 'service_role', false);
+$$;

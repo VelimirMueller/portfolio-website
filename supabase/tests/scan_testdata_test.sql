@@ -38,6 +38,11 @@ select pg_temp.check(not has_function_privilege('anon', 'public.mtg_collect_test
 select pg_temp.check(pg_temp.raises('select public.mtg_collect_test_batch()'),
                      'the trigger function cannot be called directly, even by the owner');
 
+select pg_temp.check(not public.is_admin(), 'the SQL editor itself is not the admin');
+set local role service_role;
+select pg_temp.check(public.is_admin(), 'the service role (Edge Functions) counts as admin');
+reset role;
+
 -- 2. A signed-in stranger sees and writes nothing -------------------------------------------
 set local role authenticated;
 set local request.jwt.claim.sub = '00000000-0000-4000-8000-00000000dead';
