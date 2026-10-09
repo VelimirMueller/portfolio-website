@@ -42,6 +42,8 @@ $$;
 -- Only the trigger runs it; nobody can call it through the API.
 revoke execute on function public.send_contact_email_hook() from public, anon, authenticated;
 
+-- Same name as the dashboard webhook it replaces (see 20260930160000_contact_messages_admin.sql),
+-- so the old one goes and only one email is sent per message.
 drop trigger if exists on_new_contact_message on public.contact_messages;
 create trigger on_new_contact_message
   after insert on public.contact_messages

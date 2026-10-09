@@ -17,8 +17,9 @@ const HOOK_SECRET = Deno.env.get('CONTACT_HOOK_SECRET') ?? ''
 function sameSecret(given: string, expected: string): boolean {
   const a = new TextEncoder().encode(given)
   const b = new TextEncoder().encode(expected)
+  // Different lengths already fail; walking the longer one keeps every byte compared.
   let diff = a.length ^ b.length
-  for (let i = 0; i < b.length; i++) diff |= (a[i] ?? 0) ^ b[i]
+  for (let i = 0; i < Math.max(a.length, b.length); i++) diff |= (a[i] ?? 0) ^ (b[i] ?? 0)
   return diff === 0
 }
 
