@@ -28,7 +28,9 @@ begin
     return new;
   end if;
 
-  -- Asynchronous (pg_net queues it): the insert never waits for the email.
+  -- Asynchronous (pg_net queues it): the insert never waits for the email. A failed
+  -- send loses no message (it is in the admin inbox); pg_net keeps each response in
+  -- net._http_response for 6 hours to look up why.
   perform net.http_post(
     url := 'https://zkvpvhrmrbkpuspypqrj.supabase.co/functions/v1/send-contact-email',
     body := jsonb_build_object('type', 'INSERT', 'table', 'contact_messages', 'record', to_jsonb(new)),

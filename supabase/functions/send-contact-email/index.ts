@@ -13,13 +13,15 @@ const SITE = 'https://www.velimir-mueller.de'
 // (from Vault) in x-contact-hook-secret; see migration 20261009170000_contact_email_hook.sql.
 const HOOK_SECRET = Deno.env.get('CONTACT_HOOK_SECRET') ?? ''
 
-/** Constant-time string compare, so the answer time does not leak the secret. */
-function sameSecret(given: string, expected: string): boolean {
-  const a = new TextEncoder().encode(given)
-  const b = new TextEncoder().encode(expected)
-  // Different lengths already fail; walking the longer one keeps every byte compared.
-  let diff = a.length ^ b.length
-  for (let i = 0; i < Math.max(a.length, b.length); i++) diff |= (a[i] ?? 0) ^ (b[i] ?? 0)
+/**
+ * Constant-time compare: both sides are hashed first, so the loop always walks
+ * 32 bytes, whatever the length of the input (no length or prefix leaks).
+ */
+async function sameSecret(given: string, expected: string): Promise<boolean> {
+  const hash = async (v: string) => new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v)))
+  const [a, b] = await Promise.all([hash(given), hash(expected)])
+  let diff = 0
+  for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i]
   return diff === 0
 }
 
@@ -138,7 +140,7 @@ serve(async (req) => {
     console.error('send-contact-email: CONTACT_HOOK_SECRET is not set')
     return json({ error: 'Not configured' }, 500)
   }
-  if (req.method !== 'POST' || !sameSecret(req.headers.get('x-contact-hook-secret') ?? '', HOOK_SECRET)) {
+  if (req.method !== 'POST' || !(await sameSecret(req.headers.get('x-contact-hook-secret') ?? '', HOOK_SECRET))) {
     return json({ error: 'Unauthorized' }, 401)
   }
 
