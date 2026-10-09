@@ -1,7 +1,10 @@
 
 [functions.send-contact-email]
 enabled = true
-verify_jwt = true
+# No Supabase JWT check: the caller is the database trigger, not a user. The
+# function checks the shared secret in x-contact-hook-secret instead (Vault +
+# function secret CONTACT_HOOK_SECRET). Deploy with this file, not --no-verify-jwt.
+verify_jwt = false
 import_map = "./functions/send-contact-email/deno.json"
 # Uncomment to specify a custom file path to the entrypoint.
 # Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
