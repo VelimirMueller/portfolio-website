@@ -9,7 +9,7 @@
 -- token before the first batch (fine-grained PAT, repo mtg-scanner only,
 -- "Contents: read and write", which repository_dispatch needs):
 --   select vault.create_secret('<token>', 'github_dispatch_token', 'DB trigger -> mtg-scanner repository_dispatch');
--- Without it a batch is still stored (dispatched_at stays null) and can be sent again
+-- Without it a batch is still stored (dispatch_requested_at stays null) and can be sent again
 -- with: select public.mtg_dispatch_test_batch('<batch id>');
 
 create extension if not exists pg_net;
@@ -38,7 +38,8 @@ create table if not exists public.mtg_test_batch (
   created_at          timestamptz not null default now(),
   note                text check (length(note) <= 500),
   case_count          integer not null default 0,
-  dispatched_at       timestamptz,
+  -- When the request was queued, not that GitHub accepted it: check net._http_response.
+  dispatch_requested_at timestamptz,
   dispatch_request_id bigint  -- pg_net request id; the response is in net._http_response for 6 hours
 );
 
@@ -99,7 +100,9 @@ begin
   end if;
 
   -- Asynchronous: the app's insert never waits for GitHub. GitHub answers 204 on
-  -- success and rejects requests without a User-Agent.
+  -- success and rejects requests without a User-Agent. The header (with the token)
+  -- sits in net.http_request_queue until pg_net sends it; the net schema is not
+  -- exposed to anon/authenticated. Keep the token scoped to mtg-scanner only.
   request_id := net.http_post(
     url := 'https://api.github.com/repos/VelimirMueller/mtg-scanner/dispatches',
     body := jsonb_build_object(
@@ -115,7 +118,7 @@ begin
   );
 
   update public.mtg_test_batch
-     set dispatched_at = now(), dispatch_request_id = request_id
+     set dispatch_requested_at = now(), dispatch_request_id = request_id
    where id = p_batch_id;
   return request_id;
 end;
@@ -133,6 +136,9 @@ as $$
 declare
   n integer;
 begin
+  -- Two batches at once cannot share or lose a case: the second UPDATE waits for
+  -- the first one's row locks, re-checks batch_id is null, finds nothing and
+  -- raises below. Cases added meanwhile simply go with the next batch.
   update public.mtg_test_case
      set batch_id = new.id
    where batch_id is null;
