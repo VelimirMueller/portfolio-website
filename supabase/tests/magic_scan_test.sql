@@ -149,6 +149,18 @@ set local role authenticated;
 select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Mercv"}]')) r) = 'check',
   'clear lead: two cards at 0.75 -> check');
 
+-- Language ties (20261010040000): the same German and English name reads as English.
+reset role;
+insert into public.mtg_catalog (oracle_id, name, type_line, colors) values
+  ('00000000-0000-4000-8000-0000000000a5', 'Quorvath Bellringer', 'Creature — Human', '{W}');
+insert into public.mtg_card_name (lang, printed_name, oracle_id) values
+  ('de', 'Quorvath Bellringer', '00000000-0000-4000-8000-0000000000a5');
+set local role authenticated;
+select pg_temp.check((select r ->> 'method' || '/' || (r ->> 'lang') from jsonb_array_elements(public.mtg_match_scan('[{"name": "Quorvath Bellri"}]')) r) = 'prefix/en',
+  'language tie: prefix -> en');
+select pg_temp.check((select r ->> 'method' || '/' || (r ->> 'lang') from jsonb_array_elements(public.mtg_match_scan('[{"name": "Quorvath Bellrinqer"}]')) r) = 'fuzzy/en',
+  'language tie: fuzzy -> en');
+
 set local test.uid = '11111111-1111-4111-8111-111111111111';
 set local role authenticated;
 select pg_temp.check((select count(*) = 0 from public.mtg_printing), 'RLS: other user sees no printings');
