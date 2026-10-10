@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { Home, FolderOpen, Mail } from 'lucide-react';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
+import { AsciiArt, ASCII_LOST } from '@/components/atoms/AsciiArt';
 
 const links = [
   { key: 'home' as const, href: '/', icon: Home },
@@ -29,6 +30,8 @@ export default function NotFoundPage() {
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 max-w-md mx-auto leading-relaxed">
             {t('notFound.description')}
           </p>
+
+          <AsciiArt art={ASCII_LOST} className="mt-8 mx-auto w-fit text-left text-[11px] dark:text-white/30" />
 
           <div className="flex gap-6 justify-center mt-8">
             {links.map(({ key, href, icon: Icon }) => (

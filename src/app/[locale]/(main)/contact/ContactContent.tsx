@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Mail, Linkedin, Github, Check } from 'lucide-react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
+// ArtBackdrop: existing atom (src/components/atoms/ArtBackdrop.tsx, PR #60), also used by SectionHeader.
+import { ArtBackdrop } from '@/components/atoms/ArtBackdrop';
+import { AsciiArt, ASCII_SIGNAL } from '@/components/atoms/AsciiArt';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
@@ -148,13 +151,19 @@ export default function ContactContent() {
   };
 
   return (
-    <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
+    <div className="relative overflow-hidden">
+    {/* Full-bleed art: the transmitter sits behind the header and the form; everything overlaps it. */}
+    <ArtBackdrop className="bg-[url('/art/contact-v1.webp')] bg-[length:auto_100%] md:bg-[length:150%_auto] bg-[position:78%_0%] md:bg-[position:85%_35%] [mask-image:linear-gradient(to_bottom,black_70%,transparent)]" />
+    <div className="relative pt-32 pb-20 px-4 max-w-3xl mx-auto">
       <AnimateIn from="bottom">
-        <SectionHeader title={t('contact.title')} subtitle={t('contact.subtitle')} />
+        <div className="relative">
+          <SectionHeader title={t('contact.title')} subtitle={t('contact.subtitle')} />
+          <AsciiArt art={ASCII_SIGNAL} className="absolute right-0 bottom-0 hidden md:block" />
+        </div>
       </AnimateIn>
 
       <AnimateIn from="bottom" delay={100}>
-        <div className="bg-white dark:bg-[#111] p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 relative overflow-hidden">
+        <div className="bg-white/75 dark:bg-[#0c0c10]/55 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 relative overflow-hidden shadow-2xl shadow-black/5 dark:shadow-black/40">
           <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full -mr-32 -mt-32 pointer-events-none hidden md:block md:blur-3xl"></div>
 
           <div className="relative z-10">
@@ -305,6 +314,7 @@ export default function ContactContent() {
           </div>
         </div>
       </AnimateIn>
+    </div>
     </div>
   );
 }
