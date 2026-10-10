@@ -1,0 +1,17 @@
+{
+  "divider-what-v2.svg": "01 WHAT IT DOES. A WEBSITE. ABOUT ME. BY ME.",
+  "divider-start-v2.svg": "02 QUICK START. COPY. PASTE. PORT 3000.",
+  "divider-how-v2.svg": "03 HOW IT WORKS. BOXES AND ARROWS, AS PROMISED.",
+  "divider-usage-v2.svg": "04 USAGE. TWELVE SCRIPTS. ALL OF THEM USED.",
+  "divider-status-v2.svg": "05 STATUS. LIVE. CHECKED ON EVERY PUSH.",
+  "stats-v2-dark.svg": "0 COOKIES PER VISIT. 2 LOCALES. 3 LIVE DEMOS. 4 CI JOBS",
+  "stats-v2-light.svg": "0 COOKIES PER VISIT. 2 LOCALES. 3 LIVE DEMOS. 4 CI JOBS",
+  "features-v2-dark.svg": "Portfolio: Bento home, about, services, projects and contact. German and English.. Live demos: A CRM dashboard, an MCP demo and an arcade shooter in WASM.. Private admin: Contact inbox, cookieless traffic KPIs and a Magic card collection.",
+  "features-v2-light.svg": "Portfolio: Bento home, about, services, projects and contact. German and English.. Live demos: A CRM dashboard, an MCP demo and an arcade shooter in WASM.. Private admin: Contact inbox, cookieless traffic KPIs and a Magic card collection.",
+  "start-v2-dark.svg": "Terminal: $ git clone https://github.com/VelimirMueller/portfolio-website.git | $ cd portfolio-website && npm install | $ cp .env.example .env.local | # add your Supabase URL and anon key | $ npm run dev",
+  "start-v2-light.svg": "Terminal: $ git clone https://github.com/VelimirMueller/portfolio-website.git | $ cd portfolio-website && npm install | $ cp .env.example .env.local | # add your Supabase URL and anon key | $ npm run dev",
+  "flow-v2-dark.svg": "BROWSER -> NEXT.JS 14 -> SUPABASE -> VERCEL. Atomic Design: presentational components get props. Containers own state and side effects.",
+  "flow-v2-light.svg": "BROWSER -> NEXT.JS 14 -> SUPABASE -> VERCEL. Atomic Design: presentational components get props. Containers own state and side effects.",
+  "status-v2-dark.svg": "Public site, DE + EN: live. Live demos: live. Admin inbox + traffic KPIs: live. Magic pool, decks, wishlist: live. Scanner card match: tuning. Lint, unit, build, visual, E2E: on every push",
+  "status-v2-light.svg": "Public site, DE + EN: live. Live demos: live. Admin inbox + traffic KPIs: live. Magic pool, decks, wishlist: live. Scanner card match: tuning. Lint, unit, build, visual, E2E: on every push"
+}
