@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 
-// The mtg-scanner testdata workflow (GitHub Actions) is the only caller. It sends
+// The lab-mtg-scanner testdata workflow (GitHub Actions) is the only caller. It sends
 // this shared secret in x-testdata-key; the GitHub repo secret TESTDATA_KEY holds
 // the same value. No Supabase JWT check (see supabase/config.toml).
 //

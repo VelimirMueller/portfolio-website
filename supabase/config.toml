@@ -15,7 +15,7 @@ entrypoint = "./functions/send-contact-email/index.ts"
 
 [functions.testdata-eval]
 enabled = true
-# No Supabase JWT check: the caller is the mtg-scanner testdata workflow, not a user.
+# No Supabase JWT check: the caller is the lab-mtg-scanner testdata workflow, not a user.
 # The function checks the shared secret in x-testdata-key instead (function secret
 # TESTDATA_EXPORT_KEY = GitHub secret TESTDATA_KEY). Deploy with this file.
 verify_jwt = false

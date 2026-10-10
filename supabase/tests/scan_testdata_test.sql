@@ -1,4 +1,4 @@
--- Tests for 20261009220000_scan_testdata.sql. Self-contained: inserts its own cases,
+-- Tests for 20261009220000_scan_testdata.sql (and 20261010050000). Self-contained: inserts its own cases,
 -- asserts, then rolls everything back (no request reaches GitHub: pg_net only sends
 -- committed requests). Run against a local copy of the schema:
 --   psql -v ON_ERROR_STOP=1 -f supabase/tests/scan_testdata_test.sql
@@ -32,6 +32,9 @@ grant execute on function pg_temp.add_case() to authenticated;
 select pg_temp.check(not has_function_privilege('anon', 'public.mtg_dispatch_test_batch(uuid)', 'execute')
                  and not has_function_privilege('authenticated', 'public.mtg_dispatch_test_batch(uuid)', 'execute'),
                      'anon and authenticated cannot execute mtg_dispatch_test_batch');
+select pg_temp.check(pg_get_functiondef('public.mtg_dispatch_test_batch(uuid)'::regprocedure)
+                       like '%/repos/VelimirMueller/lab-mtg-scanner/dispatches%',
+                     'dispatch goes to the renamed repo lab-mtg-scanner');
 select pg_temp.check(not has_function_privilege('anon', 'public.mtg_collect_test_batch()', 'execute')
                  and not has_function_privilege('authenticated', 'public.mtg_collect_test_batch()', 'execute'),
                      'anon and authenticated cannot execute mtg_collect_test_batch');
