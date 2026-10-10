@@ -11,7 +11,7 @@ export default function AdminLoginPage({
     <main className="min-h-screen flex items-center justify-center p-4 bg-[#050505]">
       <div className="w-full max-w-sm bg-[#111111] rounded-[2rem] p-8 border border-[#222] animate-fade-in-up">
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-purple-600 flex items-center justify-center font-bold text-white">
             V
           </div>
           <span className="font-bold text-xl tracking-tight text-white">
@@ -20,8 +20,8 @@ export default function AdminLoginPage({
         </div>
 
         {searchParams.sent ? (
-          <div role="status" className="flex items-start gap-3 p-3 rounded-xl border border-blue-500/20 bg-blue-500/5">
-            <Mail size={16} className="text-blue-400 mt-0.5 shrink-0" aria-hidden="true" />
+          <div role="status" className="flex items-start gap-3 p-3 rounded-xl border border-brand-500/20 bg-brand-500/5">
+            <Mail size={16} className="text-brand-400 mt-0.5 shrink-0" aria-hidden="true" />
             <p className="text-xs text-gray-300 leading-relaxed">
               If that address may sign in, a login link is on its way. Open it in this browser.
             </p>
@@ -42,11 +42,11 @@ export default function AdminLoginPage({
               type="email"
               required
               autoComplete="email"
-              className="w-full bg-[#0a0a0a] border border-[#222] rounded-xl py-2.5 px-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-[#0a0a0a] border border-[#222] rounded-xl py-2.5 px-4 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
             />
             <SubmitButton
               pendingLabel="Sending…"
-              className="mt-2 w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-blue-900/20 transition-colors"
+              className="mt-2 w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-brand-900/20 transition-colors"
             >
               Send login link
             </SubmitButton>

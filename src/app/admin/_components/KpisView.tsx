@@ -60,7 +60,7 @@ export function KpisView({
             <h2 id="kpi-messages-title" className="text-sm font-bold text-white">Messages</h2>
             <p className="text-[10px] font-mono uppercase tracking-wider text-gray-500">Contact form · last {KPI_WINDOW_DAYS} days</p>
           </div>
-          <Link href="/admin" className="text-[10px] text-blue-400 font-bold hover:text-blue-300">
+          <Link href="/admin" className="text-[10px] text-brand-400 font-bold hover:text-brand-300">
             Open inbox
           </Link>
         </div>

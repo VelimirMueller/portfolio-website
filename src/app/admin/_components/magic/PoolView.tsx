@@ -59,12 +59,12 @@ export function PoolView({ entries, changeQty }: { entries: PoolEntry[]; changeQ
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search name or text…"
-              className="w-full bg-[#111] border border-[#222] rounded-xl pl-9 pr-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500"
+              className="w-full bg-[#111] border border-[#222] rounded-xl pl-9 pr-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500"
             />
           </label>
           <Link
             href="/admin/magic/add"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 text-white text-sm font-medium hover:bg-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
           >
             <Plus size={16} aria-hidden="true" /> Add card
           </Link>

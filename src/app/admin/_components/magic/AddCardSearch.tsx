@@ -41,7 +41,7 @@ export function AddCardSearch({
   action: (formData: FormData) => Promise<void>;
 }) {
   const input =
-    'bg-[#0b0b0b] border border-[#222] rounded-lg px-2 py-1.5 text-sm text-white focus:outline-none focus:border-blue-500';
+    'bg-[#0b0b0b] border border-[#222] rounded-lg px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-500';
   return (
     <div className="space-y-6">
       <form method="get" className="flex flex-wrap items-center gap-3" role="search">
@@ -55,12 +55,12 @@ export function AddCardSearch({
             minLength={2}
             autoFocus
             placeholder="Card name, e.g. Cyclonic Rift"
-            className="w-full bg-[#111] border border-[#222] rounded-xl pl-9 pr-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500"
+            className="w-full bg-[#111] border border-[#222] rounded-xl pl-9 pr-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500"
           />
         </label>
         <button
           type="submit"
-          className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+          className="px-4 py-2 rounded-xl bg-brand-600 text-white text-sm font-medium hover:bg-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
         >
           Search
         </button>
@@ -140,7 +140,7 @@ export function AddCardSearch({
                       name="intent"
                       value="pool"
                       aria-label={`Add ${card.name} to the pool`}
-                      className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+                      className="px-3 py-1.5 rounded-lg bg-brand-600 text-white text-sm hover:bg-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
                     >
                       Own it
                     </button>

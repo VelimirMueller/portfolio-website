@@ -34,7 +34,7 @@ function GotIt({ entry, wishToPool }: { entry: WishEntry; wishToPool: WishToPool
         aria-busy={pending}
         aria-label={`Got it: move ${entry.card.name} to the pool`}
         onClick={move}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-500 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-600 text-white text-sm hover:bg-brand-500 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
       >
         <PackageCheck size={14} aria-hidden="true" /> Got it
       </button>

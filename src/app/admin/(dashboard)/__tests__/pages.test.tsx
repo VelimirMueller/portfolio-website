@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import type { ContactMessage } from '@/app/admin/_lib/messages';
+import { dashboardStatsFixture } from '@/app/admin/_lib/dashboardStatsFixtures';
 
 const redirect = jest.fn((url: string) => {
   throw new Error(`NEXT_REDIRECT ${url}`);
@@ -32,9 +33,14 @@ const eventsQuery = {
   limit: () => eventsQuery,
   maybeSingle: async () => ({ data: events[0] ?? null, error: null }),
 };
+let stats: unknown = null;
+let statsError: unknown = null;
 jest.mock('@/app/admin/_lib/auth', () => ({
   requireAdmin: async () => ({
-    supabase: { from: (table: string) => (table === 'analytics_events' ? eventsQuery : query) },
+    supabase: {
+      from: (table: string) => (table === 'analytics_events' ? eventsQuery : query),
+      rpc: async () => ({ data: stats, error: statsError }),
+    },
     user: { id: 'x', email: 'me@example.com' },
   }),
 }));
@@ -60,6 +66,8 @@ beforeEach(() => {
   listError = null;
   events = [];
   eventsError = null;
+  stats = null;
+  statsError = null;
   update.mockClear();
 });
 
@@ -146,5 +154,29 @@ describe('KPI page', () => {
     eventsError = { message: 'relation does not exist' };
     render(await AdminKpisPage({}));
     expect(screen.getByRole('alert')).toHaveTextContent('Could not load analytics events');
+  });
+
+  it('opens on the Website tab and falls back to it for an unknown ?tab=', async () => {
+    render(await AdminKpisPage({ searchParams: { tab: 'nope' } }));
+    expect(screen.getByRole('tab', { name: 'Website' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tab', { name: 'Supabase' })).toHaveAttribute('aria-selected', 'false');
+    expect(screen.getByText('Busiest weekdays')).toBeVisible();
+  });
+
+  it('opens the Supabase tab from the URL with the stats in place', async () => {
+    stats = dashboardStatsFixture();
+    render(await AdminKpisPage({ searchParams: { tab: 'supabase' } }));
+    expect(screen.getByRole('tab', { name: 'Supabase' })).toHaveAttribute('aria-selected', 'true');
+    expect(await screen.findByText('2.4 GB')).toBeInTheDocument();
+    expect(screen.getByText('Tables by size')).toBeVisible();
+    expect(screen.getByText('Busiest weekdays')).not.toBeVisible();
+  });
+
+  it('shows the migration notice in a stats tab when the RPC fails', async () => {
+    statsError = { message: 'function public.admin_dashboard_stats does not exist' };
+    render(await AdminKpisPage({ searchParams: { tab: 'magic' } }));
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Stats are not available yet — run migration 20261010060000'
+    );
   });
 });

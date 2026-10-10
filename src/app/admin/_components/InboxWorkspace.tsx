@@ -193,11 +193,11 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
               aria-label="Select all"
               checked={allChecked}
               onChange={() => setChecked(allChecked ? new Set() : new Set(messages.map((m) => m.id)))}
-              className="accent-blue-600"
+              className="accent-brand-600"
             />
             {checked.size > 0 ? (
               <div className="flex items-center gap-1 flex-1 min-w-0" role="toolbar" aria-label="Bulk actions">
-                <span className="text-[11px] font-mono text-blue-400 mr-2">{checked.size} selected</span>
+                <span className="text-[11px] font-mono text-brand-400 mr-2">{checked.size} selected</span>
                 <IconButton label="Mark read" onClick={() => run(checkedIds, 'read')} disabled={pending}>
                   <MailOpen size={14} />
                 </IconButton>
@@ -229,7 +229,7 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
                   defaultValue={query}
                   aria-label="Search messages"
                   placeholder="Search…  ( / )"
-                  className="w-full bg-[#0a0a0a] border border-[#222] rounded-full py-1.5 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-[#0a0a0a] border border-[#222] rounded-full py-1.5 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-brand-500"
                 />
               </form>
             )}
@@ -261,16 +261,16 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
                   key={m.id}
                   id={`row-${m.id}`}
                   className={`group relative flex items-start gap-3 px-5 py-3 transition-colors ${
-                    isOpen ? 'bg-blue-600/10' : checked.has(m.id) ? 'bg-[#1a1a1a]' : 'hover:bg-[#1a1a1a]'
+                    isOpen ? 'bg-brand-500/10' : checked.has(m.id) ? 'bg-[#1a1a1a]' : 'hover:bg-[#1a1a1a]'
                   }`}
                 >
-                  {isOpen && <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-blue-500" aria-hidden="true" />}
+                  {isOpen && <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-brand-500" aria-hidden="true" />}
                   <input
                     type="checkbox"
                     aria-label={`Select message from ${m.name}`}
                     checked={checked.has(m.id)}
                     onChange={() => toggle(m.id)}
-                    className="relative z-10 mt-2 accent-blue-600"
+                    className="relative z-10 mt-2 accent-brand-600"
                   />
                   <Avatar name={m.name} />
                   <div className="flex-1 min-w-0 lg:group-hover:pr-20">
@@ -297,7 +297,7 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
                     )}
                   </div>
                   {m.status === 'new' && !isOpen && (
-                    <span className="absolute right-3 bottom-4 w-1.5 h-1.5 rounded-full bg-blue-500" aria-label="Unread" />
+                    <span className="absolute right-3 bottom-4 w-1.5 h-1.5 rounded-full bg-brand-500" aria-label="Unread" />
                   )}
                   {/* Hover quick actions */}
                   <div className="absolute right-3 top-2 z-10 hidden group-hover:flex group-focus-within:flex items-center gap-0.5 bg-[#1a1a1a] rounded-lg border border-[#333] p-0.5">
@@ -354,7 +354,7 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
             />
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center gap-3 p-10 text-center">
-              <div className="p-3 rounded-2xl bg-blue-500/10 text-blue-400">
+              <div className="p-3 rounded-2xl bg-brand-500/10 text-brand-400">
                 <Inbox size={22} aria-hidden="true" />
               </div>
               <p className="text-sm font-bold text-white">Select a message</p>
@@ -445,7 +445,7 @@ function ReadingPane({
             <Avatar name={message.name} size="lg" />
             <div className="min-w-0">
               <h2 className="text-lg font-bold text-white truncate">{message.name}</h2>
-              <a href={`mailto:${message.email}`} className="text-xs text-blue-400 hover:text-blue-300 break-all">
+              <a href={`mailto:${message.email}`} className="text-xs text-brand-400 hover:text-brand-300 break-all">
                 {message.email}
               </a>
               <div className="flex items-center gap-2 mt-1.5">
@@ -458,7 +458,7 @@ function ReadingPane({
           </div>
           <a
             href={replyHref(message)}
-            className="self-start flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-500 shadow-lg shadow-blue-900/20"
+            className="self-start flex items-center gap-2 px-4 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-500 shadow-lg shadow-brand-900/20"
           >
             <Mail size={14} aria-hidden="true" /> Reply
           </a>
@@ -528,7 +528,7 @@ function IconButton({
       title={label}
       onClick={onClick}
       disabled={disabled}
-      className={`p-1.5 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+      className={`p-1.5 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
         tone === 'danger' ? 'text-red-400 hover:bg-red-500/10' : 'text-gray-400 hover:text-white hover:bg-[#222]'
       }`}
     >
