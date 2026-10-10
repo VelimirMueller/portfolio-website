@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ArtBackdropProps {
-  /** Static Tailwind classes: the background image plus position, size and mask. */
+  /** Static Tailwind classes for the background image, its position, size and mask. Nothing else. */
   className: string;
 }
 

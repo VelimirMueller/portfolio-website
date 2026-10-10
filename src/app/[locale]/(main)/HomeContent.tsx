@@ -195,7 +195,7 @@ export default function HomeContent() {
         <BentoCard
           className="h-full min-h-[260px] bg-white dark:bg-[#121214] justify-center"
           subtitle={t('home.synthwerkLabel')}
-          backdrop={<ArtBackdrop className="bg-[url('/art/synthwerk-v1.webp')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent_25%,black_75%)]" />}
+          backdrop={<ArtBackdrop className="bg-[url('/art/synthwerk-v1.webp')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent_60%,black_100%)] md:[mask-image:linear-gradient(to_right,transparent_25%,black_75%)]" />}
         >
            <div className="relative z-10 max-w-md">
              <h3 className="text-3xl md:text-5xl font-mono font-bold text-light-text dark:text-dark-text tracking-tighter mb-3">SYNTHWERK.</h3>
