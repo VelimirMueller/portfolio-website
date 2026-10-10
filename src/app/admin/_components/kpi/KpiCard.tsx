@@ -1,14 +1,57 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Inbox, Mail, ShieldAlert, TrendingDown, TrendingUp, CalendarDays } from 'lucide-react';
+import {
+  Activity,
+  Boxes,
+  CalendarDays,
+  Clock,
+  Copy,
+  Database,
+  FlaskConical,
+  History,
+  Inbox,
+  Languages,
+  Layers,
+  Library,
+  ListPlus,
+  Mail,
+  Send,
+  Server,
+  ShieldAlert,
+  Star,
+  Table,
+  TrendingDown,
+  TrendingUp,
+} from 'lucide-react';
 
-const ICONS = { inbox: Inbox, mail: Mail, shield: ShieldAlert, calendar: CalendarDays } as const;
+const ICONS = {
+  inbox: Inbox,
+  mail: Mail,
+  shield: ShieldAlert,
+  calendar: CalendarDays,
+  database: Database,
+  activity: Activity,
+  server: Server,
+  table: Table,
+  boxes: Boxes,
+  layers: Layers,
+  copy: Copy,
+  languages: Languages,
+  star: Star,
+  listPlus: ListPlus,
+  library: Library,
+  flask: FlaskConical,
+  send: Send,
+  clock: Clock,
+  history: History,
+} as const;
 const COLORS = {
   blue: { chip: 'bg-blue-500/10 text-blue-400', spark: '#3b82f6' },
   purple: { chip: 'bg-purple-500/10 text-purple-400', spark: '#a855f7' },
   green: { chip: 'bg-green-500/10 text-green-400', spark: '#22c55e' },
   red: { chip: 'bg-red-500/10 text-red-400', spark: '#f87171' },
+  indigo: { chip: 'bg-brand-500/15 text-brand-400', spark: '#6366f1' },
 } as const;
 
 /** easeOutCubic count-up, as in the CRM demo's KPI cards. Decimals are kept. */
@@ -43,7 +86,10 @@ const Sparkline = ({ data, color }: { data: number[]; color: string }) => {
 
 export interface KpiCardProps {
   label: string;
-  value: number;
+  /** Numeric value with count-up; optional when `display` is given. */
+  value?: number;
+  /** Ready-made value text (e.g. "2.4 GB", "17.2") shown instead of the number. */
+  display?: string;
   suffix?: string;
   decimals?: number;
   icon: keyof typeof ICONS;
@@ -58,7 +104,8 @@ export interface KpiCardProps {
 
 export function KpiCard({
   label,
-  value,
+  value = 0,
+  display,
   suffix = '',
   decimals = 0,
   icon,
@@ -85,8 +132,7 @@ export function KpiCard({
         {sparkline && <Sparkline data={sparkline} color={COLORS[color].spark} />}
       </div>
       <div className="text-2xl font-mono font-bold text-white mb-1">
-        {shown.toFixed(decimals)}
-        {suffix}
+        {display ?? `${shown.toFixed(decimals)}${suffix}`}
       </div>
       <div className="flex items-center justify-between gap-2">
         <span className="text-xs text-gray-500">{label}</span>

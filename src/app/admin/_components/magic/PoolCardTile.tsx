@@ -40,7 +40,7 @@ export function QtyControls({
   };
 
   const btn =
-    'w-7 h-7 rounded-lg border border-[#333] text-gray-400 hover:text-white hover:border-[#555] flex items-center justify-center disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500';
+    'w-7 h-7 rounded-lg border border-[#333] text-gray-400 hover:text-white hover:border-[#555] flex items-center justify-center disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500';
   return (
     <div className="flex items-center gap-1.5" aria-busy={pending}>
       <button

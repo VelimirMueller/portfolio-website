@@ -45,7 +45,7 @@ export function AdminShell({
       >
         <div>
           <div className="flex items-center gap-3 px-4 mb-12 mt-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-purple-600 flex items-center justify-center font-bold text-white">
               V
             </div>
             <span className="font-bold text-xl tracking-tight">
@@ -68,14 +68,14 @@ export function AdminShell({
                   href={href}
                   onClick={() => setSidebarOpen(false)}
                   aria-current={active ? 'page' : undefined}
-                  className={`flex items-center gap-4 px-4 py-3 rounded-xl w-full text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
-                    active ? 'bg-blue-600/10 text-blue-400' : 'text-gray-500 hover:bg-[#1a1a1a] hover:text-white'
+                  className={`flex items-center gap-4 px-4 py-3 rounded-xl w-full text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
+                    active ? 'bg-brand-500/10 text-brand-400' : 'text-gray-500 hover:bg-[#1a1a1a] hover:text-white'
                   }`}
                 >
                   <Icon size={20} aria-hidden="true" />
                   <span className="font-medium text-sm flex-1">{label}</span>
                   {href === '/admin' && unread > 0 && (
-                    <span className="min-w-5 h-5 px-1.5 rounded bg-blue-600 text-white text-[10px] flex items-center justify-center font-bold">
+                    <span className="min-w-5 h-5 px-1.5 rounded bg-brand-600 text-white text-[10px] flex items-center justify-center font-bold">
                       {unread}
                     </span>
                   )}
