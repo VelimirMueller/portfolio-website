@@ -4,7 +4,18 @@ import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { ExpandableProjectCard } from '@/components/molecules/ExpandableProjectCard';
+import { BuildCard, type BuildGroup } from '@/components/molecules/BuildCard';
 import { useTranslations } from 'next-intl';
+
+// Studio builds (vm-brand groups). Text lives in projects.builds.<key>.
+const BUILDS: { key: string; group: BuildGroup; tags: string[]; href?: string; link?: 'github' | 'site' }[] = [
+  { key: 'synthwerk', group: 'flagship', tags: ['FastAPI', 'Go', 'ONNX', 'Nuxt'], href: 'https://github.com/VelimirMueller/synthwerk', link: 'github' },
+  { key: 'rig', group: 'ops', tags: ['Claude Code', 'MCP', 'DeepSeek', 'GLM', 'MLX'] },
+  { key: 'bench', group: 'flagship', tags: ['TypeScript', 'SQLite', 'GitHub Pages'], href: 'https://velimirmueller.github.io/code-context-mcp/', link: 'site' },
+  { key: 'mtg', group: 'lab', tags: ['Kotlin', 'Compose', 'ML Kit', 'Supabase'] },
+  { key: 'debater', group: 'lab', tags: ['LangGraph', 'Python', 'Langfuse'], href: 'https://github.com/VelimirMueller/lab-debater', link: 'github' },
+  { key: 'skills', group: 'lab', tags: ['Claude Code', 'Vue', 'React'], href: 'https://github.com/VelimirMueller/lab-claude-skills', link: 'github' },
+];
 
 export default function ProjectsContent() {
   const t = useTranslations();
@@ -89,6 +100,29 @@ export default function ProjectsContent() {
             accentColor="orange"
           />
         </AnimateIn>
+      </div>
+
+      {/* --- STUDIO BUILDS --- */}
+      <div className="mb-16">
+        <AnimateIn from="left">
+          <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.studioBuilds')}</h3>
+        </AnimateIn>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {BUILDS.map((b, i) => (
+            <AnimateIn key={b.key} from="bottom" delay={100 + i * 50}>
+              <BuildCard
+                group={b.group}
+                title={t(`projects.builds.${b.key}.title`)}
+                desc={t(`projects.builds.${b.key}.desc`)}
+                image={`/art/build-${b.key}-v1.webp`}
+                tags={b.tags}
+                href={b.href}
+                linkLabel={b.link ? t(`projects.${b.link}`) : undefined}
+                privateLabel={t('projects.private')}
+              />
+            </AnimateIn>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-12">
