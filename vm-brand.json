@@ -3,5 +3,9 @@
   "tagline": "A CV that compiles.",
   "sublabel": "NEXT.JS · SUPABASE · VERCEL",
   "bannerVersion": "v2",
-  "art": {"file": "v2/portfolio-website.png", "seed": 321}
+  "art": {
+    "file": "v2/portfolio-website.png",
+    "seed": 321
+  },
+  "status": "STABLE · v2.3.0"
 }
