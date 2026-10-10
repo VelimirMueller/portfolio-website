@@ -137,6 +137,18 @@ select pg_temp.check((select r ->> 'method' from jsonb_array_elements(public.mtg
 select pg_temp.check((select r ->> 'method' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing "}]')) r) is distinct from 'prefix',
   'prefix: a word shared by every test card (not unique) is not a prefix match');
 
+-- Clear lead (20261010030000): a typo far ahead of every other card matches, a close race stays a question.
+select pg_temp.check((select r ->> 'status' || '/' || (r ->> 'method') || '/' || (r ->> 'name') from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Mercv"}]')) r) = 'matched/fuzzy/Testing Mercy',
+  'clear lead: "Testing Mercv" 0.75, next card 0.40 -> matched');
+select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Gekko"}]')) r) = 'check',
+  'clear lead: 0.65 is under p_sure_min - 0.2 -> check');
+reset role;
+insert into public.mtg_catalog (oracle_id, name, type_line, colors) values
+  ('00000000-0000-4000-8000-0000000000a4', 'Testing Merch', 'Artifact', '{}');
+set local role authenticated;
+select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Mercv"}]')) r) = 'check',
+  'clear lead: two cards at 0.75 -> check');
+
 set local test.uid = '11111111-1111-4111-8111-111111111111';
 set local role authenticated;
 select pg_temp.check((select count(*) = 0 from public.mtg_printing), 'RLS: other user sees no printings');
