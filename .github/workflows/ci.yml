@@ -66,6 +66,11 @@ jobs:
           for try in 1 2 3; do
             timeout 480 npx playwright install --with-deps chromium webkit && exit 0
             echo "::warning::Playwright install try $try failed or hung; retrying"
+            # A killed apt leaves dpkg half done and its locks held; without this the
+            # next try fails at once with exit 100 (seen 2026-10-10, run on PR #49).
+            sudo pkill -9 -f 'apt-get|dpkg' || true
+            sudo rm -f /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/cache/apt/archives/lock /var/lib/apt/lists/lock
+            sudo dpkg --configure -a || true
           done
           exit 1
       - name: Run visual regression tests
@@ -106,6 +111,11 @@ jobs:
           for try in 1 2 3; do
             timeout 480 npx playwright install --with-deps chromium webkit && exit 0
             echo "::warning::Playwright install try $try failed or hung; retrying"
+            # A killed apt leaves dpkg half done and its locks held; without this the
+            # next try fails at once with exit 100 (seen 2026-10-10, run on PR #49).
+            sudo pkill -9 -f 'apt-get|dpkg' || true
+            sudo rm -f /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/cache/apt/archives/lock /var/lib/apt/lists/lock
+            sudo dpkg --configure -a || true
           done
           exit 1
       - name: Run E2E tests
