@@ -1,3 +1,5 @@
+<img alt="PORTFOLIO. velimir-mueller.de. Live, v2.3. 0 cookies, 3 live demos, 2 locales." src=".github/readme/hero.jpg" width="100%">
+
 <div align="center">
 
 # velimir-portfolio
