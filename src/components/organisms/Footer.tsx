@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from '@/i18n/navigation';
 import { Mail, Linkedin, Github } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { AsciiArt, ASCII_VM } from '@/components/atoms/AsciiArt';
 
 export const Footer = () => {
   const t = useTranslations();
@@ -43,6 +44,10 @@ export const Footer = () => {
             </a>
           </div>
         </div>
+      </div>
+      <div className="mt-12 hidden md:flex items-end justify-between gap-6">
+        <AsciiArt art={ASCII_VM} className="text-[8px] dark:text-white/15" />
+        <AsciiArt art={'// no frameworks were harmed.\n// a few were mildly inconvenienced.'} className="text-right" />
       </div>
       <div className="mt-12 pt-8 border-t border-black/5 dark:border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 dark:text-gray-400 font-mono gap-2">
         <span>© {new Date().getFullYear()} Velimir Müller.</span>

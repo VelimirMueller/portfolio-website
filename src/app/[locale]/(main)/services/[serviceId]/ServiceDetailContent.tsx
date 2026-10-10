@@ -3,6 +3,7 @@ import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
+import { AsciiArt, asciiDivider } from '@/components/atoms/AsciiArt';
 import { Check, Zap, Layers, GitBranch, Laptop, Box, type LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -16,6 +17,16 @@ const iconMap: Record<ServiceId, LucideIcon> = {
   'modern-stack': Zap,
 };
 
+// SectionHeader's optional artClassName prop exists since PR #61 (src/components/molecules/SectionHeader.tsx).
+// Static strings so Tailwind sees every class (no template literals in class names).
+const artMap: Record<ServiceId, string> = {
+  'requirements-engineering': "bg-[url('/art/svc-requirements-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
+  'ux-ui-branding': "bg-[url('/art/svc-ux-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
+  'frontend-development': "bg-[url('/art/svc-frontend-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
+  'project-delivery': "bg-[url('/art/svc-delivery-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
+  'modern-stack': "bg-[url('/art/svc-stack-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
+};
+
 export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
   const t = useTranslations();
   const problems = t.raw(`serviceDetail.${serviceId}.problems`) as string[];
@@ -27,8 +38,17 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
       <AnimateIn from="bottom">
-        <SectionHeader title={t(`serviceDetail.${serviceId}.title`)} subtitle={t(`serviceDetail.${serviceId}.subtitle`)} />
+        <SectionHeader
+          title={t(`serviceDetail.${serviceId}.title`)}
+          subtitle={t(`serviceDetail.${serviceId}.subtitle`)}
+          artClassName={artMap[serviceId as ServiceId]}
+        />
       </AnimateIn>
+
+      <AsciiArt
+        art={asciiDivider(Math.max(1, Object.keys(artMap).indexOf(serviceId) + 1), serviceId.replace(/-/g, ' '))}
+        className="-mt-6 md:-mt-10 mb-8 hidden md:block overflow-hidden"
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
 
