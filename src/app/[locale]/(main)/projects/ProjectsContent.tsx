@@ -15,7 +15,7 @@ export default function ProjectsContent() {
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
       <AnimateIn from="bottom">
-        <SectionHeader title={t('projects.title')} subtitle={t('projects.subtitle')} />
+        <SectionHeader title={t('projects.title')} subtitle={t('projects.subtitle')} artClassName="bg-[url('/art/projects-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block" />
       </AnimateIn>
 
       {/* --- FEATURED DEMOS --- */}
