@@ -2,6 +2,7 @@
   "name": "velimir-portfolio",
   "version": "2.3.0",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
