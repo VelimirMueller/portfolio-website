@@ -4,6 +4,7 @@ import { computeMessageKpis } from '@/app/admin/_lib/kpis';
 import type { ContactMessage } from '@/app/admin/_lib/messages';
 import { computeTraffic, parseTrafficParams, trafficWindow } from '@/app/admin/_lib/traffic';
 import { loadLastEventAt, loadTrafficEvents } from '@/app/admin/_lib/trafficQuery';
+import { loadVercelStats } from '@/app/admin/_lib/vercelStats';
 import { KpiDashboard } from '@/app/admin/_components/kpi/KpiDashboard';
 import { MagicStats } from '@/app/admin/_components/kpi/MagicStats';
 import { SupabaseStats } from '@/app/admin/_components/kpi/SupabaseStats';
@@ -21,11 +22,12 @@ export default async function AdminKpisPage({
   const params = parseTrafficParams(searchParams);
   const now = new Date();
 
-  const [messages, traffic, lastEventAt, dashboard] = await Promise.all([
+  const [messages, traffic, lastEventAt, dashboard, vercel] = await Promise.all([
     supabase.from('contact_messages').select('id, name, email, message, status, created_at'),
     loadTrafficEvents(supabase, trafficWindow(params.filters.range, now).since),
     loadLastEventAt(supabase),
     loadDashboardStats((fn) => supabase.rpc(fn)),
+    loadVercelStats(),
   ]);
 
   const data = computeTraffic(traffic.events, params, now);
@@ -55,7 +57,7 @@ export default async function AdminKpisPage({
           />
         ),
         supabase: <SupabaseStats stats={dashboard.stats} error={dashboard.error} />,
-        vercel: <VercelPanel />,
+        vercel: <VercelPanel stats={vercel} />,
         magic: <MagicStats stats={dashboard.stats} error={dashboard.error} />,
       }}
     />

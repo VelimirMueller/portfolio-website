@@ -16,7 +16,7 @@ function Dashboard({ initialTab = 'website' }: { initialTab?: ReturnType<typeof 
       panels={{
         website: <p>website body</p>,
         supabase: <SupabaseStats stats={fixture} />,
-        vercel: <VercelPanel />,
+        vercel: <VercelPanel stats={{ status: 'unconfigured' }} />,
         magic: <MagicStats stats={fixture} />,
       }}
     />
@@ -41,7 +41,7 @@ describe('KpiDashboard tabs', () => {
     render(<Dashboard />);
     expect(screen.getByRole('tab', { name: 'Website' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByText('website body')).toBeVisible();
-    expect(screen.getByText('Vercel — coming soon').closest('[role="tabpanel"]')).toHaveAttribute('hidden');
+    expect(screen.getByText('VERCEL_API_TOKEN').closest('[role="tabpanel"]')).toHaveAttribute('hidden');
   });
 
   it('switches tabs on click and keeps ?tab= next to the other params', () => {
@@ -109,10 +109,11 @@ describe('Supabase tab', () => {
 });
 
 describe('Vercel tab', () => {
-  it('explains what it needs, without calling anything', () => {
-    render(<VercelPanel />);
-    expect(screen.getByRole('heading', { name: 'Vercel — coming soon' })).toBeInTheDocument();
-    expect(screen.getByText(/VERCEL_API_TOKEN/)).toBeInTheDocument();
+  it('explains which token it needs, without calling anything', () => {
+    render(<VercelPanel stats={{ status: 'unconfigured' }} />);
+    expect(screen.getByRole('heading', { name: 'Vercel' })).toBeInTheDocument();
+    expect(screen.getByText('VERCEL_API_TOKEN')).toBeInTheDocument();
+    expect(screen.getByText(/Production environment/)).toBeInTheDocument();
   });
 });
 

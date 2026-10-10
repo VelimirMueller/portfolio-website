@@ -25,7 +25,17 @@ export const Card = ({
   </div>
 );
 
-export type BadgeColor = 'blue' | 'green' | 'purple' | 'orange' | 'red' | 'emerald' | 'cyan' | 'pink' | 'amber';
+export type BadgeColor =
+  | 'blue'
+  | 'green'
+  | 'purple'
+  | 'orange'
+  | 'red'
+  | 'emerald'
+  | 'cyan'
+  | 'pink'
+  | 'amber'
+  | 'gray';
 
 const BADGE_STYLES: Record<BadgeColor, string> = {
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
@@ -37,6 +47,7 @@ const BADGE_STYLES: Record<BadgeColor, string> = {
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
   pink: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
   amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  gray: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
 };
 
 export const Badge = ({ children, color = 'blue' }: { children: ReactNode; color?: BadgeColor }) => (
