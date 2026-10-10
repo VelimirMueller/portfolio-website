@@ -127,6 +127,16 @@ select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg
 select pg_temp.check((select r ->> 'status' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Gekko"}]', p_fuzzy_min => -5, p_sure_min => 7)) r) = 'check',
   'thresholds: out-of-range values are clamped, not trusted');
 
+-- Unique prefix (20261010010000): a cut-off name of exactly one card matches.
+select pg_temp.check((select r ->> 'status' || '/' || (r ->> 'method') from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing Merc"}]')) r) = 'matched/prefix',
+  'prefix: "Testing Merc" -> Testing Mercy');
+select pg_temp.check((select r ->> 'status' || '/' || (r ->> 'method') from jsonb_array_elements(public.mtg_match_scan('[{"name": "Prüfender Gec"}]')) r) = 'matched/prefix',
+  'prefix: German printed name cut off');
+select pg_temp.check((select r ->> 'method' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing"}]')) r) is distinct from 'prefix',
+  'prefix: under 8 characters is never a prefix match');
+select pg_temp.check((select r ->> 'method' from jsonb_array_elements(public.mtg_match_scan('[{"name": "Testing "}]')) r) is distinct from 'prefix',
+  'prefix: a word shared by every test card (not unique) is not a prefix match');
+
 set local test.uid = '11111111-1111-4111-8111-111111111111';
 set local role authenticated;
 select pg_temp.check((select count(*) = 0 from public.mtg_printing), 'RLS: other user sees no printings');
