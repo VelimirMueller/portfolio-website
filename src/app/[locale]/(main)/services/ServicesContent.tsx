@@ -22,7 +22,7 @@ export default function ServicesContent() {
   return (
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
       <AnimateIn from="bottom">
-        <SectionHeader title={t('services.title')} subtitle={t('services.subtitle')} />
+        <SectionHeader title={t('services.title')} subtitle={t('services.subtitle')} artClassName="bg-[url('/art/services-v1.webp')] bg-cover bg-[position:100%_60%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block" />
       </AnimateIn>
 
       <div className="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-4">
