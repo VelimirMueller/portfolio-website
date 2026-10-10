@@ -4,13 +4,17 @@ import { ArrowRight, Code2, Database, Layout, Terminal, Box, Globe, Package } fr
 import { BentoCard } from '@/components/molecules/BentoCard';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
+import { ArtBackdrop } from '@/components/atoms/ArtBackdrop';
 import { useTranslations } from 'next-intl';
 
 const HighlightStatement = () => {
   const t = useTranslations();
 
   return (
-    <BentoCard className="h-full bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none">
+    <BentoCard
+      className="h-full bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden group min-h-[320px] border-none"
+      backdrop={<ArtBackdrop className="bg-[url('/art/mcp-v1.webp')] bg-[length:120%] bg-[position:100%_4%] [mask-image:linear-gradient(to_bottom,black_18%,transparent_34%)]" />}
+    >
       <div className="relative w-full h-full min-h-[320px] flex flex-col justify-center items-center text-center px-6">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         <div className="relative z-10 flex flex-col items-center gap-4">
@@ -97,7 +101,10 @@ export default function HomeContent() {
       <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4 auto-rows-min">
 
         <AnimateIn from="left" className="md:col-span-6 lg:col-span-8">
-        <BentoCard className="h-full min-h-[450px] bg-white dark:bg-[#121214] border-light-border dark:border-dark-border justify-between relative overflow-hidden">
+        <BentoCard
+          className="h-full min-h-[450px] bg-white dark:bg-[#121214] border-light-border dark:border-dark-border justify-between relative overflow-hidden"
+          backdrop={<ArtBackdrop className="bg-[url('/art/hero-v1.webp')] bg-cover bg-[position:42%_50%] -scale-x-100 hidden md:block [mask-image:linear-gradient(to_left,transparent_35%,black_65%)]" />}
+        >
           <div className="absolute inset-0 opacity-20 bg-noise pointer-events-none"></div>
 
           <div className="relative z-10 flex flex-col h-full justify-between">
@@ -182,6 +189,30 @@ export default function HomeContent() {
         </BentoCard>
         </AnimateIn>
 
+      
+
+        <AnimateIn from="bottom" delay={100} className="md:col-span-6 lg:col-span-12">
+        <BentoCard
+          className="h-full min-h-[260px] bg-white dark:bg-[#121214] justify-center"
+          subtitle={t('home.synthwerkLabel')}
+          backdrop={<ArtBackdrop className="bg-[url('/art/synthwerk-v1.webp')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent_25%,black_75%)]" />}
+        >
+           <div className="relative z-10 max-w-md">
+             <h3 className="text-3xl md:text-5xl font-mono font-bold text-light-text dark:text-dark-text tracking-tighter mb-3">SYNTHWERK.</h3>
+             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-5">
+                {t('home.synthwerkDesc')}
+             </p>
+             <a
+               href="https://github.com/VelimirMueller/synthwerk"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="inline-flex items-center gap-2 text-xs font-mono font-bold text-light-text dark:text-dark-text border-b border-gray-300 dark:border-gray-700 pb-1 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-500 transition-all w-fit group"
+             >
+                {t('home.synthwerkCta')} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+             </a>
+           </div>
+        </BentoCard>
+        </AnimateIn>
       </div>
     </div>
   );

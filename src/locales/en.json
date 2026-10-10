@@ -46,7 +46,10 @@
     "servicesLabel": "Services",
     "servicesTitle": "End-to-End",
     "servicesDesc": "Requirements → UX/UI → shipped product. Stack fits the job: Next.js, Vue/Nuxt, Laravel, Supabase, Vercel, AWS/Azure.",
-    "allServices": "All Services"
+    "allServices": "All Services",
+    "synthwerkLabel": "Open source",
+    "synthwerkDesc": "AI services you run yourself. In small pieces: chat, vision and a page builder, each in its own repo.",
+    "synthwerkCta": "The map on GitHub"
   },
   "services": {
     "metaTitle": "Services — Velimir Müller",
