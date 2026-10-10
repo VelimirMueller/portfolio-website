@@ -1,0 +1,155 @@
+{
+  "group": "flagship",
+  "version": "v2",
+  "dividers": [
+    {
+      "key": "what",
+      "index": "01",
+      "title": "WHAT IT DOES",
+      "caption": "A WEBSITE. ABOUT ME. BY ME.",
+      "art": "strip-flagship-1"
+    },
+    {
+      "key": "start",
+      "index": "02",
+      "title": "QUICK START",
+      "caption": "COPY. PASTE. PORT 3000.",
+      "art": "strip-flagship-2"
+    },
+    {
+      "key": "how",
+      "index": "03",
+      "title": "HOW IT WORKS",
+      "caption": "BOXES AND ARROWS, AS PROMISED.",
+      "art": "strip-flagship-3"
+    },
+    {
+      "key": "usage",
+      "index": "04",
+      "title": "USAGE",
+      "caption": "TWELVE SCRIPTS. ALL OF THEM USED.",
+      "art": "strip-flagship-4"
+    },
+    {
+      "key": "status",
+      "index": "05",
+      "title": "STATUS",
+      "caption": "LIVE. CHECKED ON EVERY PUSH.",
+      "art": "strip-flagship-5"
+    }
+  ],
+  "panels": [
+    {
+      "key": "stats",
+      "type": "stats",
+      "items": [
+        {
+          "value": "0",
+          "label": "COOKIES PER VISIT"
+        },
+        {
+          "value": "2",
+          "label": "LOCALES"
+        },
+        {
+          "value": "3",
+          "label": "LIVE DEMOS"
+        },
+        {
+          "value": "4",
+          "label": "CI JOBS"
+        }
+      ]
+    },
+    {
+      "key": "features",
+      "type": "cards",
+      "items": [
+        {
+          "title": "Portfolio",
+          "text": "Bento home, about, services, projects and contact. German and English."
+        },
+        {
+          "title": "Live demos",
+          "text": "A CRM dashboard, an MCP demo and an arcade shooter in WASM."
+        },
+        {
+          "title": "Private admin",
+          "text": "Contact inbox, cookieless traffic KPIs and a Magic card collection."
+        }
+      ]
+    },
+    {
+      "key": "start",
+      "type": "terminal",
+      "title": "QUICK START",
+      "lines": [
+        "$ git clone https://github.com/VelimirMueller/portfolio-website.git",
+        "$ cd portfolio-website && npm install",
+        "$ cp .env.example .env.local",
+        "# add your Supabase URL and anon key",
+        "$ npm run dev"
+      ]
+    },
+    {
+      "key": "flow",
+      "type": "flow",
+      "nodes": [
+        {
+          "title": "BROWSER",
+          "sub": "No cookie. A beacon per page view."
+        },
+        {
+          "title": "NEXT.JS 14",
+          "sub": "App Router, next-intl, strict CSP.",
+          "hot": true
+        },
+        {
+          "title": "SUPABASE",
+          "sub": "Postgres, RLS, magic-link auth."
+        },
+        {
+          "title": "VERCEL",
+          "sub": "Every push to main deploys."
+        }
+      ],
+      "caption": "Atomic Design: presentational components get props. Containers own state and side effects."
+    },
+    {
+      "key": "status",
+      "type": "status",
+      "rows": [
+        {
+          "label": "Public site, DE + EN",
+          "value": "live",
+          "state": "ok"
+        },
+        {
+          "label": "Live demos",
+          "value": "live",
+          "state": "ok"
+        },
+        {
+          "label": "Admin inbox + traffic KPIs",
+          "value": "live",
+          "state": "ok"
+        },
+        {
+          "label": "Magic pool, decks, wishlist",
+          "value": "live",
+          "state": "ok"
+        },
+        {
+          "label": "Scanner card match",
+          "value": "tuning",
+          "state": "wip"
+        },
+        {
+          "label": "Lint, unit, build, visual, E2E",
+          "value": "on every push",
+          "state": "ok"
+        }
+      ]
+    }
+  ]
+}
