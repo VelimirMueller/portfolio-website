@@ -46,7 +46,10 @@
     "servicesLabel": "Services",
     "servicesTitle": "End-to-End",
     "servicesDesc": "Requirements → UX/UI → ausgeliefertes Produkt. Stack passend zum Auftrag: Next.js, Vue/Nuxt, Laravel, Supabase, Vercel, AWS/Azure.",
-    "allServices": "Alle Leistungen"
+    "allServices": "Alle Leistungen",
+    "synthwerkLabel": "Open Source",
+    "synthwerkDesc": "KI-Dienste zum Selbstbetreiben. In kleinen Teilen: Chat, Bilderkennung und Page-Builder, jeder im eigenen Repo.",
+    "synthwerkCta": "Die Übersicht auf GitHub"
   },
   "services": {
     "metaTitle": "Leistungen — Velimir Müller",
