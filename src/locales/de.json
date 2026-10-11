@@ -26,30 +26,225 @@
     "metaTitle": "Velimir Müller | Senior Product Engineer",
     "metaDesc": "Senior Product Engineer. Full Lifecycle über mehrere ausgelieferte Produkte. vlm-code-context-mcp auf npm — MCP-Server für KI-Agents, per Benchmark verifiziert. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
     "badge": "Verfügbar für Projekte",
-    "subtitle": "Senior Product Engineer",
-    "subtitleSecondary": "Full-Stack · Infrastructure · Agent Tooling",
-    "description": "Ich liefere Produkte end-to-end. In über 9 Jahren bin ich vom Frontend-Spezialisten zum Verantwortlichen für den gesamten Lifecycle geworden — von Figma über React, Vue, Node.js, Laravel bis zum Cloud-Deployment. Heute bringe ich dieselbe Tiefe in Agentic Workflows und Context Engineering ein und entwickle Open-Source-MCP-Tooling für KI-gestützte Entwicklung.",
+    "eyebrow": "VM. / Product Engineer · Berlin",
+    "tagline": "Produkt, Plattform und KI-Tooling. Von Anfang bis Ende.",
+    "sub": "Full-Stack · Plattform · KI-Tooling",
+    "description": "Anforderungen, UX, Code und Cloud-Infrastruktur aus einer Hand. Ausgeliefert bei GALVANY (Lead-Matching, 3–4× schnellere Zuweisung), DEMOS (Civic-Tech-Plattform) und bewerbermappe.com (Presse: BILD, Die Zeit, n-tv).",
     "ctaProjects": "Projekte ansehen",
     "ctaContact": "Kontakt",
-    "techDna": "Engineering DNA",
-    "systemStatus": "System Status",
-    "operational": "Operational",
-    "highlightTag": "Open Source",
-    "highlightTitle": "MCP-Server für KI-Coding-Agents.",
-    "highlightDesc": "81 Tools. Adversarial Benchmark über 9 Coding-Tasks → ~40% mediane Token-Reduktion nach mehreren Review-Schritten (getestet gegen rohen Codebase-Kontext). Persistenter Sprint/Retro-Speicher, damit Agents aus vergangener Arbeit lernen.",
-    "highlightCta": "Auf GitHub ansehen",
-    "thePerson": "The Person",
-    "personQuote": "Produkte beginnen nicht beim Code — sie beginnen beim Business-Problem. Ich arbeite die volle Strecke vom Stakeholder-Interview bis zum Production-Deployment, weil die Übergaben dazwischen der Ort sind, an dem aus guten Produkten mittelmäßige werden.",
-    "personQuoteHighlight": "Keine Silos, keine Übersetzungsverluste.",
-    "personName": "Velimir Müller",
-    "personRole": "Product Engineer",
-    "servicesLabel": "Services",
-    "servicesTitle": "End-to-End",
-    "servicesDesc": "Requirements → UX/UI → ausgeliefertes Produkt. Stack passend zum Auftrag: Next.js, Vue/Nuxt, Laravel, Supabase, Vercel, AWS/Azure.",
+    "statsLabel": "Auf einen Blick",
+    "stats": [
+      {
+        "value": "3–4×",
+        "label": "Schnellere Lead-Zuweisung bei GALVANY"
+      },
+      {
+        "value": "81",
+        "label": "Tools in code-context-mcp"
+      },
+      {
+        "value": "~40%",
+        "label": "Mediane Token-Reduktion, 9-Task-Benchmark"
+      },
+      {
+        "value": "2",
+        "label": "Unabhängige Reviews pro Änderung"
+      }
+    ],
+    "sections": {
+      "practice": {
+        "index": "01",
+        "title": "Leistungen",
+        "caption": "Drei Bereiche, eine Verantwortung"
+      },
+      "experience": {
+        "index": "02",
+        "title": "Erfahrung",
+        "caption": "Von Anfang bis Ende, in vielen Rollen"
+      },
+      "flagships": {
+        "index": "03",
+        "title": "Flagships",
+        "caption": "Produkte, die ich öffentlich ausliefere"
+      },
+      "system": {
+        "index": "04",
+        "title": "Delivery-System",
+        "caption": "Wie Änderungen in Produktion kommen"
+      },
+      "capabilities": {
+        "index": "05",
+        "title": "Kompetenzen",
+        "caption": "Stack im Produktionseinsatz"
+      }
+    },
+    "sectionCount": "Abschnitt",
+    "practiceLabel": "Leistungsbereiche",
+    "practice": [
+      {
+        "title": "Product Engineering",
+        "text": "Anforderungen, UX und UI, Full-Stack-Code, Tests und Rollout. Eine Verantwortung vom Ticket bis zum Release.",
+        "tags": "Next.js · Laravel · Vue"
+      },
+      {
+        "title": "KI-Tooling",
+        "text": "Agent-Pipelines mit Review-Gates, MCP-Server und lokale Modelle. Modelle schlagen vor, Regeln entscheiden.",
+        "tags": "MCP · Claude Code · MLX"
+      },
+      {
+        "title": "Plattform",
+        "text": "Vercel, Supabase, AWS und Azure mit Terraform. CI, die einen fehlerhaften Merge vor dem Review stoppt.",
+        "tags": "Terraform · Docker · CI"
+      }
+    ],
     "allServices": "Alle Leistungen",
-    "synthwerkLabel": "Open Source",
-    "synthwerkDesc": "KI-Dienste zum Selbstbetreiben. In kleinen Teilen: Chat, Bilderkennung und Page-Builder, jeder im eigenen Repo.",
-    "synthwerkCta": "Die Übersicht auf GitHub"
+    "experienceIntro": "Vom Frontend-Spezialisten zum Full-Stack Product Engineer, in einem Konzern, einem Civic-Tech-SaaS und zwei Startups. Heute plane, baue und betreibe ich ganze Anwendungen, von der ersten Anforderung bis zur Produktion.",
+    "ownLabel": "Wofür ich verantwortlich bin",
+    "own": [
+      {
+        "title": "Planen",
+        "text": "Anforderungen, Architektur und UX für ganze Anwendungen. Aus einem Business-Problem wird ein klarer Plan."
+      },
+      {
+        "title": "Bauen",
+        "text": "Features in Frontend und Backend, abgesichert durch Unit-, E2E- und visuelle Regressionstests."
+      },
+      {
+        "title": "Betreiben",
+        "text": "Infrastruktur auf AWS und Azure mit Terraform. CI/CD, Monitoring und Releases."
+      },
+      {
+        "title": "Verbessern",
+        "text": "Rollout mit dem Team, dann in Produktion messen und weiterentwickeln."
+      }
+    ],
+    "rolesLabel": "Stationen",
+    "roles": [
+      {
+        "org": "GALVANY",
+        "role": "Senior Software Engineer, Full-Stack / Product",
+        "time": "2025 – heute",
+        "current": true
+      },
+      {
+        "org": "DEMOS plan GmbH",
+        "role": "Software Engineer, Frontend",
+        "time": "2021 – 2025"
+      },
+      {
+        "org": "Housy GmbH · bewerbermappe.com",
+        "role": "Frontend / Product Engineer",
+        "time": "2021"
+      },
+      {
+        "org": "Zalando SE",
+        "role": "Specialist, E-Commerce",
+        "time": "2017 – 2019"
+      }
+    ],
+    "current": "Aktuell",
+    "experienceCta": "Kompletter Werdegang",
+    "flagships": [
+      {
+        "key": "synthwerk",
+        "name": "SYNTHWERK.",
+        "status": "In Entwicklung · M0",
+        "label": "Modulare KI-Services",
+        "text": "KI-Services zum Selbstbetreiben: Chat, Bild-Labels und ein Page-Builder, ein Repository pro Rolle.",
+        "href": "https://github.com/VelimirMueller/synthwerk",
+        "cta": "Die Übersicht auf GitHub"
+      },
+      {
+        "key": "code-context-mcp",
+        "name": "CODE CONTEXT.",
+        "status": "Veröffentlicht · npm v2.11",
+        "label": "MCP-Server für KI-Coding-Agents",
+        "text": "Indexiert eine Codebasis als strukturierten Kontext für Agents. 81 Tools, persistenter Sprint- und Retro-Speicher.",
+        "href": "https://github.com/VelimirMueller/code-context-mcp",
+        "cta": "Auf GitHub ansehen"
+      },
+      {
+        "key": "claude-skills",
+        "name": "CLAUDE SKILLS.",
+        "status": "Gepflegt",
+        "label": "Skills für Frontend-Projekte",
+        "text": "Audit-fähige Claude-Code-Skills mit Konventionen, Contribution-Guide und Release Notes.",
+        "href": "https://github.com/VelimirMueller/claude-skills",
+        "cta": "Auf GitHub ansehen"
+      }
+    ],
+    "pipelineLabel": "Delivery-Pipeline",
+    "pipeline": [
+      {
+        "title": "Ticket",
+        "text": "Umfang und Abnahme. Verantwortlich: ich."
+      },
+      {
+        "title": "Spec",
+        "text": "Ein Modell entwirft, ich gebe frei."
+      },
+      {
+        "title": "Build",
+        "text": "Modelle implementieren in einem isolierten Worktree."
+      },
+      {
+        "title": "Review",
+        "text": "Zwei unabhängige Modelle. Beide müssen zustimmen.",
+        "hot": true
+      },
+      {
+        "title": "Ship",
+        "text": "PR, Release-Check, Merge. Verantwortlich: ich."
+      }
+    ],
+    "pipelineNote": "Kein Schritt merged, deployt oder schließt ein Ticket allein.",
+    "controlsLabel": "Kontrollen",
+    "controls": [
+      {
+        "title": "Review-Gates",
+        "text": "Fehlt eine Review-Stimme, ist der Pull Request blockiert."
+      },
+      {
+        "title": "Releases nach Regeln",
+        "text": "Feste Regeln geben GO oder HOLD. Ein Modell schreibt Notizen, nie das Urteil."
+      },
+      {
+        "title": "Dauerhaftes Gedächtnis",
+        "text": "Entscheidungen, Fallstricke und Abhängigkeiten überdauern jede Session."
+      },
+      {
+        "title": "Ein versioniertes Setup",
+        "text": "Das Tooling ist gepinnt, protokolliert und mit einem Befehl geprüft."
+      }
+    ],
+    "quote": "Modelle schlagen vor. Regeln prüfen. Ich entscheide.",
+    "quoteBy": "Arbeitsprinzip",
+    "stackLabel": "Technologie",
+    "stack": [
+      {
+        "area": "Frontend",
+        "items": "Next.js · React · Vue 3 · Nuxt · TypeScript · Tailwind"
+      },
+      {
+        "area": "Backend",
+        "items": "Node.js · Go · FastAPI · Laravel · Quarkus"
+      },
+      {
+        "area": "Plattform",
+        "items": "Vercel · Supabase · AWS · Azure · Terraform · Docker"
+      },
+      {
+        "area": "Qualität",
+        "items": "Vitest · Jest · Playwright · Pytest · visuelle Regression"
+      },
+      {
+        "area": "AI",
+        "items": "Claude Code · MCP · LangGraph · ONNX · MLX"
+      }
+    ],
+    "contactTitle": "Am Anfang steht das Business-Problem.",
+    "contactText": "Schicken Sie das Problem, die Nutzer und die Deadline. Ich antworte mit einem Umfang und einem ersten Plan.",
+    "contactCta": "Kontakt"
   },
   "services": {
     "metaTitle": "Leistungen — Velimir Müller",

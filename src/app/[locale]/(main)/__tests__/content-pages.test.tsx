@@ -29,14 +29,15 @@ jest.mock('next-intl', () => {
     );
 
   return {
-    useTranslations: () => {
+    useTranslations: (namespace?: string) => {
+      const full = (key: string) => (namespace ? `${namespace}.${key}` : key);
       const t = (key: string) => {
-        const value = resolve(key);
+        const value = resolve(full(key));
         return typeof value === 'string' ? value : key;
       };
-      t.raw = (key: string) => resolve(key);
+      t.raw = (key: string) => resolve(full(key));
       t.rich = (key: string) => {
-        const value = resolve(key);
+        const value = resolve(full(key));
         return typeof value === 'string' ? value : key;
       };
       return t;
@@ -90,10 +91,10 @@ jest.mock('lucide-react', () => {
 });
 
 describe('content pages render with the real German catalog', () => {
-  it('HomeContent renders the hero and highlight card', () => {
+  it('HomeContent renders the hero and the flagships', () => {
     render(<HomeContent />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/VELIMIR/);
-    expect(screen.getByText(de.home.highlightTitle)).toBeInTheDocument();
+    expect(screen.getByText(de.home.flagships[0].name)).toBeInTheDocument();
   });
 
   it('AboutContent renders the about copy', () => {
