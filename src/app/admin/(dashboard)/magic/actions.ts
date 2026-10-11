@@ -171,6 +171,10 @@ export async function importDeck(_prev: ImportDeckState, formData: FormData): Pr
     if (names.success && names.data.length) return { errors: [], unresolved: names.data };
     return { errors: ['Some names did not resolve.'], unresolved: [] };
   }
+  if (result.status !== 'created') {
+    console.error('[admin] magic: import deck returned status', String(result.status).slice(0, 40));
+    return { errors: ['Could not import the deck.'], unresolved: [] };
+  }
 
   revalidatePath('/admin/magic', 'layout');
   redirect(`/admin/magic/decks/${slug}`);
