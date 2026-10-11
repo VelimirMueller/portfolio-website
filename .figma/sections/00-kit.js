@@ -66,6 +66,8 @@ K.done = (s, b) => h.place(s, b);
 
 // ---- art --------------------------------------------------------------------
 K.LIGHT = { about: 1, 'build-synthwerk': 1, contact: 1, hero: 1, mcp: 1, projects: 1, services: 1, 'svc-ux': 1, synthwerk: 1 };
+// Art paths are '<pack id>/<file>'. vfb serve maps 'website/' to .figma/art/ and finds the file under any image
+// extension (hero-v1.png -> hero-v1.jpg). `vfb test --strict` fails on a path with no file.
 K.art = (name, mode) => (K.m(mode) === 'light' && K.LIGHT[name]) ? 'website/light/' + name + '-light.png' : 'website/' + name + '-v1.png';
 // Art panel: image fill over the mode background, with a fade so text on top stays readable.
 K.panel = async (path, w, hh, o) => { o = o || {}; const mode = K.m(o.mode); const pad = o.pad == null ? 40 : o.pad;
