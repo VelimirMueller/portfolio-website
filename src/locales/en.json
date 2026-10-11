@@ -388,7 +388,37 @@
       ]
     },
     "challengeLabel": "Challenge",
-    "solutionLabel": "Solution"
+    "solutionLabel": "Solution",
+    "studioBuilds": "Studio Builds",
+    "private": "Private repo",
+    "github": "On GitHub",
+    "site": "Open the site",
+    "builds": {
+      "synthwerk": {
+        "title": "Synthwerk",
+        "desc": "AI services you run yourself, in small pieces: image labels, an LLM gateway, identity, a page builder and widgets. One map, one repo per role."
+      },
+      "rig": {
+        "title": "The Rig",
+        "desc": "My private agent pipeline. Models write the code, two other models review every change, and fixed rules decide deploys. A local knowledge base keeps every pitfall."
+      },
+      "bench": {
+        "title": "Code Context Benchmarks",
+        "desc": "The same agent on the same tasks, once without and once with code-context. Runs on demand, results append-only. Fewer tokens, measured."
+      },
+      "mtg": {
+        "title": "MTG Scanner",
+        "desc": "An Android app in Kotlin. It reads Magic cards on the phone, offline, and adds them to my collection. Its own eval set scores 87.8 %."
+      },
+      "debater": {
+        "title": "Debater",
+        "desc": "Agents argue a question on LangGraph. Every step is traced, so you read why they agree, not only that they do."
+      },
+      "skills": {
+        "title": "Claude Skills",
+        "desc": "Opinionated, audit-aware Claude Code skills for frontend projects: folder rules, lint, state and tests."
+      }
+    }
   },
   "about": {
     "metaTitle": "About — Velimir Müller",

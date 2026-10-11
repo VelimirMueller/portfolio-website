@@ -388,7 +388,37 @@
       ]
     },
     "challengeLabel": "Herausforderung",
-    "solutionLabel": "Lösung"
+    "solutionLabel": "Lösung",
+    "studioBuilds": "Studio-Projekte",
+    "private": "Privates Repo",
+    "github": "Auf GitHub",
+    "site": "Zur Seite",
+    "builds": {
+      "synthwerk": {
+        "title": "Synthwerk",
+        "desc": "KI-Services zum Selbstbetreiben, in kleinen Teilen: Bild-Labels, LLM-Gateway, Identity, Page-Builder und Widgets. Eine Karte, ein Repo pro Rolle."
+      },
+      "rig": {
+        "title": "Das Rig",
+        "desc": "Meine private Agent-Pipeline. Modelle schreiben den Code, zwei andere Modelle prüfen jede Änderung, und feste Regeln entscheiden über Deploys. Eine lokale Wissensbasis merkt sich jeden Stolperstein."
+      },
+      "bench": {
+        "title": "Code-Context-Benchmarks",
+        "desc": "Derselbe Agent, dieselben Aufgaben, einmal ohne und einmal mit code-context. Läufe auf Abruf, Ergebnisse nur anhängend. Weniger Tokens, gemessen."
+      },
+      "mtg": {
+        "title": "MTG Scanner",
+        "desc": "Eine Android-App in Kotlin. Sie liest Magic-Karten offline auf dem Handy und fügt sie meiner Sammlung hinzu. Das eigene Eval-Set erreicht 87,8 %."
+      },
+      "debater": {
+        "title": "Debater",
+        "desc": "Agents diskutieren eine Frage auf LangGraph. Jeder Schritt ist getraced: Man liest, warum sie sich einigen, nicht nur dass."
+      },
+      "skills": {
+        "title": "Claude Skills",
+        "desc": "Meinungsstarke, audit-fähige Claude-Code-Skills für Frontend-Projekte: Ordnerregeln, Lint, State und Tests."
+      }
+    }
   },
   "about": {
     "metaTitle": "Über mich — Velimir Müller",
