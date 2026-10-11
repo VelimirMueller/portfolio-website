@@ -1,4 +1,4 @@
--- Tests for 20261011120000_magic_deck_import.sql. Self-contained: inserts its own
+-- Tests for 20261011120000_magic_deck_import.sql and 20261011130000_magic_deck_import_definer.sql. Self-contained: inserts its own
 -- cards, asserts, then rolls everything back. Run against a local copy of the schema:
 --   psql -v ON_ERROR_STOP=1 -f supabase/tests/magic_deck_import_test.sql
 -- Any failed check raises and stops the run.
@@ -87,12 +87,11 @@ select pg_temp.check(pg_temp.raises($q$select public.mtg_import_deck('X', 'x', '
 select pg_temp.check(pg_temp.raises($q$select public.mtg_import_deck('X', 'x', '', '[{"section":"main","qty":0,"name":"Testing Haste"}]')$q$), 'raises: qty 0');
 select pg_temp.check(pg_temp.raises($q$select public.mtg_import_deck('X', 'x', '', '[{"section":"sideboard","qty":1,"name":"Testing Haste"}]')$q$), 'raises: empty main deck');
 
--- 5. Not the admin: RLS hides the catalog, so no name resolves and nothing is created.
+-- 5. Not the admin: the function refuses before it reads anything.
 set local test.uid = '00000000-0000-4000-8000-00000000dead';
-select pg_temp.check(public.mtg_import_deck('Intruder', 'intruder', '',
-                       '[{"section":"main","qty":1,"name":"Testing Haste"}]') ->> 'status' = 'unresolved',
-                     'rls: a non-admin resolves nothing');
-set local test.uid = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
-select pg_temp.check(not exists (select 1 from public.mtg_deck where slug = 'intruder'), 'rls: no deck created');
+select pg_temp.check(pg_temp.raises($q$select public.mtg_import_deck('Intruder', 'intruder', '', '[{"section":"main","qty":1,"name":"Testing Haste"}]')$q$),
+                     'admin only: a non-admin cannot import');
+reset role;
+select pg_temp.check(not exists (select 1 from public.mtg_deck where slug = 'intruder'), 'admin only: no deck created');
 
 rollback;
