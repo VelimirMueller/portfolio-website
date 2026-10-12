@@ -62,6 +62,13 @@ describe.each(routing.locales)('page metadata (%s)', (locale) => {
     expect(meta.description).not.toContain('{jobTitle}');
   });
 
+  it('home: the metadata names no employer, no press and no benchmark number (#123)', async () => {
+    const serialized = JSON.stringify(await homeMetadata(params(locale)));
+    for (const term of ['GALVANY', 'DEMOS', 'bewerbermappe', 'BILD', 'Zeit', 'n-tv', '3–4×', '~40%', '81 tools', '81 Tools']) {
+      expect(serialized).not.toContain(term);
+    }
+  });
+
   it('about: the description names the job title', async () => {
     const meta = await aboutMetadata(params(locale));
     expect(meta.description).toMatch(new RegExp(`^${jobTitle}\\. `));
