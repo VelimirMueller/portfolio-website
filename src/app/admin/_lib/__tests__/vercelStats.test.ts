@@ -151,4 +151,27 @@ describe('loadVercelStats', () => {
     expect(JSON.stringify(result)).not.toContain(TOKEN);
     expect(fetchImpl.mock.calls[0][1]?.headers).toEqual({ Authorization: `Bearer ${TOKEN}` });
   });
+
+  it('errors without asking for deployments when the project has no id', async () => {
+    const fetchImpl = jest.fn(() => Promise.resolve(jsonResponse({ name: 'portfolio-website' })));
+    const result = await loadVercelStats(fetchImpl, env());
+    expect(result).toEqual({ status: 'error', message: 'Vercel API returned no project' });
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it('treats a malformed deployments payload as no deployments', async () => {
+    const fetchImpl = jest.fn((url: string) =>
+      Promise.resolve(jsonResponse(url.includes('/v9/projects/') ? projectBody : { deployments: 'nope' })),
+    );
+    const result = await loadVercelStats(fetchImpl, env());
+    expect(result).toMatchObject({ status: 'ok', deployments: [] });
+  });
+
+  it('falls back to the configured project for a nameless project', async () => {
+    const fetchImpl = jest.fn((url: string) =>
+      Promise.resolve(jsonResponse(url.includes('/v9/projects/') ? { id: 'prj_x' } : { deployments: [] })),
+    );
+    const result = await loadVercelStats(fetchImpl, env({ VERCEL_PROJECT: 'my-vercel-id' }));
+    expect(result).toMatchObject({ status: 'ok', project: { id: 'prj_x', name: 'my-vercel-id' } });
+  });
 });

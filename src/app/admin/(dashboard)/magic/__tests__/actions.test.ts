@@ -20,7 +20,8 @@ jest.mock('@/app/admin/_lib/auth', () => ({
   requireAdmin: async () => ({ supabase: { rpc, from: (t: string) => (from(t), catalog) }, user: { id: 'admin' } }),
 }));
 
-import { addToPool, changeQty, changeWishQty, wishToPool } from '../actions';
+import { parseDecklist } from '@/app/admin/_lib/magic/decklist';
+import { addToPool, changeQty, changeWishQty, importDeck, wishToPool } from '../actions';
 
 const ID = '33333333-3333-4333-8333-333333333333';
 const ORACLE = '20000000-0000-4000-8000-000000000001';
@@ -185,5 +186,79 @@ describe('addToPool form errors', () => {
       'NEXT_REDIRECT /admin/magic/add?error=More+German+copies+than+copies.&q=rift'
     );
     expect(rpc).not.toHaveBeenCalled();
+  });
+});
+
+describe('importDeck', () => {
+  const EMPTY = { errors: [], unresolved: [] };
+  const LIST = '4 Goblin Guide\n1 Krenko, Mob Boss\n\nSIDEBOARD:\n2 Smash to Smithereens';
+  const deck = (fields: Partial<Record<'name' | 'summary' | 'list', string>> = {}) =>
+    form({ name: 'Krenko Mob Boss', summary: ' Goblins ', list: LIST, ...fields });
+  let consoleError: jest.SpyInstance;
+  beforeEach(() => {
+    consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+  afterEach(() => consoleError.mockRestore());
+
+  it('creates the deck through mtg_import_deck and opens it', async () => {
+    rpcResult = { data: { status: 'created' }, error: null };
+    await expect(importDeck(EMPTY, deck())).rejects.toThrow('NEXT_REDIRECT /admin/magic/decks/krenko-mob-boss');
+    expect(rpc).toHaveBeenCalledWith('mtg_import_deck', {
+      p_name: 'Krenko Mob Boss',
+      p_slug: 'krenko-mob-boss',
+      p_summary: 'Goblins',
+      p_lines: parseDecklist(LIST).lines,
+    });
+    expect(revalidatePath).toHaveBeenCalledWith('/admin/magic', 'layout');
+  });
+
+  it.each([
+    ['an empty name', { name: '  ' }, 'The deck needs a name.'],
+    ['a name without letters or digits', { name: '!!!' }, 'The deck name needs at least one letter or digit.'],
+    ['the reserved name "new"', { name: 'New' }, '"New" is reserved. Choose another name.'],
+  ])('refuses %s before calling the database', async (_label, fields, message) => {
+    await expect(importDeck(EMPTY, deck(fields))).resolves.toEqual({ errors: [message], unresolved: [] });
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it('returns the parse errors of a malformed list and creates nothing', async () => {
+    const state = await importDeck(EMPTY, deck({ list: 'Goblin Guide without a count' }));
+    expect(state.unresolved).toEqual([]);
+    expect(state.errors).toEqual(parseDecklist('Goblin Guide without a count').errors);
+    expect(state.errors.length).toBeGreaterThan(0);
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it('reports a database failure without leaking the details', async () => {
+    rpcResult = { data: null, error: { code: '42501', message: 'permission denied' } };
+    await expect(importDeck(EMPTY, deck())).resolves.toEqual({ errors: ['Could not import the deck.'], unresolved: [] });
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it('asks for another name when the slug is taken', async () => {
+    rpcResult = { data: { status: 'exists' }, error: null };
+    await expect(importDeck(EMPTY, deck())).resolves.toEqual({
+      errors: ['A deck with the address "krenko-mob-boss" already exists. Choose another name.'],
+      unresolved: [],
+    });
+  });
+
+  it('lists the names the catalog could not resolve, with suggestions', async () => {
+    const names = [{ name: 'Goblin Guyde', candidates: ['Goblin Guide'] }];
+    rpcResult = { data: { status: 'unresolved', names }, error: null };
+    await expect(importDeck(EMPTY, deck())).resolves.toEqual({ errors: [], unresolved: names });
+    expect(redirect).not.toHaveBeenCalled();
+  });
+
+  it('falls back to a general message when the unresolved names are malformed', async () => {
+    rpcResult = { data: { status: 'unresolved', names: 'garbage' }, error: null };
+    await expect(importDeck(EMPTY, deck())).resolves.toEqual({ errors: ['Some names did not resolve.'], unresolved: [] });
+  });
+
+  it('treats an unknown status as a failure', async () => {
+    rpcResult = { data: { status: 'surprise' }, error: null };
+    await expect(importDeck(EMPTY, deck())).resolves.toEqual({ errors: ['Could not import the deck.'], unresolved: [] });
+    expect(redirect).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
   });
 });
