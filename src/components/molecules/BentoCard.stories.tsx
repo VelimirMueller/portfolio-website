@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Code2, Palette, Rocket, Settings, Zap } from 'lucide-react';
 import { BentoCard } from './BentoCard';
 

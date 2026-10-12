@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Footer } from './Footer';
 
 const meta = {
@@ -32,17 +32,19 @@ export const Default: Story = {};
 
 export const MobileViewport: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile' },
     docs: {
       description: {
         story: 'Footer at mobile width — columns stack vertically.',
       },
     },
   },
+  globals: {
+    viewport: { value: 'mobile', isRotated: false },
+  },
 };
 
 export const TabletViewport: Story = {
-  parameters: {
-    viewport: { defaultViewport: 'tablet' },
+  globals: {
+    viewport: { value: 'tablet', isRotated: false },
   },
 };
