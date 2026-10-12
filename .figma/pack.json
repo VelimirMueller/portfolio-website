@@ -1,0 +1,12 @@
+{
+  "id": "website",
+  "name": "Portfolio website",
+  "figma": { "fileKey": "6QGVjgjKuloaT3QDBAM7Yx", "plan": "starter" },
+  "match": { "collections": ["primitive", "color"], "fileName": "portfolio" },
+  "pages": ["00 · Foundations", "10 · Components", "20 · Templates"],
+  "fonts": [["Inter", "Regular"], ["Inter", "Medium"], ["Inter", "Semi Bold"], ["Inter", "Bold"], ["Space Mono", "Regular"], ["Space Mono", "Bold"]],
+  "sections": ["sections"],
+  "art": "art",
+  "tokens": "tokens.json",
+  "quality": { "minTokenCoverage": 0.85, "minStyleCoverage": 0.85 }
+}
