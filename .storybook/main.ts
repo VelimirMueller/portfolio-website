@@ -37,6 +37,12 @@ const config: StorybookConfig = {
 
     aliasArray.push(
       { find: '@', replacement: path.resolve(dirname, '../src') },
+      // Next.js 16.4 + Storybook 10.6: see next-redirect-boundary.tsx.
+      // Matches only the exact specifier Storybook's router decorator uses.
+      {
+        find: /^next\/dist\/client\/components\/redirect-boundary\.js$/,
+        replacement: path.resolve(dirname, 'next-redirect-boundary.tsx'),
+      },
     );
 
     config.resolve.alias = aliasArray;

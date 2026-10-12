@@ -36,7 +36,7 @@ jest.mock('@hcaptcha/react-hcaptcha', () => {
     R.useEffect(() => {
       mounted += 1;
       props.onLoad?.();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
     return <div data-testid="hcaptcha" />;
   });
   return { __esModule: true, default: Fake };

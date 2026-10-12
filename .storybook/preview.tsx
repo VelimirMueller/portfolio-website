@@ -12,6 +12,8 @@ const withProviders: Decorator = (Story, context) => {
   const selectedTheme = (context.globals.theme as string) || 'dark';
   const selectedLocale = (context.globals.locale as string) || 'de';
 
+  // Storybook runs decorators as components, so a hook is valid here.
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(selectedTheme);

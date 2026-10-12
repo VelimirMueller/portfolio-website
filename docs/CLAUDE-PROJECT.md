@@ -13,7 +13,7 @@ It must be created by hand in claude.ai: there is no command for it.
    - `docs/REFERENCE.md`
    - `.env.example`
    - `next.config.mjs`
-   - `src/middleware.ts`
+   - `src/proxy.ts`
 4. After a release, sync the files in the project. The repo is the source.
 
 ## Project instructions
@@ -26,15 +26,15 @@ Order of authority: CLAUDE.md (development rules), then README.md, then docs/REF
 Core rule from CLAUDE.md: every change must keep the existing behaviour of the site.
 
 What it is:
-- Next.js 15 App Router, React 19, next-intl (de, en; German is the default; both
+- Next.js 16 App Router, React 19, next-intl (de, en; German is the default; both
   prefixed, canonical host www.), Tailwind, Supabase, hCaptcha, Resend. Hosted on Vercel;
   every push to main deploys to production.
 - Pages: home (bento grid), about, services, projects, contact.
 - Three live demos at /projects/... outside the [locale] group on purpose: CRM dashboard,
-  an MCP demo (iframe of a static page) and an arcade shooter in WASM. The middleware
+  an MCP demo (iframe of a static page) and an arcade shooter in WASM. The proxy
   excludes them by name.
 - Private admin at /admin (English, noindex): contact inbox, cookieless traffic KPIs,
-  a Magic: The Gathering collection. Magic-link sign-in for one admin; middleware,
+  a Magic: The Gathering collection. Magic-link sign-in for one admin; proxy,
   requireAdmin() and Postgres RLS (public.is_admin()) all check it. No service-role key.
 - Atomic Design: atoms, molecules, organisms, templates; containers hold state and effects.
 

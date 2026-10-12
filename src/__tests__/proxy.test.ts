@@ -12,16 +12,16 @@ jest.mock('../utils/supabase/middleware', () => ({
   updateSession: jest.fn(async () => ({ response: passThrough, user })),
 }));
 
-import middleware, { config } from '../middleware';
+import proxy, { config } from '../proxy';
 
-const run = (path: string) => middleware(new NextRequest(new URL(path, 'https://example.test')));
+const run = (path: string) => proxy(new NextRequest(new URL(path, 'https://example.test')));
 
 beforeEach(() => {
   user = null;
   intl.mockClear();
 });
 
-describe('middleware', () => {
+describe('proxy', () => {
   it('redirects a signed-out visitor from /admin to the login page', async () => {
     const res = await run('/admin');
     expect(res.headers.get('location')).toBe('https://example.test/admin/login');
