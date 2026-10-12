@@ -83,3 +83,45 @@ test.describe('Analytics beacons', () => {
     await context.close();
   });
 });
+
+/**
+ * Vercel Speed Insights shares the beacon's gate. The e2e server is a
+ * production build, so the script tag renders; outside Vercel the path 404s,
+ * but the request itself proves whether the page asked for it.
+ */
+test.describe('Speed Insights', () => {
+  const SPEED_INSIGHTS = '/_vercel/speed-insights/';
+
+  async function speedInsightsRequests(page: Page, path = '/de') {
+    const requested: string[] = [];
+    page.on('request', (r) => new URL(r.url()).pathname.startsWith(SPEED_INSIGHTS) && requested.push(r.url()));
+    await page.goto(path);
+    await page.waitForLoadState('networkidle');
+    return requested;
+  }
+
+  test('loads when statistics are allowed', async ({ page }) => {
+    expect(await speedInsightsRequests(page)).not.toEqual([]);
+  });
+
+  test('loads nothing after the visitor opted out', async ({ page }) => {
+    await page.addInitScript(() => window.localStorage.setItem('analytics-opt-out', '1'));
+    expect(await speedInsightsRequests(page)).toEqual([]);
+  });
+
+  for (const [signal, value] of [
+    ['doNotTrack', '1'],
+    ['globalPrivacyControl', true],
+  ] as const) {
+    test(`loads nothing with ${signal}`, async ({ browser }) => {
+      const context = await browser.newContext();
+      await context.addInitScript(
+        ([key, v]) => Object.defineProperty(navigator, key, { get: () => v }),
+        [signal, value] as const
+      );
+      const page = await context.newPage();
+      expect(await speedInsightsRequests(page)).toEqual([]);
+      await context.close();
+    });
+  }
+});
