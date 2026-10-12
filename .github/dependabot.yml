@@ -29,7 +29,9 @@ updates:
         update-types: [version-update:semver-major]
 
   - package-ecosystem: github-actions
-    directory: /
+    # "/" covers .github/workflows; the second entry covers the local composite
+    # actions, so their action versions get the same bumps (issue #81).
+    directories: ["/", "/.github/actions/*"]
     schedule:
       interval: monthly
       timezone: Europe/Berlin

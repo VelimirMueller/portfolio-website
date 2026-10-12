@@ -24,11 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
+      - uses: ./.github/actions/node-deps
       - run: npm run lint
       - run: npm run type-check
 
@@ -55,11 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
+      - uses: ./.github/actions/node-deps
       - run: npm run test:coverage
       - name: Upload coverage report
         if: always()
@@ -76,33 +68,12 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
+      - uses: ./.github/actions/node-deps
       - run: npm run build-storybook
-      # Browsers cached per Playwright version. The system packages (apt, inside
-      # --with-deps) sometimes hang for hours on the runner (twice on 2026-10-09):
-      # each try gets 8 minutes, up to 3 tries.
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      # Cache + install with retries; the composite action explains the apt hang.
       - name: Install Playwright browsers
         timeout-minutes: 26
-        run: |
-          for try in 1 2 3; do
-            timeout 480 npx playwright install --with-deps chromium webkit && exit 0
-            echo "::warning::Playwright install try $try failed or hung; retrying"
-            # A killed apt leaves dpkg half done and its locks held; without this the
-            # next try fails at once with exit 100 (seen 2026-10-10, run on PR #49).
-            sudo pkill -9 -f 'apt-get|dpkg' || true
-            sudo rm -f /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/cache/apt/archives/lock /var/lib/apt/lists/lock
-            sudo dpkg --configure -a || true
-          done
-          exit 1
+        uses: ./.github/actions/playwright-install
       - name: Run visual regression tests
         run: npm run test:visual
       - name: Upload visual diff results
@@ -122,32 +93,11 @@ jobs:
     needs: unit-tests-and-build
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      # Browsers cached per Playwright version. The system packages (apt, inside
-      # --with-deps) sometimes hang for hours on the runner (twice on 2026-10-09):
-      # each try gets 8 minutes, up to 3 tries.
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - uses: ./.github/actions/node-deps
+      # Cache + install with retries; the composite action explains the apt hang.
       - name: Install Playwright browsers
         timeout-minutes: 26
-        run: |
-          for try in 1 2 3; do
-            timeout 480 npx playwright install --with-deps chromium webkit && exit 0
-            echo "::warning::Playwright install try $try failed or hung; retrying"
-            # A killed apt leaves dpkg half done and its locks held; without this the
-            # next try fails at once with exit 100 (seen 2026-10-10, run on PR #49).
-            sudo pkill -9 -f 'apt-get|dpkg' || true
-            sudo rm -f /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/cache/apt/archives/lock /var/lib/apt/lists/lock
-            sudo dpkg --configure -a || true
-          done
-          exit 1
+        uses: ./.github/actions/playwright-install
       - name: Run E2E tests
         run: npm run test:e2e
       - name: Upload test results
