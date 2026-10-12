@@ -29,8 +29,40 @@ const FLAGSHIP_ART: Record<string, string> = {
   'claude-skills': "bg-[url('/art/v2/claude-skills.webp')]",
 };
 
-const panel = 'relative rounded-[1.5rem] border border-light-border dark:border-dark-border bg-white/80 dark:bg-[#0c0c0e]/90 overflow-hidden';
-const card = 'rounded-2xl border border-light-border dark:border-[#26262b] bg-white dark:bg-[#111113]';
+const panel = 'glass rounded-[1.5rem] overflow-hidden';
+const card = 'glass-inner rounded-2xl';
+
+const SECTION_BG: Record<SectionKey, { art: string; side: 'left' | 'right' }> = {
+  practice: { art: "bg-[url('/art/v2/site-svc-requirements.webp')]", side: 'right' },
+  experience: { art: "bg-[url('/art/v2/site-svc-delivery.webp')]", side: 'left' },
+  flagships: { art: "bg-[url('/art/v2/site-svc-ux.webp')]", side: 'right' },
+  system: { art: "bg-[url('/art/v2/site-svc-stack.webp')]", side: 'left' },
+  capabilities: { art: "bg-[url('/art/v2/site-svc-frontend.webp')]", side: 'right' },
+};
+
+/**
+ * Large brand render behind a whole section, bleeding past the content column, so the glass panels on top
+ * have something to blur (the contact-page effect, site-wide). Light mode inverts the near-black render and
+ * rotates the hue back to indigo, as ArtBackdrop does.
+ */
+const SectionArt = ({ id }: { id: SectionKey }) => {
+  const { art, side } = SECTION_BG[id];
+  const right = side === 'right';
+  return (
+    <>
+      <div aria-hidden="true" className={`absolute -z-10 top-[-10%] h-[120%] w-[100vw] max-w-[1800px] pointer-events-none bg-cover bg-center ${art} ${right ? 'right-[-30vw] [mask-image:radial-gradient(ellipse_at_62%_50%,black_35%,transparent_78%)]' : 'left-[-30vw] [mask-image:radial-gradient(ellipse_at_38%_50%,black_35%,transparent_78%)]'} invert hue-rotate-180 opacity-50 mix-blend-multiply saturate-150 dark:invert-0 dark:hue-rotate-0 dark:mix-blend-normal dark:opacity-100`} />
+      {/* indigo light the glass refracts */}
+      <div aria-hidden="true" className={`absolute -z-10 top-[20%] h-[60%] w-[45vw] rounded-full blur-[120px] pointer-events-none bg-brand-500/25 dark:bg-brand-500/30 ${right ? 'right-[-8vw]' : 'left-[-8vw]'}`} />
+    </>
+  );
+};
+
+const Section = ({ id, children }: { id: SectionKey; children: React.ReactNode }) => (
+  <div className="relative isolate">
+    <SectionArt id={id} />
+    {children}
+  </div>
+);
 
 /** Grid fading out from the top plus one soft indigo glow: the frame of every kit panel. */
 const PanelFrame = () => (
@@ -311,19 +343,16 @@ const ContactBand = () => {
 export default function HomeContent() {
   const total = 5;
   return (
-    <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto relative">
-      <Hero />
-      <SectionDivider id="practice" total={total} />
-      <Practice />
-      <SectionDivider id="experience" total={total} />
-      <Experience />
-      <SectionDivider id="flagships" total={total} />
-      <Flagships />
-      <SectionDivider id="system" total={total} />
-      <DeliverySystem />
-      <SectionDivider id="capabilities" total={total} />
-      <Capabilities />
-      <ContactBand />
+    <div className="relative overflow-x-clip">
+      <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto relative">
+        <Hero />
+        <Section id="practice"><SectionDivider id="practice" total={total} /><Practice /></Section>
+        <Section id="experience"><SectionDivider id="experience" total={total} /><Experience /></Section>
+        <Section id="flagships"><SectionDivider id="flagships" total={total} /><Flagships /></Section>
+        <Section id="system"><SectionDivider id="system" total={total} /><DeliverySystem /></Section>
+        <Section id="capabilities"><SectionDivider id="capabilities" total={total} /><Capabilities /></Section>
+        <ContactBand />
+      </div>
     </div>
   );
 }
