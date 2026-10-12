@@ -11,7 +11,7 @@ Development rules for velimir-mueller.de. Details live in the [README](README.md
 - Next.js 15 (App Router), React 19, TypeScript (strict), Tailwind CSS 3.
 - `next-intl`: locales `de` (default) and `en`, both prefixed in the URL (`/de`, `/en`). Config in `src/i18n/`, copy in `src/locales/*.json`.
 - Supabase (Postgres, Auth with magic link, RLS) through `@supabase/ssr`. Clients in `src/utils/supabase/`.
-- Contact form: hCaptcha and Resend.
+- Contact form: hCaptcha; the `send-contact-email` Edge Function sends the mail with Resend.
 - Analytics: first-party and cookieless (`/api/collect`), plus Vercel Speed Insights through the same-origin `/_vercel/speed-insights/*` path. One opt-out (`src/utils/analytics/optOut.ts`) covers both.
 - Tests: Jest + React Testing Library, Playwright (e2e and visual regression), Storybook 9 (`@storybook/nextjs-vite`), SQL tests against a local Supabase.
 - Node 22 or later.
@@ -58,7 +58,7 @@ CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and typ
 - **Migrations are the source.** `supabase/migrations/` is the single source of truth for the schema, also for other apps on this database. Add a new migration; never edit an applied one. Add or update a SQL test in `supabase/tests/`.
 - **Admin UUID in two places.** `src/config/admin.ts` and `public.is_admin()` in the migration. Change both together. Middleware, `requireAdmin()` and RLS all check it. No service-role key.
 - **Positioning in one place.** The public job title and positioning line come from `src/config/positioning.ts`. Locale copy uses the `{jobTitle}` placeholder. Change copy in both languages.
-- **Env vars: names only.** Never write a value into a file, commit, PR or log. The names are in `.env.example`; values live in `.env.local` and in Vercel.
+- **Env vars: names only.** Never write a value into a file, commit, PR or log. The names are in `.env.example` and `supabase/functions/.env.example`; values live in `.env.local`, in Vercel and in Supabase function secrets.
 - **No tags.** Releases are a `chore(release): vX.Y.Z` commit that bumps `package.json`. The owner creates the signed tag. Never create or push a tag.
 - **Commits** follow Conventional Commits; the husky `commit-msg` hook runs commitlint.
 
@@ -72,10 +72,12 @@ CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and typ
 
 ## Environment variables
 
-Names only. See `.env.example` and [docs/REFERENCE.md](docs/REFERENCE.md).
+Names only. App and scripts: `.env.example`. Edge Function secrets: `supabase/functions/.env.example`. Details in [docs/REFERENCE.md](docs/REFERENCE.md#environment-variables). `src/__tests__/env-example.test.ts` fails when code reads a name that no template lists.
 
 - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`: required.
-- `RESEND_API_KEY`, `NEXT_PUBLIC_HCAPTCHA_SITEKEY`, `HCAPTCHA_SECRET`: contact form.
+- `NEXT_PUBLIC_HCAPTCHA_SITEKEY`, `HCAPTCHA_SECRET`: contact form captcha.
 - `ANALYTICS_INGEST_SECRET`: analytics ingest (Vercel).
 - `NEXT_PUBLIC_SITE_URL`: optional, overrides the canonical URL (preview deployments).
+- `VERCEL_API_TOKEN`, `VERCEL_PROJECT`, `VERCEL_TEAM_ID`: optional, admin KPI tab *Vercel*.
 - `SUPABASE_DB_URL`: local only, for the Magic catalog loaders in `scripts/mtg/`.
+- Edge Function secrets, not read by Next.js: `RESEND_API_KEY`, `CONTACT_HOOK_SECRET`, `EMAIL_FROM`, `CONTACT_TO` (`send-contact-email`, which sends the contact mail); `TESTDATA_EXPORT_KEY` (`testdata-eval`). Set them with `supabase secrets set`.

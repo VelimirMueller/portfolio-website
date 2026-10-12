@@ -266,7 +266,7 @@ Both HTTP calls go through `pg_net`. Extensions used: `pgcrypto`, `pg_trgm`, `un
 | `send-contact-email` | The `on_new_contact_message` trigger only (shared secret in the `x-contact-hook-secret` header) | Sends the contact message to the inbox with Resend |
 | `testdata-eval` | The `lab-mtg-scanner` testdata workflow only (shared secret in the `x-testdata-key` header) | Returns a batch with signed photo URLs, or runs `mtg_match_scan` for up to 50 readings. Uses the service role |
 
-Their secrets are Supabase function secrets, not app env vars: `RESEND_API_KEY`, `CONTACT_HOOK_SECRET`, optional `EMAIL_FROM` and `CONTACT_TO` (`send-contact-email`); `TESTDATA_EXPORT_KEY` (`testdata-eval`). Supabase provides `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to the functions.
+Their secrets are Supabase function secrets, not app env vars (template: [supabase/functions/.env.example](../supabase/functions/.env.example)): `RESEND_API_KEY`, `CONTACT_HOOK_SECRET`, optional `EMAIL_FROM` and `CONTACT_TO` (`send-contact-email`); `TESTDATA_EXPORT_KEY` (`testdata-eval`). Supabase provides `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to the functions.
 
 ### SQL tests
 
@@ -310,22 +310,21 @@ Never write a secret value into a file, commit or PR.
 
 ## Environment variables
 
-Names only. Values live in `.env.local` and in Vercel. The template is [.env.example](../.env.example).
+Names only. Values live in `.env.local`, in Vercel and in Supabase function secrets. The templates are [.env.example](../.env.example) (app and scripts) and [supabase/functions/.env.example](../supabase/functions/.env.example) (Edge Functions). `src/__tests__/env-example.test.ts` fails when code reads a name that no template lists. `NEXT_PUBLIC_*` is public (inlined into the browser bundle); every other name is server-only.
 
-| Name | Used for |
-| :--- | :--- |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL. Required |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` | Supabase publishable key. Required |
-| `RESEND_API_KEY` | Contact form mail. The Next.js app does not read it; the `send-contact-email` Edge Function reads it as a function secret |
-| `NEXT_PUBLIC_HCAPTCHA_SITEKEY` | Contact form captcha (public key) |
-| `HCAPTCHA_SECRET` | Contact form captcha check |
-| `ANALYTICS_INGEST_SECRET` | Analytics ingest (Vercel). Without it `/api/collect` stores nothing |
-| `NEXT_PUBLIC_SITE_URL` | Optional. Overrides the canonical URL (preview deployments) |
-| `VERCEL_API_TOKEN` | Optional. Admin KPI tab Vercel; without it the tab shows how to set it up |
-| `VERCEL_PROJECT`, `VERCEL_TEAM_ID` | Optional. Vercel project and team for that tab |
-| `SUPABASE_DB_URL` | Local only. Magic catalog loaders in `scripts/mtg/` |
+| Name | Set in | Used for |
+| :--- | :--- | :--- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Vercel | Supabase project URL. Required |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` | Vercel | Supabase publishable key. Required |
+| `NEXT_PUBLIC_SITE_URL` | Vercel (previews) | Optional. Overrides the canonical URL |
+| `NEXT_PUBLIC_HCAPTCHA_SITEKEY` | Vercel | Contact form captcha (public key) |
+| `HCAPTCHA_SECRET` | Vercel | Contact form captcha check in `/api/contact` |
+| `ANALYTICS_INGEST_SECRET` | Vercel (Production) | Analytics ingest. Without it `/api/collect` stores nothing |
+| `VERCEL_API_TOKEN` | Vercel | Optional. Admin KPI tab Vercel; without it the tab shows how to set it up |
+| `VERCEL_PROJECT`, `VERCEL_TEAM_ID` | Vercel | Optional. Vercel project (default `portfolio-website`) and team for that tab |
+| `SUPABASE_DB_URL` | Local only | Magic catalog loaders in `scripts/mtg/` (`psql`); the app does not read it |
 
-The Edge Function secrets are listed under [Edge Functions](#edge-functions).
+The Next.js app does not read `RESEND_API_KEY`: the contact mail goes out through the `send-contact-email` Edge Function. Its secrets and those of `testdata-eval` are listed under [Edge Functions](#edge-functions); set them with `supabase secrets set`.
 
 ## Design
 

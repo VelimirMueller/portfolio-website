@@ -54,3 +54,6 @@ supabase/.temp/
 supabase/.branches/
 .playwright-artifacts-sb/
 .venv/
+
+# supabase functions serve reads this; the template is supabase/functions/.env.example
+supabase/functions/.env
