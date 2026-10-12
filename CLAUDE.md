@@ -13,7 +13,7 @@ Development rules for velimir-mueller.de. Details live in the [README](README.md
 - Supabase (Postgres, Auth with magic link, RLS) through `@supabase/ssr`. Clients in `src/utils/supabase/`.
 - Contact form: hCaptcha; the `send-contact-email` Edge Function sends the mail with Resend.
 - Analytics: first-party and cookieless (`/api/collect`), plus Vercel Speed Insights through the same-origin `/_vercel/speed-insights/*` path. One opt-out (`src/utils/analytics/optOut.ts`) covers both.
-- Tests: Jest + React Testing Library, Playwright (e2e and visual regression), Storybook 9 (`@storybook/nextjs-vite`), SQL tests against a local Supabase.
+- Tests: Jest + React Testing Library, Playwright (e2e and visual regression), Storybook 10 (`@storybook/nextjs-vite`), SQL tests against a local Supabase.
 - Node 22 or later.
 
 ## Commands
