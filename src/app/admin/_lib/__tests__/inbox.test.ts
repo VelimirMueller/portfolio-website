@@ -77,6 +77,9 @@ describe('nextAfter', () => {
     expect(nextAfter(list, 'a', ['a', 'b', 'c', 'd'])).toBeNull();
     expect(nextAfter(list, 'zz', ['zz'])).toBeNull();
   });
+  it('returns null when no message is open', () => {
+    expect(nextAfter(list, null, ['a'])).toBeNull();
+  });
 });
 
 describe('step', () => {

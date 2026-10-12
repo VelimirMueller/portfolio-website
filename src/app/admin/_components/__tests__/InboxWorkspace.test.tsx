@@ -177,3 +177,77 @@ describe('InboxWorkspace delete confirmation placement', () => {
     expect(within(screen.getByRole('region', { name: 'Messages' })).getByRole('alertdialog')).toHaveTextContent('Delete this message');
   });
 });
+
+describe('InboxWorkspace keyboard and reading pane', () => {
+  it('selects the open message with x and toggles it off again', () => {
+    setup({ selectedId: id(2) });
+    key('x');
+    expect(screen.getByRole('checkbox', { name: 'Select message from Person 2' })).toBeChecked();
+    key('x');
+    expect(screen.getByRole('checkbox', { name: 'Select message from Person 2' })).not.toBeChecked();
+  });
+
+  it('unwinds Escape one step at a time: delete prompt, then selection, then the open message', () => {
+    setup({ selectedId: id(1) });
+    key('x');
+    fireEvent.click(within(screen.getByRole('toolbar', { name: 'Bulk actions' })).getByRole('button', { name: 'Delete' }));
+    expect(screen.getByRole('alertdialog')).toBeInTheDocument();
+
+    key('Escape');
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+    expect(screen.getByRole('toolbar', { name: 'Bulk actions' })).toBeInTheDocument();
+    expect(push).not.toHaveBeenCalled();
+
+    key('Escape');
+    expect(screen.queryByRole('toolbar', { name: 'Bulk actions' })).not.toBeInTheDocument();
+    expect(push).not.toHaveBeenCalled();
+
+    key('Escape');
+    expect(push).toHaveBeenLastCalledWith('/admin', { scroll: false });
+  });
+
+  it('ignores shortcuts with a modifier key, so browser shortcuts keep working', () => {
+    setup({ selectedId: id(1) });
+    fireEvent.keyDown(window, { key: 'e', metaKey: true });
+    fireEvent.keyDown(window, { key: 'j', ctrlKey: true });
+    expect(updateStatuses).not.toHaveBeenCalled();
+    expect(push).not.toHaveBeenCalled();
+  });
+
+  it('archives and marks spam from the reading pane', async () => {
+    setup({ selectedId: id(1) });
+    const pane = screen.getByRole('toolbar', { name: 'Message actions' });
+    fireEvent.click(within(pane).getByRole('button', { name: 'Archive' }));
+    await flush();
+    expect(updateStatuses).toHaveBeenLastCalledWith([id(1)], 'archived');
+    fireEvent.click(within(screen.getByRole('toolbar', { name: 'Message actions' })).getByRole('button', { name: 'Mark as spam' }));
+    await flush();
+    expect(updateStatuses).toHaveBeenLastCalledWith([id(1)], 'spam');
+  });
+
+  it('offers only the actions that change something for the open message', () => {
+    setup({ filter: 'archived', selectedId: id(1), messages: [msg(1, { status: 'archived' })] });
+    const pane = screen.getByRole('toolbar', { name: 'Message actions' });
+    expect(within(pane).queryByRole('button', { name: 'Archive' })).not.toBeInTheDocument();
+    expect(within(pane).getByRole('button', { name: 'Mark unread' })).toBeInTheDocument();
+    expect(within(pane).getByRole('button', { name: 'Mark as spam' })).toBeInTheDocument();
+  });
+
+  it('marks a new message read from the pane and leaves the "new" view', async () => {
+    setup({ selectedId: id(1) });
+    fireEvent.click(within(screen.getByRole('toolbar', { name: 'Message actions' })).getByRole('button', { name: 'Mark read' }));
+    await flush();
+    expect(updateStatuses).toHaveBeenCalledWith([id(1)], 'read');
+    expect(replace).toHaveBeenCalledWith(`/admin?id=${id(2)}`, { scroll: false });
+  });
+
+  it('shows a delete error and keeps the message', async () => {
+    deleteMessages.mockRejectedValueOnce(new Error('nope'));
+    setup({ selectedId: id(1) });
+    fireEvent.click(within(screen.getByRole('toolbar', { name: 'Message actions' })).getByRole('button', { name: 'Delete' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Yes, delete' }));
+    await flush();
+    expect(screen.getByRole('alert')).toHaveTextContent('Could not delete.');
+    expect(replace).not.toHaveBeenCalled();
+  });
+});

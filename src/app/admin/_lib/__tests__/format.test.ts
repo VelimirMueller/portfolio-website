@@ -43,6 +43,17 @@ describe('formatBerlinTime', () => {
     expect(formatBerlinTime(iso, at(48))).toBe('2 days ago (14:00 Berlin)');
   });
 
+  it('counts minutes and days in the singular and plural', () => {
+    const minutes = (m: number) => Date.parse(iso) + m * 60_000;
+    expect(formatBerlinTime(iso, minutes(1))).toBe('1 minute ago (14:00 Berlin)');
+    expect(formatBerlinTime(iso, minutes(59))).toBe('59 minutes ago (14:00 Berlin)');
+    expect(formatBerlinTime(iso, at(24))).toBe('1 day ago (14:00 Berlin)');
+  });
+
+  it('says just now for a timestamp slightly in the future (clock skew)', () => {
+    expect(formatBerlinTime(iso, at(-0.01))).toBe('just now (14:00 Berlin)');
+  });
+
   it('shows minutes', () => {
     expect(formatBerlinTime(iso, at(0.5))).toBe('30 minutes ago (14:00 Berlin)');
   });
