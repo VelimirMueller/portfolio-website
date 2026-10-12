@@ -32,6 +32,24 @@ jobs:
       - run: npm run lint
       - run: npm run type-check
 
+  # Applies supabase/migrations to a fresh local database and runs the SQL tests
+  # (issue #73). Postgres only, in Docker; never touches the hosted project.
+  # Runs on every PR (no path filter), so it can be a required check.
+  db-migrations:
+    name: Database Migrations & SQL Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      # Same CLI version as the devDependency, without a full npm ci.
+      - name: Read the Supabase CLI version from package-lock.json
+        id: cli
+        run: echo "version=$(jq -r '.packages["node_modules/supabase"].version' package-lock.json)" >> "$GITHUB_OUTPUT"
+      - uses: supabase/setup-cli@v1
+        with:
+          version: ${{ steps.cli.outputs.version }}
+      - run: bash scripts/db/test-migrations.sh
+
   unit-tests-and-build:
     name: Unit Tests & Build
     runs-on: ubuntu-latest

@@ -13,7 +13,7 @@ insert into public.mtg_catalog (oracle_id, name, type_line, colors) values
   ('00000000-0000-4000-8000-0000000000b1', 'Wishful Gecko', 'Creature — Lizard', '{G}'),
   ('00000000-0000-4000-8000-0000000000b2', 'Wishful Mercy', 'Sorcery', '{B}');
 
-set local test.uid = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
+set local request.jwt.claim.sub = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
 set local role authenticated;
 
 -- Add, add again: one row, copies summed, notes joined, capped at 99.
@@ -59,7 +59,7 @@ end $$;
 select pg_temp.check(exists (select 1 from public.mtg_wishlist where id = (select id from w)), 'refused move keeps the wish');
 
 -- Not the admin: RLS shows and changes nothing.
-set local test.uid = '11111111-1111-4111-8111-111111111111';
+set local request.jwt.claim.sub = '11111111-1111-4111-8111-111111111111';
 select pg_temp.check((select count(*) from public.mtg_wishlist) = 0, 'other user: sees no wish');
 select pg_temp.check(public.mtg_change_wish_qty((select id from w), 1) is null, 'other user: cannot change');
 select pg_temp.check(public.mtg_wish_to_pool((select id from w)) is null, 'other user: cannot move');

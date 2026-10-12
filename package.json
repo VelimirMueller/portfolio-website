@@ -16,6 +16,7 @@
     "build-storybook": "storybook build",
     "test:visual": "npx playwright test --config=playwright-storybook.config.ts",
     "test:e2e": "npx playwright test --config=playwright.config.ts",
+    "test:db": "bash scripts/db/test-migrations.sh",
     "prepare": "husky"
   },
   "dependencies": {

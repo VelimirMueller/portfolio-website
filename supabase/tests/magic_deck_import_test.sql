@@ -22,7 +22,7 @@ insert into public.mtg_catalog (oracle_id, name, type_line, colors) values
 insert into public.mtg_card_name (lang, printed_name, oracle_id) values
   ('de', 'Prüfende Eile', '00000000-0000-4000-8000-0000000000b2');
 
-set local test.uid = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
+set local request.jwt.claim.sub = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
 set local role authenticated;
 
 -- 1. A typo, an ambiguous front face: nothing is created, both are reported.
@@ -88,7 +88,7 @@ select pg_temp.check(pg_temp.raises($q$select public.mtg_import_deck('X', 'x', '
 select pg_temp.check(pg_temp.raises($q$select public.mtg_import_deck('X', 'x', '', '[{"section":"sideboard","qty":1,"name":"Testing Haste"}]')$q$), 'raises: empty main deck');
 
 -- 5. Not the admin: the function refuses before it reads anything.
-set local test.uid = '00000000-0000-4000-8000-00000000dead';
+set local request.jwt.claim.sub = '00000000-0000-4000-8000-00000000dead';
 select pg_temp.check(pg_temp.raises($q$select public.mtg_import_deck('Intruder', 'intruder', '', '[{"section":"main","qty":1,"name":"Testing Haste"}]')$q$),
                      'admin only: a non-admin cannot import');
 reset role;
