@@ -1,5 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
-import { Resend } from 'npm:resend@6.9.1'
+import { Resend } from 'npm:resend@6.12.4'
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
 

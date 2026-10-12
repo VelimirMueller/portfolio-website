@@ -220,6 +220,42 @@ test.describe('Language', () => {
   });
 });
 
+// ─── Locale redirects (open redirect, GHSA-8f24-v5vv-gm5j) ──
+
+test.describe('Locale redirects', () => {
+  // Paths the URL parser could read as another host. Joined to the origin by
+  // hand: passed to `request.get` as-is, `//evil.example` would be a
+  // scheme-relative URL and the request would never reach the app.
+  const craftedPaths = [
+    '//evil.example',
+    '//evil.example/de',
+    '/%2F%2Fevil.example',
+    '/%5C%5Cevil.example',
+    '/%09/evil.example',
+    '/de//evil.example',
+  ];
+
+  test('the locale redirect for / stays on this host', async ({ request, baseURL }) => {
+    const res = await request.get('/', { maxRedirects: 0 });
+    expect(res.status()).toBeGreaterThanOrEqual(300);
+    expect(res.status()).toBeLessThan(400);
+    const target = new URL(res.headers()['location'], baseURL);
+    expect(target.origin).toBe(new URL(baseURL!).origin);
+    expect(target.pathname).toBe('/de');
+  });
+
+  for (const path of craftedPaths) {
+    test(`${path} does not redirect off-site`, async ({ request, baseURL }) => {
+      const origin = new URL(baseURL!).origin;
+      const res = await request.get(`${origin}${path}`, { maxRedirects: 0 });
+      const location = res.headers()['location'];
+      if (location) {
+        expect(new URL(location, origin).origin).toBe(origin);
+      }
+    });
+  }
+});
+
 // ─── Contact Form ───────────────────────────────────────────
 
 test.describe('Contact form', () => {
