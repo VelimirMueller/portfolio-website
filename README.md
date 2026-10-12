@@ -136,7 +136,7 @@ npm run dev
 <p>
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/readme/deploy-v2-light.svg">
-  <img alt="NEXT_PUBLIC_SUPABASE_URL: Required. Set in the Vercel dashboard. NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY: Required. Set in the Vercel dashboard. RESEND_API_KEY: Contact form mail. NEXT_PUBLIC_HCAPTCHA_SITEKEY: Contact form captcha (public key). HCAPTCHA_SECRET: Contact form captcha check. See .env.example" src="assets/readme/deploy-v2-dark.svg" width="100%">
+  <img alt="NEXT_PUBLIC_SUPABASE_URL: Required. Set in the Vercel dashboard. NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY: Required. Set in the Vercel dashboard. NEXT_PUBLIC_HCAPTCHA_SITEKEY: Contact form captcha (public key). HCAPTCHA_SECRET: Contact form captcha check. ANALYTICS_INGEST_SECRET: Optional. Analytics ingest. Other optional names: .env.example. Edge Function secrets: supabase/functions/.env.example" src="assets/readme/deploy-v2-dark.svg" width="100%">
 </picture>
 </p>
 
