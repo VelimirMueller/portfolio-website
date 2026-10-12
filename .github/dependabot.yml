@@ -1,0 +1,41 @@
+# Dependabot (issue #67): version updates for npm and GitHub Actions.
+# Security updates come from the repo setting "Dependabot security updates"
+# and are not limited by the schedules below.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    # Conventional commits so commitlint accepts the messages: "chore(deps): ...".
+    commit-message:
+      prefix: chore(deps)
+    groups:
+      # One PR per week for all minor and patch bumps; majors stay separate.
+      npm-minor-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Next.js and React are pinned with "~" on purpose: a major upgrade is a
+      # planned migration, not a weekly bump.
+      - dependency-name: next
+        update-types: [version-update:semver-major]
+      - dependency-name: react
+        update-types: [version-update:semver-major]
+      - dependency-name: react-dom
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: chore(deps)
+    groups:
+      github-actions:
+        patterns: ["*"]

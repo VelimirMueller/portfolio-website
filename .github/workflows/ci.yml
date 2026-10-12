@@ -7,6 +7,18 @@ on:
     branches: [main]
 
 jobs:
+  # Fails on critical advisories in production dependencies (issue #67).
+  # Reads package-lock.json only, so no npm ci. Tighten to high after M1.
+  dependency-audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm audit --omit=dev --audit-level=critical
+
   lint-and-typecheck:
     name: Lint & Type Check
     runs-on: ubuntu-latest
