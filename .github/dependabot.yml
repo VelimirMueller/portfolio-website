@@ -27,6 +27,17 @@ updates:
         update-types: [version-update:semver-major]
       - dependency-name: react-dom
         update-types: [version-update:semver-major]
+      # Next.js 15.5 bundles React 19.2 for the app, so tests and Storybook stay
+      # on the same 19.2 line (issue #155). 19.2.x patches still come through.
+      # Remove these four entries when Next 16 lands (issue #156).
+      - dependency-name: react
+        versions: [">= 19.3.0"]
+      - dependency-name: react-dom
+        versions: [">= 19.3.0"]
+      - dependency-name: "@types/react"
+        versions: [">= 19.3.0"]
+      - dependency-name: "@types/react-dom"
+        versions: [">= 19.3.0"]
 
   - package-ecosystem: github-actions
     # "/" covers .github/workflows; the second entry covers the local composite
