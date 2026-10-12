@@ -28,6 +28,8 @@ test.describe('Security headers', () => {
   });
 
   // Same-origin framing exists only for the MCP demo document (issue #69).
+  // The header rules in next.config.mjs are disjoint, so every response must
+  // carry exactly one CSP.
   test('only the MCP demo document allows same-origin framing', async ({ request }) => {
     const demo = await request.get('/demos/mcp-demo.html');
     const demoCsp = demo.headersArray().filter((h) => h.name.toLowerCase() === 'content-security-policy');
@@ -36,8 +38,9 @@ test.describe('Security headers', () => {
     expect(demoCsp[0].value).not.toContain("frame-ancestors 'none'");
     expect(demo.headers()['x-frame-options']).toBe('SAMEORIGIN');
 
-    for (const path of ['/de', '/projects/mcp-demo']) {
-      const response = await request.get(path);
+    // '/' is the locale redirect; check its own headers, not the target's.
+    for (const path of ['/', '/de', '/en/about', '/projects/mcp-demo']) {
+      const response = await request.get(path, { maxRedirects: 0 });
       const csp = response.headersArray().filter((h) => h.name.toLowerCase() === 'content-security-policy');
       expect(csp, path).toHaveLength(1);
       expect(csp[0].value, path).toContain("frame-ancestors 'none'");
