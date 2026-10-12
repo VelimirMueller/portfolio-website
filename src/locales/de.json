@@ -51,34 +51,6 @@
         "label": "Unabhängige Reviews pro Änderung"
       }
     ],
-    "sections": {
-      "practice": {
-        "index": "01",
-        "title": "Leistungen",
-        "caption": "Drei Bereiche, eine Verantwortung"
-      },
-      "experience": {
-        "index": "02",
-        "title": "Erfahrung",
-        "caption": "Von Anfang bis Ende, in vielen Rollen"
-      },
-      "flagships": {
-        "index": "03",
-        "title": "Flagships",
-        "caption": "Produkte, die ich öffentlich ausliefere"
-      },
-      "system": {
-        "index": "04",
-        "title": "Delivery-System",
-        "caption": "Wie Änderungen in Produktion kommen"
-      },
-      "capabilities": {
-        "index": "05",
-        "title": "Kompetenzen",
-        "caption": "Stack im Produktionseinsatz"
-      }
-    },
-    "sectionCount": "Abschnitt",
     "practiceLabel": "Leistungsbereiche",
     "practice": [
       {
@@ -98,7 +70,6 @@
       }
     ],
     "allServices": "Alle Leistungen",
-    "experienceIntro": "Vom Frontend-Spezialisten zum Full-Stack Product Engineer, in einem Konzern, einem Civic-Tech-SaaS und zwei Startups. Heute plane, baue und betreibe ich ganze Anwendungen, von der ersten Anforderung bis zur Produktion.",
     "ownLabel": "Wofür ich verantwortlich bin",
     "own": [
       {
@@ -162,15 +133,6 @@
         "text": "Indexiert eine Codebasis als strukturierten Kontext für Agents. 81 Tools, persistenter Sprint- und Retro-Speicher.",
         "href": "https://github.com/VelimirMueller/code-context-mcp",
         "cta": "Auf GitHub ansehen"
-      },
-      {
-        "key": "claude-skills",
-        "name": "CLAUDE SKILLS.",
-        "status": "Gepflegt",
-        "label": "Skills für Frontend-Projekte",
-        "text": "Audit-fähige Claude-Code-Skills mit Konventionen, Contribution-Guide und Release Notes.",
-        "href": "https://github.com/VelimirMueller/claude-skills",
-        "cta": "Auf GitHub ansehen"
       }
     ],
     "pipelineLabel": "Delivery-Pipeline",
@@ -198,25 +160,6 @@
       }
     ],
     "pipelineNote": "Kein Schritt merged, deployt oder schließt ein Ticket allein.",
-    "controlsLabel": "Kontrollen",
-    "controls": [
-      {
-        "title": "Review-Gates",
-        "text": "Fehlt eine Review-Stimme, ist der Pull Request blockiert."
-      },
-      {
-        "title": "Releases nach Regeln",
-        "text": "Feste Regeln geben GO oder HOLD. Ein Modell schreibt Notizen, nie das Urteil."
-      },
-      {
-        "title": "Dauerhaftes Gedächtnis",
-        "text": "Entscheidungen, Fallstricke und Abhängigkeiten überdauern jede Session."
-      },
-      {
-        "title": "Ein versioniertes Setup",
-        "text": "Das Tooling ist gepinnt, protokolliert und mit einem Befehl geprüft."
-      }
-    ],
     "quote": "Modelle schlagen vor. Regeln prüfen. Ich entscheide.",
     "quoteBy": "Arbeitsprinzip",
     "stackLabel": "Technologie",

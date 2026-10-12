@@ -51,34 +51,6 @@
         "label": "Independent reviews per change"
       }
     ],
-    "sections": {
-      "practice": {
-        "index": "01",
-        "title": "Practice",
-        "caption": "Three areas, one owner"
-      },
-      "experience": {
-        "index": "02",
-        "title": "Experience",
-        "caption": "End to end, across roles"
-      },
-      "flagships": {
-        "index": "03",
-        "title": "Flagships",
-        "caption": "Products I ship in public"
-      },
-      "system": {
-        "index": "04",
-        "title": "Delivery system",
-        "caption": "How changes reach production"
-      },
-      "capabilities": {
-        "index": "05",
-        "title": "Capabilities",
-        "caption": "Stack in production"
-      }
-    },
-    "sectionCount": "Section",
     "practiceLabel": "Practice areas",
     "practice": [
       {
@@ -98,7 +70,6 @@
       }
     ],
     "allServices": "All services",
-    "experienceIntro": "From frontend specialist to full-stack product engineer, across a corporate, a civic-tech SaaS and two startups. Today I plan, build and run whole applications, from the first requirement to production.",
     "ownLabel": "What I own",
     "own": [
       {
@@ -162,15 +133,6 @@
         "text": "Indexes a codebase into structured context for agents. 81 tools, persistent sprint and retro memory.",
         "href": "https://github.com/VelimirMueller/code-context-mcp",
         "cta": "View on GitHub"
-      },
-      {
-        "key": "claude-skills",
-        "name": "CLAUDE SKILLS.",
-        "status": "Maintained",
-        "label": "Skills for frontend projects",
-        "text": "Audit-aware Claude Code skills with conventions, a contribution guide and release notes.",
-        "href": "https://github.com/VelimirMueller/claude-skills",
-        "cta": "View on GitHub"
       }
     ],
     "pipelineLabel": "Delivery pipeline",
@@ -198,25 +160,6 @@
       }
     ],
     "pipelineNote": "No step merges, deploys or closes a ticket on its own.",
-    "controlsLabel": "Controls",
-    "controls": [
-      {
-        "title": "Gated reviews",
-        "text": "A missing review vote blocks the pull request."
-      },
-      {
-        "title": "Rule-based releases",
-        "text": "Fixed rules give GO or HOLD. A model writes notes, never the verdict."
-      },
-      {
-        "title": "Persistent memory",
-        "text": "Decisions, pitfalls and dependencies outlive every session."
-      },
-      {
-        "title": "One versioned setup",
-        "text": "The tooling is pinned, logged and health-checked with one command."
-      }
-    ],
     "quote": "Models propose. Rules gate. I decide.",
     "quoteBy": "Operating principle",
     "stackLabel": "Technology",

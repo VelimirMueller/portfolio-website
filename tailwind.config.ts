@@ -60,8 +60,15 @@ const config: Config = {
         'stripe-5': 'stripe-flow-5 28s ease-in-out infinite',
         'card-shine': 'card-shine 0.6s ease forwards',
         'border-glow': 'border-glow 3s ease-in-out infinite',
+        // BrandAurora: the indigo curtain drifts, never loops visibly
+        'aurora-a': 'aurora-a 26s ease-in-out infinite alternate',
+        'aurora-b': 'aurora-b 19s ease-in-out infinite alternate',
+        'aurora-c': 'aurora-c 23s ease-in-out infinite alternate',
       },
       keyframes: {
+        'aurora-a': { '0%': { transform: 'translateX(-50%) scale(1)' }, '100%': { transform: 'translateX(-46%) scale(1.08)' } },
+        'aurora-b': { '0%': { transform: 'translate(0, 0)' }, '100%': { transform: 'translate(8vw, 4vh)' } },
+        'aurora-c': { '0%': { transform: 'translate(0, 0) scale(1)' }, '100%': { transform: 'translate(-6vw, 3vh) scale(1.1)' } },
         // KPI section switch: drop out of hyperspace — stretched, blurred, then settled.
         'warp-in': {
           '0%': { opacity: '0', transform: 'perspective(900px) translateZ(-120px) scaleY(1.04)', filter: 'blur(8px) brightness(1.6)' },
