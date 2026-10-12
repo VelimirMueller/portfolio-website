@@ -51,5 +51,6 @@ context.db*
 # local tool state
 .playwright-mcp/
 supabase/.temp/
+supabase/.branches/
 .playwright-artifacts-sb/
 .venv/

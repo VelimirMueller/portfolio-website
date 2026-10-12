@@ -59,7 +59,7 @@ A private area at `/admin`, introduced in **v2.0.0** (traffic KPIs since **v2.1.
 
 **Access.** Supabase Auth magic link for a single admin user (sign-ups off, `shouldCreateUser: false`). Three layers check the admin: middleware, `requireAdmin()` in every page and server action, and Postgres RLS via `public.is_admin()`. The admin's user UUID lives in `src/config/admin.ts` **and** in the migration — change both together. No service-role key is used.
 
-**Database.** `supabase/migrations/` versions the `contact_messages` table, its `status` column and the RLS policies. Apply new migrations in the Supabase SQL editor.
+**Database.** `supabase/migrations/` versions the `contact_messages` table, its `status` column and the RLS policies. Apply new migrations in the Supabase SQL editor. CI (job *Database Migrations & SQL Tests*) applies every migration to a fresh local database and runs `supabase/tests/*.sql`; locally: `npm run test:db` (needs Docker and psql). The catalog fixture `supabase/tests/fixtures/catalog.sql` stands in for the Scryfall catalog that `20261008150000_magic_v2.sql` needs. SQL tests act as a user with `set local request.jwt.claim.sub = '<uuid>'`.
 
 **Supabase Auth settings** (dashboard, not in the repo): Site URL `https://www.velimir-mueller.de`; redirect URLs `https://www.velimir-mueller.de/admin/auth/callback` and `http://localhost:3000/admin/auth/callback`; custom SMTP via Resend for the login mails.
 

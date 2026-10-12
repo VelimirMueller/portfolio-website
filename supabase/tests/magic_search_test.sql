@@ -34,7 +34,7 @@ insert into public.mtg_card_name (lang, printed_name, oracle_id) values
   ('de', 'Zqxrank', '00000000-0000-4000-8000-0000000000c5');
 
 -- Search runs as the admin.
-set local test.uid = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
+set local request.jwt.claim.sub = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
 set local role authenticated;
 
 create function pg_temp.ids(q text, lim int default 24) returns text[] language sql as $$
@@ -74,7 +74,7 @@ select pg_temp.check((select count(*) = 3 from public.mtg_search_catalog('zqxran
 
 -- 6. Access: security definer refuses other users itself; anon cannot call it.
 reset role;
-set local test.uid = '11111111-1111-4111-8111-111111111111';
+set local request.jwt.claim.sub = '11111111-1111-4111-8111-111111111111';
 set local role authenticated;
 do $$ begin
   perform public.mtg_search_catalog('zqxrank', 24);

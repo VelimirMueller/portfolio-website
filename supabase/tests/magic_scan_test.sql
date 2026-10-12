@@ -30,7 +30,7 @@ select pg_temp.check(public.mtg_norm('Vraska’s Final Mercy!') = 'vraska''s fin
 select pg_temp.check(public.mtg_norm('  Loot,   the Anomaly ') = 'loot, the anomaly', 'norm: whitespace');
 
 -- Matching runs as the admin (RLS on).
-set local test.uid = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
+set local request.jwt.claim.sub = 'bf3817e9-307a-490e-a3d4-5e63ed65da4a';
 set local role authenticated;
 
 create temp table r as
@@ -161,7 +161,7 @@ select pg_temp.check((select r ->> 'method' || '/' || (r ->> 'lang') from jsonb_
 select pg_temp.check((select r ->> 'method' || '/' || (r ->> 'lang') from jsonb_array_elements(public.mtg_match_scan('[{"name": "Quorvath Bellrinqer"}]')) r) = 'fuzzy/en',
   'language tie: fuzzy -> en');
 
-set local test.uid = '11111111-1111-4111-8111-111111111111';
+set local request.jwt.claim.sub = '11111111-1111-4111-8111-111111111111';
 set local role authenticated;
 select pg_temp.check((select count(*) = 0 from public.mtg_printing), 'RLS: other user sees no printings');
 select pg_temp.check((select count(*) = 0 from public.mtg_card_name), 'RLS: other user sees no names');
