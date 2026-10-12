@@ -102,7 +102,21 @@ body {
 }
 
 /* Mobile performance: disable GPU-heavy effects on touch devices */
+/* Demo glass: the CRMPro dashboard is dark-only and keeps its own blue accent, so its glass is always dark. */
+@layer components {
+  .glass-demo, .glass-demo-inner, .glass-demo-side {
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  .glass-demo { background: rgba(17, 17, 20, 0.5); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 30px 80px -40px rgba(0, 0, 0, 0.9); }
+  .glass-demo-inner { background: rgba(255, 255, 255, 0.03); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04); }
+  .glass-demo-side { background: rgba(5, 5, 5, 0.55); }
+  .glass-demo-pop { background: rgba(17, 17, 20, 0.88); }
+}
 @media (hover: none) {
+  .glass-demo, .glass-demo-inner, .glass-demo-side { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .glass-demo { background: rgba(17, 17, 20, 0.94); }
   /* Kill backdrop-blur — use solid bg instead */
   .backdrop-blur-sm,
   .backdrop-blur-xl {

@@ -4,6 +4,10 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
+import { Eyebrow, Tick } from '@/components/atoms/Signature';
+import { PanelFrame, glassCard } from '@/components/molecules/GlassPanel';
+import { SectionStage, type StageArt } from '@/components/molecules/SectionStage';
+import { SectionDivider } from '@/components/molecules/SectionDivider';
 
 // Home in the VM. flagship look (vm-brand PLAYBOOK B-34, README v2 / profile v4): one indigo accent,
 // dark art with a fading grid, "// LABEL" eyebrows, numbered art dividers. Copy lives in locales/*.json (home.*).
@@ -16,13 +20,6 @@ type Step = { title: string; text: string; hot?: boolean };
 type StackRow = { area: string; items: string };
 type SectionKey = 'practice' | 'experience' | 'flagships' | 'system' | 'capabilities';
 
-const SECTION_ART: Record<SectionKey, string> = {
-  practice: "bg-[url('/art/v2/strip-flagship-1.webp')]",
-  experience: "bg-[url('/art/v2/strip-flagship-2.webp')]",
-  flagships: "bg-[url('/art/v2/strip-flagship-3.webp')]",
-  system: "bg-[url('/art/v2/strip-flagship-4.webp')]",
-  capabilities: "bg-[url('/art/v2/strip-flagship-5.webp')]",
-};
 const FLAGSHIP_ART: Record<string, string> = {
   synthwerk: "bg-[url('/art/v2/synthwerk.webp')]",
   'code-context-mcp': "bg-[url('/art/v2/code-context-mcp.webp')]",
@@ -30,80 +27,24 @@ const FLAGSHIP_ART: Record<string, string> = {
 };
 
 const panel = 'glass rounded-[1.5rem] overflow-hidden';
-const card = 'glass-inner rounded-2xl';
+const card = glassCard;
 
-const SECTION_BG: Record<SectionKey, { art: string; side: 'left' | 'right' }> = {
-  practice: { art: "bg-[url('/art/v2/site-svc-requirements.webp')]", side: 'right' },
-  experience: { art: "bg-[url('/art/v2/site-svc-delivery.webp')]", side: 'left' },
-  flagships: { art: "bg-[url('/art/v2/site-svc-ux.webp')]", side: 'right' },
-  system: { art: "bg-[url('/art/v2/site-svc-stack.webp')]", side: 'left' },
-  capabilities: { art: "bg-[url('/art/v2/site-svc-frontend.webp')]", side: 'right' },
+const SECTION: Record<SectionKey, { art: StageArt; side: 'left' | 'right'; strip: 1 | 2 | 3 | 4 | 5 }> = {
+  practice: { art: 'site-svc-requirements', side: 'right', strip: 1 },
+  experience: { art: 'site-svc-delivery', side: 'left', strip: 2 },
+  flagships: { art: 'site-svc-ux', side: 'right', strip: 3 },
+  system: { art: 'site-svc-stack', side: 'left', strip: 4 },
+  capabilities: { art: 'site-svc-frontend', side: 'right', strip: 5 },
 };
 
-/**
- * Large brand render behind a whole section, bleeding past the content column, so the glass panels on top
- * have something to blur (the contact-page effect, site-wide). Light mode inverts the near-black render and
- * rotates the hue back to indigo, as ArtBackdrop does.
- */
-const SectionArt = ({ id }: { id: SectionKey }) => {
-  const { art, side } = SECTION_BG[id];
-  const right = side === 'right';
-  return (
-    <>
-      <div aria-hidden="true" className={`absolute -z-10 top-[-10%] h-[120%] w-[100vw] max-w-[1800px] pointer-events-none bg-cover bg-center ${art} ${right ? 'right-[-30vw] [mask-image:radial-gradient(ellipse_at_62%_50%,black_35%,transparent_78%)]' : 'left-[-30vw] [mask-image:radial-gradient(ellipse_at_38%_50%,black_35%,transparent_78%)]'} invert hue-rotate-180 opacity-50 mix-blend-multiply saturate-150 dark:invert-0 dark:hue-rotate-0 dark:mix-blend-normal dark:opacity-100`} />
-      {/* indigo light the glass refracts */}
-      <div aria-hidden="true" className={`absolute -z-10 top-[20%] h-[60%] w-[45vw] rounded-full blur-[120px] pointer-events-none bg-brand-500/25 dark:bg-brand-500/30 ${right ? 'right-[-8vw]' : 'left-[-8vw]'}`} />
-    </>
-  );
-};
-
-const Section = ({ id, children }: { id: SectionKey; children: React.ReactNode }) => (
-  <div className="relative isolate">
-    <SectionArt id={id} />
-    {children}
-  </div>
-);
-
-/** Grid fading out from the top plus one soft indigo glow: the frame of every kit panel. */
-const PanelFrame = () => (
-  <>
-    <div aria-hidden="true" className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_right,#8080800f_1px,transparent_1px),linear-gradient(to_bottom,#8080800f_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_50%_0%,black,transparent_75%)]" />
-    <div aria-hidden="true" className="absolute -top-40 right-[5%] w-[45%] h-80 rounded-full bg-brand-500/10 dark:bg-brand-500/15 blur-[90px] pointer-events-none" />
-  </>
-);
-
-const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <p className="relative font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600 dark:text-brand-400 mb-5">{'// '}{children}</p>
-);
-
-const Tick = () => <span aria-hidden="true" className="block w-6 h-0.5 bg-brand-500 mb-6" />;
-
-const SectionDivider = ({ id, total }: { id: SectionKey; total: number }) => {
+const Section = ({ id, total, children }: { id: SectionKey; total: number; children: React.ReactNode }) => {
   const t = useTranslations('home');
   const s = t.raw(`sections.${id}`) as { index: string; title: string; caption: string };
   return (
-    <AnimateIn from="bottom" className="mt-24 md:mt-32 mb-6">
-      <div id={id} className="relative h-40 md:h-[200px] rounded-[1.5rem] overflow-hidden border border-light-border dark:border-[#26262b] bg-[#08080a] scroll-mt-28">
-        <div aria-hidden="true" className={`absolute inset-0 bg-cover bg-center ${SECTION_ART[id]}`} />
-        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_right,rgba(10,10,11,0.94),rgba(10,10,11,0.7)_40%,rgba(10,10,11,0.1)_72%,rgba(10,10,11,0.3))]" />
-        <div aria-hidden="true" className="absolute inset-y-0 left-0 w-1/2 bg-[linear-gradient(to_right,#ffffff0d_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0d_1px,transparent_1px)] bg-[size:32px_32px]" />
-        <div aria-hidden="true" className="absolute bottom-0 inset-x-0 h-[3px] bg-brand-500/85" />
-        <span className="absolute top-5 right-5 md:top-6 md:right-8 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400 border border-[#26262b] bg-[#0a0a0b]/80 rounded-full px-3 py-1">
-          {t('sectionCount')} {s.index} / {String(total).padStart(2, '0')}
-        </span>
-        <div className="relative h-full flex flex-col justify-center px-6 md:px-10">
-          <h2 className="flex items-baseline gap-3 md:gap-4 font-mono font-bold tracking-tight">
-            <span className="text-4xl md:text-6xl text-brand-400">{s.index}</span>
-            <span className="text-2xl md:text-4xl text-zinc-500 font-normal">/</span>
-            <span className="text-2xl md:text-5xl text-zinc-100 uppercase">{s.title}</span>
-          </h2>
-          <div className="flex items-center gap-4 mt-3">
-            <span aria-hidden="true" className="w-11 h-0.5 bg-brand-500" />
-            <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.22em] text-zinc-400">{s.caption}</span>
-          </div>
-        </div>
-      </div>
-    </AnimateIn>
+    <SectionStage art={SECTION[id].art} side={SECTION[id].side}>
+      <SectionDivider id={id} index={s.index} total={total} title={s.title} caption={s.caption} countLabel={t('sectionCount')} strip={SECTION[id].strip} />
+      {children}
+    </SectionStage>
   );
 };
 
@@ -132,7 +73,7 @@ const Hero = () => {
                 VELIMIR<br />MÜLLER.
               </h1>
               <div className="mt-7 flex gap-4">
-                <span aria-hidden="true" className="mt-3 w-11 h-0.5 shrink-0 bg-brand-500" />
+                <Tick wide className="mt-3" />
                 <div>
                   <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-300">{t('tagline')}</p>
                   <p className="mt-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600 dark:text-brand-400">{t('sub')}</p>
@@ -177,7 +118,7 @@ const CardGrid = ({ label, items, cols }: { label: string; items: Card[]; cols: 
       {items.map((c, i) => (
         <div key={c.title} className={`${card} p-6 md:p-7 flex flex-col`}>
           <div className="flex items-start justify-between">
-            <Tick />
+            <Tick className="mb-6" />
             <span className="font-mono text-[11px] text-zinc-400 dark:text-zinc-500">{String(i + 1).padStart(2, '0')}</span>
           </div>
           <h3 className="text-xl font-semibold text-light-text dark:text-zinc-100">{c.title}</h3>
@@ -251,7 +192,7 @@ const Flagships = () => {
               </div>
               <h3 className="mt-6 font-mono font-bold tracking-tighter text-3xl md:text-5xl text-light-text dark:text-white">{f.name}</h3>
               <div className="mt-4 flex items-center gap-4">
-                <span aria-hidden="true" className="w-11 h-0.5 bg-brand-500" />
+                <Tick wide />
                 <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-600 dark:text-zinc-400">{f.label}</span>
               </div>
               <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-zinc-600 dark:text-zinc-400 border-l-2 border-light-border dark:border-[#26262b] pl-4">{f.text}</p>
@@ -346,11 +287,11 @@ export default function HomeContent() {
     <div className="relative overflow-x-clip">
       <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto relative">
         <Hero />
-        <Section id="practice"><SectionDivider id="practice" total={total} /><Practice /></Section>
-        <Section id="experience"><SectionDivider id="experience" total={total} /><Experience /></Section>
-        <Section id="flagships"><SectionDivider id="flagships" total={total} /><Flagships /></Section>
-        <Section id="system"><SectionDivider id="system" total={total} /><DeliverySystem /></Section>
-        <Section id="capabilities"><SectionDivider id="capabilities" total={total} /><Capabilities /></Section>
+        <Section id="practice" total={total}><Practice /></Section>
+        <Section id="experience" total={total}><Experience /></Section>
+        <Section id="flagships" total={total}><Flagships /></Section>
+        <Section id="system" total={total}><DeliverySystem /></Section>
+        <Section id="capabilities" total={total}><Capabilities /></Section>
         <ContactBand />
       </div>
     </div>

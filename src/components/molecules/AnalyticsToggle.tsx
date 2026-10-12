@@ -40,7 +40,7 @@ export function AnalyticsToggle({ labels }: { labels: AnalyticsToggleLabels }) {
   const toggle = () => setBlocked(!setOptedOut(state.enabled));
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-gray-50 dark:bg-[#0a0a0a] p-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 rounded-2xl glass-inner p-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <p id="analytics-toggle-label" className="text-sm font-bold text-black dark:text-white">
           {labels.title}

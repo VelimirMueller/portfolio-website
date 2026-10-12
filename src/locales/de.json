@@ -272,7 +272,20 @@
       "frontendDevelopment": "Full-Stack Development",
       "projectDelivery": "Projektplanung & Delivery",
       "modernStack": "Modern Stack"
-    }
+    },
+    "stages": {
+      "offer": {
+        "index": "01",
+        "title": "Angebot",
+        "caption": "Von der Idee zum Go-live"
+      },
+      "services": {
+        "index": "02",
+        "title": "Leistungen",
+        "caption": "Fünf Leistungen, ein Lebenszyklus"
+      }
+    },
+    "more": "Details"
   },
   "serviceDetail": {
     "challenges": "Herausforderungen",
@@ -613,6 +626,23 @@
         "title": "Claude Skills",
         "desc": "Meinungsstarke, audit-fähige Claude-Code-Skills für Frontend-Projekte: Ordnerregeln, Lint, State und Tests."
       }
+    },
+    "stages": {
+      "demos": {
+        "index": "01",
+        "title": "Demos",
+        "caption": "Direkt im Browser testen"
+      },
+      "builds": {
+        "index": "02",
+        "title": "Studio-Builds",
+        "caption": "VM. Studio, vier Gruppen"
+      },
+      "work": {
+        "index": "03",
+        "title": "Projekte aus der Praxis",
+        "caption": "Fallstudien"
+      }
     }
   },
   "about": {
@@ -679,6 +709,18 @@
       "company": "Servicezentrum der Berliner Volkshochschulen",
       "date": "Aug 2020 - Mai 2021",
       "desc": "Linux-Systeme mit BigBlueButton administriert, IT-Sicherheitskonzepte für selbst gehostete Server umgesetzt, Features mit Ruby on Rails und React entwickelt und interne IT-Infrastruktur verwaltet."
+    },
+    "stages": {
+      "profile": {
+        "index": "01",
+        "title": "Profil",
+        "caption": "Rolle, Umfang und Fokus"
+      },
+      "experience": {
+        "index": "02",
+        "title": "Erfahrung",
+        "caption": "Berufserfahrung"
+      }
     }
   },
   "contact": {

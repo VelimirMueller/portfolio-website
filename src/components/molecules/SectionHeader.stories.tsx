@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Large section heading with decorative green line, monospace subtitle with "01" prefix, and bold title. Used at the top of every major page section.',
+          'Large section heading with a decorative indigo line, monospace subtitle with "01" prefix, and bold title. Used at the top of every major page section.',
       },
     },
   },

@@ -163,8 +163,8 @@ export default function ContactContent() {
       </AnimateIn>
 
       <AnimateIn from="bottom" delay={100}>
-        <div className="bg-white/75 dark:bg-[#0c0c10]/55 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 relative overflow-hidden shadow-2xl shadow-black/5 dark:shadow-black/40">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full -mr-32 -mt-32 pointer-events-none hidden md:block md:blur-3xl"></div>
+        <div className="glass p-8 md:p-12 rounded-3xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/15 rounded-full -mr-32 -mt-32 pointer-events-none hidden md:block md:blur-3xl"></div>
 
           <div className="relative z-10">
             {showSuccess ? (
@@ -283,8 +283,8 @@ export default function ContactContent() {
             )}
 
             <div className="mt-12 pt-12 border-t border-black/5 dark:border-white/5 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <a href="mailto:velimir.mueller@googlemail.com" className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#050505] border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-all group">
-                <div className="w-10 h-10 rounded-full bg-white dark:bg-[#111] flex items-center justify-center text-gray-500 group-hover:text-black dark:group-hover:text-white border border-black/5 dark:border-white/5">
+              <a href="mailto:velimir.mueller@googlemail.com" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:!border-brand-500/50 transition-all group">
+                <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
                   <Mail size={18}/>
                 </div>
                 <div>
@@ -292,8 +292,8 @@ export default function ContactContent() {
                   <div className="text-black dark:text-white font-mono text-sm break-all">{t('contact.emailLink')}</div>
                 </div>
               </a>
-              <a href="https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#050505] border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-all group">
-                <div className="w-10 h-10 rounded-full bg-white dark:bg-[#111] flex items-center justify-center text-gray-500 group-hover:text-black dark:group-hover:text-white border border-black/5 dark:border-white/5">
+              <a href="https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:!border-brand-500/50 transition-all group">
+                <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
                   <Linkedin size={18}/>
                 </div>
                 <div>
@@ -301,8 +301,8 @@ export default function ContactContent() {
                   <div className="text-black dark:text-white font-mono text-sm">{t('contact.linkedinLink')}</div>
                 </div>
               </a>
-              <a href="https://github.com/VelimirMueller" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#050505] border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-all group">
-                <div className="w-10 h-10 rounded-full bg-white dark:bg-[#111] flex items-center justify-center text-gray-500 group-hover:text-black dark:group-hover:text-white border border-black/5 dark:border-white/5">
+              <a href="https://github.com/VelimirMueller" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:!border-brand-500/50 transition-all group">
+                <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
                   <Github size={18}/>
                 </div>
                 <div>
