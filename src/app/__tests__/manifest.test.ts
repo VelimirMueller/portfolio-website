@@ -56,4 +56,10 @@ describe('app icon files', () => {
     // Colour type 2 = RGB without alpha: iOS rounds the corners itself.
     expect(pngInfo(path.join(app, 'apple-icon.png'))).toEqual({ width: 180, height: 180, colorType: 2 });
   });
+
+  it('serves the same Apple touch icon at the fixed /apple-touch-icon.png path', () => {
+    // iOS and crawlers request this path without reading the <link> tag (issue #105).
+    const fixed = fs.readFileSync(path.join(root, 'public', 'apple-touch-icon.png'));
+    expect(fixed.equals(fs.readFileSync(path.join(app, 'apple-icon.png')))).toBe(true);
+  });
 });

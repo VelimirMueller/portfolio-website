@@ -61,7 +61,7 @@ describe('middleware', () => {
     // Next.js matches the whole pathname against the pattern.
     const matches = (p: string) => config.matcher.some((m) => new RegExp(`^${m}$`).test(p));
 
-    it.each(['/favicon.ico', '/icon.svg', '/apple-icon.png', '/manifest.webmanifest', '/icons/icon-192.png'])(
+    it.each(['/favicon.ico', '/icon.svg', '/apple-icon.png', '/apple-touch-icon.png', '/manifest.webmanifest', '/icons/icon-192.png'])(
       'skips the icon file %s, so next-intl never redirects it',
       (p) => {
         expect(matches(p)).toBe(false);
