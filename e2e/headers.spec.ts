@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { OPT_OUT_KEY } from '../src/utils/analytics/optOut';
 
 /**
  * Public pages a normal visit can reach. The contact page is only viewed:
@@ -24,7 +25,9 @@ const LOCAL_SCHEMES = new Set(['data:', 'blob:', 'about:']);
  * too, and wait for the network to stay idle after each step.
  */
 async function visit(page: Page, path: string) {
-  await page.goto(path);
+  const response = await page.goto(path);
+  // A 404 page would pass the request check without testing the real page.
+  expect(response?.ok(), path).toBe(true);
   await page.waitForLoadState('networkidle');
   await page.evaluate(async () => {
     // Capped, in case a page grows while it scrolls.
@@ -91,7 +94,7 @@ test.describe('Security headers', () => {
   for (const optedOut of [false, true]) {
     test(`a visit sets no cookies${optedOut ? ' after the visitor opted out' : ''}`, async ({ page, context }) => {
       if (optedOut) {
-        await page.addInitScript(() => window.localStorage.setItem('analytics-opt-out', '1'));
+        await page.addInitScript((key) => window.localStorage.setItem(key, '1'), OPT_OUT_KEY);
       }
       for (const path of ['/', '/de', '/en/about', '/de/contact', '/projects/cyberpunk-arcade/index.html']) {
         const response = await page.goto(path);
