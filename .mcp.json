@@ -4,14 +4,7 @@
       "command": "node",
       "args": [
         "./node_modules/vlm-code-context-mcp/dist/server/index.js",
-        "/home/velimir/Schreibtisch/dev/next-app/context.db"
-      ]
-    },
-    "github": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-github"
+        "./context.db"
       ]
     }
   }

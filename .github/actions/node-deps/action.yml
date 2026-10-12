@@ -1,0 +1,13 @@
+# Shared setup for the jobs that need node_modules (issue #81): Node 24 with the
+# npm cache, then a clean install from package-lock.json.
+name: Node and dependencies
+description: Set up Node 24 with the npm cache and run npm ci.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+        cache: npm
+    - run: npm ci
+      shell: bash
