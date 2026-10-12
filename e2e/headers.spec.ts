@@ -1,4 +1,41 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
+
+/**
+ * Public pages a normal visit can reach. The contact page is only viewed:
+ * hCaptcha (a third party) loads when the visitor sends the form (issue #68).
+ */
+const PUBLIC_PAGES = [
+  '/de',
+  '/en',
+  '/de/about',
+  '/de/services',
+  '/de/projects',
+  '/de/contact',
+  '/projects/dashboard-demo',
+  '/projects/mcp-demo',
+  '/projects/cyberpunk-arcade/index.html',
+];
+
+/** Schemes that never leave the browser. Everything else must be same-origin. */
+const LOCAL_SCHEMES = new Set(['data:', 'blob:', 'about:']);
+
+/**
+ * Load a page, then scroll to the end so lazy images and in-view effects load
+ * too, and wait for the network to stay idle after each step.
+ */
+async function visit(page: Page, path: string) {
+  await page.goto(path);
+  await page.waitForLoadState('networkidle');
+  await page.evaluate(async () => {
+    // Capped, in case a page grows while it scrolls.
+    for (let y = 0, steps = 0; y < document.documentElement.scrollHeight && steps < 40; y += window.innerHeight, steps++) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve, 50)));
+    }
+    window.scrollTo(0, document.documentElement.scrollHeight);
+  });
+  await page.waitForLoadState('networkidle');
+}
 
 /**
  * Security headers contract. The CSP must allow exactly what the app uses
@@ -7,6 +44,7 @@ import { test, expect } from '@playwright/test';
  * same-origin (issue #69). Analytics and Vercel Speed Insights are
  * same-origin, so no analytics host is allowed —
  * the console check below catches an over-tight policy breaking a page.
+ * A visit sets no cookie and sends no request to another host (issue #68).
  */
 
 test.describe('Security headers', () => {
@@ -49,13 +87,34 @@ test.describe('Security headers', () => {
   });
 
   // The privacy policy promises "no cookies on a visit" — banner-free depends on it.
-  test('a visit sets no cookies', async ({ page, context }) => {
-    for (const path of ['/', '/de', '/en/about', '/de/contact']) {
-      const response = await page.goto(path);
-      expect(response!.headers()['set-cookie'], path).toBeUndefined();
-    }
-    expect(await context.cookies()).toEqual([]);
-  });
+  // Both states of the statistics switch must keep that promise (issue #68).
+  for (const optedOut of [false, true]) {
+    test(`a visit sets no cookies${optedOut ? ' after the visitor opted out' : ''}`, async ({ page, context }) => {
+      if (optedOut) {
+        await page.addInitScript(() => window.localStorage.setItem('analytics-opt-out', '1'));
+      }
+      for (const path of ['/', '/de', '/en/about', '/de/contact', '/projects/cyberpunk-arcade/index.html']) {
+        const response = await page.goto(path);
+        expect(response!.headers()['set-cookie'], path).toBeUndefined();
+      }
+      expect(await context.cookies()).toEqual([]);
+    });
+  }
+
+  // The privacy policy promises "no third-party request on a visit" (issue #68).
+  // The context listener also sees requests from iframes and workers.
+  for (const path of PUBLIC_PAGES) {
+    test(`a visit to ${path} sends no third-party request`, async ({ page, context, baseURL }) => {
+      const origin = new URL(baseURL!).origin;
+      const foreign: string[] = [];
+      context.on('request', (request) => {
+        const url = new URL(request.url());
+        if (!LOCAL_SCHEMES.has(url.protocol) && url.origin !== origin) foreign.push(request.url());
+      });
+      await visit(page, path);
+      expect(foreign, path).toEqual([]);
+    });
+  }
 
   for (const path of [
     '/de',
