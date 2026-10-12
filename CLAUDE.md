@@ -1,369 +1,81 @@
-CLAUDE.md - Next.js Development Specification
-Core Principle
-CRITICAL: All changes must preserve existing app behavior. The app must work exactly as before.
-Project Setup
-Technology Stack
+# CLAUDE.md
 
-Framework: Next.js (App Router)
-Database: Supabase
-Deployment: Vercel
-Testing: Jest + React Testing Library + Playwright
-Styling: (Use existing styling approach)
+Development rules for velimir-mueller.de. Details live in the [README](README.md) and [docs/REFERENCE.md](docs/REFERENCE.md); env var names live in [.env.example](.env.example).
 
-Environment Configuration
-Create .env.local:
-NEXT_PUBLIC_SUPABASE_URL=https://zkvpvhrmrbkpuspypqrj.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=sb_publishable_F-mjXO72s6zvuM0WZ1yaow_xrp_bl51
-Supabase Integration
-Server Client (/utils/supabase/server.ts)
-typescriptimport { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { cookies } from "next/headers";
+## Core rule
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
+**Every change must keep the existing behaviour of the site.** The app must work exactly as before, unless the change is the behaviour. Every push to `main` deploys to production on Vercel.
 
-export const createClient = (cookieStore: ReturnType<typeof cookies>) => {
-return createServerClient(
-supabaseUrl!,
-supabaseKey!,
-{
-cookies: {
-getAll() {
-return cookieStore.getAll()
-},
-setAll(cookiesToSet) {
-try {
-cookiesToSet.forEach(({ name, value, options }) =>
-cookieStore.set(name, value, options)
-)
-} catch {
-// The `setAll` method was called from a Server Component.
-// This can be ignored if you have middleware refreshing user sessions.
-}
-},
-},
-},
-);
-};
-Usage in Server Components
-typescriptimport { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
+## Stack
 
-export default async function Page() {
-const cookieStore = await cookies()
-const supabase = createClient(cookieStore)
-const { data: todos } = await supabase.from('todos').select()
+- Next.js 15 (App Router), React 19, TypeScript (strict), Tailwind CSS 3.
+- `next-intl`: locales `de` (default) and `en`, both prefixed in the URL (`/de`, `/en`). Config in `src/i18n/`, copy in `src/locales/*.json`.
+- Supabase (Postgres, Auth with magic link, RLS) through `@supabase/ssr`. Clients in `src/utils/supabase/`.
+- Contact form: hCaptcha and Resend.
+- Analytics: first-party and cookieless (`/api/collect`), plus Vercel Speed Insights through the same-origin `/_vercel/speed-insights/*` path. One opt-out (`src/utils/analytics/optOut.ts`) covers both.
+- Tests: Jest + React Testing Library, Playwright (e2e and visual regression), Storybook 9 (`@storybook/nextjs-vite`), SQL tests against a local Supabase.
+- Node 22 or later.
 
-return (
-<ul>
-{todos?.map((todo) => (
-<li key={todo.id}>{todo}</li>
-))}
-</ul>
-)
-}
-Architecture Patterns
-Atomic Design Structure
-src/
-├── components/
-│   ├── atoms/           # Basic building blocks
-│   │   ├── Button/
-│   │   ├── Input/
-│   │   ├── Label/
-│   │   ├── Icon/
-│   │   └── Typography/
-│   ├── molecules/       # Simple combinations
-│   │   ├── SearchBar/
-│   │   ├── FormField/
-│   │   └── Card/
-│   ├── organisms/       # Complex components
-│   │   ├── NavigationBar/
-│   │   ├── ProductCard/
-│   │   └── LoginForm/
-│   ├── templates/       # Page layouts
-│   └── pages/          # Specific instances
-├── containers/         # Smart components
-├── utils/
-├── hooks/
-└── types/
-Component Classification
-Presentational (Dumb) Components
-Location: components/atoms, components/molecules, components/organisms
-Characteristics:
+## Commands
 
-Receive data via props only
-No state management (except UI state like hover, focus)
-No side effects or API calls
-Highly reusable
-Easy to test
-Pure functions of their props
+| Command | What it does |
+| :--- | :--- |
+| `npm run dev` | Dev server on `localhost:3000`. The CSP blocks `eval` here, so client components do not hydrate. Check interactive behaviour with `npm run build && npm start`. |
+| `npm run build` / `npm start` | Production build / serve it. |
+| `npm run lint` | ESLint (`next lint`, `next/core-web-vitals`). |
+| `npm run type-check` | `tsc --noEmit`. |
+| `npm test` / `npm run test:watch` | Jest unit and integration tests. |
+| `npm run test:coverage` | Jest with the enforced coverage floor (CI runs this). |
+| `npm run storybook` / `npm run build-storybook` | Storybook on port 6006 / static build. |
+| `npm run test:visual` | Playwright screenshots of every story (`playwright-storybook.config.ts`). `-- --update-snapshots` writes new baselines. |
+| `npm run test:e2e` | Playwright against the production build (`playwright.config.ts`, `e2e/*.spec.ts`). |
+| `npm run test:db` | Applies `supabase/migrations/` to a fresh local database and runs `supabase/tests/*.sql`. Needs Docker and psql. |
 
-Example:
-typescript// components/atoms/Button/Button.tsx
-interface ButtonProps {
-children: React.ReactNode;
-onClick?: () => void;
-variant?: 'primary' | 'secondary';
-disabled?: boolean;
-}
+CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and type check, database migrations and SQL tests, unit tests with coverage and build, Storybook visual regression, e2e.
 
-export const Button: React.FC<ButtonProps> = ({
-children,
-onClick,
-variant = 'primary',
-disabled = false
-}) => {
-return (
-<button
-onClick={onClick}
-disabled={disabled}
-className={`button button--${variant}`}
->
-{children}
-</button>
-);
-};
-Container (Smart) Components
-Location: containers/
-Characteristics:
+## Where things live
 
-Manage state (local or global)
-Handle side effects (data fetching, subscriptions)
-Connect to APIs or state management
-Pass data to presentational components
-Contain business logic
+- `src/app/[locale]/(main)/`: public pages (home, about, services, projects, contact).
+- `src/app/projects/`: live demos `dashboard-demo` (CRM) and `mcp-demo`. Outside `[locale]` on purpose; the `src/middleware.ts` matcher excludes them by name. The WASM shooter and the MCP demo page are static files in `public/games/` and `public/demos/`.
+- `src/app/admin/`: private admin (English, `noindex`). UI in `_components/`, queries and logic in `_lib/`.
+- `src/app/api/`: route handlers (contact, analytics collect).
+- `src/components/`: shared UI in Atomic Design layers: `atoms/` (`Button`, `CodeBlock`, `LanguageToggle`), `molecules/` (`BentoCard`, `SectionHeader`), `organisms/` (`Navigation`, `Footer`).
+- `src/config/`: single sources of truth: `site.ts` (URL), `positioning.ts` (job title, description), `admin.ts` (admin UUID), `legal.ts`.
+- `src/app/seo.ts`: localized metadata (Open Graph, Twitter) per page.
+- `supabase/migrations/`, `supabase/tests/`: schema and SQL tests. `scripts/mtg/`: Magic catalog loaders.
 
-Example:
-typescript// containers/TodoListContainer.tsx
-'use client'
+## Components
 
-import { useEffect, useState } from 'react';
-import { TodoList } from '@/components/organisms/TodoList';
-import { createClient } from '@/utils/supabase/client';
+- Presentational components get data through props. They hold only UI state (hover, open, focus). No data fetching, no side effects.
+- Server components (pages, layouts) and server actions fetch data and pass it down.
+- Client components (`'use client'`) own browser state and effects, e.g. `ThemeProvider`, `LanguageToggle`, `Analytics`, the admin dashboards. Keep them as small as possible.
+- Stories (`*.stories.tsx`) sit next to the component; tests sit in the `__tests__/` folder next to the code.
 
-export const TodoListContainer = () => {
-const [todos, setTodos] = useState([]);
-const [loading, setLoading] = useState(true);
+## Fixed rules
 
-useEffect(() => {
-const fetchTodos = async () => {
-const supabase = createClient();
-const { data } = await supabase.from('todos').select();
-setTodos(data || []);
-setLoading(false);
-};
+- **No cookies on a visit.** `next-intl` runs with `localeCookie: false`; `e2e/headers.spec.ts` asserts that public pages set no cookie. No third-party request on page view: hCaptcha loads only when the contact form is sent. Only the admin login sets a session cookie.
+- **One `headers()` entry.** All security headers come from `headerRules` in `next.config.mjs`; `buildCsp()` builds the one CSP per response. Never add a second CSP header (two CSPs are enforced as their intersection). Same-origin framing exists only for `/demos/mcp-demo.html`.
+- **Migrations are the source.** `supabase/migrations/` is the single source of truth for the schema, also for other apps on this database. Add a new migration; never edit an applied one. Add or update a SQL test in `supabase/tests/`.
+- **Admin UUID in two places.** `src/config/admin.ts` and `public.is_admin()` in the migration. Change both together. Middleware, `requireAdmin()` and RLS all check it. No service-role key.
+- **Positioning in one place.** The public job title and positioning line come from `src/config/positioning.ts`. Locale copy uses the `{jobTitle}` placeholder. Change copy in both languages.
+- **Env vars: names only.** Never write a value into a file, commit, PR or log. The names are in `.env.example`; values live in `.env.local` and in Vercel.
+- **No tags.** Releases are a `chore(release): vX.Y.Z` commit that bumps `package.json`. The owner creates the signed tag. Never create or push a tag.
+- **Commits** follow Conventional Commits; the husky `commit-msg` hook runs commitlint.
 
-    fetchTodos();
-}, []);
+## Testing
 
-return <TodoList todos={todos} loading={loading} />;
-};
-Testing Strategy
-Test Distribution (Recommended)
+- Test behaviour, not implementation. Mock Supabase and network calls in unit tests.
+- Coverage ratchet: `coverageThreshold` in jest.config.js is the enforced floor (CI runs `npm run test:coverage`).
+  Each value is the measured global number rounded down, minus 1 point. When a change raises coverage, raise the floor in the same PR. Never lower it.
+- A UI change that alters a story's look needs new visual baselines (`npm run test:visual -- --update-snapshots`). Baselines are rendered on Linux in CI.
+- A schema change needs `npm run test:db` green.
 
-70% Unit Tests: Test individual components and functions
-20% Integration Tests: Test component interactions
-10% E2E Tests: Test complete user flows
+## Environment variables
 
-Unit Tests
-Framework: Jest + React Testing Library
-What to test:
+Names only. See `.env.example` and [docs/REFERENCE.md](docs/REFERENCE.md).
 
-Individual atoms, molecules, organisms
-Utility functions
-Custom hooks
-Props rendering
-User interactions
-Edge cases
-
-Example:
-typescript// components/atoms/Button/Button.test.tsx
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Button } from './Button';
-
-describe('Button', () => {
-it('renders children correctly', () => {
-render(<Button>Click me</Button>);
-expect(screen.getByText('Click me')).toBeInTheDocument();
-});
-
-it('calls onClick when clicked', () => {
-const handleClick = jest.fn();
-render(<Button onClick={handleClick}>Click me</Button>);
-fireEvent.click(screen.getByText('Click me'));
-expect(handleClick).toHaveBeenCalledTimes(1);
-});
-
-it('is disabled when disabled prop is true', () => {
-render(<Button disabled>Click me</Button>);
-expect(screen.getByText('Click me')).toBeDisabled();
-});
-});
-Integration Tests
-Framework: Jest + React Testing Library
-What to test:
-
-Interaction between smart and dumb components
-Data flow between components
-Form submissions
-API mocking
-
-Example:
-typescript// containers/TodoListContainer.test.tsx
-import { render, screen, waitFor } from '@testing-library/react';
-import { TodoListContainer } from './TodoListContainer';
-
-jest.mock('@/utils/supabase/client', () => ({
-createClient: () => ({
-from: () => ({
-select: jest.fn().mockResolvedValue({
-data: [{ id: 1, title: 'Test Todo' }]
-})
-})
-})
-}));
-
-describe('TodoListContainer', () => {
-it('fetches and displays todos', async () => {
-render(<TodoListContainer />);
-
-    await waitFor(() => {
-      expect(screen.getByText('Test Todo')).toBeInTheDocument();
-    });
-});
-});
-E2E Tests
-Framework: Playwright
-What to test:
-
-Critical user journeys
-Authentication flows
-Complete features end-to-end
-
-Example:
-typescript// e2e/login.spec.ts
-import { test, expect } from '@playwright/test';
-
-test('user can log in', async ({ page }) => {
-await page.goto('/login');
-await page.fill('input[name="email"]', 'user@example.com');
-await page.fill('input[name="password"]', 'password123');
-await page.click('button[type="submit"]');
-await expect(page).toHaveURL('/dashboard');
-});
-Visual Regression Testing
-Framework: Playwright + Percy or Chromatic
-Setup:
-typescript// playwright.config.ts
-import { defineConfig } from '@playwright/test';
-
-export default defineConfig({
-use: {
-screenshot: 'only-on-failure',
-},
-});
-Example:
-typescripttest('button looks correct', async ({ page }) => {
-await page.goto('/components/button');
-await expect(page).toHaveScreenshot('button-default.png');
-});
-File Structure Standards
-Component Structure
-Component/
-├── Component.tsx           # Main component
-├── Component.test.tsx      # Unit tests
-├── Component.stories.tsx   # Storybook (optional)
-├── Component.module.css    # Styles (if using CSS modules)
-├── index.ts               # Export barrel
-└── types.ts               # TypeScript types
-Container Structure
-ContainerName/
-├── ContainerName.tsx
-├── ContainerName.test.tsx
-├── useContainerName.ts    # Custom hook (if complex logic)
-└── index.ts
-Development Guidelines
-1. Preserve Existing Behavior
-
-Never break existing functionality
-All existing features must work identically
-Test thoroughly after any refactoring
-
-2. Component Development
-
-Start with atoms, build up to organisms
-Keep components small and focused
-Use TypeScript for type safety
-Write tests alongside components
-
-3. State Management
-
-Use React hooks for local state
-Consider Context API for shared state
-Keep state as close to where it's used as possible
-Server components for data fetching when possible
-
-4. Supabase Best Practices
-
-Use server components for initial data fetching
-Use client components for real-time subscriptions
-Handle errors gracefully
-Implement proper loading states
-
-5. Testing Best Practices
-
-Write tests before or alongside code
-Test behavior, not implementation
-Mock external dependencies
-Maintain high code coverage (aim for >80%)
-Coverage ratchet: `coverageThreshold` in jest.config.js is the enforced floor (CI runs `npm run test:coverage`).
-Each value is the measured global number rounded down, minus 1 point. When a change raises coverage, raise the floor in the same PR. Never lower it.
-
-6. Code Quality
-
-Use ESLint and Prettier
-Follow consistent naming conventions
-Document complex logic
-Keep functions pure when possible
-
-Deployment
-Vercel Deployment
-
-Connect GitHub repository to Vercel
-Add environment variables in Vercel dashboard
-Configure build settings:
-
-Framework Preset: Next.js
-Build Command: npm run build
-Output Directory: .next
-
-
-
-Environment Variables (Vercel)
-Add in Vercel dashboard:
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
-Migration Strategy
-When refactoring existing code:
-
-Identify current components and their behavior
-Document all existing functionality
-Create tests for current behavior
-Refactor to atomic design pattern
-Verify all tests still pass
-Confirm app works identically
-
-Success Criteria
-✅ App functions exactly as before
-✅ All existing features work
-✅ Test coverage >80%
-✅ Components follow atomic design
-✅ Clear separation between smart/dumb components
-✅ Supabase integration working
-✅ Successfully deployed to Vercel
-Notes
-
-Always prioritize working functionality over perfect architecture
-Refactor incrementally, not all at once
-Keep user experience unchanged
-Document any deviations from this spec with clear reasoning
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`: required.
+- `RESEND_API_KEY`, `NEXT_PUBLIC_HCAPTCHA_SITEKEY`, `HCAPTCHA_SECRET`: contact form.
+- `ANALYTICS_INGEST_SECRET`: analytics ingest (Vercel).
+- `NEXT_PUBLIC_SITE_URL`: optional, overrides the canonical URL (preview deployments).
+- `SUPABASE_DB_URL`: local only, for the Magic catalog loaders in `scripts/mtg/`.
