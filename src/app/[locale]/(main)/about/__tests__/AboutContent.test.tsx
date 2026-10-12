@@ -8,6 +8,7 @@ import en from '@/locales/en.json';
 import AboutContent from '../AboutContent';
 
 let mockMessages: Record<string, unknown> = en;
+let mockLocale = 'en';
 
 jest.mock('next-intl', () => {
   const resolve = (key: string): unknown =>
@@ -16,6 +17,7 @@ jest.mock('next-intl', () => {
       mockMessages
     );
   return {
+    useLocale: () => mockLocale,
     useTranslations: () => {
       const t = (key: string) => {
         const value = resolve(key);
@@ -42,9 +44,10 @@ const timelineItems = () => {
 describe.each([
   ['en', en],
   ['de', de],
-] as const)('AboutContent experience timeline (%s)', (_locale, messages) => {
+] as const)('AboutContent experience timeline (%s)', (locale, messages) => {
   beforeEach(() => {
     mockMessages = messages;
+    mockLocale = locale;
   });
 
   it('renders all seven entries in order with their copy', () => {
