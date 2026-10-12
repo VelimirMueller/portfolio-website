@@ -180,7 +180,7 @@ const COHORT_DATA = [
 function useCountUp(end: number, duration = 1500): number {
   const [current, setCurrent] = useState(0);
   const startTime = useRef<number | null>(null);
-  const rafId = useRef<number>();
+  const rafId = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const ease = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic

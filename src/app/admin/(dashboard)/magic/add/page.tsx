@@ -5,11 +5,10 @@ import { addToPool } from '../actions';
 
 const first = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) ?? '';
 
-export default async function AdminMagicAddPage({
-  searchParams = {},
-}: {
-  searchParams?: Record<string, string | string[] | undefined>;
+export default async function AdminMagicAddPage(props: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const searchParams = (await props.searchParams) ?? {};
   const { supabase } = await requireAdmin();
   const query = first(searchParams.q).trim().slice(0, 100);
 

@@ -39,7 +39,7 @@ export async function sendMagicLink(formData: FormData) {
  */
 async function loginOrigin() {
   if (process.env.NODE_ENV === 'production') return SITE_URL;
-  const h = headers();
+  const h = await headers();
   return `${h.get('x-forwarded-proto') ?? 'http'}://${h.get('host')}`;
 }
 

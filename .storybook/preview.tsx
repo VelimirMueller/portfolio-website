@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import type { Preview, Decorator } from '@storybook/react';
+import type { Preview, Decorator } from '@storybook/nextjs-vite';
 import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 import deMessages from '../src/locales/de.json';
@@ -68,7 +68,7 @@ const preview: Preview = {
     },
     layout: 'centered',
     viewport: {
-      viewports: {
+      options: {
         mobile: {
           name: 'Mobile',
           styles: { width: '375px', height: '812px' },
@@ -87,7 +87,7 @@ const preview: Preview = {
         },
       },
     },
-    backgrounds: { disable: true },
+    backgrounds: { disabled: true },
     nextjs: {
       appDirectory: true,
       navigation: {

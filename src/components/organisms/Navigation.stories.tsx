@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Navigation } from './Navigation';
 
 const meta = {
@@ -79,7 +79,6 @@ export const OnProjectsPage: Story = {
 
 export const MobileViewport: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile' },
     docs: {
       description: {
         story:
@@ -87,10 +86,13 @@ export const MobileViewport: Story = {
       },
     },
   },
+  globals: {
+    viewport: { value: 'mobile', isRotated: false },
+  },
 };
 
 export const TabletViewport: Story = {
-  parameters: {
-    viewport: { defaultViewport: 'tablet' },
+  globals: {
+    viewport: { value: 'tablet', isRotated: false },
   },
 };

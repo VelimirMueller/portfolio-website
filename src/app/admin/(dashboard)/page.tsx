@@ -8,11 +8,10 @@ import {
 } from '@/app/admin/_lib/messages';
 import { InboxWorkspace } from '@/app/admin/_components/InboxWorkspace';
 
-export default async function AdminInboxPage({
-  searchParams,
-}: {
-  searchParams: { status?: string; q?: string; id?: string };
+export default async function AdminInboxPage(props: {
+  searchParams: Promise<{ status?: string; q?: string; id?: string }>;
 }) {
+  const searchParams = await props.searchParams;
   const { supabase } = await requireAdmin();
   const filter = parseStatusFilter(searchParams.status);
   const query = typeof searchParams.q === 'string' ? searchParams.q : '';

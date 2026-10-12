@@ -26,7 +26,7 @@ Order of authority: CLAUDE.md (development rules), then README.md, then docs/REF
 Core rule from CLAUDE.md: every change must keep the existing behaviour of the site.
 
 What it is:
-- Next.js 14 App Router, React 18, next-intl (de, en; German is the default; both
+- Next.js 15 App Router, React 19, next-intl (de, en; German is the default; both
   prefixed, canonical host www.), Tailwind, Supabase, hCaptcha, Resend. Hosted on Vercel;
   every push to main deploys to production.
 - Pages: home (bento grid), about, services, projects, contact.

@@ -28,7 +28,8 @@ const image = (bytes: Uint8Array, contentType: string, cache: 'HIT' | 'MISS') =>
  * Card image, first from public.mtg_image_cache; on a miss fetched once from
  * Scryfall's CDN and stored. Admin-only like every /admin route (and RLS).
  */
-export async function GET(_request: Request, { params }: { params: { key: string[] } }) {
+export async function GET(_request: Request, props: { params: Promise<{ key: string[] }> }) {
+  const params = await props.params;
   const { supabase } = await requireAdmin();
   const key = params.key.join('/');
   if (!IMAGE_KEY.test(key)) return new Response('Not found', { status: 404 });
