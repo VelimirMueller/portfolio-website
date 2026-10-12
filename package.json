@@ -58,7 +58,7 @@
     "tailwindcss": "^3.4.1",
     "ts-jest": "^29.4.6",
     "typescript": "^5.3.0",
-    "vlm-code-context-mcp": "^0.2.9"
+    "vlm-code-context-mcp": "^2.8.0"
   },
   "engines": {
     "node": ">=22"
