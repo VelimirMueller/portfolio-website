@@ -6,7 +6,7 @@ import { routing } from '@/i18n/routing';
 import { pickClientMessages } from '@/i18n/clientMessages';
 import { SiteAnalytics } from '@/components/SiteAnalytics';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
-import { SITE_URL } from '@/config/site';
+import { rootMetadata } from '@/app/seo';
 import { inter, spaceMono, themeInitScript } from '../shared-layout';
 import '../globals.css';
 
@@ -29,39 +29,12 @@ export const viewport: Viewport = {
   ],
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: 'Velimir Müller | Senior Product Engineer & AI Agentic Developer',
-  description:
-    'Senior Product Engineer & AI Agentic Developer — end-to-end product ownership, MCP server development, and full-stack engineering with Next.js, React, and Claude Code.',
-  keywords: [
-    'Senior Product Engineer',
-    'AI Agentic Developer',
-    'MCP Server Developer',
-    'Model Context Protocol',
-    'Claude Code',
-    'Product Owner',
-    'Full-stack Developer',
-    'Next.js Developer',
-    'Agentic AI',
-    'React',
-    'TypeScript',
-  ],
-  openGraph: {
-    type: 'website',
-    title: 'Velimir Müller | Senior Product Engineer & AI Agentic Developer',
-    description:
-      'Senior Product Engineer & AI Agentic Developer — end-to-end product ownership, MCP server development, and full-stack engineering with Next.js, React, and Claude Code.',
-    siteName: 'Velimir Müller',
-    locale: 'en',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Velimir Müller | Senior Product Engineer & AI Agentic Developer',
-    description:
-      'Senior Product Engineer & AI Agentic Developer — end-to-end product ownership, MCP server development, and full-stack engineering with Next.js, React, and Claude Code.',
-  },
-};
+export async function generateMetadata({
+  params,
+}: Pick<Props, 'params'>): Promise<Metadata> {
+  const { locale } = await params;
+  return rootMetadata(locale);
+}
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;

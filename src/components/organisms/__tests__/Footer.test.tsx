@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Footer } from "../Footer";
 import de from "@/locales/de.json";
+import { POSITIONING } from "@/config/positioning";
 
 // Mock next-intl with a minimal implementation that reads the German locale
 jest.mock("next-intl", () => ({
@@ -19,6 +20,7 @@ jest.mock("next-intl", () => ({
     };
     return t;
   },
+  useLocale: () => "de",
 }));
 
 // Mock @/i18n/navigation (used by Footer for locale-aware links)
@@ -76,6 +78,13 @@ describe("Footer", () => {
       "href",
       "/de/about"
     );
+  });
+
+  it("renders the job title from the positioning config", () => {
+    renderFooter(<Footer />);
+    expect(
+      screen.getByText(`${POSITIONING.de.jobTitle}.`, { exact: false })
+    ).toBeInTheDocument();
   });
 
   it("renders social link icons", () => {

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { SiteAnalytics } from '@/components/SiteAnalytics';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { SITE_URL } from '@/config/site';
+import { SITE_NAME, getPositioning, siteTitle } from '@/config/positioning';
 import { inter, spaceMono, themeInitScript } from '../shared-layout';
 import '../globals.css';
 
@@ -23,9 +24,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Velimir Müller | Senior Product Engineer & AI Agentic Developer',
-  description:
-    'Interactive project demos — Velimir Müller, Senior Product Engineer & AI Agentic Developer.',
+  title: siteTitle('en'),
+  description: `Interactive project demos — ${SITE_NAME}, ${getPositioning('en').jobTitle}.`,
 };
 
 export default function DemoLayout({

@@ -23,8 +23,7 @@
     "menuLabel": "Navigationsmenü"
   },
   "home": {
-    "metaTitle": "Velimir Müller | Senior Product Engineer",
-    "metaDesc": "Senior Product Engineer. Full Lifecycle über mehrere ausgelieferte Produkte. vlm-code-context-mcp auf npm — MCP-Server für KI-Agents, per Benchmark verifiziert. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
+    "metaDesc": "{jobTitle}. Full Lifecycle über mehrere ausgelieferte Produkte. vlm-code-context-mcp auf npm — MCP-Server für KI-Agents, per Benchmark verifiziert. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
     "badge": "Verfügbar für Projekte",
     "eyebrow": "VM. / Product Engineer · Berlin",
     "tagline": "Produkt, Plattform und KI-Tooling. Von Anfang bis Ende.",
@@ -647,12 +646,11 @@
   },
   "about": {
     "metaTitle": "Über mich — Velimir Müller",
-    "metaDesc": "Senior Product Engineer. Mehrere Rollen in Civic-Tech, Rental-Tech und einem finanzierten Lead-Intelligence-Startup. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
+    "metaDesc": "{jobTitle}. Mehrere Rollen in Civic-Tech, Rental-Tech und einem finanzierten Lead-Intelligence-Startup. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
     "title": "PROFILE.",
     "subtitle": "Velimir Müller",
     "summary": "Summary",
     "bio1": "",
-    "bio1Bold": "Senior Product Engineer",
     "bio1After": "der die volle Strecke vom Stakeholder-Interview bis zum Production-Deployment arbeitet. Frontend: React, Vue, Next.js, Nuxt. Backend: Laravel, Quarkus, FastAPI, Node. Infra: Terraform auf AWS/Azure, CI/CD mit GitHub Actions.",
     "bio2": "Neben dem täglichen Einsatz von KI in meiner Entwicklung baue ich Tooling dafür. vlm-code-context-mcp auf npm ist ein MCP-Server, der KI-Coding-Agents strukturierten Zugang zu Codebases gibt — 81 Tools, ~40% mediane Token-Reduktion nach mehreren Review-Schritten in einem adversarialen 9-Task-Benchmark, persistenter Sprint/Retro-Speicher, damit Agents aus vergangener Arbeit lernen.",
     "bio3": "Erfahrung bei einem Corporate (Zalando), einem mittelständischen Civic-Tech-SaaS (DEMOS) und zwei Startups (Housy/bewerbermappe.com, GALVANY). Mich interessiert, was nach dem Deployment passiert — was ausgeliefert wurde, was sich für Nutzer geändert hat, was die Metriken im nächsten Sprint zeigen.",
@@ -751,7 +749,6 @@
     "errorDetailed": "Etwas ist schiefgelaufen. Bitte versuche es erneut oder schreibe mir direkt an velimir.mueller@googlemail.com"
   },
   "footer": {
-    "tagline": "Senior Product Engineer.",
     "taglineSecondary": "Full-Stack · Infrastructure · Agent Tooling.",
     "taglineDesc": "Von Business-Anforderungen bis zum Deployment — Full Lifecycle Ownership.",
     "sitemap": "Sitemap",
