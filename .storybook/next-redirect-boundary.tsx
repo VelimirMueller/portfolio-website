@@ -1,5 +1,8 @@
 import React, { useContext, useMemo, type ReactNode } from 'react';
 import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+// No `.js` here on purpose: the main.ts alias matches only the `.js`
+// specifier, so this import resolves to the real Next.js module, not to
+// this file.
 import { RedirectBoundary as NextRedirectBoundary } from 'next/dist/client/components/redirect-boundary';
 
 // Workaround for storybookjs/storybook#36720. Next.js 16.4 `useRouter()` reads
@@ -13,6 +16,9 @@ type LayoutRouterValue = React.ContextType<typeof LayoutRouterContext>;
 
 export function RedirectBoundary({ children }: { children: ReactNode }) {
   const layout = useContext(LayoutRouterContext);
+  // The cast is deliberate: the mock value is not a full LayoutRouterContext.
+  // After a Next.js upgrade, check that `useRouter()` in
+  // next/dist/client/components/navigation.js still reads only this field.
   const value = useMemo(
     () =>
       layout && !layout.parentRenderTree
