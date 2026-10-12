@@ -1417,7 +1417,7 @@ export default function DashboardDemoPage() {
       {/* --- Main Content --- */}
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
 
-        <header className="h-20 border-b border-[#222] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#050505]/40 backdrop-blur-xl z-20 shrink-0">
+        <header className="h-20 border-b border-[#222] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#050505]/60 backdrop-blur z-20 shrink-0">
           <div className="flex items-center gap-4 md:w-96">
             <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu" onClick={() => setSidebarOpen(o => !o)}>{sidebarOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
 
