@@ -726,7 +726,7 @@
     "metaDesc": "Kontaktieren Sie mich für Zusammenarbeit, Beratung oder Projektanfragen.",
     "title": "KONTAKT.",
     "subtitle": "Get In Touch",
-    "intro": "Offen für Product-Engineering-Rollen, bei denen der Auftrag von Requirements über UX, Frontend (React, Vue, Next.js, Nuxt), Backend (Laravel, Node, Quarkus) bis zum Terraform-verwalteten Cloud-Deployment reicht. Contract oder Festanstellung.",
+    "intro": "Offen für Product-Engineering-Rollen, die das ganze Produkt abdecken: Anforderungen, UX, Frontend, Backend und Cloud-Deployment. Auf Projektbasis oder in Festanstellung.",
     "nameLabel": "Name",
     "namePlaceholder": "Ihr Name",
     "emailLabel": "Email",
