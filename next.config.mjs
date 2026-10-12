@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 // Supabase (contact API), wasm-unsafe-eval (the cyberpunk wasm demos).
 // Analytics needs no third-party host: page views go to the first-party
 // /api/collect, and Vercel Speed Insights loads and reports through the
-// same-origin /_vercel/speed-insights/* path (see SiteAnalytics.tsx), so
+// same-origin /_vercel/speed-insights/* path (see SpeedInsights.tsx), so
 // 'self' covers both. Images are same-origin only (the avatar is self-hosted
 // in public/ so no third party sees visitor IPs).
 // 'unsafe-inline' in script-src is a Next.js constraint (inline runtime +

@@ -1,5 +1,5 @@
-import Script from 'next/script';
 import { Analytics } from './Analytics';
+import { SpeedInsights } from './SpeedInsights';
 
 /**
  * Everything the site measures, in one place so the privacy policy (section 8)
@@ -10,6 +10,9 @@ import { Analytics } from './Analytics';
  *   script tag (same-origin /_vercel/* endpoint). The npm package is avoided
  *   because its optional svelte/vite peer range conflicts with Storybook 8.
  *
+ * Both share one gate (trackingAllowed): the privacy switch, Do Not Track and
+ * Global Privacy Control stop all of it.
+ *
  * Production only: dev and test builds send nothing.
  */
 export function SiteAnalytics() {
@@ -17,7 +20,7 @@ export function SiteAnalytics() {
   return (
     <>
       <Analytics />
-      <Script src="/_vercel/speed-insights/script.js" strategy="afterInteractive" />
+      <SpeedInsights />
     </>
   );
 }
