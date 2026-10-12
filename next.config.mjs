@@ -71,6 +71,14 @@ const headerRules = [
   },
 ];
 
+// Old arcade build URLs. The folder public/games/dist/ was removed (issue #80);
+// old external links (posts, CV) go to the canonical arcade page instead of a 404.
+// ':path*' also matches the bare folder path.
+const ARCADE_PAGE = '/projects/cyberpunk-arcade/index.html';
+const redirectRules = [
+  { source: '/games/dist/:path*', destination: ARCADE_PAGE, permanent: true },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -85,6 +93,9 @@ const nextConfig = {
   },
   async headers() {
     return headerRules;
+  },
+  async redirects() {
+    return redirectRules;
   },
 };
 
