@@ -150,6 +150,390 @@
           "state": "ok"
         }
       ]
+    },
+    {
+      "key": "lead",
+      "type": "lead",
+      "title": "ABOUT",
+      "text": "The source of [www.velimir-mueller.de](https://www.velimir-mueller.de): portfolio, services and live demos, plus a private admin. It sets no cookies. It still remembers your language, for the length of one URL."
+    },
+    {
+      "key": "what",
+      "type": "notes",
+      "title": "WHAT IT DOES",
+      "columns": 2,
+      "items": [
+        {
+          "lead": "End-to-end product engineering",
+          "text": "Requirements, UX/UI, full-stack code, automated deployment."
+        },
+        {
+          "lead": "German and English",
+          "text": "A visit sets no cookie, so the site needs no consent banner."
+        },
+        {
+          "lead": "Three live demos",
+          "text": "A CRM dashboard, an MCP demo and an arcade shooter in WASM."
+        },
+        {
+          "lead": "One private admin",
+          "text": "A private area at `/admin`: contact inbox, cookieless traffic KPIs and a Magic: The Gathering collection."
+        }
+      ]
+    },
+    {
+      "key": "devnotes",
+      "type": "notes",
+      "title": "LOCAL DEV",
+      "items": [
+        {
+          "lead": "Open localhost:3000",
+          "text": "`npm run dev` serves the app on [localhost:3000](http://localhost:3000)."
+        },
+        {
+          "lead": "CSP blocks eval under next dev",
+          "text": "Client components (counters, keyboard shortcuts) do not hydrate locally. Check interactive behaviour with `npm run build && npm start`."
+        }
+      ]
+    },
+    {
+      "key": "layers",
+      "type": "flow",
+      "title": "ATOMIC DESIGN",
+      "nodes": [
+        {
+          "title": "containers/",
+          "sub": "State, side effects, API. Supabase via utils/server.ts and utils/client.ts."
+        },
+        {
+          "title": "props",
+          "sub": "Containers pass data down. Nothing flows back up but events."
+        },
+        {
+          "title": "components/",
+          "sub": "atoms -> molecules -> organisms -> templates. No business logic.",
+          "hot": true
+        }
+      ]
+    },
+    {
+      "key": "how",
+      "type": "notes",
+      "title": "STACK AND RULES",
+      "items": [
+        {
+          "lead": "Stack",
+          "text": "Next.js 15 (App Router), React 19, TypeScript (strict), Tailwind CSS, Supabase, Vercel. Tests: Jest, React Testing Library, Playwright. AI tooling: Claude AI."
+        },
+        {
+          "lead": "Design",
+          "text": "Monochrome + accent, full dark mode. Bento grid with `rounded-[1.5rem]` cards, monospace labels and data, subtle grid backgrounds and blur gradients, hover micro-animations, green pulse indicators for availability."
+        },
+        {
+          "lead": "No cookies",
+          "text": "`next-intl` runs with `localeCookie: false`. `e2e/headers.spec.ts` asserts that public pages set no cookie. hCaptcha loads only when the contact form is sent."
+        },
+        {
+          "lead": "Full source tree",
+          "text": "The architecture and the page list are in `docs/REFERENCE.md`."
+        }
+      ]
+    },
+    {
+      "key": "scripts",
+      "type": "commands",
+      "title": "SCRIPTS",
+      "rows": [
+        {
+          "cmd": "npm run dev",
+          "text": "Start the development server."
+        },
+        {
+          "cmd": "npm run build",
+          "text": "Production build."
+        },
+        {
+          "cmd": "npm run start",
+          "text": "Serve the production build."
+        },
+        {
+          "cmd": "npm run lint",
+          "text": "ESLint check."
+        },
+        {
+          "cmd": "npm run type-check",
+          "text": "TypeScript type check (no emit)."
+        },
+        {
+          "cmd": "npm test",
+          "text": "Jest unit tests."
+        },
+        {
+          "cmd": "npm run test:watch",
+          "text": "Jest in watch mode."
+        },
+        {
+          "cmd": "npm run test:coverage",
+          "text": "Coverage report."
+        },
+        {
+          "cmd": "npm run storybook",
+          "text": "Storybook on port 6006."
+        },
+        {
+          "cmd": "npm run build-storybook",
+          "text": "Static Storybook site."
+        },
+        {
+          "cmd": "npm run test:visual",
+          "text": "Playwright visual regression tests. `-- --update-snapshots` writes new baselines."
+        },
+        {
+          "cmd": "npm run test:e2e",
+          "text": "Playwright E2E tests. `-- --grep \"Navigation\"` runs one group."
+        }
+      ]
+    },
+    {
+      "key": "testing",
+      "type": "notes",
+      "title": "TESTING AND STORYBOOK",
+      "columns": 2,
+      "items": [
+        {
+          "lead": "Unit and integration",
+          "text": "Jest with React Testing Library."
+        },
+        {
+          "lead": "Visual regression",
+          "text": "Playwright screenshots every Storybook story and compares it with the baseline. Config `playwright-storybook.config.ts`, tests `e2e/storybook-visual.spec.ts`."
+        },
+        {
+          "lead": "End-to-end",
+          "text": "[Playwright](https://playwright.dev/) against the production build: navigation, theme/language toggle, contact form, service pages, project demos and 404 handling. Config `playwright.config.ts`, tests `e2e/app.spec.ts`."
+        },
+        {
+          "lead": "Storybook 8",
+          "text": "[Storybook](https://storybook.js.org/) is the component library and the visual documentation, on `localhost:6006`."
+        },
+        {
+          "lead": "Stories",
+          "text": "**Atoms:** Button, CodeBlock, LanguageToggle. **Molecules:** BentoCard, SectionHeader. **Organisms:** Navigation, Footer."
+        },
+        {
+          "lead": "Addons",
+          "text": "Autodocs, controls panel, dark/light toolbar toggle, responsive viewport presets, accessibility (a11y) audit panel."
+        }
+      ]
+    },
+    {
+      "key": "commits",
+      "type": "terminal",
+      "title": "COMMIT CONVENTION",
+      "lines": [
+        "# Conventional Commits. husky commit-msg runs commitlint; npm install sets it up.",
+        "type(scope?): subject",
+        "",
+        "feat(contact): add honeypot field",
+        "fix(theme): honor system light preference",
+        "chore(release): v2.0.0",
+        "# types: feat fix chore docs test refactor perf ci"
+      ]
+    },
+    {
+      "key": "admin",
+      "type": "notes",
+      "title": "ADMIN",
+      "items": [
+        {
+          "lead": "Private area at /admin since v2.0.0",
+          "text": "Contact inbox, traffic KPIs (v2.1.0), Magic (v2.2.0). English only, `noindex`, disallowed in `robots.txt`."
+        },
+        {
+          "lead": "Access",
+          "text": "Supabase Auth magic link for one admin user. Middleware, `requireAdmin()` and Postgres RLS via `public.is_admin()` check it. No service-role key."
+        },
+        {
+          "lead": "Admin UUID",
+          "text": "Lives in `src/config/admin.ts` **and** in the migration. Change both together."
+        },
+        {
+          "lead": "Migrations",
+          "text": "In `supabase/migrations/`. Apply them in the Supabase SQL editor."
+        },
+        {
+          "lead": "Secrets",
+          "text": "Analytics needs `ANALYTICS_INGEST_SECRET` in Vercel. The Magic catalog loader needs `SUPABASE_DB_URL`."
+        },
+        {
+          "lead": "Everything else",
+          "text": "Every table, setup step, keyboard shortcut and Supabase Auth setting is in `docs/REFERENCE.md`."
+        }
+      ]
+    },
+    {
+      "key": "deploy",
+      "type": "commands",
+      "title": "DEPLOYMENT · VERCEL, EVERY PUSH TO MAIN",
+      "rows": [
+        {
+          "cmd": "NEXT_PUBLIC_SUPABASE_URL",
+          "text": "Required. Set in the Vercel dashboard."
+        },
+        {
+          "cmd": "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY",
+          "text": "Required. Set in the Vercel dashboard."
+        },
+        {
+          "cmd": "RESEND_API_KEY",
+          "text": "Contact form mail."
+        },
+        {
+          "cmd": "NEXT_PUBLIC_HCAPTCHA_SITEKEY",
+          "text": "Contact form captcha (public key)."
+        },
+        {
+          "cmd": "HCAPTCHA_SECRET",
+          "text": "Contact form captcha check. See `.env.example`."
+        }
+      ]
+    },
+    {
+      "key": "ci",
+      "type": "notes",
+      "title": "CI",
+      "items": [
+        {
+          "lead": "GitHub Actions",
+          "text": "`.github/workflows/ci.yml` runs on every push and PR to `main`."
+        },
+        {
+          "lead": "Jobs",
+          "text": "Lint & type check (ESLint + `tsc --noEmit`), unit tests with coverage + Next.js build, Storybook build + visual regression, E2E against the production build."
+        },
+        {
+          "lead": "Same checks locally",
+          "text": "`npm run lint && npm run type-check && npm test && npm run test:e2e`"
+        }
+      ]
+    },
+    {
+      "key": "links",
+      "type": "buttons",
+      "items": [
+        {
+          "label": "Reference",
+          "sub": "docs/REFERENCE.md",
+          "href": "docs/REFERENCE.md"
+        },
+        {
+          "label": "CI runs",
+          "sub": "github actions",
+          "href": "https://github.com/VelimirMueller/portfolio-website/actions"
+        },
+        {
+          "label": "Live site",
+          "sub": "velimir-mueller.de",
+          "href": "https://www.velimir-mueller.de"
+        },
+        {
+          "label": "LinkedIn",
+          "sub": "velimir-mueller",
+          "href": "https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175"
+        },
+        {
+          "label": "Email",
+          "sub": "googlemail",
+          "href": "mailto:velimir.mueller@googlemail.com"
+        },
+        {
+          "label": "GitHub",
+          "sub": "VelimirMueller",
+          "href": "https://github.com/VelimirMueller"
+        },
+        {
+          "label": "Plain text",
+          "sub": "show copyable commands"
+        }
+      ]
+    },
+    {
+      "key": "footer",
+      "type": "footer",
+      "studio": "VM. studio / flagship",
+      "text": "source available, all rights reserved · look per vm-brand playbook",
+      "eof": "-- EOF -- no cookies were set --"
     }
-  ]
+  ],
+  "readme": {
+    "hero_alt": "VM. / flagship. PORTFOLIO-WEBSITE. A CV that compiles. Next.js, Supabase, Vercel. Stable, v2.3.0.",
+    "items": [
+      "lead",
+      "stats",
+      "divider:what",
+      "features",
+      "what",
+      "divider:start",
+      "start",
+      {
+        "details": "links",
+        "chip": 7,
+        "code": [
+          [
+            "bash",
+            "git clone https://github.com/VelimirMueller/portfolio-website.git\ncd portfolio-website\nnpm install\ncp .env.example .env.local   # add your Supabase URL and anon key\nnpm run dev"
+          ]
+        ]
+      },
+      "devnotes",
+      "divider:how",
+      "flow",
+      "layers",
+      "how",
+      "divider:usage",
+      "scripts",
+      "testing",
+      "commits",
+      "admin",
+      "deploy",
+      {
+        "details": "links",
+        "chip": 7,
+        "code": [
+          [
+            "bash",
+            "npm test                                      # all unit tests\nnpm run test:visual -- --update-snapshots     # new visual baselines\nnpm run test:e2e -- --grep \"Navigation\"       # one E2E group\nnpm run storybook                             # localhost:6006"
+          ],
+          [
+            "text",
+            "type(scope?): subject\n\nfeat(contact): add honeypot field\nfix(theme): honor system light preference\nchore(release): v2.0.0"
+          ],
+          [
+            "text",
+            "NEXT_PUBLIC_SUPABASE_URL\nNEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY"
+          ]
+        ]
+      },
+      "divider:status",
+      "status",
+      "ci",
+      {
+        "buttons": "links",
+        "only": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "buttons": "links",
+        "only": [
+          4,
+          5,
+          6
+        ]
+      },
+      "footer"
+    ]
+  }
 }
