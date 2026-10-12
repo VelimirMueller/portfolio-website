@@ -2,8 +2,9 @@ import { test, expect } from '@playwright/test';
 
 /**
  * Security headers contract. The CSP must allow exactly what the app uses
- * (hCaptcha, Supabase, Vercel insights, the wasm demos, same-origin
- * iframes for the MCP demo) and nothing else —
+ * (hCaptcha, Supabase, the wasm demos, same-origin iframes for the MCP
+ * demo) and nothing else. Analytics and Vercel Speed Insights are
+ * same-origin, so no analytics host is allowed —
  * the console check below catches an over-tight policy breaking a page.
  */
 
@@ -14,6 +15,9 @@ test.describe('Security headers', () => {
 
     expect(headers['content-security-policy']).toContain("default-src 'self'");
     expect(headers['content-security-policy']).toContain("frame-ancestors 'self'");
+    // Stale Vercel Web Analytics hosts (replaced in v2.1.0) stay out (issue #70).
+    expect(headers['content-security-policy']).not.toContain('vercel-scripts.com');
+    expect(headers['content-security-policy']).not.toContain('vercel-insights.com');
     expect(headers['x-content-type-options']).toBe('nosniff');
     expect(headers['referrer-policy']).toBe('strict-origin-when-cross-origin');
     expect(headers['x-frame-options']).toBe('SAMEORIGIN');
