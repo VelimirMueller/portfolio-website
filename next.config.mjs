@@ -79,6 +79,16 @@ const redirectRules = [
   { source: '/games/dist/:path*', destination: ARCADE_PAGE, permanent: true },
 ];
 
+// Safari and some crawlers request the Apple touch icon at fixed root paths and
+// ignore the <link rel="apple-touch-icon"> tag. src/app/apple-icon.png is served
+// at /apple-icon.png, so both legacy paths are rewritten to it (issue #105).
+// The middleware matcher skips paths with a dot, so next-intl never sees them.
+const APPLE_ICON = '/apple-icon.png';
+const rewriteRules = [
+  { source: '/apple-touch-icon.png', destination: APPLE_ICON },
+  { source: '/apple-touch-icon-precomposed.png', destination: APPLE_ICON },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -96,6 +106,9 @@ const nextConfig = {
   },
   async redirects() {
     return redirectRules;
+  },
+  async rewrites() {
+    return rewriteRules;
   },
 };
 
