@@ -13,8 +13,8 @@ jobs:
     name: Dependency Audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
       - run: npm audit --omit=dev --audit-level=critical
@@ -23,7 +23,7 @@ jobs:
     name: Lint & Type Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/node-deps
       - run: npm run lint
       - run: npm run type-check
@@ -36,12 +36,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # Same CLI version as the devDependency, without a full npm ci.
       - name: Read the Supabase CLI version from package-lock.json
         id: cli
         run: echo "version=$(jq -r '.packages["node_modules/supabase"].version' package-lock.json)" >> "$GITHUB_OUTPUT"
-      - uses: supabase/setup-cli@v1
+      - uses: supabase/setup-cli@v3
         with:
           version: ${{ steps.cli.outputs.version }}
       - run: bash scripts/db/test-migrations.sh
@@ -50,12 +50,12 @@ jobs:
     name: Unit Tests & Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/node-deps
       - run: npm run test:coverage
       - name: Upload coverage report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: coverage/
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/node-deps
       - run: npm run build-storybook
       # Cache + install with retries; the composite action explains the apt hang.
@@ -78,7 +78,7 @@ jobs:
         run: npm run test:visual
       - name: Upload visual diff results
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: visual-regression-results
           path: |
@@ -92,7 +92,7 @@ jobs:
     timeout-minutes: 45
     needs: unit-tests-and-build
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/node-deps
       # Cache + install with retries; the composite action explains the apt hang.
       - name: Install Playwright browsers
@@ -102,7 +102,7 @@ jobs:
         run: npm run test:e2e
       - name: Upload test results
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: e2e-results
           path: |
