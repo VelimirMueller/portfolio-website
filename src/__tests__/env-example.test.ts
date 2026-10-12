@@ -12,6 +12,8 @@ const RUNTIME_PROVIDED = new Set(['NODE_ENV', 'CI']);
 // Supabase injects these into every Edge Function.
 const SUPABASE_PROVIDED = new Set(['SUPABASE_URL', 'SUPABASE_ANON_KEY', 'SUPABASE_SERVICE_ROLE_KEY', 'SUPABASE_DB_URL']);
 
+// Skips node_modules and every __tests__ dir: tests set fake env values for mocks,
+// and those are not names the deployed code reads.
 function walk(dir: string, accept: (file: string) => boolean): string[] {
   return readdirSync(dir).flatMap((name) => {
     const path = join(dir, name);
@@ -62,7 +64,8 @@ const functionFiles = walk(join(ROOT, 'supabase', 'functions'), (f) => /\.(ts|js
 const APP_PATTERNS = [
   /process\.env\.([A-Z][A-Z0-9_]*)/g,
   /process\.env\[['"]([A-Z][A-Z0-9_]*)['"]\]/g,
-  // Injected env objects, e.g. loadVercelStats(fetch, env = process.env).
+  // Injected env objects, e.g. loadVercelStats(fetch, env = process.env). Any object
+  // named env with an UPPER_CASE key counts; list the name or rename the object.
   /\benv\.([A-Z][A-Z0-9_]*)/g,
 ];
 const FUNCTION_PATTERNS = [/Deno\.env\.get\(\s*['"]([A-Z][A-Z0-9_]*)['"]/g];
