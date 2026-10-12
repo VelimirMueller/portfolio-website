@@ -23,31 +23,31 @@
     "menuLabel": "Navigationsmenü"
   },
   "home": {
-    "metaDesc": "{jobTitle}. Full Lifecycle über mehrere ausgelieferte Produkte. vlm-code-context-mcp auf npm — MCP-Server für KI-Agents, per Benchmark verifiziert. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
+    "metaDesc": "{jobTitle}. Verantwortet Produkte von Ende zu Ende: UX, Frontend, Backend, Daten und Cloud. React, Vue, TypeScript, PHP/Laravel, Python, Rust, Terraform, AWS/Azure. Live-Demos und Open-Source-Code.",
     "badge": "Verfügbar für Projekte",
     "eyebrow": "VM. / Product Engineer · Berlin",
-    "tagline": "Produkt, Plattform und KI-Tooling. Von Anfang bis Ende.",
-    "sub": "Full-Stack · Plattform · KI-Tooling",
-    "description": "Anforderungen, UX, Code und Cloud-Infrastruktur aus einer Hand. Ausgeliefert bei GALVANY (Lead-Matching, 3–4× schnellere Zuweisung), DEMOS (Civic-Tech-Plattform) und bewerbermappe.com (Presse: BILD, Die Zeit, n-tv).",
+    "tagline": "Von der Idee zum laufenden Produkt. Ein Engineer, der ganze Stack.",
+    "sub": "Frontend · Backend · Daten · Cloud · AI-Tooling",
+    "description": "Ich bringe ein Produkt von Anforderungen und UX über Code, Daten und Cloud-Infrastruktur zu einem stabilen Release und halte es wartbar. Sie bekommen eine Person, die jede Schicht versteht, mit Business und Entwicklung spricht und jede Änderung mit Tests und Reviews absichert. Die Projekte unten sind der Beleg.",
     "ctaProjects": "Projekte ansehen",
     "ctaContact": "Kontakt",
     "statsLabel": "Auf einen Blick",
     "stats": [
       {
-        "value": "3–4×",
-        "label": "Schnellere Lead-Zuweisung bei GALVANY"
+        "value": "5",
+        "label": "Sprachen in ausgeliefertem Code: TypeScript, PHP, Python, Rust, SQL"
       },
       {
-        "value": "81",
-        "label": "Tools in code-context-mcp"
+        "value": "3",
+        "label": "Live-Demos zum Ausprobieren im Browser"
       },
       {
-        "value": "~40%",
-        "label": "Mediane Token-Reduktion, 9-Task-Benchmark"
+        "value": "15",
+        "label": "Öffentliche Repositories"
       },
       {
         "value": "2",
-        "label": "Unabhängige Reviews pro Änderung"
+        "label": "Unabhängige Reviews vor jedem Merge"
       }
     ],
     "sections": {

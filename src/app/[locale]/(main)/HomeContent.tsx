@@ -100,7 +100,7 @@ const Hero = () => {
               <div key={s.label} className={`${card} p-5 md:p-7`}>
                 <dt className="sr-only">{s.label}</dt>
                 <dd className="font-mono font-bold tracking-tight text-3xl md:text-5xl text-brand-600 dark:text-brand-400">{s.value}</dd>
-                <dd className="mt-3 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 leading-relaxed">{s.label}</dd>
+                <dd className="mt-3 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 leading-relaxed hyphens-auto break-words">{s.label}</dd>
               </div>
             ))}
           </dl>

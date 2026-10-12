@@ -23,31 +23,31 @@
     "menuLabel": "Navigation menu"
   },
   "home": {
-    "metaDesc": "{jobTitle}. Full lifecycle across multiple shipped products. Published vlm-code-context-mcp — MCP server for AI agents, benchmark-verified. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
+    "metaDesc": "{jobTitle}. Owns products end to end: UX, frontend, backend, data and cloud. React, Vue, TypeScript, PHP/Laravel, Python, Rust, Terraform, AWS/Azure. Live demos and open-source code.",
     "badge": "Available for projects",
     "eyebrow": "VM. / Product engineer · Berlin",
-    "tagline": "Product, platform and AI tooling. End to end.",
-    "sub": "Full-stack · Platform · AI tooling",
-    "description": "Requirements, UX, code and cloud infrastructure, owned by one engineer. Shipped at GALVANY (lead matching, 3–4× faster assignment), DEMOS (civic-tech platform) and bewerbermappe.com (press: BILD, Die Zeit, n-tv).",
+    "tagline": "From idea to running product. One engineer, the whole stack.",
+    "sub": "Frontend · Backend · Data · Cloud · AI tooling",
+    "description": "I take a product from requirements and UX through code, data and cloud infrastructure to a stable release, and I keep it maintainable. You get one person who understands every layer, speaks with business and engineering, and backs every change with tests and reviews. The projects below are the proof.",
     "ctaProjects": "View projects",
     "ctaContact": "Contact",
     "statsLabel": "At a glance",
     "stats": [
       {
-        "value": "3–4×",
-        "label": "Faster lead assignment at GALVANY"
+        "value": "5",
+        "label": "Languages in shipped code: TypeScript, PHP, Python, Rust, SQL"
       },
       {
-        "value": "81",
-        "label": "Tools in code-context-mcp"
+        "value": "3",
+        "label": "Live demos to try in your browser"
       },
       {
-        "value": "~40%",
-        "label": "Median token reduction, 9-task benchmark"
+        "value": "15",
+        "label": "Public repositories"
       },
       {
         "value": "2",
-        "label": "Independent reviews per change"
+        "label": "Independent reviews before every merge"
       }
     ],
     "sections": {
