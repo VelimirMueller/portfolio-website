@@ -25,21 +25,20 @@ const cspDirectives = [
   "form-action 'self'",
 ];
 
-// Framing is same-origin only: /projects/mcp-demo embeds the standalone
-// /demos/mcp-demo.html in an iframe, so the parent needs 'self' in frame-src
-// and the demo document needs 'self' in frame-ancestors. Cross-origin framing
-// stays blocked, which is what actually prevents clickjacking.
+// Framing is denied everywhere except the one page that needs it:
+// /projects/mcp-demo embeds the standalone /demos/mcp-demo.html in an iframe,
+// so the parent needs 'self' in frame-src and only the demo document gets
+// 'self' in frame-ancestors (and X-Frame-Options SAMEORIGIN). Every other
+// response sends frame-ancestors 'none' and X-Frame-Options DENY.
 // One CSP per response: frame-ancestors is appended here, not sent as a
 // second header (two CSPs would intersect).
 const buildCsp = (frameAncestors) =>
   [...cspDirectives, `frame-ancestors ${frameAncestors}`].join('; ');
 
-const contentSecurityPolicy = buildCsp("'self'");
+const MCP_DEMO_PATH = '/demos/mcp-demo.html';
 
-const securityHeaders = [
-  { key: 'Content-Security-Policy', value: contentSecurityPolicy },
+const sharedHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
-  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   {
     key: 'Permissions-Policy',
@@ -48,6 +47,27 @@ const securityHeaders = [
   {
     key: 'Strict-Transport-Security',
     value: 'max-age=63072000; includeSubDomains',
+  },
+];
+
+const securityHeaders = (frameAncestors, frameOptions) => [
+  { key: 'Content-Security-Policy', value: buildCsp(frameAncestors) },
+  { key: 'X-Frame-Options', value: frameOptions },
+  ...sharedHeaders,
+];
+
+// The two sources are disjoint (the first excludes MCP_DEMO_PATH with a
+// negative lookahead), so each response matches exactly one rule and carries
+// exactly one CSP and one X-Frame-Options header. Next.js would otherwise
+// apply every matching rule.
+const headerRules = [
+  {
+    source: '/((?!demos/mcp-demo\\.html$).*)',
+    headers: securityHeaders("'none'", 'DENY'),
+  },
+  {
+    source: MCP_DEMO_PATH,
+    headers: securityHeaders("'self'", 'SAMEORIGIN'),
   },
 ];
 
@@ -64,12 +84,7 @@ const nextConfig = {
     optimizeCss: true,
   },
   async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: securityHeaders,
-      },
-    ];
+    return headerRules;
   },
 };
 
