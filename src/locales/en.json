@@ -23,8 +23,7 @@
     "menuLabel": "Navigation menu"
   },
   "home": {
-    "metaTitle": "Velimir Müller | Senior Product Engineer",
-    "metaDesc": "Senior Product Engineer. Full lifecycle across multiple shipped products. Published vlm-code-context-mcp — MCP server for AI agents, benchmark-verified. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
+    "metaDesc": "{jobTitle}. Full lifecycle across multiple shipped products. Published vlm-code-context-mcp — MCP server for AI agents, benchmark-verified. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
     "badge": "Available for projects",
     "eyebrow": "VM. / Product engineer · Berlin",
     "tagline": "Product, platform and AI tooling. End to end.",
@@ -647,12 +646,11 @@
   },
   "about": {
     "metaTitle": "About — Velimir Müller",
-    "metaDesc": "Senior Product Engineer. Multiple roles across civic-tech, rental-tech, and a funded lead-intelligence startup. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
+    "metaDesc": "{jobTitle}. Multiple roles across civic-tech, rental-tech, and a funded lead-intelligence startup. React, Vue, TypeScript, Laravel, Terraform, AWS/Azure.",
     "title": "PROFILE.",
     "subtitle": "Velimir Müller",
     "summary": "Summary",
     "bio1": "",
-    "bio1Bold": "Senior Product Engineer",
     "bio1After": "working the full stretch from stakeholder interview to production deployment. Frontend: React, Vue, Next.js, Nuxt. Backend: Laravel, Quarkus, FastAPI, Node. Infra: Terraform on AWS/Azure, CI/CD with GitHub Actions.",
     "bio2": "Beyond using AI in my daily development, I build tooling for it. vlm-code-context-mcp on npm is an MCP server that gives AI coding agents structured access to codebases — 81 tools, ~40% median token reduction after multiple review steps on an adversarial 9-task benchmark, persistent sprint/retro memory so agents learn from past work.",
     "bio3": "Experience across a corporate (Zalando), a mid-sized civic-tech SaaS (DEMOS), and two startups (Housy/bewerbermappe.com, GALVANY). I care about what happens after deployment — what shipped, what changed for users, what the metrics show next sprint.",
@@ -751,7 +749,6 @@
     "errorDetailed": "Something went wrong. Please try again or email me directly at velimir.mueller@googlemail.com"
   },
   "footer": {
-    "tagline": "Senior Product Engineer.",
     "taglineSecondary": "Full-Stack · Infrastructure · Agent Tooling.",
     "taglineDesc": "From business needs to deployment — full lifecycle ownership.",
     "sitemap": "Sitemap",

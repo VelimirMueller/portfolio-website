@@ -3,11 +3,13 @@
 import React from 'react';
 import { Link } from '@/i18n/navigation';
 import { Mail, Linkedin, Github } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getPositioning } from '@/config/positioning';
 import { AsciiArt, ASCII_VM } from '@/components/atoms/AsciiArt';
 
 export const Footer = () => {
   const t = useTranslations();
+  const { jobTitle } = getPositioning(useLocale());
 
   return (
     <footer className="max-w-7xl mx-auto px-4 py-12 md:py-20 border-t border-black/5 dark:border-white/5 mt-20">
@@ -15,7 +17,7 @@ export const Footer = () => {
         <div className="md:col-span-2">
           <h3 className="font-mono font-bold text-xl text-black dark:text-white mb-3">Velimir Müller</h3>
           <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-w-sm">
-            {t('footer.tagline')}<br/>
+            {jobTitle}.<br/>
             <span className="text-gray-600 dark:text-gray-400 text-xs leading-relaxed">{t('footer.taglineSecondary')}</span><br/>
             <span className="text-gray-600 dark:text-gray-400">{t('footer.taglineDesc')}</span>
           </p>

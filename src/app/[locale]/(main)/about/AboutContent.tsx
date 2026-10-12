@@ -6,7 +6,8 @@ import { Eyebrow } from '@/components/atoms/Signature';
 import { GlassPanel, glassCard } from '@/components/molecules/GlassPanel';
 import { SectionStage } from '@/components/molecules/SectionStage';
 import { SectionDivider } from '@/components/molecules/SectionDivider';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getPositioning } from '@/config/positioning';
 
 // About in the glass look (vm-brand B-48): two stages, 01 profile and 02 experience.
 
@@ -25,6 +26,7 @@ const EXPERIENCE = ['exp1', 'exp2', 'exp3', 'exp4', 'exp5', 'exp6', 'exp7'];
 
 export default function AboutContent() {
   const t = useTranslations();
+  const { jobTitle } = getPositioning(useLocale());
   const stage = (key: string) => t.raw(`about.stages.${key}`) as StageCopy;
   const profile = stage('profile');
   const experience = stage('experience');
@@ -46,7 +48,7 @@ export default function AboutContent() {
               <Eyebrow>{t('about.summary')}</Eyebrow>
               <div className="relative prose dark:prose-invert prose-lg max-w-none">
                 <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                  <span className="text-black dark:text-white font-bold">{t('about.bio1Bold')}</span> {t('about.bio1After')}
+                  <span className="text-black dark:text-white font-bold">{jobTitle}</span> {t('about.bio1After')}
                 </p>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">{t('about.bio2')}</p>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">{t('about.bio3')}</p>

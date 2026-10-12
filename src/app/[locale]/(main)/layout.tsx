@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { Navigation } from '@/components/organisms/Navigation';
 import { Footer } from '@/components/organisms/Footer';
-import { SITE_URL } from '@/config/site';
+import { siteJsonLd } from '@/app/seo';
 import { PageWarp, SiteHyperspace } from '@/components/effects/SiteHyperspace';
 
 type Props = {
@@ -13,54 +13,7 @@ export default async function MainLayout({ children, params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'a11y' });
 
-  const jsonLd = JSON.stringify([
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Person',
-      name: 'Velimir Müller',
-      jobTitle: 'Senior Product Engineer',
-      description:
-        'Senior Product Engineer & AI Agentic Developer specializing in end-to-end product ownership, MCP server development, and full-stack engineering with Next.js and Claude Code.',
-      url: SITE_URL,
-      sameAs: [
-        'https://www.linkedin.com/in/velimir-müller-07b460175',
-        'https://github.com/VelimirMueller',
-      ],
-      knowsAbout: [
-        'React',
-        'TypeScript',
-        'Next.js',
-        'Laravel',
-        'Supabase',
-        'AWS',
-        'ML',
-        'Agentic AI',
-        'Model Context Protocol',
-        'MCP Server Development',
-        'Claude Code',
-        'Product Management',
-        'AI-Powered Development Tools',
-        'Vercel',
-        'Full-Stack Development',
-      ],
-      hasOccupation: {
-        '@type': 'Occupation',
-        name: 'Senior Product Engineer',
-        occupationLocation: { '@type': 'Country', name: 'Germany' },
-        skills:
-          'Full-Stack Development, Next.js, React, TypeScript, AI Agentic Development, MCP Server Development, Product Ownership, Claude Code',
-      },
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: 'Velimir Müller',
-      url: SITE_URL,
-      description:
-        'Portfolio of Velimir Müller — Senior Product Engineer, AI Agentic Developer, and MCP server developer.',
-      inLanguage: ['de', 'en'],
-    },
-  ]);
+  const jsonLd = JSON.stringify(siteJsonLd(locale));
 
   return (
     <div className="flex flex-col min-h-screen text-light-text dark:text-dark-text font-sans transition-colors duration-300">

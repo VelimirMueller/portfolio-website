@@ -8,6 +8,7 @@ import { render, screen } from '@testing-library/react';
 import de from '@/locales/de.json';
 import en from '@/locales/en.json';
 import { LEGAL_CONTACT, SUPERVISORY_AUTHORITY } from '@/config/legal';
+import { POSITIONING } from '@/config/positioning';
 
 import HomeContent from '../HomeContent';
 import AboutContent from '../about/AboutContent';
@@ -100,6 +101,11 @@ describe('content pages render with the real German catalog', () => {
   it('AboutContent renders the about copy', () => {
     render(<AboutContent />);
     expect(screen.getByText(de.about.title)).toBeInTheDocument();
+  });
+
+  it('AboutContent leads the bio with the job title from the positioning config', () => {
+    render(<AboutContent />);
+    expect(screen.getByText(POSITIONING.de.jobTitle)).toHaveClass('font-bold');
   });
 
   it('ServicesContent renders title and value items from t.raw', () => {

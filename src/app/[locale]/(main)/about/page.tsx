@@ -1,4 +1,5 @@
 import { SITE_URL } from '@/config/site';
+import { getPositioning } from '@/config/positioning';
 import { getTranslations } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import AboutContent from './AboutContent';
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }: Props) {
 
   return {
     title: t('metaTitle'),
-    description: t('metaDesc'),
+    description: t('metaDesc', { jobTitle: getPositioning(locale).jobTitle }),
     alternates: {
       canonical: `${SITE_URL}/${locale}/about`,
     },
