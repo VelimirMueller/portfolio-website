@@ -88,7 +88,7 @@ Other folders:
 | `scripts/db/test-migrations.sh` | `npm run test:db` |
 | `scripts/email/` | Builds the email header image |
 | `e2e/` | Playwright specs: `app`, `a11y`, `admin`, `analytics`, `demos`, `headers`, `storybook-visual` |
-| `.storybook/` | Storybook 9 config |
+| `.storybook/` | Storybook 10 config |
 | `.figma/`, `docs/design-system.md` | The Figma design-system pack |
 | `assets/`, `brand/`, `vm-brand.json` | README art and brand kit |
 
