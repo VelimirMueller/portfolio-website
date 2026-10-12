@@ -38,6 +38,7 @@ T.board = async (name, build, o) => { o = o || {}; await K.init(); await K.reind
     h.add(c, lab, f); h.add(b, c); }
   return h.place(s, b); };
 // Card shell for template-only blocks (case studies, legal text, summary). Public pages use liquid glass (B-48); admin uses T.panel.
+// Async since the glass skin applies an effect style: every caller awaits it (`await T.card(`).
 T.card = async (w, mode, cw, name, gap, pad) => K.glass(mode, cw, name, gap == null ? 16 : gap, pad == null ? (T.D(w) ? 32 : 24) : pad);
 T.glass = async (w, mode, cw, name, gap) => K.glass(mode, cw || T.CW(w), name, gap == null ? 20 : gap, T.D(w) ? 40 : 24);
 

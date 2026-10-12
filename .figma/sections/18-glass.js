@@ -1,6 +1,8 @@
 // 18 · Glass — the liquid-glass layer of the site rework (vm-brand B-48): section divider, numbered card, status row,
 // glass stat and pipeline step. Glass needs art behind it: the templates put these on a T.stage.
 // Art: website/v2/* are the vm-brand v2 renders; v2/light/* are the light-mode results of the site's CSS filter.
+// The paths say .png, the files are .jpg: vfb serve finds a file under any image extension, and `vfb test --strict`
+// fails on a path with no file (see K.art in 00-kit.js).
 K.ART2_LIGHT = { 'site-svc-requirements': 1, 'site-svc-delivery': 1, 'site-svc-ux': 1, 'site-svc-stack': 1, 'site-svc-frontend': 1, 'site-contact': 1, 'flagship-base': 1 };
 K.art2 = (name, mode) => (K.m(mode) === 'light' && K.ART2_LIGHT[name]) ? 'website/v2/light/' + name + '-light.png' : 'website/v2/' + name + '.png';
 
