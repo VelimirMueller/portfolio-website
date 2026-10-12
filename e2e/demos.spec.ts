@@ -145,6 +145,23 @@ test.describe('Cyberpunk arcade', () => {
   });
 });
 
+test.describe('Old arcade build URLs', () => {
+  // public/games/dist/ was removed (issue #80); old external links redirect permanently to the arcade page.
+  for (const path of ['/games/dist', '/games/dist/index.html', '/games/dist/cyberpunk_rpg-d4da93eb63bc5ffa.js']) {
+    test(`${path} redirects permanently to the arcade page`, async ({ request }) => {
+      const response = await request.get(path, { maxRedirects: 0 });
+      expect(response.status()).toBe(308);
+      expect(response.headers()['location']).toBe(ARCADE);
+    });
+  }
+
+  test('the folder URL with a trailing slash ends on the working arcade page', async ({ request }) => {
+    const response = await request.get('/games/dist/');
+    expect(response.status()).toBe(200);
+    expect(new URL(response.url()).pathname).toBe(ARCADE);
+  });
+});
+
 test.describe('Projects page demo links', () => {
   test('every demo link returns 200', async ({ page, request }) => {
     await page.goto('/de/projects');

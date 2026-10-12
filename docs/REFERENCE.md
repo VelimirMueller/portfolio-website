@@ -30,8 +30,7 @@ src/
 │   ├── projects/                   # Live demos, English only, outside [locale]
 │   │   ├── layout.tsx
 │   │   ├── dashboard-demo/page.tsx # CRM dashboard demo
-│   │   ├── mcp-demo/page.tsx       # Frames public/demos/mcp-demo.html
-│   │   └── dist/index.html         # Old arcade build output; no route or link uses it
+│   │   └── mcp-demo/page.tsx       # Frames public/demos/mcp-demo.html
 │   ├── admin/                      # Private admin, English only, noindex
 │   │   ├── layout.tsx, actions.ts
 │   │   ├── login/page.tsx
@@ -81,7 +80,6 @@ Other folders:
 | :--- | :--- |
 | `public/demos/mcp-demo.html` | The MCP demo document (framed by `/projects/mcp-demo`) |
 | `public/projects/cyberpunk-arcade/index.html` | The arcade page; it loads `public/games/cyberpunk/` (desktop) or `public/games/cyberpunk_mobile/` (touch or narrow screen) |
-| `public/games/dist/` | Old arcade build output; no route or link uses it |
 | `public/art/`, `public/email/` | Page art, the email header image |
 | `supabase/migrations/`, `supabase/tests/` | Schema and SQL tests (see [Database](#database)) |
 | `supabase/functions/` | Edge Functions `send-contact-email` and `testdata-eval` |
@@ -157,6 +155,7 @@ English only, `noindex`, disallowed in `robots.txt`. Every path except the first
 | `POST /api/collect` | Analytics beacon; calls `record_analytics_event()`. Without `ANALYTICS_INGEST_SECRET` it answers 204 and stores nothing |
 | `/sitemap.xml`, `/robots.txt` | From `sitemap.ts` and `robots.ts` |
 | `/_vercel/speed-insights/*` | Vercel Speed Insights, same origin |
+| `/games/dist/*` | Old arcade build URL (folder removed in issue #80); 308 redirect to `/projects/cyberpunk-arcade/index.html` (`redirectRules` in `next.config.mjs`) |
 
 ## Admin (v2)
 
