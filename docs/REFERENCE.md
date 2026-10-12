@@ -9,7 +9,7 @@ Generated from the repository (`find src -type f`), without tests (`__tests__/`,
 
 ```
 src/
-├── middleware.ts                   # /admin: session + admin check; everything else: next-intl
+├── proxy.ts                        # /admin: session + admin check; everything else: next-intl
 ├── app/
 │   ├── globals.css
 │   ├── seo.ts                      # Localized metadata (Open Graph, Twitter, hreflang)
@@ -121,7 +121,7 @@ An unknown service id or path shows the localized 404 page.
 
 ### Demos
 
-English only, outside `[locale]`. The middleware matcher excludes `projects/dashboard-demo` and `projects/mcp-demo` by name, and files with an extension never reach it.
+English only, outside `[locale]`. The proxy (`src/proxy.ts`) matcher excludes `projects/dashboard-demo` and `projects/mcp-demo` by name, and files with an extension never reach it.
 
 | Path | Demo |
 | :--- | :--- |
@@ -167,7 +167,7 @@ A private area at `/admin`, introduced in **v2.0.0** (traffic KPIs since **v2.1.
 | **KPIs** | Four tabs (`?tab=`). **Website**: traffic first, then messages. Traffic: live visitors, visitors / page views / clicks / bounce rate / session length with trends, time series with previous-period comparison, weekday × hour heatmap, top pages, sources and audience (click any row to filter), a flow explorer (came from → page → went to) and a click leaderboard. A section switcher (`?view=`: all, overview, when, audience, flow, clicks, messages) shows one part at a time. Range, filters, metric and flow focus live in the URL. Keyboard: `1`–`4` range · `v`/`p`/`c` metric · `r` refresh · `⌫` drop newest filter · `⌘K` command palette. Messages: 30-day volume and trend, unread, spam rate, messages per day, status breakdown, busiest weekdays (Europe/Berlin). **Supabase**: database size, Postgres version, connections, table sizes, storage buckets (from `admin_dashboard_stats()`). **Vercel**: production deployment, build success rate and build times from the Vercel REST API; without `VERCEL_API_TOKEN` it shows how to set it up. **Magic**: pool, wishlist, decks and scan test-data counts (from `admin_dashboard_stats()`) |
 | **Magic** | Velimir's Magic: The Gathering cards. Tabs: **Pool**: every owned card with Scryfall image, exact text, copies (± in place), German copies, notes; search plus color and type filters. **Decks**: every deck with how much of it you own; per deck the main deck, sideboard and upgrade path, each card marked owned / buy N against the pool, a priced list of what is still to buy, and warnings when the plan is off (card count, off-color cards). *New deck* imports a pasted decklist. **Wishlist**: cards you want but do not own yet, with copies (± in place), notes and *Got it*, which moves them into the pool. **Add card**: search the catalog of every paper card ever printed (Scryfall) and add copies to the pool (*Own it*) or to the wishlist (*Want it*) |
 
-**Access.** Supabase Auth magic link for a single admin user (sign-ups off, `shouldCreateUser: false`). Three layers check the admin: the middleware, `requireAdmin()` in every page and server action, and Postgres RLS via `public.is_admin()`. The admin's user UUID lives in `src/config/admin.ts` **and** in the migration; change both together. The Next.js app uses no service-role key. Only the session cookie of the admin login is ever set.
+**Access.** Supabase Auth magic link for a single admin user (sign-ups off, `shouldCreateUser: false`). Three layers check the admin: the proxy (`src/proxy.ts`), `requireAdmin()` in every page and server action, and Postgres RLS via `public.is_admin()`. The admin's user UUID lives in `src/config/admin.ts` **and** in the migration; change both together. The Next.js app uses no service-role key. Only the session cookie of the admin login is ever set.
 
 **Supabase Auth settings** (dashboard, not in the repo): Site URL `https://www.velimir-mueller.de`; redirect URLs `https://www.velimir-mueller.de/admin/auth/callback` and `http://localhost:3000/admin/auth/callback`; custom SMTP via Resend for the login mails; mail template `supabase/templates/magic-link.html`.
 

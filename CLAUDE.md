@@ -8,7 +8,7 @@ Development rules for velimir-mueller.de. Details live in the [README](README.md
 
 ## Stack
 
-- Next.js 15 (App Router), React 19, TypeScript (strict), Tailwind CSS 3.
+- Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 3.
 - `next-intl`: locales `de` (default) and `en`, both prefixed in the URL (`/de`, `/en`). Config in `src/i18n/`, copy in `src/locales/*.json`.
 - Supabase (Postgres, Auth with magic link, RLS) through `@supabase/ssr`. Clients in `src/utils/supabase/`.
 - Contact form: hCaptcha; the `send-contact-email` Edge Function sends the mail with Resend.
@@ -22,7 +22,7 @@ Development rules for velimir-mueller.de. Details live in the [README](README.md
 | :--- | :--- |
 | `npm run dev` | Dev server on `localhost:3000`. The CSP blocks `eval` here, so client components do not hydrate. Check interactive behaviour with `npm run build && npm start`. |
 | `npm run build` / `npm start` | Production build / serve it. |
-| `npm run lint` | ESLint (`next lint`, `next/core-web-vitals`). |
+| `npm run lint` | ESLint CLI (`eslint .`, flat config `eslint.config.mjs` with `next/core-web-vitals`). |
 | `npm run type-check` | `tsc --noEmit`. |
 | `npm test` / `npm run test:watch` | Jest unit and integration tests. |
 | `npm run test:coverage` | Jest with the enforced coverage floor (CI runs this). |
@@ -36,7 +36,7 @@ CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and typ
 ## Where things live
 
 - `src/app/[locale]/(main)/`: public pages (home, about, services, projects, contact).
-- `src/app/projects/`: live demos `dashboard-demo` (CRM) and `mcp-demo`. Outside `[locale]` on purpose; the `src/middleware.ts` matcher excludes them by name. The WASM shooter and the MCP demo page are static files in `public/games/` and `public/demos/`.
+- `src/app/projects/`: live demos `dashboard-demo` (CRM) and `mcp-demo`. Outside `[locale]` on purpose; the `src/proxy.ts` matcher (Next.js 16 proxy, formerly middleware) excludes them by name. The WASM shooter and the MCP demo page are static files in `public/games/` and `public/demos/`.
 - `src/app/admin/`: private admin (English, `noindex`). UI in `_components/`, queries and logic in `_lib/`.
 - `src/app/api/`: route handlers (contact, analytics collect).
 - `src/components/`: shared UI in Atomic Design layers: `atoms/` (`Button`, `CodeBlock`, `LanguageToggle`), `molecules/` (`BentoCard`, `SectionHeader`), `organisms/` (`Navigation`, `Footer`).
