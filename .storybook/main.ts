@@ -1,5 +1,9 @@
 import type { StorybookConfig } from '@storybook/nextjs-vite';
-import path from 'path';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Storybook 10 loads main.ts as ESM, so CommonJS __dirname is not defined.
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
   stories: ['../src/components/**/*.stories.@(ts|tsx)'],
@@ -32,7 +36,7 @@ const config: StorybookConfig = {
         }));
 
     aliasArray.push(
-      { find: '@', replacement: path.resolve(__dirname, '../src') },
+      { find: '@', replacement: path.resolve(dirname, '../src') },
     );
 
     config.resolve.alias = aliasArray;
