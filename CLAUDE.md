@@ -316,6 +316,8 @@ Write tests before or alongside code
 Test behavior, not implementation
 Mock external dependencies
 Maintain high code coverage (aim for >80%)
+Coverage ratchet: `coverageThreshold` in jest.config.js is the enforced floor (CI runs `npm run test:coverage`).
+Each value is the measured global number rounded down, minus 1 point. When a change raises coverage, raise the floor in the same PR. Never lower it.
 
 6. Code Quality
 
