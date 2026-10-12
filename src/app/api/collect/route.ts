@@ -45,11 +45,11 @@ export async function POST(request: NextRequest) {
   if (isBot(userAgent) || optedOut(request.headers)) return done();
   if (isAdminSession(request.cookies.getAll().map((c) => c.name))) return done();
 
-  // On Vercel, request.ip and these headers come from the platform edge, which
-  // overwrites client-sent values — so neither the rate limit nor the visitor
-  // hash can be steered by a forged header in production.
+  // On Vercel these headers come from the platform edge, which overwrites
+  // client-sent values — so neither the rate limit nor the visitor hash can be
+  // steered by a forged header in production. Next 15 removed request.ip;
+  // x-real-ip is what @vercel/functions' ipAddress() reads as well.
   const ip =
-    request.ip ||
     request.headers.get('x-real-ip') ||
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     '';

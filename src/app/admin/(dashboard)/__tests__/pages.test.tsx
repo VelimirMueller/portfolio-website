@@ -74,7 +74,7 @@ beforeEach(() => {
 describe('inbox page', () => {
   it('lists unread messages by default with counts per tab', async () => {
     rows = [row({}), row({ id: B, name: 'Read Person', status: 'read' })];
-    render(await AdminInboxPage({ searchParams: {} }));
+    render(await AdminInboxPage({ searchParams: Promise.resolve({}) }));
     const list = screen.getByRole('region', { name: 'Messages' });
     expect(within(list).getByText('Jane Doe')).toBeInTheDocument();
     expect(within(list).queryByText('Read Person')).not.toBeInTheDocument();
@@ -84,7 +84,7 @@ describe('inbox page', () => {
 
   it('marks an opened new message read and keeps it visible in the unread tab', async () => {
     rows = [row({})];
-    render(await AdminInboxPage({ searchParams: { id: A } }));
+    render(await AdminInboxPage({ searchParams: Promise.resolve({ id: A }) }));
     expect(update).toHaveBeenCalledWith({ status: 'read' });
     expect(screen.getByRole('heading', { name: 'Jane Doe' })).toBeInTheDocument();
     expect(within(screen.getByRole('region', { name: 'Messages' })).getByText('Jane Doe')).toBeInTheDocument();
@@ -92,27 +92,27 @@ describe('inbox page', () => {
 
   it('ignores an id that is not a UUID', async () => {
     rows = [row({})];
-    render(await AdminInboxPage({ searchParams: { id: 'nope' } }));
+    render(await AdminInboxPage({ searchParams: Promise.resolve({ id: 'nope' }) }));
     expect(update).not.toHaveBeenCalled();
     expect(screen.getByText('Select a message')).toBeInTheDocument();
   });
 
   it('does not touch an archived message when opening it', async () => {
     rows = [row({ status: 'archived' })];
-    render(await AdminInboxPage({ searchParams: { status: 'archived', id: A } }));
+    render(await AdminInboxPage({ searchParams: Promise.resolve({ status: 'archived', id: A }) }));
     expect(update).not.toHaveBeenCalled();
   });
 
   it('reports a failed load', async () => {
     listError = { message: 'boom' };
-    render(await AdminInboxPage({ searchParams: {} }));
+    render(await AdminInboxPage({ searchParams: Promise.resolve({}) }));
     expect(screen.getByText('Could not load messages.')).toBeInTheDocument();
   });
 });
 
 describe('legacy message URL', () => {
-  it('forwards to the workspace with the message open', () => {
-    expect(() => LegacyMessagePage({ params: { id: A } })).toThrow(`NEXT_REDIRECT /admin?status=all&id=${A}`);
+  it('forwards to the workspace with the message open', async () => {
+    await expect(LegacyMessagePage({ params: Promise.resolve({ id: A }) })).rejects.toThrow(`NEXT_REDIRECT /admin?status=all&id=${A}`);
   });
 });
 
@@ -144,7 +144,7 @@ describe('KPI page', () => {
     events = [
       { created_at: at, type: 'pageview', visitor: 'a'.repeat(64), path: '/de', prev_path: null, referrer: 'google.com', target: null, country: 'DE', device: 'desktop', browser: 'Chrome' },
     ];
-    render(await AdminKpisPage({ searchParams: { range: '24h' } }));
+    render(await AdminKpisPage({ searchParams: Promise.resolve({ range: '24h' }) }));
     expect(screen.getByRole('radio', { name: '24h' })).toHaveAttribute('aria-checked', 'true');
     expect(screen.getByRole('heading', { name: 'Flow explorer' })).toBeInTheDocument();
     expect(screen.getAllByText('google.com').length).toBeGreaterThan(0);
@@ -157,7 +157,7 @@ describe('KPI page', () => {
   });
 
   it('opens on the Website tab and falls back to it for an unknown ?tab=', async () => {
-    render(await AdminKpisPage({ searchParams: { tab: 'nope' } }));
+    render(await AdminKpisPage({ searchParams: Promise.resolve({ tab: 'nope' }) }));
     expect(screen.getByRole('tab', { name: 'Website' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('tab', { name: 'Supabase' })).toHaveAttribute('aria-selected', 'false');
     expect(screen.getByText('Busiest weekdays')).toBeVisible();
@@ -165,7 +165,7 @@ describe('KPI page', () => {
 
   it('opens the Supabase tab from the URL with the stats in place', async () => {
     stats = dashboardStatsFixture();
-    render(await AdminKpisPage({ searchParams: { tab: 'supabase' } }));
+    render(await AdminKpisPage({ searchParams: Promise.resolve({ tab: 'supabase' }) }));
     expect(screen.getByRole('tab', { name: 'Supabase' })).toHaveAttribute('aria-selected', 'true');
     expect(await screen.findByText('2.4 GB')).toBeInTheDocument();
     expect(screen.getByText('Tables by size')).toBeVisible();
@@ -174,7 +174,7 @@ describe('KPI page', () => {
 
   it('shows the migration notice in a stats tab when the RPC fails', async () => {
     statsError = { message: 'function public.admin_dashboard_stats does not exist' };
-    render(await AdminKpisPage({ searchParams: { tab: 'magic' } }));
+    render(await AdminKpisPage({ searchParams: Promise.resolve({ tab: 'magic' }) }));
     expect(screen.getByRole('status')).toHaveTextContent(
       'Stats are not available yet — run migration 20261010060000'
     );

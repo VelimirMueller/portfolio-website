@@ -2,11 +2,10 @@ import { Mail } from 'lucide-react';
 import { sendMagicLink } from '../actions';
 import { SubmitButton } from '../_components/SubmitButton';
 
-export default function AdminLoginPage({
-  searchParams,
-}: {
-  searchParams: { sent?: string; error?: string };
+export default async function AdminLoginPage(props: {
+  searchParams: Promise<{ sent?: string; error?: string }>;
 }) {
+  const searchParams = await props.searchParams;
   return (
     <main className="min-h-screen flex items-center justify-center p-4 bg-[#050505]">
       <div className="w-full max-w-sm bg-[#111111] rounded-[2rem] p-8 border border-[#222] animate-fade-in-up">

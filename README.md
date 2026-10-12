@@ -5,7 +5,7 @@
 
 <p align="center">
 
-[![status: live](https://img.shields.io/badge/status-live-10b981?style=flat-square&labelColor=0a0a0b)](https://www.velimir-mueller.de) [![VM. flagship](https://img.shields.io/badge/VM.-flagship-6366f1?style=flat-square&labelColor=0a0a0b)](https://github.com/VelimirMueller) [![version 2.3.0](https://img.shields.io/badge/version-2.3.0-6366f1?style=flat-square&labelColor=0a0a0b)](package.json) [![stack: Next.js 14](https://img.shields.io/badge/stack-Next.js_14-a1a1aa?style=flat-square&labelColor=0a0a0b)](https://nextjs.org)
+[![status: live](https://img.shields.io/badge/status-live-10b981?style=flat-square&labelColor=0a0a0b)](https://www.velimir-mueller.de) [![VM. flagship](https://img.shields.io/badge/VM.-flagship-6366f1?style=flat-square&labelColor=0a0a0b)](https://github.com/VelimirMueller) [![version 2.3.0](https://img.shields.io/badge/version-2.3.0-6366f1?style=flat-square&labelColor=0a0a0b)](package.json) [![stack: Next.js 15](https://img.shields.io/badge/stack-Next.js_15-a1a1aa?style=flat-square&labelColor=0a0a0b)](https://nextjs.org)
 
 </p>
 
@@ -98,7 +98,7 @@ npm run dev
 └────────────────────────────┘      └────────────────────────────┘
 ```
 
-- **Stack:** Next.js 14 (App Router), TypeScript (strict), Tailwind CSS, Supabase, Vercel. Tests: Jest, React Testing Library, Playwright. AI tooling: Claude AI.
+- **Stack:** Next.js 15 (App Router), React 19, TypeScript (strict), Tailwind CSS, Supabase, Vercel. Tests: Jest, React Testing Library, Playwright. AI tooling: Claude AI.
 - **Design:** monochrome + accent, full dark mode. Bento grid with `rounded-[1.5rem]` cards, monospace labels and data, subtle grid backgrounds and blur gradients, hover micro-animations, green pulse indicators for availability.
 - **No cookies.** `next-intl` runs with `localeCookie: false`. `e2e/headers.spec.ts` asserts that public pages set no cookie. hCaptcha loads only when the contact form is sent.
 - Full source tree and the page list: [docs/REFERENCE.md](docs/REFERENCE.md#architecture).

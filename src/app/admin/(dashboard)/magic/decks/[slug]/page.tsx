@@ -5,7 +5,8 @@ import { deckOwnership } from '@/app/admin/_lib/magic/deck';
 import { DeckView } from '@/app/admin/_components/magic/DeckView';
 import { LoadError } from '@/app/admin/_components/magic/LoadError';
 
-export default async function AdminMagicDeckPage({ params }: { params: { slug: string } }) {
+export default async function AdminMagicDeckPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const { supabase } = await requireAdmin();
   const deck = await loadDeck(supabase, params.slug);
   if (deck.error) return <LoadError what="the deck" />;

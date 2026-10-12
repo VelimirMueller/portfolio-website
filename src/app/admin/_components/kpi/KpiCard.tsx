@@ -57,7 +57,7 @@ const COLORS = {
 /** easeOutCubic count-up, as in the CRM demo's KPI cards. Decimals are kept. */
 function useCountUp(end: number, duration = 1200): number {
   const [current, setCurrent] = useState(0);
-  const raf = useRef<number>();
+  const raf = useRef<number | undefined>(undefined);
   useEffect(() => {
     let start: number | null = null;
     const step = (t: number) => {

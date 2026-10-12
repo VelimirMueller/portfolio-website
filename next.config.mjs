@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 // Supabase (contact API), Vercel insights (analytics/vitals),
 // wasm-unsafe-eval (the cyberpunk wasm demos). Images are same-origin only
 // (the avatar is self-hosted in public/ so no third party sees visitor IPs).
-// 'unsafe-inline' in script-src is a Next 14 constraint (inline runtime +
+// 'unsafe-inline' in script-src is a Next.js constraint (inline runtime +
 // theme bootstrap script, no nonce support without dynamic rendering).
 // Framing is same-origin only: /projects/mcp-demo embeds the standalone
 // /demos/mcp-demo.html in an iframe, so the parent needs 'self' in frame-src

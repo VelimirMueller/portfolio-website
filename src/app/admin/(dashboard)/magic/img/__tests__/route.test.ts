@@ -18,7 +18,7 @@ import { GET } from '../[...key]/route';
 
 const KEY = 'small/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b';
 const JPEG = Uint8Array.from([0xff, 0xd8, 0xff, 0xe0, 1, 2, 3]);
-const call = (key: string) => GET(new Request(`http://x/admin/magic/img/${key}`), { params: { key: key.split('/') } });
+const call = (key: string) => GET(new Request(`http://x/admin/magic/img/${key}`), { params: Promise.resolve({ key: key.split('/') }) });
 const upstream = (body: Uint8Array, init: { status?: number; type?: string } = {}) =>
   new Response(body.slice().buffer as ArrayBuffer, { status: init.status ?? 200, headers: { 'content-type': init.type ?? 'image/jpeg' } });
 

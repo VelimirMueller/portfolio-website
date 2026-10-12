@@ -81,7 +81,7 @@ describe('magic pages', () => {
 
   it('deck page shows one deck by slug', async () => {
     queries.loadDeck.mockResolvedValue(ok(stapelbruch));
-    render(await DeckPage({ params: { slug: 'stapelbruch' } }));
+    render(await DeckPage({ params: Promise.resolve({ slug: 'stapelbruch' }) }));
     expect(queries.loadDeck).toHaveBeenCalledWith({}, 'stapelbruch');
     expect(queries.loadDeckOwnership).toHaveBeenCalledWith({}, stapelbruch.id);
     expect(screen.getByRole('heading', { name: 'Stapelbruch' })).toBeInTheDocument();
@@ -89,9 +89,9 @@ describe('magic pages', () => {
 
   it('deck page answers 404 for an unknown slug and an alert for a failed read', async () => {
     queries.loadDeck.mockResolvedValue(ok(null));
-    await expect(DeckPage({ params: { slug: 'nope' } })).rejects.toThrow('NEXT_NOT_FOUND');
+    await expect(DeckPage({ params: Promise.resolve({ slug: 'nope' }) })).rejects.toThrow('NEXT_NOT_FOUND');
     queries.loadDeck.mockResolvedValue(failed(null));
-    render(await DeckPage({ params: { slug: 'x' } }));
+    render(await DeckPage({ params: Promise.resolve({ slug: 'x' }) }));
     expect(screen.getByRole('alert')).toHaveTextContent('Could not load the deck.');
   });
 
@@ -100,7 +100,7 @@ describe('magic pages', () => {
     queries.searchCatalog.mockResolvedValue(ok({ cards: [rift], more: true }));
     queries.loadOwned.mockResolvedValue(ok(new Map([[rift.oracle_id, 2]])));
     queries.loadWished.mockResolvedValue(ok(new Map([[rift.oracle_id, 1]])));
-    render(await AddPage({ searchParams: { q: ' rift ', added: 'Opt', error: 'Bad input.' } }));
+    render(await AddPage({ searchParams: Promise.resolve({ q: ' rift ', added: 'Opt', error: 'Bad input.' }) }));
     expect(queries.searchCatalog).toHaveBeenCalledWith({}, 'rift');
     expect(screen.getByText(/First 1 matches for “rift”/)).toBeInTheDocument();
     expect(screen.getByText('in pool ×2')).toBeInTheDocument();
@@ -110,13 +110,13 @@ describe('magic pages', () => {
   });
 
   it('add page confirms a wished card', async () => {
-    render(await AddPage({ searchParams: { wished: 'Opt' } }));
+    render(await AddPage({ searchParams: Promise.resolve({ wished: 'Opt' }) }));
     expect(screen.getByRole('status')).toHaveTextContent('Opt is on your wishlist.');
   });
 
   it('add page reports a failed wishlist read too', async () => {
     queries.loadWished.mockResolvedValue(failed(new Map()));
-    render(await AddPage({ searchParams: { q: 'rift' } }));
+    render(await AddPage({ searchParams: Promise.resolve({ q: 'rift' }) }));
     expect(screen.getByText(/Could not load the search or your pool and wishlist counts/)).toBeInTheDocument();
   });
 
@@ -135,7 +135,7 @@ describe('magic pages', () => {
 
   it('add page reports a failed pool read instead of hiding the pool counts', async () => {
     queries.loadOwned.mockResolvedValue(failed(new Map()));
-    render(await AddPage({ searchParams: { q: 'rift' } }));
+    render(await AddPage({ searchParams: Promise.resolve({ q: 'rift' }) }));
     expect(screen.getByText(/Could not load the search or your pool and wishlist counts/)).toBeInTheDocument();
   });
 });

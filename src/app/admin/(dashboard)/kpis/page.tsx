@@ -13,11 +13,10 @@ import { KpisView } from '@/app/admin/_components/KpisView';
 import { TrafficDashboard } from '@/app/admin/_components/traffic/TrafficDashboard';
 import { parseView } from '@/app/admin/_components/kpi/viewModel';
 
-export default async function AdminKpisPage({
-  searchParams = {},
-}: {
-  searchParams?: Record<string, string | string[] | undefined>;
+export default async function AdminKpisPage(props: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const searchParams = (await props.searchParams) ?? {};
   const { supabase } = await requireAdmin();
   const params = parseTrafficParams(searchParams);
   const now = new Date();
