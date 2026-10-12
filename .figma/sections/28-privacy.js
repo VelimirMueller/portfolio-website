@@ -4,5 +4,5 @@ section({ name: '28 · Privacy', page: PG.T, run: async () => T.board('28 · Pri
   ['2. General Information', ['The protection of your personal data is important to me. Personal data is only processed on this website to the extent necessary and in accordance with the GDPR.']],
   ['3. Contact form', ['Name, email and message are used only to answer your inquiry, then deleted.']],
   ['4. Analytics', ['First-party, cookieless page statistics. No profiling. You can switch them off here.']]],
-  async (iw) => { const box = K.col(12, 'Analytics setting'); K.pad(box, 20); box.cornerRadius = 16; K.f(box, K.v(mode, 'inset')); K.s(box, K.v(mode, 'border')); K.fixW(box, iw);
+  async (iw) => { const box = K.col(12, 'Analytics setting'); K.pad(box, 20); box.cornerRadius = 16; await K.glassSkin(box, mode, 'inner'); K.fixW(box, iw);
     h.add(box, await T.use('Switch', { Checked: 'On', State: 'Default', Mode: T.MODE(mode) }, null, () => K.switchC('On', 'Default', mode))); return box; }), { route: '/privacy' }) });

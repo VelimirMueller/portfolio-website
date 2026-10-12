@@ -66,10 +66,19 @@ Every component is a component set with `Mode=Dark|Light`, plus state and size w
 | 15 · Admin | Admin Sidebar, Admin Header, Inbox Row, Message Pane, KPI Card, Login Card, Card Tile, Deck Card, Quantity Stepper, Kbd |
 | 16 · Feedback | Alert, Toast, Modal, Tooltip, Skeleton, Empty State, Progress |
 | 17 · Data | Table Row, Table, Accordion |
+| 18 · Glass | Section Divider, Numbered Card, Status Row, Glass Stat, Pipeline Step |
 
 ### 20 · Templates
 
 One section per live route in `src/app`. Each shows desktop 1440 and mobile 390. Dark comes first. Public routes also show light. Admin and demos are dark only, as in code.
+
+Public routes and both demos use the liquid-glass layer of the site rework (vm-brand B-48):
+
+- Content sits on stages (`T.stage`). Each stage has a large brand render behind it (`T.backdrop`): one viewport wide, shifted 30 % to one side, faded at the edges, plus one indigo light.
+- Panels and cards on a stage are glass (`K.glass`, `K.glassCard`): a translucent bound fill, a white-to-indigo edge, and the `glass/*` effect styles (backdrop blur and shadows).
+- A page with more than one block opens each block with a numbered `Section Divider` (`NN / TITLE` on an art strip).
+- Admin and magic routes stay flat (`T.panel`): dense data reads better on an opaque surface.
+- The art is in `.figma/art/v2/`. `v2/light/` holds the light-mode renders: the site's CSS filter (invert, hue-rotate 180°, 50 % multiply) baked into the file, because Figma cannot invert an image fill.
 
 | Section | Route |
 |---|---|

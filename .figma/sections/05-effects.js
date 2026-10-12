@@ -26,7 +26,10 @@ section({ name: '04 · Effects & Imagery', page: PG.F, run: async () => {
   const names = ['hero', 'about', 'services', 'projects', 'contact', 'mcp', 'synthwerk', 'svc-requirements', 'svc-ux', 'svc-frontend', 'svc-delivery', 'svc-stack',
     'build-bench', 'build-debater', 'build-mtg', 'build-rig', 'build-skills', 'build-synthwerk'];
   const extra = ['site-contact', 'site-svc-delivery', 'site-svc-frontend', 'site-svc-requirements', 'site-svc-stack', 'site-svc-ux', 'portfolio-website', 'orbfall', 'synthwerk', 'code-context-mcp'];
-  for (const [label, path] of names.map(x => [x + '-v1', 'website/' + x + '-v1.png']).concat(extra.map(x => [x, 'website/' + x + '.png']))) {
+  // v2: the vm-brand renders of the site rework (section art, dividers, flagships); v2/light: the light-mode results.
+  const v2 = ['flagship-base', 'strip-flagship-1', 'strip-flagship-2', 'strip-flagship-3', 'strip-flagship-4', 'strip-flagship-5', 'claude-skills'].map(x => ['v2/' + x, 'website/v2/' + x + '.png'])
+    .concat(Object.keys(K.ART2_LIGHT).map(x => ['v2/light/' + x, K.art2(x, 'light')]));
+  for (const [label, path] of names.map(x => [x + '-v1', 'website/' + x + '-v1.png']).concat(extra.map(x => [x, 'website/' + x + '.png']), v2)) {
     const c = K.col(8, label); h.add(c, await h.img(path, 346, 150, { r: 12 }), await K.t(label, 'mono/caption', 'dark/faint')); h.add(all, c); }
   h.add(b, all);
   return h.place(s, b); } });

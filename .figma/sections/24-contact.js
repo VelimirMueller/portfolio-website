@@ -1,4 +1,4 @@
-// 24 · Contact — /contact (ContactContent.tsx): full-page art, narrow column (max-w-3xl), form card, three contact tiles.
+// 24 · Contact — /contact (ContactContent.tsx): full-page art, narrow column (max-w-3xl), form card, three glass contact tiles.
 section({ name: '24 · Contact', page: PG.T, run: async () => T.board('24 · Contact', async (w, mode) => {
   const D = T.D(w), M = T.MODE(mode); const f = T.frame('Contact · ' + w, w, mode);
   const bg = await K.panel(K.art('contact', mode), w, D ? 1480 : 1700, { name: 'Backdrop', pad: 0, gap: 0, r: 0, stroke: false, align: 'MIN', mode,
@@ -10,7 +10,7 @@ section({ name: '24 · Contact', page: PG.T, run: async () => T.board('24 · Con
   const form = await T.use('Contact Form', { State: 'Default', Mode: M }, null, () => K.contactForm('Default', mode, NW)); h.add(col, form); T.size(form, NW);
   const tiles = h.AL(D ? 'HORIZONTAL' : 'VERTICAL', { name: 'Contact tiles', itemSpacing: 12 }); const tw = D ? Math.floor((NW - 24) / 3) : NW;
   for (const [ic, l, v] of [['mail', 'EMAIL', 'Get in touch'], ['linkedin', 'LINKEDIN', 'Connect'], ['github', 'GITHUB', 'View code']]) {
-    const t = K.row(12, l); K.pad(t, 16); t.cornerRadius = 12; K.f(t, K.v(mode, 'card'), 0.8); K.s(t, K.v(mode, 'border')); K.fixW(t, tw);
+    const t = K.row(12, l); K.pad(t, 16); t.cornerRadius = 12; await K.glassSkin(t, mode, 'inner'); K.fixW(t, tw);
     const x = K.col(2, 'Text'); h.add(x, await K.t(l, 'label/sm', K.v(mode, 'faint')), await K.link('Arrow', 'Default', mode, v)); h.add(t, await T.iconBox(mode, ic), x); h.add(tiles, t); }
   h.add(col, tiles);
   h.add(f, await T.footer(w, mode)); return f; }, { route: '/contact' }) });

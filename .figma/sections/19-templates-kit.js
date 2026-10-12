@@ -37,8 +37,38 @@ T.board = async (name, build, o) => { o = o || {}; await K.init(); await K.reind
     const f = await build(w, mode); f.cornerRadius = w > 600 ? 16 : 40; await K.fx(f, mode === 'dark' ? 'glow/card-dark' : 'shadow/card-light');
     h.add(c, lab, f); h.add(b, c); }
   return h.place(s, b); };
-// Card shell for template-only blocks (case studies, legal text, summary).
-T.card = (w, mode, cw, name, gap, pad) => { const c = K.card(mode, cw, name, gap == null ? 16 : gap, pad == null ? (T.D(w) ? 32 : 24) : pad); return c; };
+// Card shell for template-only blocks (case studies, legal text, summary). Public pages use liquid glass (B-48); admin uses T.panel.
+T.card = async (w, mode, cw, name, gap, pad) => K.glass(mode, cw, name, gap == null ? 16 : gap, pad == null ? (T.D(w) ? 32 : 24) : pad);
+T.glass = async (w, mode, cw, name, gap) => K.glass(mode, cw || T.CW(w), name, gap == null ? 20 : gap, T.D(w) ? 40 : 24);
+
+// ---- stages (liquid glass over art) ---------------------------------------------------
+// Stage: a block of page content with a large brand render behind it (SectionArt in HomeContent.tsx). Build the content
+// first, then T.backdrop: the render is one viewport wide, shifted 30 % out to one side, faded out at the edges, plus
+// one indigo light. The page frame clips the overflow.
+T.stage = (w, gap, name) => { const s = K.col(gap == null ? 16 : gap, name || 'Stage'); K.fixW(s, T.CW(w)); return s; };
+// o.left = the stage's x in the page frame (default: the content padding).
+T.backdrop = async (stage, w, mode, art, side, o) => { const right = side !== 'left', H = Math.max(stage.height, 480), P = o && o.left != null ? o.left : T.PAD(w);
+  const c = h.hex(K.m(mode) === 'light' ? '#FAFAFA' : '#09090B');
+  const fade = { type: 'GRADIENT_RADIAL', gradientTransform: [[1, 0, (right ? 0.62 : 0.38) - 0.5], [0, 1, 0]],
+    gradientStops: [[0, 0], [0.45, 0], [1, 1]].map(([position, a]) => ({ position, color: Object.assign({}, c, { a }) })) };
+  const r = await h.img(K.art2(art, mode), w, Math.round(H * 1.2), { name: 'Section art · ' + art }); r.fills = r.fills.concat([fade]);
+  const g = figma.createEllipse(); g.name = 'Indigo light'; g.resize(Math.round(w * 0.45), Math.round(H * 0.6)); g.fills = [h.radial('#6366F1', K.m(mode) === 'light' ? 0.25 : 0.3)];
+  stage.insertChild(0, g); stage.insertChild(0, r);
+  for (const n of [r, g]) n.layoutPositioning = 'ABSOLUTE';
+  r.x = (right ? Math.round(w * 0.3) : -Math.round(w * 0.3)) - P; r.y = -Math.round(H * 0.1);
+  g.x = (right ? Math.round(w * 0.63) : -Math.round(w * 0.08)) - P; g.y = Math.round(H * 0.2);
+  return stage; };
+// Numbered art divider (signature mark NN / TITLE) as a Section Divider instance with its strip art.
+K.DIVIDER_OVER = () => [h.grad([[0, '#0A0A0B', 0.94], [0.4, '#0A0A0B', 0.7], [0.72, '#0A0A0B', 0.1], [1, '#0A0A0B', 0.3]], 0)];
+T.divider = async (w, mode, idx, total, title, caption, art) => { const V = T.D(w) ? 'Desktop' : 'Mobile';
+  const o = { index: idx, title: title.toUpperCase(), caption: caption.toUpperCase(), counter: 'SECTION ' + idx + ' / ' + total, art, w: T.CW(w) };
+  const i = await T.use('Section Divider', { Viewport: V, Mode: T.MODE(mode) }, { Index: o.index, Title: o.title, Caption: o.caption, Counter: o.counter }, () => K.divider(V, mode, o));
+  if (i && i.type === 'INSTANCE') { T.size(i, T.CW(w)); const a = i.findOne ? i.findOne(x => x.name === 'Art') : null;
+    if (a) await h.imgFill(a, 'website/v2/' + art + '.png', { over: K.DIVIDER_OVER() }); }
+  return i; };
+// n equal glass cards in a row inside a panel of inner width iw (1 column on mobile unless mobileCols).
+T.cols = (w, iw, n, gap, mobileCols) => { const cols = T.D(w) ? n : (mobileCols || 1); const g = K.wrap(iw, gap == null ? 16 : gap, 'Grid'); return { g, cw: K.cell(iw, 0, cols, gap == null ? 16 : gap) }; };
+T.inner = (w, cw) => (cw || T.CW(w)) - 2 * (T.D(w) ? 40 : 24);
 T.iconBox = async (mode, icon, tone) => { const b = K.row(0, 'Icon box'); K.fix(b, 44, 44); b.cornerRadius = 12; b.primaryAxisAlignItems = 'CENTER'; b.counterAxisAlignItems = 'CENTER';
   K.f(b, K.v(mode, tone || 'accent'), 0.1); h.add(b, await K.icon(icon, K.v(mode, (tone || 'accent') === 'accent' ? 'accent-text' : tone + '-text'), 20)); return b; };
 

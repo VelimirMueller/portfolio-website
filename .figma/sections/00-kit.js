@@ -80,6 +80,28 @@ K.panel = async (path, w, hh, o) => { o = o || {}; const mode = K.m(o.mode); con
   await h.imgFill(f, path, { under: [K.c(K.v(mode, 'bg'))], over, op });
   if (o.stroke !== false) K.s(f, K.v(mode, 'border')); return f; };
 
+// ---- liquid glass (vm-brand B-48: glass is the website surface; READMEs and banners stay flat) ----
+// Matches .glass / .glass-inner in globals.css: a translucent bound fill, a faint white edge, a specular edge from
+// white (top left) to indigo (bottom right), and an effect style with the backdrop blur and the shadows.
+// Glass only reads as glass over art: put it on a T.stage (templates) or over an art panel.
+K.GLASS = { dark: { panel: ['dark/bg', 0.42], inner: ['base/white', 0.035], edge: [0.07, 0.07], spec: 0.22, tint: '#818CF8' },
+  light: { panel: ['base/white', 0.58], inner: ['base/white', 0.5], edge: [0.7, 0.75], spec: 0.75, tint: '#6366F1' } };
+K.glassSkin = async (n, mode, kind) => { const m = K.m(mode), g = K.GLASS[m], inner = kind === 'inner';
+  const [fill, op] = g[inner ? 'inner' : 'panel']; n.fills = [K.c(fill, op)];
+  n.strokes = [K.c('base/white', g.edge[inner ? 1 : 0]), h.grad([[0, '#FFFFFF', g.spec], [0.31, '#FFFFFF', 0], [0.63, '#FFFFFF', 0], [1, g.tint, 0.5]], 45)];
+  n.strokeWeight = 1; n.strokeAlign = 'INSIDE'; await K.fx(n, 'glass/' + (inner ? 'inner' : 'panel') + '-' + m); return n; };
+// Glass panel (.glass, 24 px round) with the kit's one soft indigo glow in the top right corner.
+K.glass = async (mode, w, name, gap, pad) => { const c = K.col(gap == null ? 20 : gap, name || 'Glass panel'); K.pad(c, pad == null ? 40 : pad);
+  c.cornerRadius = 24; c.clipsContent = true; await K.glassSkin(c, mode, 'panel');
+  if (w) { K.fixW(c, w); const g = figma.createEllipse(); g.name = 'Glow'; g.resize(Math.round(w * 0.45), 320); g.fills = [h.radial('#6366F1', K.m(mode) === 'light' ? 0.1 : 0.16)];
+    h.absAt(c, g, Math.round(w * 0.5), -160); } return c; };
+// Glass card inside a panel (.glass-inner, 16 px round).
+K.glassCard = async (mode, w, name, gap, pad) => { const c = K.col(gap == null ? 8 : gap, name || 'Glass card'); K.pad(c, pad == null ? 28 : pad);
+  c.cornerRadius = 16; c.clipsContent = true; await K.glassSkin(c, mode, 'inner'); if (w) K.fixW(c, w); return c; };
+// Signature marks (vm-brand §1a): the `// LABEL` eyebrow and the 44 × 2 accent tick.
+K.slash = async (label, mode, name) => K.t('// ' + label.toUpperCase(), 'label/eyebrow', K.v(mode, 'accent-text'), { name: name || 'Eyebrow' });
+K.tick = (w, name) => { const r = h.rect(w || 44, 2, [K.c('brand/500')]); r.name = name || 'Tick'; return r; };
+
 // ---- icons (24 px, 2 px stroke, round caps: the lucide-react look of the site) ----
 K.ICONS = {
   'arrow-right': '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
