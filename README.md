@@ -140,6 +140,12 @@ npm run dev
 </picture>
 </p>
 
+<p align="center">
+<a href="https://playwright.dev/"><picture><source media="(prefers-color-scheme: light)" srcset="assets/readme/links-8-v2-light.svg"><img alt="Playwright (https://playwright.dev/)" src="assets/readme/links-8-v2-dark.svg" width="32%"></picture></a>
+<a href="https://storybook.js.org/"><picture><source media="(prefers-color-scheme: light)" srcset="assets/readme/links-9-v2-light.svg"><img alt="Storybook (https://storybook.js.org/)" src="assets/readme/links-9-v2-dark.svg" width="32%"></picture></a>
+<a href="https://www.conventionalcommits.org/"><picture><source media="(prefers-color-scheme: light)" srcset="assets/readme/links-10-v2-light.svg"><img alt="Conv. Commits (https://www.conventionalcommits.org/)" src="assets/readme/links-10-v2-dark.svg" width="32%"></picture></a>
+</p>
+
 <details>
 <summary><picture><source media="(prefers-color-scheme: light)" srcset="assets/readme/links-7-v2-light.svg"><img alt="Plain text" src="assets/readme/links-7-v2-dark.svg" width="32%"></picture></summary>
 

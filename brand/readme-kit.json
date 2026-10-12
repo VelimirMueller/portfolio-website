@@ -454,6 +454,21 @@
         {
           "label": "Plain text",
           "sub": "show copyable commands"
+        },
+        {
+          "label": "Playwright",
+          "sub": "playwright.dev",
+          "href": "https://playwright.dev/"
+        },
+        {
+          "label": "Storybook",
+          "sub": "storybook.js.org",
+          "href": "https://storybook.js.org/"
+        },
+        {
+          "label": "Conv. Commits",
+          "sub": "conventionalcommits.org",
+          "href": "https://www.conventionalcommits.org/"
         }
       ]
     },
@@ -496,6 +511,14 @@
       "commits",
       "admin",
       "deploy",
+      {
+        "buttons": "links",
+        "only": [
+          8,
+          9,
+          10
+        ]
+      },
       {
         "details": "links",
         "chip": 7,

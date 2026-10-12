@@ -50,6 +50,12 @@
   "links-6-v2-light.svg": "GitHub (https://github.com/VelimirMueller)",
   "links-7-v2-dark.svg": "Plain text",
   "links-7-v2-light.svg": "Plain text",
+  "links-8-v2-dark.svg": "Playwright (https://playwright.dev/)",
+  "links-8-v2-light.svg": "Playwright (https://playwright.dev/)",
+  "links-9-v2-dark.svg": "Storybook (https://storybook.js.org/)",
+  "links-9-v2-light.svg": "Storybook (https://storybook.js.org/)",
+  "links-10-v2-dark.svg": "Conv. Commits (https://www.conventionalcommits.org/)",
+  "links-10-v2-light.svg": "Conv. Commits (https://www.conventionalcommits.org/)",
   "footer-v2-dark.svg": "VM. studio / flagship · source available, all rights reserved · look per vm-brand playbook · -- EOF -- no cookies were set --",
   "footer-v2-light.svg": "VM. studio / flagship · source available, all rights reserved · look per vm-brand playbook · -- EOF -- no cookies were set --"
 }
