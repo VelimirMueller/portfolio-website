@@ -12,7 +12,7 @@ jest.mock('../utils/supabase/middleware', () => ({
   updateSession: jest.fn(async () => ({ response: passThrough, user })),
 }));
 
-import middleware from '../middleware';
+import middleware, { config } from '../middleware';
 
 const run = (path: string) => middleware(new NextRequest(new URL(path, 'https://example.test')));
 
@@ -55,5 +55,21 @@ describe('middleware', () => {
   it('hands every other path to next-intl', async () => {
     await run('/de/about');
     expect(intl).toHaveBeenCalled();
+  });
+
+  describe('matcher', () => {
+    // Next.js matches the whole pathname against the pattern.
+    const matches = (p: string) => config.matcher.some((m) => new RegExp(`^${m}$`).test(p));
+
+    it.each(['/favicon.ico', '/icon.svg', '/apple-icon.png', '/manifest.webmanifest', '/icons/icon-192.png'])(
+      'skips the icon file %s, so next-intl never redirects it',
+      (p) => {
+        expect(matches(p)).toBe(false);
+      }
+    );
+
+    it.each(['/', '/de', '/en/about'])('still runs on the page %s', (p) => {
+      expect(matches(p)).toBe(true);
+    });
   });
 });
