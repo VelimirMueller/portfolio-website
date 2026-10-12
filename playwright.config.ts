@@ -6,7 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './e2e',
-  testMatch: ['app.spec.ts', 'a11y.spec.ts', 'headers.spec.ts', 'admin.spec.ts', 'analytics.spec.ts'],
+  testMatch: ['app.spec.ts', 'a11y.spec.ts', 'headers.spec.ts', 'admin.spec.ts', 'analytics.spec.ts', 'demos.spec.ts'],
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
@@ -19,7 +19,12 @@ export default defineConfig({
   projects: [
     {
       name: 'Desktop Chrome',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        // Headless Chromium has no WebGL2 without a GPU; the arcade demo
+        // (Bevy/wgpu) needs it. SwiftShader renders it in software.
+        launchOptions: { args: ['--enable-unsafe-swiftshader'] },
+      },
     },
     {
       name: 'Mobile Safari',
