@@ -39,23 +39,21 @@ test.describe('Page rendering', () => {
 
   test('German pages share German Open Graph and Twitter metadata', async ({ page }) => {
     const pages = [
-      { path: '/de', title: /^Velimir Müller \| / },
-      { path: '/de/contact', title: /^Kontakt — Velimir Müller$/ },
+      { path: '/de', title: /^Velimir Müller \| /, description: /Produkte/ },
+      { path: '/de/contact', title: /^Kontakt — Velimir Müller$/, description: /Kontaktieren Sie mich/ },
     ];
-    for (const { path, title } of pages) {
+    for (const { path, title, description } of pages) {
       await page.goto(path);
       const meta = (selector: string) =>
         page.locator(`head meta[${selector}]`).first().getAttribute('content');
       expect(await meta('property="og:locale"')).toBe('de_DE');
       expect(await meta('property="og:locale:alternate"')).toBe('en_US');
       expect(await meta('property="og:title"')).toMatch(title);
+      expect(await meta('property="og:description"')).toMatch(description);
       expect(await meta('name="twitter:title"')).toBe(await meta('property="og:title"'));
       expect(await meta('property="og:image:alt"')).toContain('Leitsatz');
       await expect(page.locator('head link[rel="alternate"][hreflang="en"]')).toHaveCount(1);
     }
-    expect(
-      await page.locator('head meta[property="og:description"]').getAttribute('content')
-    ).toMatch(/Kontaktieren Sie mich/);
   });
 
   test('English pages keep og:locale en_US', async ({ page }) => {
