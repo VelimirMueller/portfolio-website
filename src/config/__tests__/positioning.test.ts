@@ -10,7 +10,7 @@ import {
   siteTitle,
 } from '../positioning';
 
-const SRC = path.join(process.cwd(), 'src');
+const SRC = path.resolve(__dirname, '..', '..');
 const catalogs = { de, en } as const;
 
 /** Every string value in a message catalog, with its dotted key. */
