@@ -6,6 +6,7 @@ import { Eyebrow } from '@/components/atoms/Signature';
 import { GlassPanel, glassCard } from '@/components/molecules/GlassPanel';
 import { SectionStage } from '@/components/molecules/SectionStage';
 import { SectionDivider } from '@/components/molecules/SectionDivider';
+import { ExperienceTimeline } from '@/components/molecules/ExperienceTimeline';
 import { useLocale, useTranslations } from 'next-intl';
 import { getPositioning } from '@/config/positioning';
 
@@ -89,30 +90,18 @@ export default function AboutContent() {
         <AnimateIn from="bottom" delay={100}>
           <GlassPanel className="p-6 md:p-10">
             <Eyebrow>{t('about.experienceLog')}</Eyebrow>
-            <ol className="relative space-y-4 md:space-y-6 before:absolute before:inset-y-0 before:left-5 before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-brand-500/30 before:to-transparent">
-              {EXPERIENCE.map((key, i) => {
-                const current = i === 0;
-                return (
-                  <li key={key} className="relative flex items-start gap-4 md:gap-6">
-                    <div className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full glass-inner shrink-0">
-                      <div className={`w-3 h-3 rounded-full ${current ? 'bg-emerald-500 animate-pulse' : 'border-[1.5px] border-zinc-400 dark:border-zinc-600'}`} />
-                    </div>
-                    <div className={`${glassCard} flex-1 min-w-0 p-4 sm:p-6`}>
-                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
-                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t(`about.${key}.title`)}</h3>
-                        <div className="flex items-center gap-2 shrink-0">
-                          <span className="text-xs font-mono text-zinc-500">{t(`about.${key}.tag`)}</span>
-                          {current && <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">{t('about.current')}</span>}
-                        </div>
-                      </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-400 mb-1">{t(`about.${key}.company`)}</div>
-                      <time className="block mb-2 text-xs font-mono text-zinc-500 uppercase">{t(`about.${key}.date`)}</time>
-                      <p className="text-zinc-600 dark:text-zinc-400 text-sm">{t(`about.${key}.desc`)}</p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
+            <ExperienceTimeline
+              className="mt-2"
+              currentLabel={t('about.current')}
+              entries={EXPERIENCE.map((id) => ({
+                id,
+                title: t(`about.${id}.title`),
+                tag: t(`about.${id}.tag`),
+                company: t(`about.${id}.company`),
+                date: t(`about.${id}.date`),
+                desc: t(`about.${id}.desc`),
+              }))}
+            />
           </GlassPanel>
         </AnimateIn>
       </SectionStage>
