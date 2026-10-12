@@ -385,16 +385,16 @@
           "text": "Required. Set in the Vercel dashboard."
         },
         {
-          "cmd": "RESEND_API_KEY",
-          "text": "Contact form mail."
-        },
-        {
           "cmd": "NEXT_PUBLIC_HCAPTCHA_SITEKEY",
           "text": "Contact form captcha (public key)."
         },
         {
           "cmd": "HCAPTCHA_SECRET",
-          "text": "Contact form captcha check. See `.env.example`."
+          "text": "Contact form captcha check."
+        },
+        {
+          "cmd": "ANALYTICS_INGEST_SECRET",
+          "text": "Optional. Analytics ingest. Other optional names: `.env.example`. Edge Function secrets: `supabase/functions/.env.example`."
         }
       ]
     },
