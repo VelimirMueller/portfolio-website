@@ -5,7 +5,13 @@ import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { ExpandableProjectCard } from '@/components/molecules/ExpandableProjectCard';
 import { BuildCard, type BuildGroup } from '@/components/molecules/BuildCard';
+import { Eyebrow } from '@/components/atoms/Signature';
+import { GlassPanel } from '@/components/molecules/GlassPanel';
+import { SectionStage } from '@/components/molecules/SectionStage';
+import { SectionDivider } from '@/components/molecules/SectionDivider';
 import { useTranslations } from 'next-intl';
+
+type StageCopy = { index: string; title: string; caption: string };
 
 // Studio builds (vm-brand groups). Text lives in projects.builds.<key>.
 const BUILDS: { key: string; group: BuildGroup; tags: string[]; href?: string; link?: 'github' | 'site' }[] = [
@@ -22,18 +28,22 @@ export default function ProjectsContent() {
   const saasChecks = t.raw('projects.saas.checks') as string[];
   const mlChecks = t.raw('projects.ml.checks') as string[];
   const bewerbermappeChecks = t.raw('projects.bewerbermappe.checks') as string[];
+  const stage = (key: string) => t.raw(`projects.stages.${key}`) as StageCopy;
+  const [demos, builds, work] = [stage('demos'), stage('builds'), stage('work')];
+  const count = t('home.sectionCount');
 
   return (
+    <div className="relative overflow-x-clip">
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
       <AnimateIn from="bottom">
         <SectionHeader title={t('projects.title')} subtitle={t('projects.subtitle')} artClassName="bg-[url('/art/projects-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block" />
       </AnimateIn>
 
       {/* --- FEATURED DEMOS --- */}
-      <div className="mb-16 space-y-4">
-        <AnimateIn from="left">
-          <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.interactiveDemos')}</h3>
-        </AnimateIn>
+      <SectionStage art="site-svc-frontend" side="right">
+      <SectionDivider id="demos" index={demos.index} total={3} title={demos.title} caption={demos.caption} countLabel={count} strip={1} className="mb-6" />
+      <GlassPanel className="p-4 md:p-8 space-y-4">
+        <Eyebrow>{t('projects.interactiveDemos')}</Eyebrow>
 
         <AnimateIn from="bottom" delay={100}>
           <ExpandableProjectCard
@@ -100,14 +110,15 @@ export default function ProjectsContent() {
             accentColor="orange"
           />
         </AnimateIn>
-      </div>
+      </GlassPanel>
+      </SectionStage>
 
       {/* --- STUDIO BUILDS --- */}
-      <div className="mb-16">
-        <AnimateIn from="left">
-          <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.studioBuilds')}</h3>
-        </AnimateIn>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <SectionStage art="site-svc-stack" side="left">
+      <SectionDivider id="builds" index={builds.index} total={3} title={builds.title} caption={builds.caption} countLabel={count} strip={2} />
+      <GlassPanel className="p-4 md:p-8">
+        <Eyebrow>{t('projects.studioBuilds')}</Eyebrow>
+        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {BUILDS.map((b, i) => (
             <AnimateIn key={b.key} from="bottom" delay={100 + i * 50}>
               <BuildCard
@@ -123,16 +134,17 @@ export default function ProjectsContent() {
             </AnimateIn>
           ))}
         </div>
-      </div>
+      </GlassPanel>
+      </SectionStage>
 
-      <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-12">
-        <AnimateIn from="left">
-          <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-6">{t('projects.realWorldWork')}</h3>
-        </AnimateIn>
+      <SectionStage art="site-svc-delivery" side="right">
+      <SectionDivider id="work" index={work.index} total={3} title={work.title} caption={work.caption} countLabel={count} strip={3} />
+      <div className="flex flex-col gap-4 sm:gap-6 md:gap-8">
+        <h3 className="sr-only">{t('projects.realWorldWork')}</h3>
 
         {/* Project 1: Enterprise Workflow */}
         <AnimateIn from="left">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 glass rounded-3xl p-6 md:p-8 group transition-all duration-300 ease-out">
            <div className="lg:col-span-5 flex flex-col justify-between">
               <div>
                  <div className="flex gap-2 mb-6">
@@ -145,20 +157,20 @@ export default function ProjectsContent() {
                  </p>
                  <div className="flex flex-wrap gap-2 mb-8">
                     {['Next.js', 'React', 'Supabase', 'Vercel', 'Figma'].map(tag => (
-                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-black/5 dark:bg-white/5 rounded-md">{tag}</span>
                     ))}
                  </div>
               </div>
               <Button to="/contact" variant="outline" className="w-fit">{t('projects.enterprise.cta')}</Button>
            </div>
 
-           <div className="lg:col-span-7 bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 md:p-8 relative overflow-hidden">
+           <div className="lg:col-span-7 glass-inner rounded-xl p-6 md:p-8 relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-50">
                  <Cpu size={64} className="text-purple-900/20 dark:text-purple-900/40" />
               </div>
 
               <div className="grid grid-cols-2 gap-4 h-full content-center">
-                 <div className="col-span-2 bg-white dark:bg-[#111] p-6 rounded border border-black/5 dark:border-white/5 flex items-center justify-between">
+                 <div className="col-span-2 glass-inner p-6 rounded-xl flex items-center justify-between">
                     <div>
                       <div className="text-4xl md:text-5xl font-mono font-black text-black dark:text-white tracking-tight">500%</div>
                       <div className="text-xs text-gray-500 uppercase tracking-wider mt-1.5">{t('projects.enterprise.metric')}</div>
@@ -167,11 +179,11 @@ export default function ProjectsContent() {
                        <ArrowUpRight size={24} className="text-green-600 dark:text-green-500"/>
                     </div>
                  </div>
-                 <div className="bg-white dark:bg-[#111] p-4 rounded border border-black/5 dark:border-white/5">
+                 <div className="glass-inner p-4 rounded-xl">
                     <div className="text-xs font-mono text-gray-500 uppercase mb-2">Role</div>
                     <div className="text-black dark:text-white font-mono text-sm">{t('projects.enterprise.role')}</div>
                  </div>
-                 <div className="bg-white dark:bg-[#111] p-4 rounded border border-black/5 dark:border-white/5">
+                 <div className="glass-inner p-4 rounded-xl">
                     <div className="text-xs font-mono text-gray-500 uppercase mb-2">Focus</div>
                     <div className="text-black dark:text-white font-mono text-sm">{t('projects.enterprise.focus')}</div>
                  </div>
@@ -182,9 +194,9 @@ export default function ProjectsContent() {
 
         {/* Project 2: SaaS Platform */}
         <AnimateIn from="right">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 glass rounded-3xl p-6 md:p-8 group transition-all duration-300 ease-out">
            <div className="lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
-              <div className="bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 h-full flex flex-col justify-center relative overflow-hidden">
+              <div className="glass-inner rounded-xl p-6 h-full flex flex-col justify-center relative overflow-hidden">
                  <div className="space-y-4">
                     {saasChecks.map((check, i) => (
                       <div key={i} className="flex items-center gap-3">
@@ -218,7 +230,7 @@ export default function ProjectsContent() {
                  </p>
                  <div className="flex flex-wrap gap-2 mb-8">
                     {['Next.js', 'Vue', 'Node.js', 'Laravel', 'Supabase', 'Tailwind', 'GitHub Actions', 'Vercel'].map(tag => (
-                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-black/5 dark:bg-white/5 rounded-md">{tag}</span>
                     ))}
                  </div>
               </div>
@@ -229,7 +241,7 @@ export default function ProjectsContent() {
 
         {/* Project 3: ML Lead Matching */}
         <AnimateIn from="left" delay={100}>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 glass rounded-3xl p-6 md:p-8 group transition-all duration-300 ease-out">
            <div className="lg:col-span-5 flex flex-col justify-between">
               <div>
                  <div className="flex gap-2 mb-6">
@@ -242,20 +254,20 @@ export default function ProjectsContent() {
                  </p>
                  <div className="flex flex-wrap gap-2 mb-8">
                     {['Python', 'scikit-learn', 'pandas', 'PostgreSQL', 'FastAPI'].map(tag => (
-                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-black/5 dark:bg-white/5 rounded-md">{tag}</span>
                     ))}
                  </div>
               </div>
               <Button to="/contact" variant="outline" className="w-fit">{t('projects.ml.cta')}</Button>
            </div>
 
-           <div className="lg:col-span-7 bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 md:p-8 relative overflow-hidden">
+           <div className="lg:col-span-7 glass-inner rounded-xl p-6 md:p-8 relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-50">
                  <BrainCircuit size={64} className="text-teal-900/20 dark:text-teal-900/40" />
               </div>
 
               <div className="grid grid-cols-2 gap-4 h-full content-center">
-                 <div className="col-span-2 bg-white dark:bg-[#111] p-6 rounded border border-black/5 dark:border-white/5 flex items-center justify-between">
+                 <div className="col-span-2 glass-inner p-6 rounded-xl flex items-center justify-between">
                     <div>
                       <div className="text-4xl md:text-5xl font-mono font-black text-black dark:text-white tracking-tight">{t('projects.ml.metricValue')}</div>
                       <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-1.5">{t('projects.ml.metric')}</div>
@@ -281,9 +293,9 @@ export default function ProjectsContent() {
 
         {/* Project 4: bewerbermappe.com */}
         <AnimateIn from="right" delay={200}>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-[#111] rounded-3xl p-6 md:p-8 border border-black/5 dark:border-white/10 group hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 ease-out">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 glass rounded-3xl p-6 md:p-8 group transition-all duration-300 ease-out">
            <div className="lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
-              <div className="bg-gray-50 dark:bg-[#050505] rounded-xl border border-black/5 dark:border-white/10 p-6 h-full flex flex-col justify-center relative overflow-hidden">
+              <div className="glass-inner rounded-xl p-6 h-full flex flex-col justify-center relative overflow-hidden">
                  <div className="absolute top-0 right-0 p-4 opacity-50">
                     <Newspaper size={48} className="text-rose-900/20 dark:text-rose-900/40" />
                  </div>
@@ -317,7 +329,7 @@ export default function ProjectsContent() {
                     {t('projects.bewerbermappe.desc')}
                  </p>
                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-                    <div className="bg-white dark:bg-[#0a0a0a] border border-black/5 dark:border-white/5 rounded-lg px-4 py-3 flex items-center gap-3">
+                    <div className="glass-inner rounded-lg px-4 py-3 flex items-center gap-3">
                        <div className="text-3xl font-mono font-black text-black dark:text-white">{t('projects.bewerbermappe.metricValue')}</div>
                        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('projects.bewerbermappe.metric')}</div>
                     </div>
@@ -325,7 +337,7 @@ export default function ProjectsContent() {
                  </div>
                  <div className="flex flex-wrap gap-2 mb-8">
                     {['WordPress', 'PHP', 'WooCommerce', 'JavaScript', 'UX/UI'].map(tag => (
-                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-gray-100 dark:bg-[#050505] rounded-md border border-black/5 dark:border-white/5">{tag}</span>
+                      <span key={tag} className="text-[11px] font-mono text-gray-500 px-2.5 py-1 bg-black/5 dark:bg-white/5 rounded-md">{tag}</span>
                     ))}
                  </div>
               </div>
@@ -337,6 +349,8 @@ export default function ProjectsContent() {
         </AnimateIn>
 
       </div>
+      </SectionStage>
+    </div>
     </div>
   );
 }

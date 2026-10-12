@@ -1,221 +1,120 @@
 import React from 'react';
 import { Terminal } from 'lucide-react';
-import { BentoCard } from '@/components/molecules/BentoCard';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
+import { Eyebrow } from '@/components/atoms/Signature';
+import { GlassPanel, glassCard } from '@/components/molecules/GlassPanel';
+import { SectionStage } from '@/components/molecules/SectionStage';
+import { SectionDivider } from '@/components/molecules/SectionDivider';
 import { useTranslations } from 'next-intl';
+
+// About in the glass look (vm-brand B-48): two stages, 01 profile and 02 experience.
+
+type StageCopy = { index: string; title: string; caption: string };
+
+const SKILLS: [string, string[]][] = [
+  ['frontend', ['React', 'Vue', 'Next.js', 'Nuxt', 'TypeScript', 'Tailwind']],
+  ['backend', ['FastAPI', 'Quarkus', 'PostgreSQL', 'Supabase', 'Laravel']],
+  ['infrastructure', ['AWS', 'Azure', 'Terraform', 'Docker', 'Vercel']],
+  ['process', ['Requirements Engineering', 'UX/UI', 'Figma']],
+  ['ai', ['GitHub Copilot', 'Claude', 'ChatGPT']],
+  ['ml', ['Python', 'scikit-learn', 'pandas', 'Feature Engineering']],
+];
+
+const EXPERIENCE = ['exp1', 'exp2', 'exp3', 'exp4', 'exp5', 'exp6', 'exp7'];
 
 export default function AboutContent() {
   const t = useTranslations();
+  const stage = (key: string) => t.raw(`about.stages.${key}`) as StageCopy;
+  const profile = stage('profile');
+  const experience = stage('experience');
+  const count = t('home.sectionCount');
 
   return (
+    <div className="relative overflow-x-clip">
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
       <AnimateIn from="bottom">
         <SectionHeader title={t('about.title')} subtitle={t('about.subtitle')} artClassName="bg-[url('/art/about-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block" />
       </AnimateIn>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-
-        {/* Bio Text */}
-        <AnimateIn from="left" delay={100} className="lg:col-span-8">
-        <BentoCard className="h-full bg-white dark:bg-[#111] min-h-[400px]" title={t('about.summary')}>
-           <div className="prose dark:prose-invert prose-lg max-w-none mt-4">
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                 <span className="text-black dark:text-white font-bold">{t('about.bio1Bold')}</span> {t('about.bio1After')}
-              </p>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                 {t('about.bio2')}
-              </p>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                 {t('about.bio3')}
-              </p>
-           </div>
-
-           <div className="mt-8 pt-8 border-t border-black/5 dark:border-white/5 grid grid-cols-3 gap-4">
-              <div>
-                 <div className="text-2xl font-mono font-bold text-black dark:text-white">4</div>
-                 <div className="text-xs text-gray-500 uppercase tracking-widest">{t('about.yearsExp')}</div>
+      <SectionStage art="site-svc-requirements" side="right">
+        <SectionDivider id="profile" index={profile.index} total={2} title={profile.title} caption={profile.caption} countLabel={count} strip={1} className="mb-6" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          {/* Bio */}
+          <AnimateIn from="left" delay={100} className="lg:col-span-8">
+            <GlassPanel className="h-full p-6 md:p-10 min-h-[400px]">
+              <Eyebrow>{t('about.summary')}</Eyebrow>
+              <div className="relative prose dark:prose-invert prose-lg max-w-none">
+                <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                  <span className="text-black dark:text-white font-bold">{t('about.bio1Bold')}</span> {t('about.bio1After')}
+                </p>
+                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">{t('about.bio2')}</p>
+                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">{t('about.bio3')}</p>
               </div>
-              <div>
-                 <div className="text-2xl font-mono font-bold text-black dark:text-white">E2E</div>
-                 <div className="text-xs text-gray-500 uppercase tracking-widest">{t('about.reqDeploy')}</div>
-              </div>
-              <div>
-                 <div className="text-2xl font-mono font-bold text-black dark:text-white">UX</div>
-                 <div className="text-xs text-gray-500 uppercase tracking-widest">{t('about.uiBranding')}</div>
-              </div>
-           </div>
-        </BentoCard>
-        </AnimateIn>
-
-        {/* Tech Stack Terminal */}
-        <AnimateIn from="right" delay={200} className="lg:col-span-4">
-        <BentoCard className="h-full bg-gray-50 dark:bg-[#0A0A0A] border-black/5 dark:border-white/10 p-0">
-           <div className="flex items-center gap-2 px-4 py-3 bg-white dark:bg-[#111] border-b border-black/5 dark:border-white/5">
-              <Terminal size={14} className="text-gray-500"/>
-              <span className="text-xs font-mono text-gray-500">skills.json</span>
-           </div>
-           <div className="p-4 font-mono text-sm space-y-4">
-               <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;frontend&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;React&quot;, &quot;Vue&quot;, &quot;Next.js&quot;, &quot;Nuxt&quot;, &quot;TypeScript&quot;, &quot;Tailwind&quot;]</div>
-               </div>
-               <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;backend&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;FastAPI&quot;, &quot;Quarkus&quot;, &quot;PostgreSQL&quot;, &quot;Supabase&quot;, &quot;Laravel&quot;]</div>
-               </div>
-               <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;infrastructure&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;AWS&quot;, &quot;Azure&quot;, &quot;Terraform&quot;, &quot;Docker&quot;, &quot;Vercel&quot;]</div>
-               </div>
-               <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;process&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Requirements Engineering&quot;, &quot;UX/UI&quot;, &quot;Figma&quot;]</div>
-               </div>
-               <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;ai&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;GitHub Copilot&quot;, &quot;Claude&quot;, &quot;ChatGPT&quot;]</div>
-               </div>
-               <div>
-                  <div className="text-purple-600 dark:text-purple-400 mb-1">&quot;ml&quot;:</div>
-                  <div className="pl-4 text-green-600 dark:text-green-400">[&quot;Python&quot;, &quot;scikit-learn&quot;, &quot;pandas&quot;, &quot;Feature Engineering&quot;]</div>
-               </div>
-           </div>
-        </BentoCard>
-        </AnimateIn>
-
-        {/* Timeline */}
-        <AnimateIn from="bottom" delay={100} className="lg:col-span-12">
-        <BentoCard className="bg-white dark:bg-[#111]" title={t('about.experienceLog')}>
-           <div className="mt-8 space-y-6 sm:space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-black/10 dark:before:via-white/10 before:to-transparent">
-
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
-                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <div className="relative mt-8 grid grid-cols-3 gap-3 md:gap-4">
+                {[['4', 'about.yearsExp'], ['E2E', 'about.reqDeploy'], ['UX', 'about.uiBranding']].map(([v, k]) => (
+                  <div key={k} className={`${glassCard} p-4 md:p-5`}>
+                    <div className="text-2xl md:text-3xl font-mono font-bold text-brand-600 dark:text-brand-400">{v}</div>
+                    <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">{t(k)}</div>
                   </div>
-                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
+                ))}
+              </div>
+            </GlassPanel>
+          </AnimateIn>
+
+          {/* Tech stack terminal */}
+          <AnimateIn from="right" delay={200} className="lg:col-span-4">
+            <GlassPanel className="h-full" frame={false}>
+              <div className="flex items-center gap-2 px-5 py-3 border-b border-black/5 dark:border-white/10">
+                <Terminal size={14} className="text-zinc-500" aria-hidden="true" />
+                <span className="text-xs font-mono text-zinc-500">skills.json</span>
+              </div>
+              <div className="p-5 font-mono text-sm space-y-4">
+                {SKILLS.map(([key, items]) => (
+                  <div key={key}>
+                    <div className="text-brand-600 dark:text-brand-400 mb-1">&quot;{key}&quot;:</div>
+                    <div className="pl-4 text-emerald-700 dark:text-emerald-400">[{items.map((i) => `"${i}"`).join(', ')}]</div>
+                  </div>
+                ))}
+              </div>
+            </GlassPanel>
+          </AnimateIn>
+        </div>
+      </SectionStage>
+
+      <SectionStage art="site-svc-delivery" side="left">
+        <SectionDivider id="experience" index={experience.index} total={2} title={experience.title} caption={experience.caption} countLabel={count} strip={2} />
+        <AnimateIn from="bottom" delay={100}>
+          <GlassPanel className="p-6 md:p-10">
+            <Eyebrow>{t('about.experienceLog')}</Eyebrow>
+            <ol className="relative space-y-4 md:space-y-6 before:absolute before:inset-y-0 before:left-5 before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-brand-500/30 before:to-transparent">
+              {EXPERIENCE.map((key, i) => {
+                const current = i === 0;
+                return (
+                  <li key={key} className="relative flex items-start gap-4 md:gap-6">
+                    <div className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full glass-inner shrink-0">
+                      <div className={`w-3 h-3 rounded-full ${current ? 'bg-emerald-500 animate-pulse' : 'border-[1.5px] border-zinc-400 dark:border-zinc-600'}`} />
+                    </div>
+                    <div className={`${glassCard} flex-1 min-w-0 p-4 sm:p-6`}>
                       <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
-                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp1.title')}</h3>
+                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t(`about.${key}.title`)}</h3>
                         <div className="flex items-center gap-2 shrink-0">
-                          <span className="text-xs font-mono text-gray-500">{t('about.exp1.tag')}</span>
-                          <span className="text-xs font-mono text-green-600 dark:text-green-400 bg-green-500/10 dark:bg-green-900/20 px-2 py-0.5 rounded">{t('about.current')}</span>
+                          <span className="text-xs font-mono text-zinc-500">{t(`about.${key}.tag`)}</span>
+                          {current && <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">{t('about.current')}</span>}
                         </div>
                       </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp1.company')}</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp1.date')}</time>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {t('about.exp1.desc')}
-                      </p>
-                  </div>
-              </div>
-
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
-                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
-                  </div>
-                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
-                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp2.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp2.tag')}</span>
-                      </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp2.company')}</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp2.date')}</time>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {t('about.exp2.desc')}
-                      </p>
-                  </div>
-              </div>
-
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
-                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
-                  </div>
-                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
-                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp3.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp3.tag')}</span>
-                      </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp3.company')}</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp3.date')}</time>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {t('about.exp3.desc')}
-                      </p>
-                  </div>
-              </div>
-
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
-                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
-                  </div>
-                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
-                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp4.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp4.tag')}</span>
-                      </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp4.company')}</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp4.date')}</time>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {t('about.exp4.desc')}
-                      </p>
-                  </div>
-              </div>
-
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
-                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
-                  </div>
-                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
-                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp5.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp5.tag')}</span>
-                      </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp5.company')}</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp5.date')}</time>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {t('about.exp5.desc')}
-                      </p>
-                  </div>
-              </div>
-
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
-                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
-                  </div>
-                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
-                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp6.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp6.tag')}</span>
-                      </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp6.company')}</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp6.date')}</time>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {t('about.exp6.desc')}
-                      </p>
-                  </div>
-              </div>
-
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-black/20 dark:border-white/20 bg-gray-50 dark:bg-[#050505] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_8px_white] dark:shadow-[0_0_0_8px_#111]">
-                      <div className="w-3 h-3 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
-                  </div>
-                  <div className="w-[calc(100%-3rem)] sm:w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 dark:bg-[#050505] p-4 sm:p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 transition-colors">
-                      <div className="flex flex-wrap justify-between items-center mb-1 gap-y-1 gap-x-3">
-                        <h3 className="font-bold text-black dark:text-white text-lg min-w-0">{t('about.exp7.title')}</h3>
-                        <span className="text-xs font-mono text-gray-500 shrink-0">{t('about.exp7.tag')}</span>
-                      </div>
-                      <div className="text-xs font-mono text-brand-600 dark:text-brand-500 mb-1">{t('about.exp7.company')}</div>
-                      <time className="block mb-2 text-xs font-mono text-gray-500 uppercase">{t('about.exp7.date')}</time>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {t('about.exp7.desc')}
-                      </p>
-                  </div>
-              </div>
-
-           </div>
-        </BentoCard>
+                      <div className="text-xs font-mono text-brand-600 dark:text-brand-400 mb-1">{t(`about.${key}.company`)}</div>
+                      <time className="block mb-2 text-xs font-mono text-zinc-500 uppercase">{t(`about.${key}.date`)}</time>
+                      <p className="text-zinc-600 dark:text-zinc-400 text-sm">{t(`about.${key}.desc`)}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </GlassPanel>
         </AnimateIn>
-
-      </div>
+      </SectionStage>
+    </div>
     </div>
   );
 }

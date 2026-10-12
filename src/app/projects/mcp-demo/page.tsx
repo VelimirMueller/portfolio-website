@@ -9,7 +9,7 @@ export default function McpDemoPage() {
     <div className="relative w-full h-[100dvh] bg-[#0c0c10] overflow-hidden">
       <Link
         href="/projects"
-        className="absolute bottom-6 left-6 z-50 flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:border-white/30 transition-all text-sm font-mono font-bold shadow-lg shadow-black/20"
+        className="absolute bottom-6 left-6 z-50 flex items-center gap-2 px-5 py-2.5 rounded-full glass-demo border text-white hover:border-brand-400/60 transition-all text-sm font-mono font-bold"
       >
         <ArrowLeft size={16} />
         Back to Projects

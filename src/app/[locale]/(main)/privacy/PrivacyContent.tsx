@@ -1,6 +1,7 @@
 import React from 'react';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
+import { SectionStage } from '@/components/molecules/SectionStage';
 import { useTranslations } from 'next-intl';
 import { LEGAL_CONTACT, SUPERVISORY_AUTHORITY } from '@/config/legal';
 import { AnalyticsToggle } from '@/components/molecules/AnalyticsToggle';
@@ -43,13 +44,15 @@ export default function PrivacyContent() {
   const s6Rights = t.raw('privacy.s6Rights') as string[];
 
   return (
+    <div className="relative overflow-x-clip">
     <div className="pt-32 pb-20 px-4 max-w-3xl mx-auto">
       <AnimateIn from="bottom">
         <SectionHeader title={t('privacy.title')} subtitle={t('privacy.subtitle')} />
       </AnimateIn>
 
+      <SectionStage art="site-svc-requirements" side="right">
       <AnimateIn from="bottom" delay={100}>
-      <div className="bg-white dark:bg-[#111] p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 space-y-10">
+      <div className="glass p-8 md:p-12 rounded-3xl space-y-10">
 
         {/* Verantwortlicher */}
         <section>
@@ -169,6 +172,8 @@ export default function PrivacyContent() {
 
       </div>
       </AnimateIn>
+      </SectionStage>
+    </div>
     </div>
   );
 }

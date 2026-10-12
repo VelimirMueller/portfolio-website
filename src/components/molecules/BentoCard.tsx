@@ -10,7 +10,14 @@ interface BentoCardProps {
   noPadding?: boolean;
   /** Decorative layer behind the whole card, header included. */
   backdrop?: React.ReactNode;
+  /** solid = card fill (default). glass = liquid glass (vm-brand B-48), for cards on a SectionStage. */
+  variant?: 'solid' | 'glass';
 }
+
+const SURFACE = {
+  solid: 'bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border shadow-sm dark:shadow-none ring-1 ring-inset ring-white/50 dark:ring-white/5',
+  glass: 'glass',
+};
 
 export const BentoCard = ({
   children,
@@ -19,9 +26,10 @@ export const BentoCard = ({
   subtitle,
   icon: Icon,
   noPadding = false,
-  backdrop
+  backdrop,
+  variant = 'solid'
 }: BentoCardProps) => (
-  <div className={`bento-card bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-[1.5rem] overflow-hidden relative flex flex-col group shadow-sm dark:shadow-none ring-1 ring-inset ring-white/50 dark:ring-white/5 ${className}`}>
+  <div className={`bento-card ${SURFACE[variant]} rounded-[1.5rem] overflow-hidden relative flex flex-col group ${className}`}>
     {backdrop}
     {(title || subtitle || Icon) && (
       <div className="p-6 pb-2 relative z-10">
