@@ -1,4 +1,4 @@
-import { SITE_URL } from '@/config/site';
+import { pageMetadata } from '@/app/seo';
 import { getTranslations } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import ServicesContent from './ServicesContent';
@@ -11,13 +11,12 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'services' });
 
-  return {
+  return pageMetadata({
+    locale,
+    path: '/services',
     title: t('metaTitle'),
     description: t('metaDesc'),
-    alternates: {
-      canonical: `${SITE_URL}/${locale}/services`,
-    },
-  };
+  });
 }
 
 export default async function ServicesPage({ params }: Props) {

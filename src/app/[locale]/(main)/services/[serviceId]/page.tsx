@@ -1,4 +1,5 @@
 import { SITE_URL } from '@/config/site';
+import { pageMetadata } from '@/app/seo';
 import { getTranslations } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import { ServiceDetailContent } from './ServiceDetailContent';
@@ -25,13 +26,12 @@ export async function generateMetadata({ params }: Props) {
 
   const t = await getTranslations({ locale, namespace: 'serviceDetail' });
 
-  return {
+  return pageMetadata({
+    locale,
+    path: `/services/${serviceId}`,
     title: `${t(`${serviceId}.title`)} — Velimir Müller`,
     description: t(`${serviceId}.description`),
-    alternates: {
-      canonical: `${SITE_URL}/${locale}/services/${serviceId}`,
-    },
-  };
+  });
 }
 
 export default async function ServiceDetailPage({ params }: Props) {

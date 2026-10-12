@@ -37,6 +37,33 @@ test.describe('Page rendering', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   });
 
+  test('German pages share German Open Graph and Twitter metadata', async ({ page }) => {
+    const pages = [
+      { path: '/de', title: /^Velimir Müller \| / },
+      { path: '/de/contact', title: /^Kontakt — Velimir Müller$/ },
+    ];
+    for (const { path, title } of pages) {
+      await page.goto(path);
+      const meta = (selector: string) =>
+        page.locator(`head meta[${selector}]`).first().getAttribute('content');
+      expect(await meta('property="og:locale"')).toBe('de_DE');
+      expect(await meta('property="og:locale:alternate"')).toBe('en_US');
+      expect(await meta('property="og:title"')).toMatch(title);
+      expect(await meta('name="twitter:title"')).toBe(await meta('property="og:title"'));
+      expect(await meta('property="og:image:alt"')).toContain('Leitsatz');
+      await expect(page.locator('head link[rel="alternate"][hreflang="en"]')).toHaveCount(1);
+    }
+    expect(
+      await page.locator('head meta[property="og:description"]').getAttribute('content')
+    ).toMatch(/Kontaktieren Sie mich/);
+  });
+
+  test('English pages keep og:locale en_US', async ({ page }) => {
+    await page.goto('/en');
+    await expect(page.locator('head meta[property="og:locale"]')).toHaveAttribute('content', 'en_US');
+    await expect(page.locator('head meta[property="og:locale:alternate"]')).toHaveAttribute('content', 'de_DE');
+  });
+
   test('homepage displays hero content', async ({ page }) => {
     await page.goto('/de');
     await expect(page.locator('h1')).toContainText('VELIMIR');

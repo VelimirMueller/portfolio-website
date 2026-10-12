@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { SiteAnalytics } from '@/components/SiteAnalytics';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { SITE_URL } from '@/config/site';
+import { ogImage } from '@/app/seo';
 import { SITE_NAME, getPositioning, siteTitle } from '@/config/positioning';
 import { inter, spaceMono, themeInitScript } from '../shared-layout';
 import '../globals.css';
@@ -26,6 +27,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: siteTitle('en'),
   description: `Interactive project demos — ${SITE_NAME}, ${getPositioning('en').jobTitle}.`,
+  // The shared preview image (public/, not a file-convention image any more).
+  openGraph: { images: [ogImage('en')] },
 };
 
 export default function DemoLayout({

@@ -1,4 +1,4 @@
-import { SITE_URL } from '@/config/site';
+import { pageMetadata } from '@/app/seo';
 import { getTranslations } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import PrivacyContent from './PrivacyContent';
@@ -11,13 +11,12 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'privacy' });
 
-  return {
+  return pageMetadata({
+    locale,
+    path: '/privacy',
     title: t('metaTitle'),
     description: t('metaDesc'),
-    alternates: {
-      canonical: `${SITE_URL}/${locale}/privacy`,
-    },
-  };
+  });
 }
 
 export default async function PrivacyPage({ params }: Props) {

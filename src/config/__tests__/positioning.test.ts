@@ -82,15 +82,12 @@ describe('positioning config', () => {
     expect(offenders).toEqual([]);
   });
 
-  it('the Open Graph image alt text names the default job title', () => {
-    // A static file (Next.js file convention), so it cannot import the
-    // config. This test keeps it in step.
-    const alt = fs.readFileSync(
-      path.join(SRC, 'app', 'opengraph-image.alt.txt'),
-      'utf8'
-    );
-    expect(alt).toContain(
-      `${SITE_NAME}, ${POSITIONING[routing.defaultLocale].jobTitle}.`
-    );
-  });
+  it.each(routing.locales)(
+    'the %s Open Graph image alt text names the job title',
+    (locale) => {
+      expect(POSITIONING[locale].ogImageAlt).toContain(
+        `${SITE_NAME}, ${POSITIONING[locale].jobTitle}.`
+      );
+    }
+  );
 });
