@@ -234,8 +234,12 @@ K.put = (parent, inst, w) => { if (!inst) return null; h.add(parent, inst); if (
 K.putFill = (parent, inst) => { if (!inst) return null; h.add(parent, inst); h.fillW(inst); return inst; };
 
 // ---- page stacking ------------------------------------------------------------------
+// These pages hold only generated sections. A node at the page root is a leftover of an aborted run or a node built but
+// never added (it lands at 0,0, on top of 20 · Home): remove it.
 after(async () => {
   for (const name of [PG.F, PG.C, PG.T]) { const pg = figma.root.children.find(p => p.name === name); if (!pg) continue;
     if (typeof pg.loadAsync === 'function') await pg.loadAsync();
+    const stray = pg.children.filter(n => n.type !== 'SECTION'); if (stray.length) h.log('removed ' + stray.length + ' stray node(s) on ' + name + ': ' + stray.slice(0, 5).map(n => n.name).join(', '), 'warn');
+    for (const n of stray) n.remove();
     const secs = pg.children.filter(n => n.type === 'SECTION' && /^\d\d · /.test(n.name)).sort((a, b) => a.name < b.name ? -1 : 1);
     h.stack(secs, 240); } });

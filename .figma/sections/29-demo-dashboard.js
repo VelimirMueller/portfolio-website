@@ -9,7 +9,7 @@ section({ name: '29 · Demo dashboard', page: PG.T, run: async () => T.board('29
       h.add(r, await K.icon(ic, c, 18), await K.t(n, 'body/sm-strong', c)); h.add(sb, r); h.fillW(r); }
     h.add(shell, sb); }
   const main = K.col(24, 'Main'); K.pad(main, D ? 32 : 16, D ? 24 : 16, 48); K.fixW(main, D ? w - 256 : w); h.add(shell, main);
-  const hd = K.row(12, 'Header'); if (!D) h.add(hd, logo); const ttl = await K.t('Dashboard', 'heading/h3', K.v(mode, 'text')); if (D) { h.add(hd, ttl); ttl.layoutGrow = 1; } else { const sp = K.spacer(); h.add(hd, sp); sp.layoutGrow = 1; }
+  const hd = K.row(12, 'Header'); if (!D) h.add(hd, logo); if (D) { const ttl = await K.t('Dashboard', 'heading/h3', K.v(mode, 'text')); h.add(hd, ttl); ttl.layoutGrow = 1; } else { const sp = K.spacer(); h.add(hd, sp); sp.layoutGrow = 1; }
   if (D) h.add(hd, await T.use('Search', { State: 'Default', Mode: M }, null, () => K.search('Default', mode))); h.add(hd, await K.pill('Live', mode, 'success')); h.add(main, hd); h.fillW(hd);
   const iw = (D ? w - 256 : w) - (D ? 64 : 32); const n = D ? 4 : 1; const kw = Math.floor((iw - 16 * (n - 1)) / n);
   const kg = K.wrap(iw, 16, 'KPIs'); for (const [l, v, t, ic] of [['MRR', '€48.2k', 'Up', 'bar-chart'], ['ACTIVE PIPELINE', '€312k', 'Up', 'layers'], ['WIN RATE', '24 %', 'Flat', 'check-circle'], ['CAC', '€1,120', 'Down', 'user']].slice(0, D ? 4 : 2)) {
