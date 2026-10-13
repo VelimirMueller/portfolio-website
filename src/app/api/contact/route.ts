@@ -29,7 +29,11 @@ export async function POST(request: NextRequest) {
 
     const parsed = parseContactPayload(body);
     if (!parsed.success) {
-      return NextResponse.json({ error: parsed.error }, { status: 400 });
+      // `field` lets the form show the reason next to the field (issue #186).
+      return NextResponse.json(
+        { error: parsed.error, ...(parsed.field ? { field: parsed.field } : {}) },
+        { status: 400 }
+      );
     }
 
     const { name, email, message, hCaptchaToken } = parsed.data;

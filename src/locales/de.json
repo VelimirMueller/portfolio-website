@@ -743,6 +743,8 @@
     "nameError": "Bitte mindestens 2 Zeichen eingeben",
     "emailError": "Bitte eine gültige E-Mail-Adresse eingeben",
     "messageError": "Bitte mindestens 10 Zeichen eingeben",
+    "tooLongError": "Bitte höchstens {max} Zeichen eingeben",
+    "serverFieldError": "Bitte dieses Feld prüfen",
     "successHeading": "Nachricht gesendet",
     "successDescription": "Danke für deine Nachricht. Ich melde mich innerhalb von 24 Stunden.",
     "redirecting": "Weiterleitung zur Startseite in {seconds}s...",

@@ -12,6 +12,13 @@ import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import type HCaptchaClass from '@hcaptcha/react-hcaptcha';
+import {
+  CONTACT_FIELDS,
+  CONTACT_LIMITS,
+  contactFieldErrors,
+  isContactField,
+  type ContactField,
+} from '@/utils/contact/schema';
 
 type HCaptchaComponent = typeof HCaptchaClass;
 
@@ -28,6 +35,8 @@ export default function ContactContent() {
   // never on page view — see the privacy policy, section on hCaptcha.
   const [captchaRequested, setCaptchaRequested] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  // The field the API refused (400 with `field`); cleared when that field changes.
+  const [serverField, setServerField] = useState<ContactField | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [countdown, setCountdown] = useState(5);
   const router = useRouter();
@@ -40,19 +49,19 @@ export default function ContactContent() {
   }, [formData]);
   const t = useTranslations();
 
-  const validate = (name: string, value: string): string | null => {
-    if (name === 'name' && value.length < 2) return t('contact.nameError');
-    if (name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return t('contact.emailError');
-    if (name === 'message' && value.length < 10) return t('contact.messageError');
-    return null;
-  };
+  // Same schema as POST /api/contact (issue #186): trimmed values, min and max length.
+  const fieldErrors = contactFieldErrors(formData);
+  const isFormValid = CONTACT_FIELDS.every((field) => !fieldErrors[field]);
 
-  const getFieldError = (name: string): string | null => {
-    if (!touched[name]) return null;
-    return validate(name, formData[name as keyof typeof formData]);
+  const getFieldError = (name: ContactField): string | null => {
+    const reason = fieldErrors[name];
+    if (touched[name] && reason) {
+      const limits: { max?: number } = CONTACT_LIMITS[name];
+      if (reason === 'tooLong' && limits.max) return t('contact.tooLongError', { max: limits.max });
+      return t(`contact.${name}Error`);
+    }
+    return serverField === name ? t('contact.serverFieldError') : null;
   };
-
-  const isFormValid = !validate('name', formData.name) && !validate('email', formData.email) && !validate('message', formData.message);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setTouched(prev => ({ ...prev, [e.target.name]: true }));
@@ -90,7 +99,10 @@ export default function ContactContent() {
       });
 
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Submission failed');
+      if (!response.ok) {
+        if (isContactField(result.field)) setServerField(result.field);
+        throw new Error(result.error || 'Submission failed');
+      }
 
       setShowSuccess(true);
       setFormData({ name: '', email: '', message: '' });
@@ -126,6 +138,7 @@ export default function ContactContent() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (serverField === e.target.name) setServerField(null);
   };
 
   const showCaptcha = !!(HCAPTCHA_SITEKEY && HCAPTCHA_SITEKEY !== 'YOUR_HCAPTCHA_SITEKEY');
@@ -143,6 +156,11 @@ export default function ContactContent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
+    if (!isFormValid) {
+      // Show every field reason; never send what the API would refuse.
+      setTouched({ name: true, email: true, message: true });
+      return;
+    }
     setIsSubmitting(true);
 
     if (showCaptcha) {

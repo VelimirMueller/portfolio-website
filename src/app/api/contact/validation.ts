@@ -1,24 +1,33 @@
-import { z } from 'zod';
+import { CONTACT_FIELDS, contactFieldReason, type ContactField, type ContactFields } from '@/utils/contact/schema';
 
-export const contactSchema = z.object({
-  name: z.string().trim().min(2).max(100),
-  email: z.string().trim().email().max(254),
-  message: z.string().trim().min(10).max(5000),
-  hCaptchaToken: z.string().min(1),
-});
+// The field rules live in @/utils/contact/schema, shared with the contact form (issue #186).
 
-export type ContactPayload = z.infer<typeof contactSchema>;
+export type ContactPayload = ContactFields & { hCaptchaToken: string };
 
 type ParseResult =
   | { success: true; data: ContactPayload }
-  | { success: false; error: string };
+  | { success: false; error: string; field?: ContactField };
 
 export function parseContactPayload(payload: unknown): ParseResult {
-  const result = contactSchema.safeParse(payload);
-  if (!result.success) {
-    const first = result.error.issues[0];
-    const field = first.path.join('.') || 'payload';
-    return { success: false, error: `${field}: ${first.message}` };
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    return { success: false, error: 'payload: invalid' };
   }
-  return { success: true, data: result.data };
+  const body = payload as Record<string, unknown>;
+  for (const field of CONTACT_FIELDS) {
+    const reason = contactFieldReason(field, body[field]);
+    if (reason) return { success: false, error: `${field}: ${reason}`, field };
+  }
+  const { hCaptchaToken } = body;
+  if (typeof hCaptchaToken !== 'string' || hCaptchaToken.length === 0) {
+    return { success: false, error: 'hCaptchaToken: invalid' };
+  }
+  return {
+    success: true,
+    data: {
+      name: (body.name as string).trim(),
+      email: (body.email as string).trim(),
+      message: (body.message as string).trim(),
+      hCaptchaToken,
+    },
+  };
 }

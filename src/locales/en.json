@@ -743,6 +743,8 @@
     "nameError": "Please enter at least 2 characters",
     "emailError": "Please enter a valid email address",
     "messageError": "Please enter at least 10 characters",
+    "tooLongError": "Please enter at most {max} characters",
+    "serverFieldError": "Please check this field",
     "successHeading": "Message sent",
     "successDescription": "Thanks for reaching out. I'll get back to you within 24 hours.",
     "redirecting": "Redirecting to home in {seconds}s...",
