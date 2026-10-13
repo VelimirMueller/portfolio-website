@@ -5,8 +5,21 @@ import { createLucideIcon } from 'lucide-react';
  *
  * lucide-react 1.0 removed all brand icons (https://lucide.dev/brand-logo-statement).
  * The path data below is the `github` and `linkedin` icon from lucide-react
- * 0.563.0 (ISC license, Copyright (c) Lucide Icons and Contributors), so the
- * icons render exactly as before: same SVG, same `lucide-*` class, same props.
+ * 0.563.0, so the icons render exactly as before: same SVG, same `lucide-*`
+ * class, same props.
+ *
+ * Icon path data: ISC License, Copyright (c) Lucide Icons and Contributors.
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 export const GithubIcon = createLucideIcon('github', [
   [
