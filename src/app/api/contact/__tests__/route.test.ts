@@ -48,6 +48,19 @@ describe('POST /api/contact', () => {
     spy.mockRestore();
   });
 
+  it('names the refused field in a 400 answer', async () => {
+    const res = await send({ ...valid, message: 'a'.repeat(5001) });
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual(expect.objectContaining({ field: 'message' }));
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
+
+  it('answers 400 without a field when only the captcha token is missing', async () => {
+    const res = await send({ ...valid, hCaptchaToken: '' });
+    expect(res.status).toBe(400);
+    expect(await res.json()).not.toHaveProperty('field');
+  });
+
   it('answers 500 when the insert fails', async () => {
     insert.mockResolvedValue({ error: { code: '42501', message: 'new row violates row-level security policy' } });
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});

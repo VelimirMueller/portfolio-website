@@ -58,10 +58,10 @@ describe('parseContactPayload', () => {
     expect(parseContactPayload({ ...valid, message: 'too short' }).success).toBe(false);
   });
 
-  it('rejects a message longer than 5000 characters', () => {
-    expect(
-      parseContactPayload({ ...valid, message: 'a'.repeat(5001) }).success
-    ).toBe(false);
+  it('rejects a message longer than 5000 characters and names the field', () => {
+    const result = parseContactPayload({ ...valid, message: 'a'.repeat(5001) });
+    expect(result.success).toBe(false);
+    if (!result.success) expect(result.field).toBe('message');
   });
 
   it('rejects a missing captcha token', () => {
