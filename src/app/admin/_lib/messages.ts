@@ -24,6 +24,7 @@ export function toContactMessages(rows: (Omit<ContactMessage, 'status'> & { stat
   for (const row of rows) {
     const status = statusSchema.safeParse(row.status);
     if (status.success) messages.push({ ...row, status: status.data });
+    else console.warn('[admin] inbox: skipped a message with unknown status', row.status.slice(0, 20));
   }
   return messages;
 }

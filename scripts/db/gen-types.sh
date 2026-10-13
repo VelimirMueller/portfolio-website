@@ -6,7 +6,8 @@
 #   npm run db:types                  migrate a fresh local database, write the file
 #   bash scripts/db/gen-types.sh --check
 #                                     compare with a database that is already running
-#                                     (CI: after `KEEP_DB=1 npm run test:db`); exit 1 when stale
+#                                     (CI: right after `KEEP_DB=1 npm run test:db`, so the
+#                                     database holds exactly the migrations); exit 1 when stale
 #
 # Without --check and without a running local database, the script starts one with
 # scripts/db/test-migrations.sh (Docker, psql) and stops it at the end.
@@ -27,11 +28,13 @@ if ! "${SUPABASE[@]}" status >/dev/null 2>&1; then
   KEEP_DB=1 bash scripts/db/test-migrations.sh >/dev/null
   started=1
 fi
-# shellcheck disable=SC2329 # invoked by the EXIT trap
-cleanup() { if [[ "$started" == "1" ]]; then "${SUPABASE[@]}" stop --no-backup >/dev/null 2>&1 || true; fi; }
-trap cleanup EXIT
-
 generated="$(mktemp)"
+# shellcheck disable=SC2329 # invoked by the EXIT trap
+cleanup() {
+  rm -f "$generated"
+  if [[ "$started" == "1" ]]; then "${SUPABASE[@]}" stop --no-backup >/dev/null 2>&1 || true; fi
+}
+trap cleanup EXIT
 { echo "$HEADER"; "${SUPABASE[@]}" gen types typescript --local --schema public 2>/dev/null; } > "$generated"
 
 if [[ "$mode" == "check" ]]; then
@@ -41,6 +44,6 @@ if [[ "$mode" == "check" ]]; then
   fi
   echo "$TARGET matches supabase/migrations."
 else
-  mv "$generated" "$TARGET"
+  cp "$generated" "$TARGET"
   echo "Wrote $TARGET."
 fi

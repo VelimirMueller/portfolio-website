@@ -46,9 +46,12 @@ export async function loadTrafficEvents(supabase: TypedSupabaseClient, since: Da
     if (error) return { events, capped: false, error: true };
     const rows = data ?? [];
     // type is text with a check constraint ('pageview' | 'click'); this narrows it.
+    let skipped = 0;
     for (const row of rows) {
       if (row.type === 'pageview' || row.type === 'click') events.push({ ...row, type: row.type });
+      else skipped++;
     }
+    if (skipped) console.warn('[admin] traffic: skipped events with an unknown type:', skipped);
     if (rows.length < PAGE_SIZE) return { events, capped: false, error: false };
   }
   return { events, capped: true, error: false };

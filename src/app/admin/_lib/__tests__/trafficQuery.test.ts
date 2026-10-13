@@ -20,8 +20,11 @@ function client(pages: (number | 'error')[], type = 'pageview') {
 
 describe('loadTrafficEvents', () => {
   it('leaves out rows whose type is not pageview or click', async () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const res = await loadTrafficEvents(client([3], 'scroll').supabase, new Date());
     expect(res.events).toEqual([]);
+    expect(warn).toHaveBeenCalledWith('[admin] traffic: skipped events with an unknown type:', 3);
+    warn.mockRestore();
   });
 
   it('pages through the row limit until a short page', async () => {

@@ -43,6 +43,9 @@ describe('toContactMessages', () => {
 
   it('keeps rows with a known status and leaves out the rest', () => {
     const rows = [{ ...row, status: 'new' }, { ...row, id: '2', status: 'deleted' }, { ...row, id: '3', status: 'spam' }];
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     expect(toContactMessages(rows).map((m) => [m.id, m.status])).toEqual([['1', 'new'], ['3', 'spam']]);
+    expect(warn).toHaveBeenCalledWith('[admin] inbox: skipped a message with unknown status', 'deleted');
+    warn.mockRestore();
   });
 });

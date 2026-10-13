@@ -45,8 +45,9 @@ function toCard(row: CardRow): CatalogCard {
 function toDeck(row: DeckRow): Deck {
   const cards: DeckCard[] = [];
   for (const { section, card, ...line } of row.cards) {
-    // The check constraint allows only these sections, so this skips nothing.
+    // The check constraint allows only these sections, so this skips nothing today.
     if (isDeckSection(section)) cards.push({ ...line, section, card: toCard(card) });
+    else console.warn('[admin] magic: skipped a deck line with unknown section', section.slice(0, 20));
   }
   return { ...row, colors: row.colors.filter(isManaColor), cards };
 }

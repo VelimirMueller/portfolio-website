@@ -99,9 +99,12 @@ describe('magic queries', () => {
         { id: 'l2', section: 'maybe', card: catalogCard() },
       ],
     };
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const deck = (await loadDeck(fakeSupabase({ data: deckRow }).client, 'stapelbruch')).data;
     expect(deck?.colors).toEqual(['U', 'R']);
     expect(deck?.cards.map((c) => c.id)).toEqual(['l1']);
+    expect(warn).toHaveBeenCalledWith('[admin] magic: skipped a deck line with unknown section', 'maybe');
+    warn.mockRestore();
     expect(deck?.cards[0].card.colors).toEqual(['U']);
 
     const owned = await loadDeckOwnership(
