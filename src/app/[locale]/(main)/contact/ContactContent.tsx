@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Mail, Linkedin, Github, Check } from 'lucide-react';
+import { Mail, Check } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from '@/components/atoms/BrandIcons';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 // ArtBackdrop: existing atom (src/components/atoms/ArtBackdrop.tsx, PR #60), also used by SectionHeader.
 import { ArtBackdrop } from '@/components/atoms/ArtBackdrop';
@@ -294,7 +295,7 @@ export default function ContactContent() {
               </a>
               <a href="https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:!border-brand-500/50 transition-all group">
                 <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
-                  <Linkedin size={18}/>
+                  <LinkedinIcon size={18}/>
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 uppercase font-mono">LinkedIn</div>
@@ -303,7 +304,7 @@ export default function ContactContent() {
               </a>
               <a href="https://github.com/VelimirMueller" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:!border-brand-500/50 transition-all group">
                 <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
-                  <Github size={18}/>
+                  <GithubIcon size={18}/>
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 uppercase font-mono">GitHub</div>
