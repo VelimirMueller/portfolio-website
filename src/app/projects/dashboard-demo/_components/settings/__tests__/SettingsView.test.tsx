@@ -24,6 +24,20 @@ describe('settings view', () => {
     expect(screen.queryByText('Changes saved successfully')).not.toBeInTheDocument();
   });
 
+  it('keeps the saved message two seconds after the last save', () => {
+    jest.useFakeTimers();
+    render(<SettingsView />);
+    tab('Edit');
+    tab('Save');
+    act(() => jest.advanceTimersByTime(1500));
+    tab('Edit');
+    tab('Save');
+    act(() => jest.advanceTimersByTime(1500));
+    expect(screen.getByText('Changes saved successfully')).toBeInTheDocument();
+    act(() => jest.advanceTimersByTime(500));
+    expect(screen.queryByText('Changes saved successfully')).not.toBeInTheDocument();
+  });
+
   it('flips a preference switch', () => {
     render(<SettingsView />);
     const email = screen.getByRole('switch', { name: 'Email Notifications' });

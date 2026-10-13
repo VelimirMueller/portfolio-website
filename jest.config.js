@@ -25,15 +25,15 @@ const config = {
   ],
   // Coverage ratchet (see CLAUDE.md, Testing Best Practices): each number is
   // the measured global value rounded down, minus 1 point of headroom so small
-  // refactors do not flake. Measured 2026-10-13 (#189): statements 92.17,
-  // branches 87.35, functions 89.98, lines 93.26. Raise after coverage
+  // refactors do not flake. Measured 2026-10-13 (#189): statements 92.18,
+  // branches 87.38, functions 90.01, lines 93.27. Raise after coverage
   // grows — never lower. The 0% files are Next.js glue (page.tsx wrappers, layouts, i18n
   // and Supabase client factories) exercised by the Playwright e2e suite.
   coverageThreshold: {
     global: {
       statements: 91,
       branches: 86,
-      functions: 88,
+      functions: 89,
       lines: 92,
     },
   },

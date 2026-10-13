@@ -1,6 +1,7 @@
 // Initial values of the settings view.
 
 export const SETTINGS_TABS = ['General', 'Notifications', 'Pipeline Stages', 'Billing & Plans', 'Team', 'Integrations'] as const;
+export type SettingsTab = (typeof SETTINGS_TABS)[number];
 
 export const INITIAL_INTEGRATIONS = [
   { name: 'Slack', connected: true },

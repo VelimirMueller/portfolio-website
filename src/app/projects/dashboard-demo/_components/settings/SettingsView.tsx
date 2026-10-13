@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { INITIAL_INTEGRATIONS, INITIAL_TOGGLES, NOTIFICATION_TOGGLES, SETTINGS_TABS } from '../../_lib/settingsData';
+import React, { useEffect, useRef, useState } from 'react';
+import { INITIAL_INTEGRATIONS, INITIAL_TOGGLES, NOTIFICATION_TOGGLES, SETTINGS_TABS, type SettingsTab } from '../../_lib/settingsData';
 import { SAVED_MESSAGE_MS, toggleChecked, toggleConnected } from '../../_lib/settings';
 import { GeneralTab, type Profile } from './GeneralTab';
 import { BillingTab, IntegrationsTab, NotificationsTab, PipelineStagesTab, TeamTab } from './tabs';
@@ -13,31 +13,36 @@ export const SettingsView = () => {
   const [notifToggles, setNotifToggles] = useState(NOTIFICATION_TOGGLES);
   const [integrations, setIntegrations] = useState(INITIAL_INTEGRATIONS);
   const [saved, setSaved] = useState(false);
+  const savedTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(savedTimer.current), []);
 
   const handleSave = () => {
     setIsEditing(false);
     setSaved(true);
-    setTimeout(() => setSaved(false), SAVED_MESSAGE_MS);
+    clearTimeout(savedTimer.current);
+    savedTimer.current = setTimeout(() => setSaved(false), SAVED_MESSAGE_MS);
   };
 
-  const tabs = [
-    <GeneralTab
-      key="general"
-      profile={profile}
-      isEditing={isEditing}
-      saved={saved}
-      toggles={toggles}
-      onEditOrSave={() => (isEditing ? handleSave() : setIsEditing(true))}
-      onProfileChange={(change) => setProfile((p) => ({ ...p, ...change }))}
-      onToggle={(id) => setToggles((prev) => toggleChecked(prev, id))}
-    />,
-    <NotificationsTab key="notifications" toggles={notifToggles} onToggle={(id) => setNotifToggles((prev) => toggleChecked(prev, id))} />,
-    <PipelineStagesTab key="stages" />,
-    <BillingTab key="billing" />,
-    <TeamTab key="team" />,
-    <IntegrationsTab key="integrations" integrations={integrations} onConnect={(name) => setIntegrations((prev) => toggleConnected(prev, name))} />,
-  ];
-  const tab = tabs[activeTab] ?? null;
+  // Keyed by tab name, so the type check fails when a tab in SETTINGS_TABS has no content.
+  const content: Record<SettingsTab, React.ReactNode> = {
+    General: (
+      <GeneralTab
+        profile={profile}
+        isEditing={isEditing}
+        saved={saved}
+        toggles={toggles}
+        onEditOrSave={() => (isEditing ? handleSave() : setIsEditing(true))}
+        onProfileChange={(change) => setProfile((p) => ({ ...p, ...change }))}
+        onToggle={(id) => setToggles((prev) => toggleChecked(prev, id))}
+      />
+    ),
+    Notifications: <NotificationsTab toggles={notifToggles} onToggle={(id) => setNotifToggles((prev) => toggleChecked(prev, id))} />,
+    'Pipeline Stages': <PipelineStagesTab />,
+    'Billing & Plans': <BillingTab />,
+    Team: <TeamTab />,
+    Integrations: <IntegrationsTab integrations={integrations} onConnect={(name) => setIntegrations((prev) => toggleConnected(prev, name))} />,
+  };
+  const tab = content[SETTINGS_TABS[activeTab]];
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">

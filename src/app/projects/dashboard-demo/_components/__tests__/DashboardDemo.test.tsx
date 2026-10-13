@@ -3,7 +3,7 @@ import DashboardDemoPage from '../../page';
 
 describe('dashboard demo', () => {
   beforeEach(() => {
-    // Count-up animations: let every frame finish at once.
+    // Count-up animations never get a frame here; the tests check static text only.
     jest.spyOn(window, 'requestAnimationFrame').mockImplementation(() => 0);
   });
   afterEach(() => jest.restoreAllMocks());
