@@ -14,25 +14,27 @@ const config = {
   // to be imported by tests. Exclusions are deliberate and documented:
   // - *.stories.tsx: Storybook-only, exercised by visual regression instead
   // - src/types: type declarations, no runtime code
-  // - src/app/projects: self-contained interactive demo showcases
+  // - src/app/projects route files (page.tsx, layout.tsx): thin shells; the
+  //   demo logic in _components/ and _lib/ is measured (issue #189)
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
     "!src/**/*.stories.tsx",
     "!src/types/**",
-    "!src/app/projects/**",
+    "!src/app/projects/**/page.tsx",
+    "!src/app/projects/layout.tsx",
   ],
   // Coverage ratchet (see CLAUDE.md, Testing Best Practices): each number is
   // the measured global value rounded down, minus 1 point of headroom so small
-  // refactors do not flake. Measured 2026-10-13 (#187): statements 91.66,
-  // branches 87.01, functions 89.33, lines 92.85. Raise after coverage
+  // refactors do not flake. Measured 2026-10-13 (#189): statements 92.18,
+  // branches 87.38, functions 90.01, lines 93.27. Raise after coverage
   // grows — never lower. The 0% files are Next.js glue (page.tsx wrappers, layouts, i18n
   // and Supabase client factories) exercised by the Playwright e2e suite.
   coverageThreshold: {
     global: {
-      statements: 90,
+      statements: 91,
       branches: 86,
-      functions: 88,
-      lines: 91,
+      functions: 89,
+      lines: 92,
     },
   },
 };

@@ -37,7 +37,7 @@ CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and typ
 ## Where things live
 
 - `src/app/[locale]/(main)/`: public pages (home, about, services, projects, contact).
-- `src/app/projects/`: live demos `dashboard-demo` (CRM) and `mcp-demo`. Outside `[locale]` on purpose; the `src/proxy.ts` matcher (Next.js 16 proxy, formerly middleware) excludes them by name. The WASM shooter and the MCP demo page are static files in `public/games/` and `public/demos/`.
+- `src/app/projects/`: live demos `dashboard-demo` (CRM; views in `_components/`, sample data and pure logic in `_lib/`, `page.tsx` is only the route) and `mcp-demo`. Outside `[locale]` on purpose; the `src/proxy.ts` matcher (Next.js 16 proxy, formerly middleware) excludes them by name. The WASM shooter and the MCP demo page are static files in `public/games/` and `public/demos/`.
 - `src/app/admin/`: private admin (English, `noindex`). UI in `_components/`, queries and logic in `_lib/`.
 - `src/app/api/`: route handlers (contact, analytics collect).
 - `src/components/`: shared UI in Atomic Design layers: `atoms/` (`Button`, `CodeBlock`, `LanguageToggle`), `molecules/` (`BentoCard`, `SectionHeader`), `organisms/` (`Navigation`, `Footer`).
