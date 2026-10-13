@@ -48,8 +48,12 @@ jest.mock("@/i18n/navigation", () => ({
 // Mock lucide-react icons
 jest.mock("lucide-react", () => ({
   Mail: () => <svg data-testid="icon-mail" />,
-  Linkedin: () => <svg data-testid="icon-linkedin" />,
-  Github: () => <svg data-testid="icon-github" />,
+}));
+
+// Brand icons are local since lucide-react 1.0 removed them.
+jest.mock("@/components/atoms/BrandIcons", () => ({
+  LinkedinIcon: () => <svg data-testid="icon-linkedin" />,
+  GithubIcon: () => <svg data-testid="icon-github" />,
 }));
 
 const renderFooter = (ui: React.ReactElement) => {
