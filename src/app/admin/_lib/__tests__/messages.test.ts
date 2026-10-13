@@ -1,4 +1,4 @@
-import { messageIdSchema, parseStatusFilter, statusAfterOpening, statusSchema } from '../messages';
+import { messageIdSchema, parseStatusFilter, statusAfterOpening, statusSchema, toContactMessages } from '../messages';
 
 describe('parseStatusFilter', () => {
   it('defaults to new', () => {
@@ -35,5 +35,14 @@ describe('statusAfterOpening', () => {
 
   it.each(['read', 'archived', 'spam'] as const)('leaves %s unchanged', (status) => {
     expect(statusAfterOpening(status)).toBeNull();
+  });
+});
+
+describe('toContactMessages', () => {
+  const row = { id: '1', name: 'Jane', email: 'jane@example.com', message: 'Hello there', created_at: null };
+
+  it('keeps rows with a known status and leaves out the rest', () => {
+    const rows = [{ ...row, status: 'new' }, { ...row, id: '2', status: 'deleted' }, { ...row, id: '3', status: 'spam' }];
+    expect(toContactMessages(rows).map((m) => [m.id, m.status])).toEqual([['1', 'new'], ['3', 'spam']]);
   });
 });

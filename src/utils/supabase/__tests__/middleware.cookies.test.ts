@@ -16,6 +16,14 @@ jest.mock('@supabase/ssr', () => ({
 import { updateSession } from '../middleware';
 
 describe('updateSession cookie refresh', () => {
+  const env = process.env;
+  beforeEach(() => {
+    process.env = { ...env, NEXT_PUBLIC_SUPABASE_URL: 'https://p.supabase.co', NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY: 'pk' };
+  });
+  afterAll(() => {
+    process.env = env;
+  });
+
   it('reads the request cookies and writes refreshed ones to the request and the response', async () => {
     const request = new NextRequest('https://example.test/admin', { headers: { cookie: 'sb-old=1' } });
     let seen: { name: string; value: string }[] = [];

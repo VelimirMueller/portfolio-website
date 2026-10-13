@@ -55,7 +55,7 @@ describe('POST /api/collect', () => {
       p_path: '/de/about',
       p_prev_path: '/de',
       p_referrer: 'linkedin.com',
-      p_target: null,
+      p_target: undefined, // omitted: the SQL default is null
       p_country: 'DE',
       p_device: 'desktop',
       p_browser: 'Chrome',

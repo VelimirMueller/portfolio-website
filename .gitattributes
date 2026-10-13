@@ -1,1 +1,2 @@
 assets/**/*.svg binary
+src/types/supabase.ts linguist-generated=true

@@ -1,7 +1,7 @@
 import { requireAdmin } from '@/app/admin/_lib/auth';
 import { loadDashboardStats, parseKpiTab } from '@/app/admin/_lib/dashboardStats';
 import { computeMessageKpis } from '@/app/admin/_lib/kpis';
-import type { ContactMessage } from '@/app/admin/_lib/messages';
+import { toContactMessages } from '@/app/admin/_lib/messages';
 import { computeTraffic, parseTrafficParams, trafficWindow } from '@/app/admin/_lib/traffic';
 import { loadLastEventAt, loadTrafficEvents } from '@/app/admin/_lib/trafficQuery';
 import { loadVercelStats } from '@/app/admin/_lib/vercelStats';
@@ -39,7 +39,7 @@ export default async function AdminKpisPage(props: {
       panels={{
         website: (
           <KpisView
-            messages={computeMessageKpis((messages.data ?? []) as ContactMessage[])}
+            messages={computeMessageKpis(toContactMessages(messages.data ?? []))}
             error={Boolean(messages.error)}
             view={view}
             counts={{ overview: data.totals.visitors, clicks: data.totals.clicks }}

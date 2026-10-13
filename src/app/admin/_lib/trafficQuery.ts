@@ -1,4 +1,4 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
+import type { TypedSupabaseClient } from '@/utils/supabase/env';
 import type { TrafficEvent } from './traffic';
 
 /** PostgREST returns at most this many rows per request (Supabase default max-rows). */
@@ -19,14 +19,14 @@ export interface LoadedEvents {
  * When the newest stored event happened, or null when none ever was. Tells
  * "collection not set up" apart from "no visitors in the chosen period".
  */
-export async function loadLastEventAt(supabase: SupabaseClient): Promise<string | null> {
+export async function loadLastEventAt(supabase: TypedSupabaseClient): Promise<string | null> {
   const { data } = await supabase
     .from('analytics_events')
     .select('created_at')
     .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle();
-  return (data as { created_at: string } | null)?.created_at ?? null;
+  return data?.created_at ?? null;
 }
 
 /**
@@ -34,7 +34,7 @@ export async function loadLastEventAt(supabase: SupabaseClient): Promise<string 
  * Newest first so that, if the cap is hit, it is the oldest part of the
  * comparison window that goes missing — not today.
  */
-export async function loadTrafficEvents(supabase: SupabaseClient, since: Date): Promise<LoadedEvents> {
+export async function loadTrafficEvents(supabase: TypedSupabaseClient, since: Date): Promise<LoadedEvents> {
   const events: TrafficEvent[] = [];
   for (let from = 0; from < MAX_EVENTS; from += PAGE_SIZE) {
     const { data, error } = await supabase
@@ -44,8 +44,11 @@ export async function loadTrafficEvents(supabase: SupabaseClient, since: Date): 
       .order('created_at', { ascending: false })
       .range(from, Math.min(from + PAGE_SIZE, MAX_EVENTS) - 1);
     if (error) return { events, capped: false, error: true };
-    const rows = (data ?? []) as TrafficEvent[];
-    events.push(...rows);
+    const rows = data ?? [];
+    // type is text with a check constraint ('pageview' | 'click'); this narrows it.
+    for (const row of rows) {
+      if (row.type === 'pageview' || row.type === 'click') events.push({ ...row, type: row.type });
+    }
     if (rows.length < PAGE_SIZE) return { events, capped: false, error: false };
   }
   return { events, capped: true, error: false };
