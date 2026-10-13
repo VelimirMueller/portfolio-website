@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { CONTACT_FIELDS, contactFieldErrors, isContactField } from '../schema';
 
 const valid = { name: 'Jane Doe', email: 'jane@example.com', message: 'Hello, I would like to work with you.' };
@@ -36,6 +37,19 @@ describe('contactFieldErrors', () => {
     }
     for (const email of ['jane@', '@example.com', 'jane@example', 'jane doe@example.com', 'jane@.com']) {
       expect(contactFieldErrors({ ...valid, email })).toEqual({ email: 'invalid' });
+    }
+  });
+
+  it('agrees with z.email() of the installed zod on every sample', () => {
+    const samples = [
+      'jane@example.com', 'a@b.co', 'JANE@EXAMPLE.COM', 'jane.doe+tag@example.co.uk', "o'neil@x.io",
+      'a@b.c', 'jane@example', '.jane@example.com', 'jane.@example.com', 'ja..ne@example.com',
+      'jane@-example.com', 'jane@example.com.', 'jane@exa_mple.com', '+@example.com', 'jäne@example.com',
+      'jane@example.c0m', 'jane@@example.com', '"jane"@example.com', 'jane@[127.0.0.1]', '',
+    ];
+    for (const email of samples) {
+      const zodAccepts = z.string().trim().email().safeParse(email).success;
+      expect([email, contactFieldErrors({ ...valid, email }).email === undefined]).toEqual([email, zodAccepts]);
     }
   });
 
