@@ -32,6 +32,12 @@ updates:
       # Raise it together with the Node runtime (issue #169).
       - dependency-name: "@types/node"
         update-types: [version-update:semver-major]
+      # TypeScript 7 (native compiler) ships no compiler API. typescript-eslint
+      # (peer <6.1.0) and ts-jest (peer <7) need it, and so does `next build`
+      # without experimental.useTypeScriptCli. Retry when both tools support
+      # TS 7 (expected with the TS 7.1 API). TS 6 updates still come (issue #180).
+      - dependency-name: typescript
+        versions: [">=7"]
 
   - package-ecosystem: github-actions
     # "/" covers .github/workflows; the second entry covers the local composite
