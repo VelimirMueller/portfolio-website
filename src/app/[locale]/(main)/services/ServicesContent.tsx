@@ -70,7 +70,7 @@ export default function ServicesContent() {
                     ))}
                   </ul>
                   <div className="mt-8 pt-6 border-t border-black/5 dark:border-white/10">
-                    <Button to="/contact" className="w-full bg-brand-600 text-white hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200 border-transparent">
+                    <Button to="/contact" variant="brand" className="w-full">
                       {t('services.checkAvailability')}
                     </Button>
                   </div>

@@ -22,7 +22,7 @@ section({ name: '01 · Colour', page: PG.F, run: async () => {
 
   const br = K.col(20, 'Brand'); h.add(br, await K.t('BRAND · INDIGO', 'label/eyebrow', 'dark/sub'));
   const scale = K.row(0, 'Scale'); scale.cornerRadius = 20; scale.clipsContent = true; h.add(br, scale);
-  for (const [n, note] of [['300', 'Soft text on art'], ['400', 'Accent text on dark · 6.6:1'], ['500', 'Fill, lines, ring, glow'], ['600', 'Accent text and CTA on light · 6.3:1'], ['700', 'Proposal: CTA hover (F-1)'], ['900', 'Deep fills']]) {
+  for (const [n, note] of [['300', 'Soft text on art'], ['400', 'Accent text on dark · 6.6:1'], ['500', 'Fill, lines, ring, glow'], ['600', 'Accent text and CTA on light · 6.3:1'], ['700', 'CTA hover on light'], ['900', 'Deep fills']]) {
     const c = K.col(6, 'brand-' + n); K.pad(c, 20, 24); K.fix(c, 240, 200); c.primaryAxisAlignItems = 'MAX'; K.f(c, 'brand/' + n);
     const on = +n >= 500 ? 'dark/text' : 'light/text';
     h.add(c, await K.t('brand-' + n, 'heading/h4', on), await K.t(K.hex['brand/' + n] || '—', 'mono/md', on), await K.t(note, 'body/xs', on, { w: 200, op: 0.85 })); h.add(scale, c); }
@@ -31,7 +31,7 @@ section({ name: '01 · Colour', page: PG.F, run: async () => {
   const st = K.col(20, 'Status'); h.add(st, await K.t('STATUS · GROUPS · BRAND ROLES', 'label/eyebrow', 'dark/sub'));
   const g2 = K.wrap(1440, 20, 'Status swatches'); h.add(st, g2);
   for (const [n, note] of [['status/ok', 'Live, operational. One per view.'], ['status/ok-text-light', 'Emerald as text on white.'], ['brand/fill', 'Lines, bars, glows.'], ['brand/fill-strong', 'Nav CTA, admin Reply.'],
-    ['brand/fill-hover', 'Proposal (F-1).'], ['brand/ring', 'Focus ring.'], ['group/flagship', 'Flagship projects.'], ['group/lab', 'Lab projects.'], ['group/ops', 'Ops tools.'], ['group/venture', 'Ventures (Orbfall).']])
+    ['brand/fill-hover', 'CTA hover on light.'], ['brand/ring', 'Focus ring.'], ['group/flagship', 'Flagship projects.'], ['group/lab', 'Lab projects.'], ['group/ops', 'Ops tools.'], ['group/venture', 'Ventures (Orbfall).']])
     h.add(g2, await sw(n, 124, 'dark', note));
   h.add(b, st);
 

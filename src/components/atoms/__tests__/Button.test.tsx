@@ -70,6 +70,14 @@ describe("Button", () => {
     expect(button.className).toContain("bg-gray-100");
   });
 
+  it("brand variant fills indigo and hovers brand-700 without the primary hover", () => {
+    render(<Button variant="brand">Brand</Button>);
+    const classes = screen.getByRole("button").className.split(" ");
+    expect(classes).toEqual(expect.arrayContaining(["bg-brand-600", "hover:bg-brand-700"]));
+    expect(classes).not.toContain("hover:bg-gray-800");
+    expect(classes).not.toContain("bg-black");
+  });
+
   it("applies custom className", () => {
     render(<Button className="my-custom">Styled</Button>);
     const button = screen.getByRole("button");

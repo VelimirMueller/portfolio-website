@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation';
 
 interface ButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'brand' | 'secondary' | 'outline' | 'ghost';
   className?: string;
   to?: string;
   type?: 'button' | 'submit' | 'reset';
@@ -29,6 +29,9 @@ export const Button = ({
 
   const variants = {
     primary: "bg-black text-white border-transparent hover:bg-gray-800 dark:bg-white dark:text-black dark:border-white dark:hover:bg-gray-200 hover:scale-[1.02]",
+    // Indigo CTA in light mode. Its own variant, because a className override of
+    // hover:bg-gray-800 loses to it in the generated CSS order (issue #184).
+    brand: "bg-brand-600 text-white border-transparent hover:bg-brand-700 dark:bg-white dark:text-black dark:border-white dark:hover:bg-zinc-200 hover:scale-[1.02]",
     secondary: "bg-gray-100 text-black border-gray-200 hover:bg-gray-200 dark:bg-[#222] dark:text-white dark:border-[#333] dark:hover:bg-[#333] hover:scale-[1.02]",
     outline: "bg-transparent text-black border-black/10 hover:border-black/30 hover:bg-black/5 dark:text-white dark:border-white/20 dark:hover:border-white dark:hover:bg-white/5 hover:scale-[1.02]",
     ghost: "bg-transparent text-gray-500 border-transparent hover:text-black hover:bg-black/5 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5 hover:scale-[1.02]"
