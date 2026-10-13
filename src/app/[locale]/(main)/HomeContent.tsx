@@ -84,7 +84,7 @@ const Hero = () => {
               </p>
             </div>
             <div className="flex flex-wrap gap-3 mt-10">
-              <Button to="/projects" track="hero:projects" className="bg-brand-600 hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200">{t('ctaProjects')}</Button>
+              <Button to="/projects" track="hero:projects" variant="brand">{t('ctaProjects')}</Button>
               <Button to="/contact" track="hero:contact" variant="outline" className="border-light-border dark:border-dark-border text-light-text dark:text-dark-text">{t('ctaContact')}</Button>
             </div>
           </div>

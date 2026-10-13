@@ -148,7 +148,7 @@ export const Navigation = () => {
             >
               {theme === 'dark' ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
             </button>
-            <Button to="/contact" track="nav:contact" variant="primary" className="!px-5 !py-2 !text-xs !h-9 bg-brand-600 hover:bg-brand-700 dark:bg-white dark:text-black dark:hover:bg-gray-200 border-none shadow-lg shadow-brand-500/20 dark:shadow-white/10">
+            <Button to="/contact" track="nav:contact" variant="brand" className="!px-5 !py-2 !text-xs !h-9 border-none shadow-lg shadow-brand-500/20 dark:shadow-white/10">
               {t('nav.contact')}
             </Button>
           </div>
