@@ -61,7 +61,8 @@ CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and typ
 - **Positioning in one place.** The public job title and positioning line come from `src/config/positioning.ts`. Locale copy uses the `{jobTitle}` placeholder. Change copy in both languages.
 - **Env vars: names only.** Never write a value into a file, commit, PR or log. The names are in `.env.example` and `supabase/functions/.env.example`; values live in `.env.local`, in Vercel and in Supabase function secrets.
 - **No tags.** Releases are a `chore(release): vX.Y.Z` commit that bumps `package.json`. The owner creates the signed tag. Never create or push a tag.
-- **Commits** follow Conventional Commits; the husky `commit-msg` hook runs commitlint.
+- **Commits** follow Conventional Commits; the husky `commit-msg` hook runs commitlint. The `pre-commit` hook runs lint-staged: ESLint on the staged files and `tsc --noEmit`.
+- **CI actions are pinned** to a full commit SHA with the version as a comment (`uses: owner/action@<sha> # vX.Y.Z`). Dependabot bumps both. The workflow token is read-only (`permissions: contents: read`).
 
 ## Testing
 

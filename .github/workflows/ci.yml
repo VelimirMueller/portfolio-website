@@ -6,15 +6,27 @@ on:
   pull_request:
     branches: [main]
 
+# Least privilege (issue #188): every job only reads the repo. Actions are pinned
+# to a full commit SHA with the version as a comment; Dependabot (github-actions)
+# bumps the SHA and the comment together.
+permissions:
+  contents: read
+
+# A new push to a PR cancels its older run. Runs on main always finish.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Fails on critical advisories in production dependencies (issue #67).
   # Reads package-lock.json only, so no npm ci. Tighten to high after M1.
   dependency-audit:
     name: Dependency Audit
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24
       - run: npm audit --omit=dev --audit-level=critical
@@ -22,8 +34,9 @@ jobs:
   lint-and-typecheck:
     name: Lint & Type Check
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/node-deps
       - run: npm run lint
       - run: npm run type-check
@@ -36,12 +49,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # Same CLI version as the devDependency, without a full npm ci.
       - name: Read the Supabase CLI version from package-lock.json
         id: cli
         run: echo "version=$(jq -r '.packages["node_modules/supabase"].version' package-lock.json)" >> "$GITHUB_OUTPUT"
-      - uses: supabase/setup-cli@v3
+      - uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
         with:
           version: ${{ steps.cli.outputs.version }}
       - run: bash scripts/db/test-migrations.sh
@@ -54,13 +67,14 @@ jobs:
   unit-tests-and-build:
     name: Unit Tests & Build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/node-deps
       - run: npm run test:coverage
       - name: Upload coverage report
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: coverage-report
           path: coverage/
@@ -72,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/node-deps
       - run: npm run build-storybook
       # Cache + install with retries; the composite action explains the apt hang.
@@ -83,7 +97,7 @@ jobs:
         run: npm run test:visual
       - name: Upload visual diff results
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: visual-regression-results
           path: |
@@ -97,7 +111,7 @@ jobs:
     timeout-minutes: 45
     needs: unit-tests-and-build
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/node-deps
       # Cache + install with retries; the composite action explains the apt hang.
       - name: Install Playwright browsers
@@ -107,7 +121,7 @@ jobs:
         run: npm run test:e2e
       - name: Upload test results
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: e2e-results
           path: |
