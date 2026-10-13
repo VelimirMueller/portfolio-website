@@ -307,6 +307,38 @@ describe("Navigation mobile menu keyboard support", () => {
     return openButton;
   };
 
+  it("closes the menu when the route changes", async () => {
+    const { rerender } = await renderWithProviders(<Navigation />);
+    await openMenu();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+    mockPathname = "/projects";
+    await act(async () => {
+      rerender(
+        <ThemeProvider>
+          <Navigation />
+        </ThemeProvider>
+      );
+    });
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("keeps the menu open while the route stays the same", async () => {
+    const { rerender } = await renderWithProviders(<Navigation />);
+    await openMenu();
+
+    await act(async () => {
+      rerender(
+        <ThemeProvider>
+          <Navigation />
+        </ThemeProvider>
+      );
+    });
+
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
+
   it("closes the menu when Escape is pressed", async () => {
     await renderWithProviders(<Navigation />);
     await openMenu();

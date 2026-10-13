@@ -32,8 +32,12 @@ export default function ContactContent() {
   const [countdown, setCountdown] = useState(5);
   const router = useRouter();
   const captchaRef = useRef<HCaptchaClass | null>(null);
+  // submitForm stays stable for the captcha callbacks and reads the latest
+  // form data from this ref, synced after each commit (before any handler).
   const formDataRef = useRef(formData);
-  formDataRef.current = formData;
+  useEffect(() => {
+    formDataRef.current = formData;
+  }, [formData]);
   const t = useTranslations();
 
   const validate = (name: string, value: string): string | null => {
