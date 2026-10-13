@@ -86,6 +86,7 @@ Other folders:
 | `supabase/templates/magic-link.html` | The admin login mail |
 | `scripts/mtg/` | Magic catalog and printings loaders |
 | `scripts/db/test-migrations.sh` | `npm run test:db` |
+| `scripts/db/gen-types.sh` | `npm run db:types` |
 | `scripts/email/` | Builds the email header image |
 | `e2e/` | Playwright specs: `app`, `a11y`, `admin`, `analytics`, `demos`, `headers`, `storybook-visual` |
 | `.storybook/` | Storybook 10 config |
@@ -270,6 +271,8 @@ Their secrets are Supabase function secrets, not app env vars (template: [supaba
 ### SQL tests
 
 CI (job *Database Migrations & SQL Tests*) applies every migration to a fresh local database and runs `supabase/tests/*.sql`; locally `npm run test:db` (needs Docker and psql). The fixture `supabase/tests/fixtures/catalog.sql` stands in for the Scryfall catalog that `20261008150000_magic_v2.sql` needs, and the script puts a dummy `contact_hook_secret` in Vault. SQL tests act as a user with `set local request.jwt.claim.sub = '<uuid>'`.
+
+The same job then runs `scripts/db/gen-types.sh --check`: `src/types/supabase.ts` (the `Database` type every Supabase client uses) must match the migrations. After a schema change, run `npm run db:types` and commit the file. Text columns with a check constraint (e.g. `status`, `section`, `colors`) come out as `string`; the read functions narrow them to the app's unions.
 
 | Test | Covers |
 | :--- | :--- |

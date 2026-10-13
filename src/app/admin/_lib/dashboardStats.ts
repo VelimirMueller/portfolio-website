@@ -50,7 +50,7 @@ export interface AdminDashboardStats {
  * as a calm inline notice instead of crashing the page.
  */
 export async function loadDashboardStats(
-  rpc: (fn: string) => PromiseLike<{ data: unknown; error: unknown | null }>,
+  rpc: (fn: 'admin_dashboard_stats') => PromiseLike<{ data: unknown; error: unknown | null }>,
 ): Promise<{ stats: AdminDashboardStats | null; error: boolean }> {
   try {
     const { data, error } = await rpc('admin_dashboard_stats');

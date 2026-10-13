@@ -15,6 +15,20 @@ export interface ContactMessage {
   created_at: string | null;
 }
 
+/**
+ * A contact_messages row as the client returns it (status is text with a check
+ * constraint) to a ContactMessage. Rows with an unknown status are left out.
+ */
+export function toContactMessages(rows: (Omit<ContactMessage, 'status'> & { status: string })[]): ContactMessage[] {
+  const messages: ContactMessage[] = [];
+  for (const row of rows) {
+    const status = statusSchema.safeParse(row.status);
+    if (status.success) messages.push({ ...row, status: status.data });
+    else console.warn('[admin] inbox: skipped a message with unknown status', row.status.slice(0, 20));
+  }
+  return messages;
+}
+
 /** Filter shown by default and when the query string holds an unknown value. */
 export function parseStatusFilter(value: unknown): MessageStatus | 'all' {
   if (value === 'all') return 'all';

@@ -4,6 +4,7 @@ import {
   messageIdSchema,
   parseStatusFilter,
   statusAfterOpening,
+  toContactMessages,
   type ContactMessage,
 } from '@/app/admin/_lib/messages';
 import { InboxWorkspace } from '@/app/admin/_components/InboxWorkspace';
@@ -23,7 +24,7 @@ export default async function AdminInboxPage(props: {
     .from('contact_messages')
     .select('id, name, email, message, status, created_at')
     .order('created_at', { ascending: false, nullsFirst: false });
-  const all = (data ?? []) as ContactMessage[];
+  const all: ContactMessage[] = toContactMessages(data ?? []);
 
   // Opening a message applies statusAfterOpening (new → read). Runs on a real
   // visit only: the page is force-dynamic with no loading.tsx, so <Link>

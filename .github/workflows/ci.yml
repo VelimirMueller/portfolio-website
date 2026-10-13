@@ -45,6 +45,11 @@ jobs:
         with:
           version: ${{ steps.cli.outputs.version }}
       - run: bash scripts/db/test-migrations.sh
+        env:
+          KEEP_DB: "1"
+      # src/types/supabase.ts must match supabase/migrations (issue #187).
+      - name: Check the generated Supabase types
+        run: bash scripts/db/gen-types.sh --check
 
   unit-tests-and-build:
     name: Unit Tests & Build

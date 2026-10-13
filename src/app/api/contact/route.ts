@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import type { Database } from '@/types/supabase';
 import { parseContactPayload } from './validation';
 import { checkContactRateLimit } from './rateLimit';
 
@@ -74,7 +75,7 @@ export async function POST(request: NextRequest) {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
     if (!url || !key) throw new Error('Supabase is not configured');
-    const supabase = createClient(url, key, {
+    const supabase = createClient<Database>(url, key, {
       auth: { persistSession: false, autoRefreshToken: false },
     });
 

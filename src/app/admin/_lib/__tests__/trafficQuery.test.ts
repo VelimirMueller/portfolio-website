@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { MAX_EVENTS, loadLastEventAt, loadTrafficEvents } from '../trafficQuery';
 
-function client(pages: (number | 'error')[]) {
+function client(pages: (number | 'error')[], type = 'pageview') {
   const calls: [number, number][] = [];
   const gte = jest.fn();
   const query = {
@@ -12,13 +12,21 @@ function client(pages: (number | 'error')[]) {
       calls.push([from, to]);
       const page = pages[calls.length - 1] ?? 0;
       if (page === 'error') return { data: null, error: { message: 'boom' } };
-      return { data: Array.from({ length: page }, (_, i) => ({ created_at: `${from + i}` })), error: null };
+      return { data: Array.from({ length: page }, (_, i) => ({ created_at: `${from + i}`, type })), error: null };
     },
   };
   return { supabase: { from: () => query } as unknown as SupabaseClient, calls, gte };
 }
 
 describe('loadTrafficEvents', () => {
+  it('leaves out rows whose type is not pageview or click', async () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const res = await loadTrafficEvents(client([3], 'scroll').supabase, new Date());
+    expect(res.events).toEqual([]);
+    expect(warn).toHaveBeenCalledWith('[admin] traffic: skipped events with an unknown type:', 3);
+    warn.mockRestore();
+  });
+
   it('pages through the row limit until a short page', async () => {
     const { supabase, calls, gte } = client([1000, 1000, 10]);
     const since = new Date('2026-09-01T00:00:00Z');

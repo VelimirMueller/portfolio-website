@@ -1,5 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import type { Database } from '@/types/supabase';
+import { supabaseEnv } from './env';
 
 /**
  * Refreshes the Supabase session cookie on the way through middleware and
@@ -11,9 +13,10 @@ export async function updateSession(request: NextRequest) {
   // Missing config (e.g. CI without Supabase env) or an unreachable auth
   // server both count as signed out — the guard then redirects to login.
   try {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!,
+    const { url, key } = supabaseEnv();
+    const supabase = createServerClient<Database>(
+      url,
+      key,
       {
         cookies: {
           getAll() {

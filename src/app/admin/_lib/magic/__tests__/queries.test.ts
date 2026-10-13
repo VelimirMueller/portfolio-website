@@ -83,11 +83,34 @@ describe('magic queries', () => {
   });
 
   it('loads one deck by slug with its cards', async () => {
-    const { client, calls } = fakeSupabase({ data: { slug: 'stapelbruch', cards: [] } });
+    const { client, calls } = fakeSupabase({ data: { slug: 'stapelbruch', colors: ['U', 'R'], cards: [] } });
     const deck = await loadDeck(client, 'stapelbruch');
     expect(deck.data?.slug).toBe('stapelbruch');
     expect(calls).toContainEqual(['eq', 'slug', 'stapelbruch']);
     expect(String(calls[1][1])).toContain('cards:mtg_deck_card(');
+  });
+
+  it('narrows text columns to the app types: colors, deck sections, view nulls', async () => {
+    const deckRow = {
+      slug: 'stapelbruch',
+      colors: ['U', 'X', 'R'],
+      cards: [
+        { id: 'l1', section: 'main', card: { ...catalogCard(), colors: ['U', 'purple'] } },
+        { id: 'l2', section: 'maybe', card: catalogCard() },
+      ],
+    };
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const deck = (await loadDeck(fakeSupabase({ data: deckRow }).client, 'stapelbruch')).data;
+    expect(deck?.colors).toEqual(['U', 'R']);
+    expect(deck?.cards.map((c) => c.id)).toEqual(['l1']);
+    expect(warn).toHaveBeenCalledWith('[admin] magic: skipped a deck line with unknown section', 'maybe');
+    warn.mockRestore();
+    expect(deck?.cards[0].card.colors).toEqual(['U']);
+
+    const owned = await loadDeckOwnership(
+      fakeSupabase({ data: [{ id: 'l1', owned: null }, { id: null, owned: 3 }] }).client
+    );
+    expect([...owned.data]).toEqual([['l1', 0]]);
   });
 
   it('searches through mtg_search_catalog and tells when more matched', async () => {

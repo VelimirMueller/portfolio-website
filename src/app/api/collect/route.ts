@@ -1,5 +1,7 @@
 import { NextRequest } from 'next/server';
-import { createClient as createSupabaseClient, type SupabaseClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/types/supabase';
+import type { TypedSupabaseClient } from '@/utils/supabase/env';
 import { SITE_URL } from '@/config/site';
 import { createRateLimiter } from '../contact/rateLimit';
 import { browserOf, countryOf, deviceOf, isAdminSession, isBot, optedOut, parseBeacon } from './parse';
@@ -15,15 +17,15 @@ const OWN_HOST = new URL(SITE_URL).hostname;
 /** The database call is best-effort; never hold a beacon request longer than this. */
 const RPC_TIMEOUT_MS = 3000;
 
-let client: { key: string; supabase: SupabaseClient } | null = null;
+let client: { key: string; supabase: TypedSupabaseClient } | null = null;
 
 /** One stateless client per instance, rebuilt only if the env changes. */
-function getClient(url: string, key: string): SupabaseClient {
+function getClient(url: string, key: string): TypedSupabaseClient {
   const cacheKey = `${url}|${key}`;
   if (client?.key !== cacheKey) {
     client = {
       key: cacheKey,
-      supabase: createSupabaseClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } }),
+      supabase: createSupabaseClient<Database>(url, key, { auth: { persistSession: false, autoRefreshToken: false } }),
     };
   }
   return client.supabase;
@@ -72,12 +74,13 @@ export async function POST(request: NextRequest) {
     p_user_agent: userAgent,
     p_type: event.type,
     p_path: event.path,
-    p_prev_path: event.prevPath,
-    p_referrer: event.referrer,
-    p_target: event.target,
-    p_country: countryOf(request.headers.get('x-vercel-ip-country')),
-    p_device: deviceOf(userAgent),
-    p_browser: browserOf(userAgent),
+    // Omitted (undefined) is the SQL default null; the generated types allow no null here.
+    p_prev_path: event.prevPath ?? undefined,
+    p_referrer: event.referrer ?? undefined,
+    p_target: event.target ?? undefined,
+    p_country: countryOf(request.headers.get('x-vercel-ip-country')) ?? undefined,
+    p_device: deviceOf(userAgent) ?? undefined,
+    p_browser: browserOf(userAgent) ?? undefined,
     })
     .abortSignal(AbortSignal.timeout(RPC_TIMEOUT_MS))
     // A timeout or network failure must not turn the beacon into a 500.

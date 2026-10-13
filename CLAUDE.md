@@ -30,6 +30,7 @@ Development rules for velimir-mueller.de. Details live in the [README](README.md
 | `npm run test:visual` | Playwright screenshots of every story (`playwright-storybook.config.ts`). `-- --update-snapshots` writes new baselines. |
 | `npm run test:e2e` | Playwright against the production build (`playwright.config.ts`, `e2e/*.spec.ts`). |
 | `npm run test:db` | Applies `supabase/migrations/` to a fresh local database and runs `supabase/tests/*.sql`. Needs Docker and psql. |
+| `npm run db:types` | Writes `src/types/supabase.ts` from `supabase/migrations/` on a fresh local database (never the hosted project). CI fails when the file is stale. |
 
 CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and type check, database migrations and SQL tests, unit tests with coverage and build, Storybook visual regression, e2e.
 
@@ -55,7 +56,7 @@ CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and typ
 
 - **No cookies on a visit.** `next-intl` runs with `localeCookie: false`; `e2e/headers.spec.ts` asserts that public pages set no cookie. No third-party request on page view: hCaptcha loads only when the contact form is sent. Only the admin login sets a session cookie.
 - **One `headers()` entry.** All security headers come from `headerRules` in `next.config.mjs`; `buildCsp()` builds the one CSP per response. Never add a second CSP header (two CSPs are enforced as their intersection). Same-origin framing exists only for `/demos/mcp-demo.html`.
-- **Migrations are the source.** `supabase/migrations/` is the single source of truth for the schema, also for other apps on this database. Add a new migration; never edit an applied one. Add or update a SQL test in `supabase/tests/`.
+- **Migrations are the source.** `supabase/migrations/` is the single source of truth for the schema, also for other apps on this database. Add a new migration; never edit an applied one. Add or update a SQL test in `supabase/tests/`, and run `npm run db:types` so the typed Supabase clients see the change.
 - **Admin UUID in two places.** `src/config/admin.ts` and `public.is_admin()` in the migration. Change both together. Middleware, `requireAdmin()` and RLS all check it. No service-role key.
 - **Positioning in one place.** The public job title and positioning line come from `src/config/positioning.ts`. Locale copy uses the `{jobTitle}` placeholder. Change copy in both languages.
 - **Env vars: names only.** Never write a value into a file, commit, PR or log. The names are in `.env.example` and `supabase/functions/.env.example`; values live in `.env.local`, in Vercel and in Supabase function secrets.

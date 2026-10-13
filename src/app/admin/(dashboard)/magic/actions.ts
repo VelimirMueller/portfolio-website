@@ -58,14 +58,14 @@ export async function addToPool(formData: FormData) {
     ? await supabase.rpc('mtg_add_to_wishlist', {
         p_oracle_id: input.oracle_id,
         p_qty: input.owned_qty,
-        p_note: input.note ?? null,
+        p_note: input.note ?? undefined,
       })
     : await supabase.rpc('mtg_add_to_pool', {
         p_oracle_id: input.oracle_id,
         p_qty: input.owned_qty,
         p_copies_de: input.copies_de,
-        p_name_de: input.name_de ?? null,
-        p_note: input.note ?? null,
+        p_name_de: input.name_de ?? undefined,
+        p_note: input.note ?? undefined,
       });
   // No id: RLS let nothing through. A card missing from the catalog fails the foreign key.
   if (error || !rowId) throw new Error('Could not add the card');
@@ -162,7 +162,8 @@ export async function importDeck(_prev: ImportDeckState, formData: FormData): Pr
     return { errors: ['Could not import the deck.'], unresolved: [] };
   }
 
-  const result = data as { status: string; names?: unknown };
+  // mtg_import_deck returns json: { status, names? }.
+  const result = typeof data === 'object' && !Array.isArray(data) ? data : {};
   if (result.status === 'exists') {
     return { errors: [`A deck with the address "${slug}" already exists. Choose another name.`], unresolved: [] };
   }

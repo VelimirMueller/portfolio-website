@@ -47,7 +47,7 @@ describe('addToPool', () => {
       p_oracle_id: ORACLE,
       p_qty: 2,
       p_copies_de: 1,
-      p_name_de: null,
+      p_name_de: undefined, // omitted: the SQL default is null
       p_note: 'foil',
     });
     expect(from).toHaveBeenCalledWith('mtg_catalog');
