@@ -107,6 +107,22 @@ describe('InboxWorkspace', () => {
     expect(updateStatuses).toHaveBeenCalledWith([id(1), id(3)], 'archived');
   });
 
+  it('drops selected messages that leave the list, and keeps the rest', () => {
+    const { rerender } = setup();
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Select message from Person 1' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Select message from Person 3' }));
+    expect(screen.getByText('2 selected')).toBeInTheDocument();
+
+    rerender(<InboxWorkspace messages={[msg(2), msg(3)]} counts={counts} filter="new" query="" selectedId={null} error={false} />);
+    expect(screen.getByText('1 selected')).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Select message from Person 3' })).toBeChecked();
+
+    // The dropped message comes back unselected.
+    rerender(<InboxWorkspace messages={messages} counts={counts} filter="new" query="" selectedId={null} error={false} />);
+    expect(screen.getByRole('checkbox', { name: 'Select message from Person 1' })).not.toBeChecked();
+    expect(screen.getByText('1 selected')).toBeInTheDocument();
+  });
+
   it('selects everything and clears again', () => {
     setup();
     fireEvent.click(screen.getByRole('checkbox', { name: 'Select all' }));

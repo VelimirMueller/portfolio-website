@@ -1,3 +1,5 @@
+import { createElement } from 'react';
+import { renderToString } from 'react-dom/server';
 import { renderHook, act } from '@testing-library/react';
 import { useReducedMotion } from '../useReducedMotion';
 
@@ -35,14 +37,23 @@ describe('useReducedMotion', () => {
   });
 
   it('updates when the preference changes at runtime', () => {
-    const { listeners } = mockMatchMedia(false);
+    const { mql, listeners } = mockMatchMedia(false);
     const { result } = renderHook(() => useReducedMotion());
     expect(result.current).toBe(false);
 
     act(() => {
+      mql.matches = true;
       listeners.forEach((cb) => cb({ matches: true }));
     });
     expect(result.current).toBe(true);
+  });
+
+  it('renders "no preference" on the server, whatever the client prefers', () => {
+    mockMatchMedia(true);
+    function Probe() {
+      return createElement('span', null, String(useReducedMotion()));
+    }
+    expect(renderToString(createElement(Probe))).toBe('<span>false</span>');
   });
 
   it('removes its listener on unmount', () => {

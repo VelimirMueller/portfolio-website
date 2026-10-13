@@ -24,9 +24,13 @@ export const Navigation = () => {
     return pathname.startsWith(path);
   };
 
-  useEffect(() => {
+  // Close the menu when the route changes (adjusted during render, so the
+  // new page never paints with the old menu open).
+  const [menuPathname, setMenuPathname] = useState(pathname);
+  if (menuPathname !== pathname) {
+    setMenuPathname(pathname);
     setIsOpen(false);
-  }, [pathname]);
+  }
 
   // Mobile dialog keyboard contract: focus moves in on open, Escape closes,
   // Tab cycles inside (aria-modal alone does not trap focus).

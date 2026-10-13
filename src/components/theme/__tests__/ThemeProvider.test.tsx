@@ -196,3 +196,64 @@ describe("ThemeProvider", () => {
     expect(localStorageMock.setItem).toHaveBeenCalledWith("theme", "light");
   });
 });
+
+describe("ThemeProvider hydration", () => {
+  const markup = (
+    <ThemeProvider>
+      <ThemeConsumer />
+    </ThemeProvider>
+  );
+
+  it("renders dark on the server, whatever the visitor saved", async () => {
+    const { renderToString } = await import("react-dom/server");
+    localStorageMock.setItem("theme", "light");
+    expect(renderToString(markup)).toContain(">dark<");
+  });
+
+  it("leaves the no-flash class alone during hydration, then applies the saved theme", async () => {
+    const { renderToString } = await import("react-dom/server");
+    const container = document.createElement("div");
+    container.innerHTML = renderToString(markup);
+    document.body.appendChild(container);
+    localStorageMock.setItem("theme", "light");
+    // The no-flash script has already set the saved theme.
+    document.documentElement.classList.add("light");
+    // Every class value the root had along the way.
+    const classSeen: string[] = [];
+    const observer = new MutationObserver((records) =>
+      records.forEach((r) => classSeen.push(r.oldValue ?? ""))
+    );
+    observer.observe(document.documentElement, {
+      attributeFilter: ["class"],
+      attributeOldValue: true,
+    });
+
+    await act(async () => {
+      render(markup, { container, hydrate: true });
+    });
+    classSeen.push(document.documentElement.className);
+    observer.takeRecords().forEach((r) => classSeen.push(r.oldValue ?? ""));
+    observer.disconnect();
+
+    expect(screen.getByTestId("theme-value")).toHaveTextContent("light");
+    expect(document.documentElement.classList.contains("light")).toBe(true);
+    // Never flipped to dark on the way.
+    expect(classSeen.some((c) => c.includes("dark"))).toBe(false);
+    container.remove();
+  });
+
+  it("keeps the start theme for the life of the provider", async () => {
+    const { rerender } = render(markup);
+    expect(screen.getByTestId("theme-value")).toHaveTextContent("dark");
+
+    // A later system change applies on the next page load, as before.
+    (window.matchMedia as jest.Mock).mockImplementationOnce((query: string) => ({
+      matches: query === "(prefers-color-scheme: light)",
+      media: query,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    }));
+    rerender(markup);
+    expect(screen.getByTestId("theme-value")).toHaveTextContent("dark");
+  });
+});

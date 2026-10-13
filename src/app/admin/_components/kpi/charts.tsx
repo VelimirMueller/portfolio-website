@@ -48,22 +48,22 @@ export interface DonutSegment {
 }
 
 export function Donut({ segments, label }: { segments: DonutSegment[]; label: string }) {
-  let offset = 0;
+  // Each arc starts where the previous one ends.
+  const arcs = segments
+    .filter((s) => s.pct > 0)
+    .reduce<{ segment: DonutSegment; offset: number }[]>((acc, segment) => {
+      const prev = acc[acc.length - 1];
+      return [...acc, { segment, offset: prev ? prev.offset + prev.segment.pct : 0 }];
+    }, []);
   const ring = 'M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831';
   return (
     <div className="flex items-center gap-6">
       <div className="relative w-28 h-28 flex-shrink-0">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36" role="img" aria-label={label}>
           <path d={ring} fill="none" stroke="#222" strokeWidth="5" />
-          {segments
-            .filter((s) => s.pct > 0)
-            .map((s) => {
-              const el = (
-                <path key={s.label} d={ring} fill="none" stroke={s.color} strokeWidth="5" strokeDasharray={`${s.pct}, 100`} strokeDashoffset={-offset} />
-              );
-              offset += s.pct;
-              return el;
-            })}
+          {arcs.map(({ segment: s, offset }) => (
+            <path key={s.label} d={ring} fill="none" stroke={s.color} strokeWidth="5" strokeDasharray={`${s.pct}, 100`} strokeDashoffset={-offset} />
+          ))}
         </svg>
       </div>
       <div className="space-y-2 flex-1">

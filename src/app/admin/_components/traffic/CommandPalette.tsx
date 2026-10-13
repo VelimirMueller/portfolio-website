@@ -35,18 +35,25 @@ export function CommandPalette({ open, onClose, actions }: { open: boolean; onCl
   const returnFocus = useRef<Element | null>(null);
   const results = useMemo(() => matchActions(actions, query), [actions, query]);
 
+  // Every opening starts with an empty query and the first result
+  // (adjusted during render, so the old query never paints).
+  const [wasOpen, setWasOpen] = useState(open);
+  if (wasOpen !== open) {
+    setWasOpen(open);
+    if (open) {
+      setQuery('');
+      setIndex(0);
+    }
+  }
+
   useEffect(() => {
     if (!open) return;
     returnFocus.current = document.activeElement;
-    setQuery('');
-    setIndex(0);
     requestAnimationFrame(() => inputRef.current?.focus());
     return () => {
       (returnFocus.current as HTMLElement | null)?.focus?.();
     };
   }, [open]);
-
-  useEffect(() => setIndex(0), [query]);
 
   useEffect(() => {
     listRef.current?.querySelector(`[data-index="${index}"]`)?.scrollIntoView?.({ block: 'nearest' });
@@ -79,7 +86,6 @@ export function CommandPalette({ open, onClose, actions }: { open: boolean; onCl
     }
   };
 
-  let lastGroup = '';
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 px-4 pt-[12vh] backdrop-blur-sm motion-safe:animate-scale-in" onMouseDown={onClose}>
       <div
@@ -95,7 +101,10 @@ export function CommandPalette({ open, onClose, actions }: { open: boolean; onCl
           <input
             ref={inputRef}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setIndex(0);
+            }}
             role="combobox"
             aria-expanded="true"
             aria-controls="palette-list"
@@ -108,8 +117,8 @@ export function CommandPalette({ open, onClose, actions }: { open: boolean; onCl
         </div>
         <ul id="palette-list" ref={listRef} role="listbox" aria-label="Commands" className="max-h-80 overflow-y-auto p-2">
           {results.map((a, i) => {
-            const header = a.group !== lastGroup ? a.group : null;
-            lastGroup = a.group;
+            // A group header above the first action of each group.
+            const header = a.group !== (i > 0 ? results[i - 1].group : '') ? a.group : null;
             return (
               <li key={a.id} role="presentation">
                 {header && <div className="px-3 pb-1 pt-2 font-mono text-[10px] uppercase tracking-wider text-[#7c808b]">{header}</div>}

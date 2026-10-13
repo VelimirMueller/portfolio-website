@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, useTransition } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 /**
@@ -38,17 +38,20 @@ export function useTrafficNav() {
   return { set, refresh, pending };
 }
 
+const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
+
+function subscribeReducedMotion(onChange: () => void) {
+  const mq = window.matchMedia?.(REDUCED_MOTION);
+  if (!mq) return () => {};
+  mq.addEventListener?.('change', onChange);
+  return () => mq.removeEventListener?.('change', onChange);
+}
+
+const reducedMotionSnapshot = () => window.matchMedia?.(REDUCED_MOTION)?.matches ?? false;
+const reducedMotionServerSnapshot = () => false;
+
 export function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-    if (!mq) return;
-    setReduced(mq.matches);
-    const onChange = () => setReduced(mq.matches);
-    mq.addEventListener?.('change', onChange);
-    return () => mq.removeEventListener?.('change', onChange);
-  }, []);
-  return reduced;
+  return useSyncExternalStore(subscribeReducedMotion, reducedMotionSnapshot, reducedMotionServerSnapshot);
 }
 
 /** easeOutCubic count-up from the previous value to `end`; jumps straight there with reduced motion. */
@@ -58,7 +61,7 @@ export function useCountUp(end: number, duration = 900): number {
   const from = useRef(0);
   useEffect(() => {
     if (reduced) {
-      setValue(end);
+      // The render returns `end` directly; the next animation starts here.
       from.current = end;
       return;
     }
@@ -76,7 +79,7 @@ export function useCountUp(end: number, duration = 900): number {
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
   }, [end, duration, reduced]);
-  return value;
+  return reduced ? end : value;
 }
 
 /** Element width, tracked with a ResizeObserver (charts draw in real pixels). */

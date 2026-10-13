@@ -71,14 +71,17 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
 
   const open = useCallback((id: string | null) => router.push(href(id), { scroll: false }), [router, href]);
 
-  // Drop selections that are no longer in the list (after an action or filter change).
-  useEffect(() => {
+  // Drop selections that are no longer in the list (after an action or filter
+  // change). Adjusted during render, so a stale selection never paints.
+  const [checkedFor, setCheckedFor] = useState(messages);
+  if (checkedFor !== messages) {
+    setCheckedFor(messages);
     setChecked((prev) => {
       const visible = new Set(messages.map((m) => m.id));
       const next = new Set(Array.from(prev).filter((id) => visible.has(id)));
       return next.size === prev.size ? prev : next;
     });
-  }, [messages]);
+  }
 
   const run = useCallback(
     (ids: string[], action: MessageStatus | 'delete') => {
