@@ -28,7 +28,7 @@ describe("LanguageToggle", () => {
   it("has correct aria-label for German locale", () => {
     render(<LanguageToggle />);
     expect(
-      screen.getByLabelText("Switch to English")
+      screen.getByLabelText("EN – Switch to English")
     ).toBeInTheDocument();
   });
 
@@ -50,7 +50,7 @@ describe("LanguageToggle", () => {
     mockLocale = "en";
     render(<LanguageToggle />);
     expect(
-      screen.getByLabelText("Auf Deutsch wechseln")
+      screen.getByLabelText("DE – Auf Deutsch wechseln")
     ).toBeInTheDocument();
   });
 
