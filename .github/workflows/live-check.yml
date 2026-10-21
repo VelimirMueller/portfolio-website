@@ -52,6 +52,7 @@ jobs:
           git show "$DEPLOY_SHA:.figma/tokens.json" > "$tmp"
           jq -e '.collections.color and .collections.primitive' "$tmp" > /dev/null
           mv "$tmp" .figma/tokens.json
+      # node-deps runs pnpm/action-setup, setup-node and pnpm install --frozen-lockfile.
       - uses: ./.github/actions/node-deps
       - name: Install Playwright browsers
         timeout-minutes: 26

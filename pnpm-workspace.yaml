@@ -1,5 +1,7 @@
 # Dependencies whose install scripts may run (pnpm 11+ blocks all others).
-# allowBuilds is the pnpm 11+ key that replaced onlyBuiltDependencies.
+# allowBuilds is the pnpm 11+ key that replaced onlyBuiltDependencies. With it,
+# `pnpm install` runs these postinstalls ("@swc/core postinstall: Done") and lists
+# no ignored builds.
 allowBuilds:
   # Native watcher for Jest; builds from source only when no prebuilt binary fits.
   "@parcel/watcher": true
