@@ -56,9 +56,30 @@ jobs:
       - name: Install Playwright browsers
         timeout-minutes: 26
         uses: ./.github/actions/playwright-install
-      - name: Run the live token check
+      # Vercel Deployment Protection answers every deployment URL with a 302 to
+      # vercel.com/sso-api. Production is checked on the public domain (the
+      # config default); a preview needs the bypass secret, else it is skipped.
+      - name: Pick the URL to check
+        id: target
         env:
-          LIVE_URL: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url || inputs.url }}
+          ENVIRONMENT: ${{ github.event.deployment_status.environment || github.event.deployment.environment }}
+          DEPLOY_URL: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url || inputs.url }}
+          HAS_BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET != '' }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "url=$DEPLOY_URL" >> "$GITHUB_OUTPUT"
+          elif [ "$ENVIRONMENT" = "Production" ]; then
+            echo "url=" >> "$GITHUB_OUTPUT"
+          elif [ "$HAS_BYPASS" = "true" ]; then
+            echo "url=$DEPLOY_URL" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Preview $DEPLOY_URL is behind Deployment Protection and VERCEL_AUTOMATION_BYPASS_SECRET is not set; the live token check is skipped."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run the live token check
+        if: steps.target.outputs.skip != 'true'
+        env:
+          LIVE_URL: ${{ steps.target.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: npm run test:live
       - name: Upload the mismatch report
