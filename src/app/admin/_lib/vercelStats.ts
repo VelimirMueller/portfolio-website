@@ -49,10 +49,29 @@ export type VercelStats =
 /** fetch init including Next.js' data-cache option (not in lib.dom types). */
 type VercelFetchInit = RequestInit & { next?: { revalidate?: number } };
 
+/** Which of the two requests failed; names the step in the error message. */
+type RequestStep = 'project' | 'deployments';
+
 class HttpError extends Error {
-  constructor(readonly status: number) {
+  constructor(
+    readonly status: number,
+    readonly step: RequestStep,
+  ) {
     super(`HTTP ${status}`);
   }
+}
+
+/** Env names to check for a status, never their values. */
+function errorHint(status: number, step: RequestStep): string {
+  if (status === 401 || status === 403) return ' Check that VERCEL_API_TOKEN is valid and its scope includes the team.';
+  if (status === 404 && step === 'project') return ' Check VERCEL_PROJECT and VERCEL_TEAM_ID.';
+  if (status === 404) return ' Check VERCEL_TEAM_ID.';
+  return '';
+}
+
+function httpErrorMessage(err: HttpError): string {
+  const what = err.step === 'project' ? 'project lookup' : 'deployments request';
+  return `Vercel stats are unavailable right now — the Vercel ${what} returned HTTP ${err.status}.${errorHint(err.status, err.step)}`;
 }
 
 function asString(value: unknown): string {
@@ -113,7 +132,8 @@ export function summarizeDeployments(deployments: VercelDeployment[]): VercelSum
  * Reads the project and its latest deployments from the Vercel REST API.
  * Never throws and never exposes the token: without VERCEL_API_TOKEN the
  * result is `{ status: 'unconfigured' }`; on any HTTP, network or timeout
- * error (8 s AbortController) it is a generic `{ status: 'error' }`.
+ * error (8 s AbortController) it is a generic `{ status: 'error' }` that
+ * names the failing step and the env vars to check.
  */
 export async function loadVercelStats(
   // globalThis.fetch (property access): stays undefined-safe in jsdom tests,
@@ -127,7 +147,7 @@ export async function loadVercelStats(
   const projectOrId = env.VERCEL_PROJECT || DEFAULT_PROJECT;
   const teamId = env.VERCEL_TEAM_ID || '';
 
-  const request = async (url: URL): Promise<Record<string, unknown>> => {
+  const request = async (url: URL, step: RequestStep): Promise<Record<string, unknown>> => {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
     try {
@@ -137,7 +157,7 @@ export async function loadVercelStats(
         next: { revalidate: 60 },
       };
       const res = await fetchImpl(url.toString(), init);
-      if (!res.ok) throw new HttpError(res.status);
+      if (!res.ok) throw new HttpError(res.status, step);
       return (await res.json()) as Record<string, unknown>;
     } finally {
       clearTimeout(timer);
@@ -150,14 +170,14 @@ export async function loadVercelStats(
   };
 
   try {
-    const projectRaw = await request(withTeam(new URL(`${API_BASE}/v9/projects/${encodeURIComponent(projectOrId)}`)));
+    const projectRaw = await request(withTeam(new URL(`${API_BASE}/v9/projects/${encodeURIComponent(projectOrId)}`)), 'project');
     const projectId = asString(projectRaw.id);
     if (!projectId) return { status: 'error', message: 'Vercel API returned no project' };
 
     const deploymentsUrl = new URL(`${API_BASE}/v6/deployments`);
     deploymentsUrl.searchParams.set('projectId', projectId);
     deploymentsUrl.searchParams.set('limit', String(DEPLOYMENTS_LIMIT));
-    const deploymentsRaw = await request(withTeam(deploymentsUrl));
+    const deploymentsRaw = await request(withTeam(deploymentsUrl), 'deployments');
 
     const list = Array.isArray(deploymentsRaw.deployments) ? deploymentsRaw.deployments : [];
     const deployments = list.map((d) => mapDeployment(d as Record<string, unknown>));
@@ -169,10 +189,11 @@ export async function loadVercelStats(
       summary: summarizeDeployments(deployments),
     };
   } catch (err) {
-    // Generic on purpose: the HTTP status at most, never the URL or token.
+    // Generic on purpose: the failing step, the HTTP status and env names at
+    // most, never the URL, the token or an ID value.
     const message =
       err instanceof HttpError
-        ? `Vercel stats are unavailable right now — the Vercel API responded with HTTP ${err.status}.`
+        ? httpErrorMessage(err)
         : 'Vercel stats are unavailable right now — the Vercel API request failed.';
     return { status: 'error', message };
   }
