@@ -3,8 +3,8 @@
 # Local only: Docker, psql and the Supabase CLI. It never links or pushes to the
 # hosted project. Used by CI (job "Database Migrations & SQL Tests").
 #
-#   npm run test:db              start the local database, migrate, test
-#   KEEP_DB=1 npm run test:db    leave the database running afterwards
+#   pnpm run test:db              start the local database, migrate, test
+#   KEEP_DB=1 pnpm run test:db    leave the database running afterwards
 #
 # Steps:
 #   1. Start only Postgres, without migrations.
@@ -17,7 +17,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/../.."
 
-# The CLI from devDependencies (npm ci), else the one on PATH (CI installs the same
+# The CLI from devDependencies (pnpm install), else the one on PATH (CI installs the same
 # version with supabase/setup-cli).
 if [[ -x node_modules/.bin/supabase ]]; then SUPABASE=(node_modules/.bin/supabase); else SUPABASE=(supabase); fi
 # The migration right before magic_v2: the catalog fixture loads after it.

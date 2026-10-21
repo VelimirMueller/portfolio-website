@@ -3,6 +3,7 @@
   "version": "2.3.0",
   "private": true,
   "license": "UNLICENSED",
+  "packageManager": "pnpm@12.10.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,9 +15,9 @@
     "type-check": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test:visual": "npx playwright test --config=playwright-storybook.config.ts",
-    "test:e2e": "npx playwright test --config=playwright.config.ts",
-    "test:live": "npx playwright test --config=playwright-live.config.ts",
+    "test:visual": "pnpm exec playwright test --config=playwright-storybook.config.ts",
+    "test:e2e": "pnpm exec playwright test --config=playwright.config.ts",
+    "test:live": "pnpm exec playwright test --config=playwright-live.config.ts",
     "test:db": "bash scripts/db/test-migrations.sh",
     "db:types": "bash scripts/db/gen-types.sh",
     "prepare": "husky"

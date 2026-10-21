@@ -4,8 +4,8 @@ import { test, expect } from '@playwright/test';
  * Visual Regression Tests for Storybook Components
  *
  * Navigates to each story via the iframe URL and captures screenshots.
- * Run with: npm run test:visual
- * Generate baselines: npm run test:visual -- --update-snapshots
+ * Run with: pnpm run test:visual
+ * Generate baselines: pnpm run test:visual --update-snapshots
  */
 
 const storyUrl = (id: string) =>

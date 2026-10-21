@@ -1,0 +1,14 @@
+# Dependencies whose install scripts may run (pnpm blocks all others).
+allowBuilds:
+  # Native watcher for Jest; builds from source only when no prebuilt binary fits.
+  "@parcel/watcher": true
+  # SWC binary check for next-intl.
+  "@swc/core": true
+  # Native SQLite for vlm-code-context-mcp.
+  better-sqlite3: true
+  # esbuild binary check for Storybook (Vite).
+  esbuild: true
+  # Native resolver for eslint-config-next.
+  unrs-resolver: true
+  # Its postinstall only prints a setup hint.
+  vlm-code-context-mcp: false

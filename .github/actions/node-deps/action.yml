@@ -1,13 +1,15 @@
-# Shared setup for the jobs that need node_modules (issue #81): Node 24 with the
-# npm cache, then a clean install from package-lock.json.
+# Shared setup for the jobs that need node_modules (issue #81): pnpm (version from
+# packageManager in package.json), Node 24 with the pnpm store cache, then a clean
+# install from pnpm-lock.yaml.
 name: Node and dependencies
-description: Set up Node 24 with the npm cache and run npm ci.
+description: Set up pnpm and Node 24 with the pnpm cache and run pnpm install --frozen-lockfile.
 runs:
   using: composite
   steps:
+    - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
     - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
         node-version: 24
-        cache: npm
-    - run: npm ci
+        cache: pnpm
+    - run: pnpm install --frozen-lockfile
       shell: bash

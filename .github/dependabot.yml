@@ -1,8 +1,10 @@
-# Dependabot (issue #67): version updates for npm and GitHub Actions.
+# Dependabot (issue #67): version updates for the JavaScript dependencies and GitHub Actions.
 # Security updates come from the repo setting "Dependabot security updates"
 # and are not limited by the schedules below.
 version: 2
 updates:
+  # "npm" is Dependabot's ecosystem name for npm, pnpm and Yarn; it reads
+  # package.json and pnpm-lock.yaml and updates the pnpm lockfile.
   - package-ecosystem: npm
     directory: /
     schedule:

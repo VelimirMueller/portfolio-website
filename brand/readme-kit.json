@@ -85,10 +85,10 @@
       "title": "QUICK START",
       "lines": [
         "$ git clone https://github.com/VelimirMueller/portfolio-website.git",
-        "$ cd portfolio-website && npm install",
+        "$ cd portfolio-website && pnpm install",
         "$ cp .env.example .env.local",
         "# add your Supabase URL and anon key",
-        "$ npm run dev"
+        "$ pnpm run dev"
       ]
     },
     {
@@ -188,11 +188,11 @@
       "items": [
         {
           "lead": "Open localhost:3000",
-          "text": "`npm run dev` serves the app on [localhost:3000](http://localhost:3000)."
+          "text": "`pnpm run dev` serves the app on [localhost:3000](http://localhost:3000)."
         },
         {
           "lead": "CSP blocks eval under next dev",
-          "text": "Client components (counters, keyboard shortcuts) do not hydrate locally. Check interactive behaviour with `npm run build && npm start`."
+          "text": "Client components (counters, keyboard shortcuts) do not hydrate locally. Check interactive behaviour with `pnpm run build && pnpm start`."
         }
       ]
     },
@@ -245,52 +245,52 @@
       "title": "SCRIPTS",
       "rows": [
         {
-          "cmd": "npm run dev",
+          "cmd": "pnpm run dev",
           "text": "Start the development server."
         },
         {
-          "cmd": "npm run build",
+          "cmd": "pnpm run build",
           "text": "Production build."
         },
         {
-          "cmd": "npm run start",
+          "cmd": "pnpm run start",
           "text": "Serve the production build."
         },
         {
-          "cmd": "npm run lint",
+          "cmd": "pnpm run lint",
           "text": "ESLint check."
         },
         {
-          "cmd": "npm run type-check",
+          "cmd": "pnpm run type-check",
           "text": "TypeScript type check (no emit)."
         },
         {
-          "cmd": "npm test",
+          "cmd": "pnpm test",
           "text": "Jest unit tests."
         },
         {
-          "cmd": "npm run test:watch",
+          "cmd": "pnpm run test:watch",
           "text": "Jest in watch mode."
         },
         {
-          "cmd": "npm run test:coverage",
+          "cmd": "pnpm run test:coverage",
           "text": "Coverage report."
         },
         {
-          "cmd": "npm run storybook",
+          "cmd": "pnpm run storybook",
           "text": "Storybook on port 6006."
         },
         {
-          "cmd": "npm run build-storybook",
+          "cmd": "pnpm run build-storybook",
           "text": "Static Storybook site."
         },
         {
-          "cmd": "npm run test:visual",
-          "text": "Playwright visual regression tests. `-- --update-snapshots` writes new baselines."
+          "cmd": "pnpm run test:visual",
+          "text": "Playwright visual regression tests. `--update-snapshots` writes new baselines."
         },
         {
-          "cmd": "npm run test:e2e",
-          "text": "Playwright E2E tests. `-- --grep \"Navigation\"` runs one group."
+          "cmd": "pnpm run test:e2e",
+          "text": "Playwright E2E tests. `--grep \"Navigation\"` runs one group."
         }
       ]
     },
@@ -331,7 +331,7 @@
       "type": "terminal",
       "title": "COMMIT CONVENTION",
       "lines": [
-        "# Conventional Commits. husky commit-msg runs commitlint; npm install sets it up.",
+        "# Conventional Commits. husky commit-msg runs commitlint; pnpm install sets it up.",
         "type(scope?): subject",
         "",
         "feat(contact): add honeypot field",
@@ -413,7 +413,7 @@
         },
         {
           "lead": "Same checks locally",
-          "text": "`npm run lint && npm run type-check && npm test && npm run test:e2e`"
+          "text": "`pnpm run lint && pnpm run type-check && pnpm test && pnpm run test:e2e`"
         }
       ]
     },
@@ -496,7 +496,7 @@
         "code": [
           [
             "bash",
-            "git clone https://github.com/VelimirMueller/portfolio-website.git\ncd portfolio-website\nnpm install\ncp .env.example .env.local   # add your Supabase URL and anon key\nnpm run dev"
+            "git clone https://github.com/VelimirMueller/portfolio-website.git\ncd portfolio-website\npnpm install\ncp .env.example .env.local   # add your Supabase URL and anon key\npnpm run dev"
           ]
         ]
       },
@@ -525,7 +525,7 @@
         "code": [
           [
             "bash",
-            "npm test                                      # all unit tests\nnpm run test:visual -- --update-snapshots     # new visual baselines\nnpm run test:e2e -- --grep \"Navigation\"       # one E2E group\nnpm run storybook                             # localhost:6006"
+            "pnpm test                                  # all unit tests\npnpm run test:visual --update-snapshots    # new visual baselines\npnpm run test:e2e --grep \"Navigation\"      # one E2E group\npnpm run storybook                         # localhost:6006"
           ],
           [
             "text",

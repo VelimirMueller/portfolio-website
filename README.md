@@ -48,7 +48,7 @@
 <p>
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/readme/start-v2-light.svg">
-  <img alt="Terminal: $ git clone https://github.com/VelimirMueller/portfolio-website.git | $ cd portfolio-website &amp;&amp; npm install | $ cp .env.example .env.local | # add your Supabase URL and anon key | $ npm run dev" src="assets/readme/start-v2-dark.svg" width="100%">
+  <img alt="Terminal: $ git clone https://github.com/VelimirMueller/portfolio-website.git | $ cd portfolio-website &amp;&amp; pnpm install | $ cp .env.example .env.local | # add your Supabase URL and anon key | $ pnpm run dev" src="assets/readme/start-v2-dark.svg" width="100%">
 </picture>
 </p>
 
@@ -58,9 +58,9 @@
 ```bash
 git clone https://github.com/VelimirMueller/portfolio-website.git
 cd portfolio-website
-npm install
+pnpm install
 cp .env.example .env.local   # add your Supabase URL and anon key
-npm run dev
+pnpm run dev
 ```
 
 </details>
@@ -68,7 +68,7 @@ npm run dev
 <p>
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/readme/devnotes-v2-light.svg">
-  <img alt="Open localhost:3000: npm run dev serves the app on localhost:3000 (http://localhost:3000). CSP blocks eval under next dev: Client components (counters, keyboard shortcuts) do not hydrate locally. Check interactive behaviour with npm run build &amp;&amp; npm start" src="assets/readme/devnotes-v2-dark.svg" width="100%">
+  <img alt="Open localhost:3000: pnpm run dev serves the app on localhost:3000 (http://localhost:3000). CSP blocks eval under next dev: Client components (counters, keyboard shortcuts) do not hydrate locally. Check interactive behaviour with pnpm run build &amp;&amp; pnpm start" src="assets/readme/devnotes-v2-dark.svg" width="100%">
 </picture>
 </p>
 
@@ -108,7 +108,7 @@ npm run dev
 <p>
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/readme/scripts-v2-light.svg">
-  <img alt="npm run dev: Start the development server. npm run build: Production build. npm run start: Serve the production build. npm run lint: ESLint check. npm run type-check: TypeScript type check (no emit). npm test: Jest unit tests. npm run test:watch: Jest in watch mode. npm run test:coverage: Coverage report. npm run storybook: Storybook on port 6006. npm run build-storybook: Static Storybook site. npm run test:visual: Playwright visual regression tests. -- --update-snapshots writes new baselines. npm run test:e2e: Playwright E2E tests. -- --grep &quot;Navigation&quot; runs one group" src="assets/readme/scripts-v2-dark.svg" width="100%">
+  <img alt="pnpm run dev: Start the development server. pnpm run build: Production build. pnpm run start: Serve the production build. pnpm run lint: ESLint check. pnpm run type-check: TypeScript type check (no emit). pnpm test: Jest unit tests. pnpm run test:watch: Jest in watch mode. pnpm run test:coverage: Coverage report. pnpm run storybook: Storybook on port 6006. pnpm run build-storybook: Static Storybook site. pnpm run test:visual: Playwright visual regression tests. --update-snapshots writes new baselines. pnpm run test:e2e: Playwright E2E tests. --grep &quot;Navigation&quot; runs one group" src="assets/readme/scripts-v2-dark.svg" width="100%">
 </picture>
 </p>
 
@@ -122,7 +122,7 @@ npm run dev
 <p>
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/readme/commits-v2-light.svg">
-  <img alt="Terminal: # Conventional Commits. husky commit-msg runs commitlint; npm install sets it up. | type(scope?): subject |  | feat(contact): add honeypot field | fix(theme): honor system light preference | chore(release): v2.0.0 | # types: feat fix chore docs test refactor perf ci" src="assets/readme/commits-v2-dark.svg" width="100%">
+  <img alt="Terminal: # Conventional Commits. husky commit-msg runs commitlint; pnpm install sets it up. | type(scope?): subject |  | feat(contact): add honeypot field | fix(theme): honor system light preference | chore(release): v2.0.0 | # types: feat fix chore docs test refactor perf ci" src="assets/readme/commits-v2-dark.svg" width="100%">
 </picture>
 </p>
 
@@ -150,10 +150,10 @@ npm run dev
 <summary><picture><source media="(prefers-color-scheme: light)" srcset="assets/readme/links-7-v2-light.svg"><img alt="Plain text" src="assets/readme/links-7-v2-dark.svg" width="32%"></picture></summary>
 
 ```bash
-npm test                                      # all unit tests
-npm run test:visual -- --update-snapshots     # new visual baselines
-npm run test:e2e -- --grep "Navigation"       # one E2E group
-npm run storybook                             # localhost:6006
+pnpm test                                  # all unit tests
+pnpm run test:visual --update-snapshots    # new visual baselines
+pnpm run test:e2e --grep "Navigation"      # one E2E group
+pnpm run storybook                         # localhost:6006
 ```
 
 ```text
@@ -187,7 +187,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
 <p>
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/readme/ci-v2-light.svg">
-  <img alt="GitHub Actions: .github/workflows/ci.yml runs on every push and PR to main. Jobs: Lint &amp; type check (ESLint + tsc --noEmit), unit tests with coverage + Next.js build, Storybook build + visual regression, E2E against the production build. Same checks locally: npm run lint &amp;&amp; npm run type-check &amp;&amp; npm test &amp;&amp; npm run test:e2e" src="assets/readme/ci-v2-dark.svg" width="100%">
+  <img alt="GitHub Actions: .github/workflows/ci.yml runs on every push and PR to main. Jobs: Lint &amp; type check (ESLint + tsc --noEmit), unit tests with coverage + Next.js build, Storybook build + visual regression, E2E against the production build. Same checks locally: pnpm run lint &amp;&amp; pnpm run type-check &amp;&amp; pnpm test &amp;&amp; pnpm run test:e2e" src="assets/readme/ci-v2-dark.svg" width="100%">
 </picture>
 </p>
 

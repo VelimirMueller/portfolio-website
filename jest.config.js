@@ -43,13 +43,17 @@ const config = {
 // Next 15: '/node_modules/(?!.pnpm)(?!(geist)/)' and a .pnpm variant), but
 // next-intl ships untranspiled ESM. Replace them with one pattern that exempts
 // next-intl and use-intl so Jest can transform them. Any one matching pattern
-// skips a file, so a leftover next/jest pattern would undo the exemption.
+// skips a file, so a leftover next/jest pattern (also its .pnpm variant, which
+// starts with "/node_modules[") would undo the exemption.
+// pnpm keeps the real files in node_modules/.pnpm/<name>@<version>/node_modules/
+// <name>/, so the pattern also exempts the .pnpm/next-intl@ and .pnpm/use-intl@
+// directories. Their own dependencies still match the second /node_modules/.
 module.exports = async () => {
   const jestConfig = await createJestConfig(config)();
   jestConfig.transformIgnorePatterns = [
-    "/node_modules/(?!(next-intl|use-intl)/)",
+    "/node_modules/(?!(\\.pnpm/)?(next-intl|use-intl)[@/])",
     ...(jestConfig.transformIgnorePatterns || []).filter(
-      (pattern) => !pattern.startsWith("/node_modules/")
+      (pattern) => !pattern.startsWith("/node_modules")
     ),
   ];
   return jestConfig;
