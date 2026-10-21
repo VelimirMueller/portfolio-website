@@ -51,6 +51,38 @@ describe('loadVercelStats', () => {
     expect(fetchImpl).toHaveBeenCalledTimes(1);
   });
 
+  it('names the project lookup and the env vars to check on a project 404', async () => {
+    const fetchImpl = jest.fn(() => Promise.resolve(jsonResponse({ error: 'not found' }, 404)));
+    const result = await loadVercelStats(fetchImpl, env({ VERCEL_PROJECT: 'prj_secret_id', VERCEL_TEAM_ID: 'team_secret' }));
+    if (result.status !== 'error') throw new Error('expected error');
+    expect(result.message).toContain('project lookup returned HTTP 404');
+    expect(result.message).toContain('Check VERCEL_PROJECT and VERCEL_TEAM_ID.');
+    expect(result.message).not.toMatch(/prj_secret_id|team_secret|api\.vercel\.com/);
+    expect(result.message).not.toContain(TOKEN);
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it('names the deployments request on a deployments 404', async () => {
+    const fetchImpl = jest.fn((url: string) =>
+      Promise.resolve(url.includes('/v9/projects/') ? jsonResponse(projectBody) : jsonResponse({}, 404)),
+    );
+    const result = await loadVercelStats(fetchImpl, env());
+    if (result.status !== 'error') throw new Error('expected error');
+    expect(result.message).toContain('deployments request returned HTTP 404');
+    expect(result.message).toContain('Check VERCEL_TEAM_ID.');
+    expect(result.message).not.toContain('prj_portfolio');
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
+  it('points at the token scope on a 403', async () => {
+    const fetchImpl = jest.fn(() => Promise.resolve(jsonResponse({ error: 'forbidden' }, 403)));
+    const result = await loadVercelStats(fetchImpl, env());
+    if (result.status !== 'error') throw new Error('expected error');
+    expect(result.message).toContain('project lookup returned HTTP 403');
+    expect(result.message).toContain('VERCEL_API_TOKEN');
+    expect(result.message).not.toContain(TOKEN);
+  });
+
   it('maps deployments and summarizes them', async () => {
     const longMessage = `${'x'.repeat(100)}\nsecond line`;
     const fetchImpl = vercelFetch({

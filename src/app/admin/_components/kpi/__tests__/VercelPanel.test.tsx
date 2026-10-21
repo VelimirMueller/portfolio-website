@@ -20,6 +20,14 @@ describe('VercelPanel — error', () => {
     expect(notice).toHaveTextContent('HTTP 401');
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
+
+  it('shows the failing step and the env vars to check on a 404', () => {
+    const message =
+      'Vercel stats are unavailable right now — the Vercel project lookup returned HTTP 404. Check VERCEL_PROJECT and VERCEL_TEAM_ID.';
+    render(<VercelPanel stats={{ status: 'error', message }} />);
+    expect(screen.getByRole('status')).toHaveTextContent(message);
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+  });
 });
 
 describe('VercelPanel — ok', () => {
