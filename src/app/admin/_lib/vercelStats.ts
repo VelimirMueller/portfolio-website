@@ -5,7 +5,8 @@
 const API_BASE = 'https://api.vercel.com';
 const DEPLOYMENTS_LIMIT = 20;
 const REQUEST_TIMEOUT_MS = 8_000;
-const DEFAULT_PROJECT = 'portfolio-website';
+// The Vercel project name (vercel.com/<team>/portfolio-website-v1.0), not the repo name.
+const DEFAULT_PROJECT = 'portfolio-website-v1.0';
 
 /** States Vercel reports today; anything unknown keeps its raw string. */
 export const DEPLOYMENT_STATES = ['READY', 'ERROR', 'BUILDING', 'QUEUED', 'CANCELED', 'INITIALIZING'] as const;
