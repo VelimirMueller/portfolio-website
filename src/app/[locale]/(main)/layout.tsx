@@ -21,12 +21,12 @@ export default async function MainLayout({ children, params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd }}
       />
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-bold">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-100 focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-bold">
         {t('skipToContent')}
       </a>
       <SiteHyperspace />
       <Navigation />
-      <main id="main-content" className="flex-grow">
+      <main id="main-content" className="grow">
         <PageWarp>{children}</PageWarp>
       </main>
       <Footer />

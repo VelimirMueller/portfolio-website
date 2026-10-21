@@ -16,12 +16,12 @@ export default function NotFoundPage() {
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 text-center relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-brand-500/[0.06] blur-3xl" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-brand-500/6 blur-3xl" />
       </div>
 
       <AnimateIn from="bottom">
         <div className="relative z-10">
-          <h1 className="text-[96px] md:text-[128px] font-bold leading-none tracking-tighter bg-gradient-to-br from-brand-500 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-[96px] md:text-[128px] font-bold leading-none tracking-tighter bg-linear-to-br from-brand-500 to-purple-500 bg-clip-text text-transparent">
             {t('notFound.title')}
           </h1>
           <h2 className="text-xl md:text-2xl font-medium text-black dark:text-white mt-2">
@@ -31,7 +31,7 @@ export default function NotFoundPage() {
             {t('notFound.description')}
           </p>
 
-          <AsciiArt art={ASCII_LOST} className="mt-8 mx-auto w-fit text-left text-[11px] dark:text-white/30" />
+          <AsciiArt art={ASCII_LOST} className="mt-8 mx-auto w-fit text-left text-[11px]! dark:text-white/30!" />
 
           <div className="flex gap-6 justify-center mt-8">
             {links.map(({ key, href, icon: Icon }) => (

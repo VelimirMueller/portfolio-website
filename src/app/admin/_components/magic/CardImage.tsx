@@ -15,7 +15,7 @@ export function CardImage({
   size?: 'small' | 'normal';
   className?: string;
 }) {
-  const box = `aspect-[488/680] rounded-[4.75%/3.5%] overflow-hidden shrink-0 ${className}`;
+  const box = `aspect-488/680 rounded-[4.75%/3.5%] overflow-hidden shrink-0 ${className}`;
   const src = cardImage(card.image_url, size);
   const large = cardImage(card.image_url, 'large');
   if (!src || !large) {

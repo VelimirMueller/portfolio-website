@@ -176,7 +176,7 @@ export default function ContactContent() {
   return (
     <div className="relative overflow-hidden">
     {/* Full-bleed art: the transmitter sits behind the header and the form; everything overlaps it. */}
-    <ArtBackdrop className="bg-[url('/art/contact-v1.webp')] bg-[length:auto_100%] md:bg-[length:150%_auto] bg-[position:78%_0%] md:bg-[position:85%_35%] [mask-image:linear-gradient(to_bottom,black_70%,transparent)]" />
+    <ArtBackdrop className="bg-[url('/art/contact-v1.webp')] bg-size-[auto_100%] md:bg-size-[150%_auto] bg-position-[78%_0%] md:bg-position-[85%_35%] mask-[linear-gradient(to_bottom,black_70%,transparent)]" />
     <div className="relative pt-32 pb-20 px-4 max-w-3xl mx-auto">
       <AnimateIn from="bottom">
         <div className="relative">
@@ -198,7 +198,7 @@ export default function ContactContent() {
                 <h3 className="text-xl font-semibold text-black dark:text-white">{t('contact.successHeading')}</h3>
                 <p className="text-sm text-gray-500 mt-2 max-w-sm">{t('contact.successDescription')}</p>
                 <div className="w-48 h-1 bg-gray-200 dark:bg-gray-800 rounded-full mt-6 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-green-500 to-brand-500 rounded-full transition-all duration-1000" style={{ width: `${((5 - countdown) / 5) * 100}%` }} />
+                  <div className="h-full bg-linear-to-r from-green-500 to-brand-500 rounded-full transition-all duration-1000" style={{ width: `${((5 - countdown) / 5) * 100}%` }} />
                 </div>
                 <p className="text-[11px] text-gray-500 font-mono mt-3">{t('contact.redirecting', { seconds: countdown })}</p>
               </div>
@@ -221,7 +221,7 @@ export default function ContactContent() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required
-                        className={`w-full bg-gray-50 dark:bg-[#050505] border ${getFieldError('name') ? 'border-red-500' : touched.name ? 'border-green-500' : 'border-black/10 dark:border-white/10'} rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500`}
+                        className={`w-full bg-gray-50 dark:bg-[#050505] border ${getFieldError('name') ? 'border-red-500' : touched.name ? 'border-green-500' : 'border-black/10 dark:border-white/10'} rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-hidden font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500`}
                         placeholder={t('contact.namePlaceholder')}
                       />
                       {getFieldError('name') && (
@@ -241,7 +241,7 @@ export default function ContactContent() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required
-                        className={`w-full bg-gray-50 dark:bg-[#050505] border ${getFieldError('email') ? 'border-red-500' : touched.email ? 'border-green-500' : 'border-black/10 dark:border-white/10'} rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500`}
+                        className={`w-full bg-gray-50 dark:bg-[#050505] border ${getFieldError('email') ? 'border-red-500' : touched.email ? 'border-green-500' : 'border-black/10 dark:border-white/10'} rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-hidden font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500`}
                         placeholder={t('contact.emailPlaceholder')}
                       />
                       {getFieldError('email') && (
@@ -261,7 +261,7 @@ export default function ContactContent() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       required
-                      className={`w-full bg-gray-50 dark:bg-[#050505] border ${getFieldError('message') ? 'border-red-500' : touched.message ? 'border-green-500' : 'border-black/10 dark:border-white/10'} rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-none font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500`}
+                      className={`w-full bg-gray-50 dark:bg-[#050505] border ${getFieldError('message') ? 'border-red-500' : touched.message ? 'border-green-500' : 'border-black/10 dark:border-white/10'} rounded-lg p-4 text-black dark:text-white focus:border-black dark:focus:border-white transition-colors outline-hidden font-mono text-sm focus-visible:ring-2 focus-visible:ring-brand-500`}
                       placeholder={t('contact.messagePlaceholder')}
                     ></textarea>
                     {getFieldError('message') && (
@@ -306,7 +306,7 @@ export default function ContactContent() {
             )}
 
             <div className="mt-12 pt-12 border-t border-black/5 dark:border-white/5 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <a href="mailto:velimir.mueller@googlemail.com" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:!border-brand-500/50 transition-all group">
+              <a href="mailto:velimir.mueller@googlemail.com" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:border-brand-500/50! transition-all group">
                 <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
                   <Mail size={18}/>
                 </div>
@@ -315,7 +315,7 @@ export default function ContactContent() {
                   <div className="text-black dark:text-white font-mono text-sm break-all">{t('contact.emailLink')}</div>
                 </div>
               </a>
-              <a href="https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:!border-brand-500/50 transition-all group">
+              <a href="https://www.linkedin.com/in/velimir-m%C3%BCller-07b460175" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:border-brand-500/50! transition-all group">
                 <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
                   <LinkedinIcon size={18}/>
                 </div>
@@ -324,7 +324,7 @@ export default function ContactContent() {
                   <div className="text-black dark:text-white font-mono text-sm">{t('contact.linkedinLink')}</div>
                 </div>
               </a>
-              <a href="https://github.com/VelimirMueller" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:!border-brand-500/50 transition-all group">
+              <a href="https://github.com/VelimirMueller" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl glass-inner hover:border-brand-500/50! transition-all group">
                 <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:text-brand-700 dark:group-hover:text-brand-300">
                   <GithubIcon size={18}/>
                 </div>

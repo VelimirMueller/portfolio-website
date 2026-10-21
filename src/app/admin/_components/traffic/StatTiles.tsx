@@ -97,8 +97,8 @@ function Tile({
     </>
   );
 
-  const base = `group relative overflow-hidden rounded-[1.5rem] border p-5 ${wide ? 'col-span-2 lg:col-span-1' : ''} text-left transition-all motion-safe:animate-fade-in-up ${
-    selected ? 'border-white/20 bg-white/[0.04]' : 'border-white/[0.07] bg-[#0b0b10]/90 hover:border-white/[0.14]'
+  const base = `group relative overflow-hidden rounded-3xl border p-5 ${wide ? 'col-span-2 lg:col-span-1' : ''} text-left transition-all motion-safe:animate-fade-in-up ${
+    selected ? 'border-white/20 bg-white/4' : 'border-white/[0.07] bg-[#0b0b10]/90 hover:border-white/[0.14]'
   }`;
 
   if (!onSelect) {
@@ -114,7 +114,7 @@ function Tile({
       onClick={onSelect}
       aria-pressed={selected}
       title={`Chart ${spec.label.toLowerCase()} (${spec.label[0].toLowerCase()})`}
-      className={`${base} hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 motion-reduce:hover:translate-y-0`}
+      className={`${base} hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400 motion-reduce:hover:translate-y-0`}
       style={{ animationDelay: `${index * 60}ms` }}
     >
       {body}

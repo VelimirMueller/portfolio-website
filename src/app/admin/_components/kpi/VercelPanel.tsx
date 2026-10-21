@@ -79,7 +79,7 @@ export function VercelPanel({ stats }: { stats: VercelStats }) {
     return (
       <p
         role="status"
-        className="max-w-2xl rounded-2xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 text-sm text-gray-400"
+        className="max-w-2xl rounded-2xl border border-white/8 bg-white/2 px-4 py-3 text-sm text-gray-400"
       >
         {stats.message}
       </p>
@@ -134,7 +134,7 @@ export function VercelPanel({ stats }: { stats: VercelStats }) {
                   href={deploymentHref(current.url)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-xs text-brand-400 hover:text-brand-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+                  className="font-mono text-xs text-brand-400 hover:text-brand-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-400"
                 >
                   {current.url}
                 </a>

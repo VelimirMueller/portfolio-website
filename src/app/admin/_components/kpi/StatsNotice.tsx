@@ -7,7 +7,7 @@ export function StatsNotice() {
   return (
     <p
       role="status"
-      className="rounded-2xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 text-sm text-gray-400"
+      className="rounded-2xl border border-white/8 bg-white/2 px-4 py-3 text-sm text-gray-400"
     >
       Stats are not available yet — run migration 20261010060000
     </p>

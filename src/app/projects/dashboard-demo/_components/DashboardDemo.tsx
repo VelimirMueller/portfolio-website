@@ -37,16 +37,16 @@ export function DashboardDemo() {
   return (
     <div className="relative isolate flex h-screen bg-[#050505] text-[#E2E2E2] font-sans overflow-hidden">
       {/* Backdrop for the glass: a faded brand render plus the demo's own blue and violet light. */}
-      <div aria-hidden="true" className="absolute -z-10 inset-0 pointer-events-none bg-[url('/art/v2/site-svc-stack.webp')] bg-cover bg-center opacity-60 [mask-image:radial-gradient(ellipse_at_70%_40%,black_20%,transparent_75%)]" />
+      <div aria-hidden="true" className="absolute -z-10 inset-0 pointer-events-none bg-[url('/art/v2/site-svc-stack.webp')] bg-cover bg-center opacity-60 mask-[radial-gradient(ellipse_at_70%_40%,black_20%,transparent_75%)]" />
       <div aria-hidden="true" className="absolute -z-10 top-[-10%] left-[15%] w-[40vw] h-[50vh] rounded-full bg-blue-600/25 blur-[140px] pointer-events-none" />
       <div aria-hidden="true" className="absolute -z-10 bottom-[-15%] right-[5%] w-[45vw] h-[55vh] rounded-full bg-violet-600/25 blur-[150px] pointer-events-none" />
 
       {/* --- Sidebar --- */}
       {sidebarOpen && <div className="fixed inset-0 bg-black/60 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
-      <aside aria-label="Dashboard sidebar navigation" className={`${sidebarOpen ? 'flex fixed inset-y-0 left-0 z-40 w-64' : 'hidden'} md:flex md:relative md:w-64 flex-shrink-0 border-r glass-demo-side flex-col justify-between p-4`}>
+      <aside aria-label="Dashboard sidebar navigation" className={`${sidebarOpen ? 'flex fixed inset-y-0 left-0 z-40 w-64' : 'hidden'} md:flex md:relative md:w-64 shrink-0 border-r glass-demo-side flex-col justify-between p-4`}>
         <div>
           <div className="flex items-center gap-3 px-4 mb-12 mt-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white">
+            <div className="w-8 h-8 rounded-lg bg-linear-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white">
               C
             </div>
             <span className="font-bold text-xl tracking-tight">CRM<span className="text-gray-600">Pro</span></span>
@@ -83,7 +83,7 @@ export function DashboardDemo() {
       {/* --- Main Content --- */}
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
 
-        <header className="h-20 border-b border-[#222] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#050505]/60 backdrop-blur z-20 shrink-0">
+        <header className="h-20 border-b border-[#222] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#050505]/60 backdrop-blur-sm z-20 shrink-0">
           <div className="flex items-center gap-4 md:w-96">
             <button className="md:hidden p-2 text-gray-400" aria-label="Open sidebar menu" onClick={() => setSidebarOpen(o => !o)}>{sidebarOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
 
@@ -93,7 +93,7 @@ export function DashboardDemo() {
                 type="search"
                 aria-label={`Search in ${getHeaderTitle()}`}
                 placeholder={`Search in ${getHeaderTitle()}...`}
-                className="w-full bg-[#111] border border-[#222] rounded-full py-2.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                className="w-full bg-[#111] border border-[#222] rounded-full py-2.5 pl-12 pr-4 text-sm text-white focus:outline-hidden focus:border-blue-500 transition-colors"
               />
             </div>
           </div>
@@ -110,14 +110,14 @@ export function DashboardDemo() {
               </Link>
             </div>
             <div className="relative">
-              <button onClick={() => setNotifOpen(!notifOpen)} className="p-3 rounded-xl transition-all group hover:bg-[#222] text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 relative" aria-label="Notifications">
+              <button onClick={() => setNotifOpen(!notifOpen)} className="p-3 rounded-xl transition-all group hover:bg-[#222] text-gray-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 relative" aria-label="Notifications">
                 <Bell size={20} className="text-gray-500 group-hover:text-white" aria-hidden="true" />
                 <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border border-[#050505]" />
               </button>
               <CRMNotificationDropdown open={notifOpen} onClose={() => setNotifOpen(false)} />
             </div>
             <div className="flex items-center gap-3 pl-6 border-l border-[#222]">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-r from-gray-700 to-gray-600 border-2 border-[#222] relative">
+              <div className="w-9 h-9 rounded-full bg-linear-to-r from-gray-700 to-gray-600 border-2 border-[#222] relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/avatar-velimir.svg" alt="User" className="w-full h-full rounded-full" />
                 <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#111] rounded-full"></div>

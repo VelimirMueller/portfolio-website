@@ -18,7 +18,7 @@ export const Card = ({
   flush?: boolean;
 }) => (
   <div
-    className={`bg-[#111111] rounded-[2rem] ${flush ? '' : 'p-6'} border border-[#222] hover:border-[#333] transition-colors ${className}`}
+    className={`bg-[#111111] rounded-4xl ${flush ? '' : 'p-6'} border border-[#222] hover:border-[#333] transition-colors ${className}`}
     style={style}
   >
     {children}
@@ -74,7 +74,7 @@ export const Avatar = ({ name, size = 'sm' }: { name: string; size?: 'sm' | 'lg'
     aria-hidden="true"
     className={`${
       size === 'lg' ? 'w-12 h-12 rounded-2xl text-sm' : 'w-7 h-7 rounded-lg text-[10px]'
-    } shrink-0 bg-gradient-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center font-bold text-white`}
+    } shrink-0 bg-linear-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center font-bold text-white`}
   >
     {initials(name)}
   </div>

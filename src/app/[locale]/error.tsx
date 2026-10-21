@@ -22,7 +22,7 @@ export default function ErrorPage({ reset }: ErrorPageProps) {
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 text-center relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-red-500/[0.06] blur-3xl" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-red-500/6 blur-3xl" />
       </div>
 
       <AnimateIn from="bottom">

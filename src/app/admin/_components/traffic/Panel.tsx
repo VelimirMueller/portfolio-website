@@ -47,7 +47,7 @@ export function Panel({
       id={id}
       aria-labelledby={`${id}-title`}
       onPointerMove={onPointerMove}
-      className={`group relative scroll-mt-24 overflow-hidden rounded-[1.75rem] border border-white/[0.07] bg-[#0b0b10]/90 p-5 md:p-6 transition-colors hover:border-white/[0.12] ${className}`}
+      className={`group relative scroll-mt-24 overflow-hidden rounded-[1.75rem] border border-white/[0.07] bg-[#0b0b10]/90 p-5 md:p-6 transition-colors hover:border-white/12 ${className}`}
     >
       <div
         aria-hidden="true"
@@ -56,7 +56,7 @@ export function Panel({
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       />
       <div className="relative">
         <div className="mb-5 flex flex-wrap items-start justify-between gap-3">

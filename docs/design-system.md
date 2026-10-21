@@ -120,13 +120,13 @@ Public routes and both demos use the liquid-glass layer of the site rework (vm-b
 
 | Token group | Source |
 |---|---|
-| `dark/*`, `light/*` base roles, `brand/*` | `tailwind.config.ts` (`colors.dark`, `colors.light`, `colors.brand`) |
+| `dark/*`, `light/*` base roles, `brand/*` | `src/app/globals.css` `@theme` (`--color-dark-*`, `--color-light-*`, `--color-brand-*`) |
 | Body colours, scrollbar, card hover shadow | `src/app/globals.css` |
 | Button, input, nav, card states | `src/components/atoms/Button.tsx`, `src/components/molecules/*`, `src/components/organisms/*`, `ContactContent.tsx` |
 | Admin roles | `src/app/admin/_components/*` (mapped from drift greys, see F-3) |
-| Fonts and text styles | `tailwind.config.ts` `fontFamily` and the type classes in `src/` |
+| Fonts and text styles | `src/app/globals.css` `@theme` `--font-*` and the type classes in `src/` |
 | Radius, spacing, grid | Tailwind defaults and the classes in `src/` (`rounded-[1.5rem]`, `max-w-7xl`, `gap-4`) |
-| Motion | `tailwind.config.ts` `animation` and `keyframes`, `globals.css` |
+| Motion | `src/app/globals.css` (`@theme` `--animate-*` and `@keyframes`) |
 | Group colours | `vm-brand` `brand.json` (flagship, lab, ops, venture) |
 
 ## Change rules

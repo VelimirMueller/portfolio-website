@@ -29,7 +29,7 @@ export const SectionStage = ({ art, side = 'right', children, className = '' }: 
   const right = side === 'right';
   return (
     <div className={`relative isolate ${className}`}>
-      <div aria-hidden="true" data-testid="stage-art" className={`absolute -z-10 top-[-10%] h-[120%] w-[100vw] max-w-[1800px] pointer-events-none bg-cover bg-center ${ART[art]} ${right ? 'right-[-30vw] [mask-image:radial-gradient(ellipse_at_62%_50%,black_35%,transparent_78%)]' : 'left-[-30vw] [mask-image:radial-gradient(ellipse_at_38%_50%,black_35%,transparent_78%)]'} invert hue-rotate-180 opacity-50 mix-blend-multiply saturate-150 dark:invert-0 dark:hue-rotate-0 dark:mix-blend-normal dark:opacity-100`} />
+      <div aria-hidden="true" data-testid="stage-art" className={`absolute -z-10 top-[-10%] h-[120%] w-screen max-w-[1800px] pointer-events-none bg-cover bg-center ${ART[art]} ${right ? 'right-[-30vw] mask-[radial-gradient(ellipse_at_62%_50%,black_35%,transparent_78%)]' : 'left-[-30vw] mask-[radial-gradient(ellipse_at_38%_50%,black_35%,transparent_78%)]'} invert hue-rotate-180 opacity-50 mix-blend-multiply saturate-150 dark:invert-0 dark:hue-rotate-0 dark:mix-blend-normal dark:opacity-100`} />
       {/* indigo light the glass refracts */}
       <div aria-hidden="true" className={`absolute -z-10 top-[20%] h-[60%] w-[45vw] rounded-full blur-[120px] pointer-events-none bg-brand-500/25 dark:bg-brand-500/30 ${right ? 'right-[-8vw]' : 'left-[-8vw]'}`} />
       {children}

@@ -57,7 +57,7 @@ export function AnalyticsToggle({ labels }: { labels: AnalyticsToggleLabels }) {
         aria-labelledby="analytics-toggle-label"
         disabled={state.browser}
         onClick={toggle}
-        className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+        className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full border transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
           active ? 'border-transparent bg-black dark:bg-white' : 'border-black/20 dark:border-white/20 bg-gray-200 dark:bg-[#222]'
         }`}
       >

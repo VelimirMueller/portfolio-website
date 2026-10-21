@@ -1,12 +1,13 @@
 /** @jest-environment node */
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { join, relative } from 'path';
-import config from '../../tailwind.config';
 
-// Guards issue #184: a `brand-<step>` class with no step in tailwind.config.ts
-// renders no CSS, so the style silently does nothing (hover:bg-brand-700 did).
+// Guards issue #184: a `brand-<step>` class with no `--color-brand-<step>` in the
+// @theme block of src/app/globals.css renders no CSS, so the style silently does
+// nothing (hover:bg-brand-700 did).
 
 const ROOT = join(__dirname, '..', '..');
+const GLOBALS_CSS = join(ROOT, 'src', 'app', 'globals.css');
 
 function walk(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
@@ -17,9 +18,11 @@ function walk(dir: string): string[] {
 }
 
 describe('brand colour classes', () => {
-  const brand = (config.theme?.extend?.colors as Record<string, Record<string, string>>).brand;
+  const brand: Record<string, string> = Object.fromEntries(
+    [...readFileSync(GLOBALS_CSS, 'utf8').matchAll(/--color-brand-(\d{2,3}):\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]),
+  );
 
-  it('every brand-<step> class in src/ has a value in tailwind.config.ts', () => {
+  it('every brand-<step> class in src/ has a value in the @theme block', () => {
     const missing: string[] = [];
     for (const file of walk(join(ROOT, 'src'))) {
       if (file === __filename) continue;

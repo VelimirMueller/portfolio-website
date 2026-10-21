@@ -28,7 +28,7 @@ export const PipelineView = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
         {PIPELINE_STAGES.map((stage, i) => (
           <Card key={stage.name} className="p-4 animate-fade-in-up relative overflow-hidden" style={{ animationDelay: `${i * 80}ms` }}>
-            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${stage.color}`} />
+            <div className={`absolute top-0 left-0 right-0 h-1 bg-linear-to-r ${stage.color}`} />
             <div className="text-[10px] text-gray-500 font-mono uppercase tracking-wider mb-2">{stage.name}</div>
             <div className="text-xl font-mono font-bold text-white mb-0.5">{stage.count}</div>
             <div className="text-xs text-gray-400 font-mono mb-3">{formatCurrency(stage.value)}</div>
@@ -45,7 +45,7 @@ export const PipelineView = () => {
             <div key={i} className="p-3 rounded-xl glass-demo-inner border">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">{deal.company.charAt(0)}</div>
+                  <div className="w-7 h-7 rounded-lg bg-linear-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">{deal.company.charAt(0)}</div>
                   <div>
                     <div className="text-xs font-bold text-white">{deal.company}</div>
                     <div className="text-[10px] text-gray-500">{deal.contact}</div>
@@ -56,7 +56,7 @@ export const PipelineView = () => {
               <div className="flex items-center justify-between mt-2">
                 <div className="flex items-center gap-2">
                   <Badge color={deal.color}>{deal.stage}</Badge>
-                  <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-[8px] font-bold border border-white/10">{deal.owner}</div>
+                  <div className="w-5 h-5 rounded-full bg-linear-to-br from-gray-600 to-gray-700 flex items-center justify-center text-[8px] font-bold border border-white/10">{deal.owner}</div>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-14">
@@ -88,7 +88,7 @@ export const PipelineView = () => {
                 <tr key={i} className="hover:bg-[#1a1a1a] transition-colors">
                   <td className="px-6 py-3.5">
                     <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">{deal.company.charAt(0)}</div>
+                      <div className="w-7 h-7 rounded-lg bg-linear-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">{deal.company.charAt(0)}</div>
                       <span className="text-xs font-bold text-white">{deal.company}</span>
                     </div>
                   </td>
@@ -96,7 +96,7 @@ export const PipelineView = () => {
                   <td className="px-6 py-3.5 text-xs font-mono font-bold text-white">{formatCurrency(deal.value)}</td>
                   <td className="px-6 py-3.5"><Badge color={deal.color}>{deal.stage}</Badge></td>
                   <td className="px-6 py-3.5">
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-[9px] font-bold border border-white/10">{deal.owner}</div>
+                    <div className="w-6 h-6 rounded-full bg-linear-to-br from-gray-600 to-gray-700 flex items-center justify-center text-[9px] font-bold border border-white/10">{deal.owner}</div>
                   </td>
                   <td className="px-6 py-3.5">
                     <div className="flex items-center gap-2 w-24">

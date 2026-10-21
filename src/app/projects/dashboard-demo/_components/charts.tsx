@@ -74,7 +74,7 @@ export const RevenueBarChart = () => {
           <p className="text-xs text-gray-500">MRR trend by month</p>
         </div>
         <div className="flex bg-[#0a0a0a] p-1 rounded-lg border border-[#222]">
-          <button className="px-3 py-1 text-[10px] font-bold bg-[#222] text-white rounded shadow">12M</button>
+          <button className="px-3 py-1 text-[10px] font-bold bg-[#222] text-white rounded-sm shadow-sm">12M</button>
           <button className="px-3 py-1 text-[10px] font-bold text-gray-500 hover:text-white transition-colors">6M</button>
           <button className="px-3 py-1 text-[10px] font-bold text-gray-500 hover:text-white transition-colors">3M</button>
         </div>
@@ -84,7 +84,7 @@ export const RevenueBarChart = () => {
           <div key={i} className="flex flex-col items-center gap-2 group w-full">
             <div className="relative w-full rounded-t-md bg-[#1a1a1a] h-32 overflow-hidden">
               <div
-                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-600 to-blue-400 rounded-t-md animate-fill-bar"
+                className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-blue-600 to-blue-400 rounded-t-md animate-fill-bar"
                 style={{ '--bar-width': `${(d.value / maxVal) * 100}%`, height: `${(d.value / maxVal) * 100}%`, animationDelay: `${i * 80}ms` } as React.CSSProperties}
               />
             </div>
@@ -118,7 +118,7 @@ export const CohortHeatmap = () => {
                 {row.months.map((val, ci) => (
                   <td key={ci} className="py-1 px-1">
                     <div
-                      className={`w-full h-8 rounded flex items-center justify-center font-mono text-[10px] animate-fade-in-up ${cohortColor(val)} ${val !== null ? 'text-white' : 'text-gray-600'}`}
+                      className={`w-full h-8 rounded-sm flex items-center justify-center font-mono text-[10px] animate-fade-in-up ${cohortColor(val)} ${val !== null ? 'text-white' : 'text-gray-600'}`}
                       style={{ animationDelay: `${600 + ri * 80 + ci * 40}ms` }}
                     >
                       {val !== null ? `${val}%` : '—'}
@@ -147,7 +147,7 @@ export const RevenueDonut = () => {
       <h3 className="text-lg font-bold text-white mb-1">Revenue by Source</h3>
       <p className="text-xs text-gray-500 mb-4">Distribution of revenue streams</p>
       <div className="flex items-center gap-6">
-        <div className="relative w-28 h-28 flex-shrink-0">
+        <div className="relative w-28 h-28 shrink-0">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36" role="img" aria-label="Revenue breakdown: New Business 45%, Expansion 30%, Renewal 20%, Services 5%">
             <path className="text-[#222]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="5" />
             {segments.map((s, i) => (

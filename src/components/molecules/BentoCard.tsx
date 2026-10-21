@@ -15,7 +15,7 @@ interface BentoCardProps {
 }
 
 const SURFACE = {
-  solid: 'bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border shadow-sm dark:shadow-none ring-1 ring-inset ring-white/50 dark:ring-white/5',
+  solid: 'bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border shadow-xs dark:shadow-none ring-1 ring-inset ring-white/50 dark:ring-white/5',
   glass: 'glass',
 };
 
@@ -29,7 +29,7 @@ export const BentoCard = ({
   backdrop,
   variant = 'solid'
 }: BentoCardProps) => (
-  <div className={`bento-card ${SURFACE[variant]} rounded-[1.5rem] overflow-hidden relative flex flex-col group ${className}`}>
+  <div className={`bento-card ${SURFACE[variant]} rounded-3xl overflow-hidden relative flex flex-col group ${className}`}>
     {backdrop}
     {(title || subtitle || Icon) && (
       <div className="p-6 pb-2 relative z-10">
@@ -38,7 +38,7 @@ export const BentoCard = ({
             {subtitle && <span className="text-brand-600 dark:text-brand-500 text-[11px] md:text-xs font-mono uppercase tracking-widest block mb-2 flex items-center gap-2 font-bold">
               {subtitle}
             </span>}
-            {title && <h3 className="text-xl md:text-2xl font-mono font-bold text-light-text dark:text-dark-text leading-snug mt-1">{title}</h3>}
+            {title && <h3 className="text-xl md:text-2xl font-mono font-bold text-light-text dark:text-dark-text leading-snug md:leading-8 mt-1">{title}</h3>}
           </div>
           {Icon && (
             <div className="p-2 rounded-lg bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border group-hover:scale-110 transition-transform duration-300">
@@ -48,6 +48,6 @@ export const BentoCard = ({
         </div>
       </div>
     )}
-    <div className={`${noPadding ? '' : 'p-6 pt-2'} flex-grow relative z-10`}>{children}</div>
+    <div className={`${noPadding ? '' : 'p-6 pt-2'} grow relative z-10`}>{children}</div>
   </div>
 );

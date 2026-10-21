@@ -14,7 +14,7 @@ export const CRMNotificationDropdown = ({ open, onClose }: { open: boolean; onCl
         </div>
         <div className="max-h-72 overflow-y-auto">
           {CRM_NOTIFICATIONS.map((n, i) => (
-            <div key={i} className={`flex items-start gap-3 px-4 py-3 border-b border-[#222]/50 hover:bg-[#1a1a1a] transition-colors ${!n.read ? 'bg-blue-500/[0.02]' : ''}`}>
+            <div key={i} className={`flex items-start gap-3 px-4 py-3 border-b border-[#222]/50 hover:bg-[#1a1a1a] transition-colors ${!n.read ? 'bg-blue-500/2' : ''}`}>
               <div className={`mt-0.5 ${n.color}`}>
                 <n.icon size={14} aria-hidden="true" />
               </div>
@@ -22,7 +22,7 @@ export const CRMNotificationDropdown = ({ open, onClose }: { open: boolean; onCl
                 <div className={`text-[11px] leading-relaxed ${!n.read ? 'text-white' : 'text-gray-400'}`}>{n.text}</div>
                 <span className="text-[9px] text-gray-600 font-mono">{n.time}</span>
               </div>
-              {!n.read && <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />}
+              {!n.read && <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />}
             </div>
           ))}
         </div>

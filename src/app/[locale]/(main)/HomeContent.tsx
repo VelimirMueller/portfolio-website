@@ -26,7 +26,7 @@ const FLAGSHIP_ART: Record<string, string> = {
   'claude-skills': "bg-[url('/art/v2/claude-skills.webp')]",
 };
 
-const panel = 'glass rounded-[1.5rem] overflow-hidden';
+const panel = 'glass rounded-3xl overflow-hidden';
 const card = glassCard;
 
 const SECTION: Record<SectionKey, { art: StageArt; side: 'left' | 'right'; strip: 1 | 2 | 3 | 4 | 5 }> = {
@@ -54,8 +54,8 @@ const Hero = () => {
   return (
     <>
       <AnimateIn from="bottom">
-        <section className="relative rounded-[1.5rem] overflow-hidden border border-light-border dark:border-dark-border bg-white dark:bg-[#0a0a0b] min-h-[520px] md:min-h-[560px]">
-          <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_right,#8080800f_1px,transparent_1px),linear-gradient(to_bottom,#8080800f_1px,transparent_1px)] bg-[size:32px_32px]" />
+        <section className="relative rounded-3xl overflow-hidden border border-light-border dark:border-dark-border bg-white dark:bg-[#0a0a0b] min-h-[520px] md:min-h-[560px]">
+          <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_right,#8080800f_1px,transparent_1px),linear-gradient(to_bottom,#8080800f_1px,transparent_1px)] bg-size-[32px_32px]" />
           {/* Dark: full-bleed art, faded out under the text column. Light: the art sits in an inset window (B-6). */}
           <div aria-hidden="true" className="hidden dark:block absolute inset-0 bg-[url('/art/v2/flagship-base.webp')] bg-cover bg-center" />
           <div aria-hidden="true" className="hidden dark:block absolute inset-0 bg-[linear-gradient(to_right,rgba(10,10,11,0.96),rgba(10,10,11,0.82)_40%,rgba(10,10,11,0)_62%)]" />
@@ -69,7 +69,7 @@ const Hero = () => {
                 {t('badge')}
               </span>
               <p className="mt-9 font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">{t('eyebrow')}</p>
-              <h1 className="mt-3 font-mono font-bold tracking-tighter leading-[0.9] text-5xl sm:text-6xl lg:text-7xl text-light-text dark:text-white">
+              <h1 className="mt-3 font-mono font-bold tracking-tighter leading-[0.9] sm:leading-none text-5xl sm:text-6xl lg:text-7xl text-light-text dark:text-white">
                 VELIMIR<br />MÜLLER.
               </h1>
               <div className="mt-7 flex gap-4">
@@ -79,7 +79,7 @@ const Hero = () => {
                   <p className="mt-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600 dark:text-brand-400">{t('sub')}</p>
                 </div>
               </div>
-              <p className="mt-7 max-w-xl text-sm md:text-base leading-relaxed text-zinc-600 dark:text-zinc-400 border-l-2 border-light-border dark:border-dark-border pl-4">
+              <p className="mt-7 max-w-xl text-sm md:text-base leading-relaxed md:leading-6 text-zinc-600 dark:text-zinc-400 border-l-2 border-light-border dark:border-dark-border pl-4">
                 {t('description')}
               </p>
             </div>
@@ -100,7 +100,7 @@ const Hero = () => {
               <div key={s.label} className={`${card} p-5 md:p-7`}>
                 <dt className="sr-only">{s.label}</dt>
                 <dd className="font-mono font-bold tracking-tight text-3xl md:text-5xl text-brand-600 dark:text-brand-400">{s.value}</dd>
-                <dd className="mt-3 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 leading-relaxed hyphens-auto break-words">{s.label}</dd>
+                <dd className="mt-3 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 leading-relaxed hyphens-auto wrap-break-word">{s.label}</dd>
               </div>
             ))}
           </dl>
@@ -147,7 +147,7 @@ const Experience = () => {
   const roles = t.raw('roles') as Role[];
   return (
     <AnimateIn from="bottom" className="space-y-4">
-      <p className="max-w-3xl text-base md:text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">{t('experienceIntro')}</p>
+      <p className="max-w-3xl text-base md:text-lg leading-relaxed md:leading-7 text-zinc-700 dark:text-zinc-300">{t('experienceIntro')}</p>
       <CardGrid label={t('ownLabel')} items={t.raw('own') as Card[]} cols="sm:grid-cols-2 lg:grid-cols-4" />
       <section className={`${panel} p-6 md:p-10`}>
         <PanelFrame />
@@ -218,7 +218,7 @@ const DeliverySystem = () => {
         <ol className="relative grid grid-cols-1 md:grid-cols-5 gap-3 md:gap-0">
           {steps.map((s, i) => (
             <li key={s.title} className="flex md:items-stretch">
-              <div className={`${card} flex-1 p-5 ${s.hot ? '!border-brand-500 ring-1 ring-brand-500/30' : ''}`}>
+              <div className={`${card} flex-1 p-5 ${s.hot ? 'border-brand-500! ring-1 ring-brand-500/30' : ''}`}>
                 <span aria-hidden="true" className="block w-5 h-0.5 bg-brand-500 mb-4" />
                 <p className="font-mono font-bold text-light-text dark:text-zinc-100">{s.title}</p>
                 <p className="mt-1.5 text-sm leading-snug text-zinc-600 dark:text-zinc-400">{s.text}</p>
@@ -267,7 +267,7 @@ const ContactBand = () => {
   const t = useTranslations('home');
   return (
     <AnimateIn from="bottom" className="mt-24 md:mt-32">
-      <section className="relative rounded-[1.5rem] overflow-hidden border border-light-border dark:border-[#26262b] bg-[#08080a] min-h-[320px] flex items-center">
+      <section className="relative rounded-3xl overflow-hidden border border-light-border dark:border-[#26262b] bg-[#08080a] min-h-[320px] flex items-center">
         <div aria-hidden="true" className="absolute inset-0 bg-[url('/art/v2/site-contact.webp')] bg-cover bg-center" />
         <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_right,rgba(10,10,11,0.95),rgba(10,10,11,0.75)_45%,rgba(10,10,11,0.15))]" />
         <div aria-hidden="true" className="absolute bottom-0 inset-x-0 h-[3px] bg-brand-500/85" />

@@ -1,4 +1,4 @@
-// 07 · Motion — durations, easings and the named animations of tailwind.config.ts and globals.css.
+// 07 · Motion — durations, easings and the named animations of the @theme block in globals.css.
 section({ name: '07 · Motion', page: PG.F, run: async () => {
   await K.init(); const s = h.section('07 · Motion'); const b = K.board('Motion', 1600);
   h.add(b, await K.head('07 · Foundations', 'Motion', 'Short and quiet. Colour and border changes take 200 ms, hover lifts 300 ms, entrances 600 ms. prefers-reduced-motion turns every animation off; touch devices drop the infinite ones.'));

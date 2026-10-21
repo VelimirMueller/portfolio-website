@@ -17,7 +17,7 @@ export const AsciiArt = ({ art, className = '' }: AsciiArtProps) => (
   <pre
     aria-hidden="true"
     data-testid="ascii-art"
-    className={`[font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace] text-[10px] leading-[1.15] whitespace-pre select-none pointer-events-none text-gray-400/80 dark:text-white/20 ${className}`}
+    className={`font-[ui-monospace,SFMono-Regular,Menlo,Consolas,monospace] text-[10px] leading-[1.15] whitespace-pre select-none pointer-events-none text-gray-400/80 dark:text-white/20 ${className}`}
   >
     {art}
   </pre>

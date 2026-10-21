@@ -54,7 +54,7 @@ export function SectionSwitcher({ counts = {} }: { counts?: Partial<Record<KpiVi
   return (
     <div
       ref={barRef}
-      className="sticky top-0 z-30 -mx-1 overflow-hidden rounded-2xl border border-white/[0.08] bg-[#030308]/90 shadow-[0_0_40px_rgba(14,165,198,0.08)] backdrop-blur-md"
+      className="sticky top-0 z-30 -mx-1 overflow-hidden rounded-2xl border border-white/8 bg-[#030308]/90 shadow-[0_0_40px_rgba(14,165,198,0.08)] backdrop-blur-md"
     >
       <Starfield ref={hyperspace} />
       {/* Scanline + edge glow: atmosphere at a few percent. */}
@@ -63,18 +63,18 @@ export function SectionSwitcher({ counts = {} }: { counts?: Partial<Record<KpiVi
         className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{ backgroundImage: 'repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 3px)' }}
       />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-10 bottom-0 h-px bg-gradient-to-r from-transparent via-fuchsia-400/50 to-transparent" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-10 bottom-0 h-px bg-linear-to-r from-transparent via-fuchsia-400/50 to-transparent" />
 
       <div
         role="radiogroup"
         aria-label="KPI section"
         onKeyDown={onKeyDown}
-        className="relative flex gap-1 overflow-x-auto p-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-lg:[mask-image:linear-gradient(90deg,transparent,black_20px,black_calc(100%-28px),transparent)]"
+        className="relative flex gap-1 overflow-x-auto p-1.5 scrollbar-none [&::-webkit-scrollbar]:hidden max-lg:mask-[linear-gradient(90deg,transparent,black_20px,black_calc(100%-28px),transparent)]"
       >
         {indicator && (
           <span
             aria-hidden="true"
-            className="absolute top-1.5 bottom-1.5 rounded-xl bg-gradient-to-r from-cyan-500/20 via-sky-500/15 to-fuchsia-500/20 ring-1 ring-cyan-300/40 shadow-[0_0_24px_rgba(14,165,198,0.35),inset_0_0_12px_rgba(217,70,239,0.15)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
+            className="absolute top-1.5 bottom-1.5 rounded-xl bg-linear-to-r from-cyan-500/20 via-sky-500/15 to-fuchsia-500/20 ring-1 ring-cyan-300/40 shadow-[0_0_24px_rgba(14,165,198,0.35),inset_0_0_12px_rgba(217,70,239,0.15)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
             style={{ left: indicator.left, width: indicator.width }}
           />
         )}
@@ -93,7 +93,7 @@ export function SectionSwitcher({ counts = {} }: { counts?: Partial<Record<KpiVi
               tabIndex={selected ? 0 : -1}
               title={v.hint}
               onClick={() => choose(v.id)}
-              className={`group relative z-10 flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 ${
+              className={`group relative z-10 flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-2 text-sm transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-300 ${
                 selected ? 'text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
@@ -115,7 +115,7 @@ export function SectionSwitcher({ counts = {} }: { counts?: Partial<Record<KpiVi
               {count !== undefined && (
                 <span
                   className={`rounded-md px-1.5 py-px font-mono text-[10px] tabular-nums ${
-                    selected ? 'bg-cyan-300/15 text-cyan-100' : 'bg-white/[0.05] text-gray-400'
+                    selected ? 'bg-cyan-300/15 text-cyan-100' : 'bg-white/5 text-gray-400'
                   }`}
                 >
                   {count}

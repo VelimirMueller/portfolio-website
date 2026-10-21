@@ -4,7 +4,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import type { ImportDeckState } from '@/app/admin/(dashboard)/magic/actions';
 
 const input =
-  'w-full bg-[#111] border border-[#222] rounded-xl px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500';
+  'w-full bg-[#111] border border-[#222] rounded-xl px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-hidden focus:border-brand-500';
 
 const EXAMPLE = `4 Goblin Guide
 4 Krenko, Mob Boss (M13) 141
@@ -18,7 +18,7 @@ function Submit() {
     <button
       type="submit"
       disabled={pending}
-      className="px-4 py-2 rounded-xl bg-brand-600 text-white text-sm font-medium hover:bg-brand-500 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+      className="px-4 py-2 rounded-xl bg-brand-600 text-white text-sm font-medium hover:bg-brand-500 disabled:opacity-50 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-400"
     >
       {pending ? 'Importing…' : 'Import deck'}
     </button>

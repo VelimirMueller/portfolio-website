@@ -21,7 +21,7 @@ export function MagicTabs() {
             key={href}
             href={href}
             aria-current={active ? 'page' : undefined}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 ${
               active ? 'bg-brand-500/10 text-brand-400' : 'text-gray-500 hover:bg-[#1a1a1a] hover:text-white'
             }`}
           >

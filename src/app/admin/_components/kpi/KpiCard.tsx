@@ -122,7 +122,7 @@ export function KpiCard({
 
   return (
     <div
-      className="bg-[#111111] rounded-[2rem] p-6 border border-[#222] hover:border-[#333] transition-colors animate-fade-in-up"
+      className="bg-[#111111] rounded-4xl p-6 border border-[#222] hover:border-[#333] transition-colors animate-fade-in-up"
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <div className="flex items-start justify-between mb-4">

@@ -38,7 +38,7 @@ export const PipelineStagesTab = () => (
           <span className="text-xs font-bold text-white flex-1">{stage.name}</span>
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-mono text-gray-500">Win prob:</span>
-            <span className="text-[10px] font-mono text-white bg-[#1a1a1a] px-2 py-0.5 rounded">{stage.probability}%</span>
+            <span className="text-[10px] font-mono text-white bg-[#1a1a1a] px-2 py-0.5 rounded-sm">{stage.probability}%</span>
           </div>
           <button className="text-gray-600 hover:text-white transition-colors p-1" aria-label={`Edit ${stage.name} stage`}>
             <Edit3 size={12} aria-hidden="true" />
@@ -83,7 +83,7 @@ export const BillingTab = () => (
       <h3 className="text-base font-bold text-white mb-4">Payment Method</h3>
       <div className="flex items-center justify-between p-3 rounded-xl glass-demo-inner border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-7 rounded bg-gradient-to-r from-blue-600 to-blue-400 flex items-center justify-center text-[8px] font-bold text-white">VISA</div>
+          <div className="w-10 h-7 rounded-sm bg-linear-to-r from-blue-600 to-blue-400 flex items-center justify-center text-[8px] font-bold text-white">VISA</div>
           <div>
             <div className="text-xs font-bold text-white font-mono">•••• •••• •••• 4242</div>
             <div className="text-[10px] text-gray-500">Expires 08/27</div>
@@ -112,7 +112,7 @@ export const TeamTab = () => (
         <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl glass-demo-inner border animate-fade-in-up" style={{ animationDelay: `${150 + i * 80}ms` }}>
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-[10px] font-bold border border-white/10">{member.initials}</div>
+              <div className="w-9 h-9 rounded-full bg-linear-to-br from-gray-600 to-gray-700 flex items-center justify-center text-[10px] font-bold border border-white/10">{member.initials}</div>
               <div className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-[#0a0a0a] ${member.online ? 'bg-green-500' : 'bg-gray-600'}`} />
             </div>
             <div>
@@ -138,7 +138,7 @@ export const IntegrationsTab = ({ integrations, onConnect }: { integrations: Int
       {integrations.map((int, i) => (
         <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl glass-demo-inner border animate-fade-in-up" style={{ animationDelay: `${150 + i * 80}ms` }}>
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#1a1a1a] flex items-center justify-center border border-[#222] flex-shrink-0">
+            <div className="w-9 h-9 rounded-lg bg-[#1a1a1a] flex items-center justify-center border border-[#222] shrink-0">
               <Building2 size={16} className="text-gray-400" aria-hidden="true" />
             </div>
             <div>

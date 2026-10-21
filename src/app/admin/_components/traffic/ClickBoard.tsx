@@ -33,14 +33,14 @@ export function ClickBoard({ rows, onPage }: { rows: ClickRow[]; onPage: (path: 
 
   return (
     <div>
-      <label className="mb-3 flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/40 px-3 py-1.5 focus-within:ring-2 focus-within:ring-cyan-400">
+      <label className="mb-3 flex items-center gap-2 rounded-full border border-white/8 bg-black/40 px-3 py-1.5 focus-within:ring-2 focus-within:ring-cyan-400">
         <Search size={13} className="text-gray-400" aria-hidden="true" />
         <span className="sr-only">Filter clicked elements</span>
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Filter elements…"
-          className="w-full bg-transparent text-xs text-white placeholder:text-[#7c808b] focus:outline-none"
+          className="w-full bg-transparent text-xs text-white placeholder:text-[#7c808b] focus:outline-hidden"
         />
       </label>
       <table className="w-full text-left text-sm">
@@ -57,11 +57,11 @@ export function ClickBoard({ rows, onPage }: { rows: ClickRow[]; onPage: (path: 
           {shown.map((r) => {
             const { kind, name } = splitTarget(r.target);
             return (
-              <tr key={r.target} className="group border-t border-white/[0.04]">
+              <tr key={r.target} className="group border-t border-white/4">
                 <td className="relative py-2 pr-3">
                   <span
                     aria-hidden="true"
-                    className="absolute inset-y-1.5 left-0 -z-0 rounded-md bg-amber-500/10 transition-colors group-hover:bg-amber-500/20"
+                    className="absolute inset-y-1.5 left-0 z-0 rounded-md bg-amber-500/10 transition-colors group-hover:bg-amber-500/20"
                     style={{ width: `${(r.count / max) * 100}%` }}
                   />
                   <span className="relative flex min-w-0 items-center gap-2">
@@ -78,7 +78,7 @@ export function ClickBoard({ rows, onPage }: { rows: ClickRow[]; onPage: (path: 
                     type="button"
                     onClick={() => onPage(r.topPage)}
                     title={`Filter to visitors of ${r.topPage}`}
-                    className="max-w-[12rem] truncate rounded font-mono text-xs text-gray-400 hover:text-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    className="max-w-48 truncate rounded-sm font-mono text-xs text-gray-400 hover:text-cyan-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400"
                   >
                     {r.topPage}
                   </button>

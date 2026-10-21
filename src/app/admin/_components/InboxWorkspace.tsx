@@ -169,7 +169,7 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
             href={s === 'new' ? '/admin' : `/admin?status=${s}`}
             aria-current={s === filter ? 'page' : undefined}
             className={`flex-1 min-w-max flex items-center justify-center gap-2 px-3 py-1.5 text-[11px] font-bold rounded-lg transition-colors ${
-              s === filter ? 'bg-[#222] text-white shadow' : 'text-gray-500 hover:text-white'
+              s === filter ? 'bg-[#222] text-white shadow-sm' : 'text-gray-500 hover:text-white'
             }`}
           >
             {TAB_LABEL[s]}
@@ -188,7 +188,7 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
         {/* ---------- List ---------- */}
         <section
           aria-label="Messages"
-          className={`${selected ? 'hidden lg:flex' : 'flex'} flex-col bg-[#111111] rounded-[2rem] border border-[#222] overflow-hidden`}
+          className={`${selected ? 'hidden lg:flex' : 'flex'} flex-col bg-[#111111] rounded-4xl border border-[#222] overflow-hidden`}
         >
           <div className="flex items-center gap-3 px-5 py-3 border-b border-[#222]">
             <input
@@ -232,7 +232,7 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
                   defaultValue={query}
                   aria-label="Search messages"
                   placeholder="Search…  ( / )"
-                  className="w-full bg-[#0a0a0a] border border-[#222] rounded-full py-1.5 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-brand-500"
+                  className="w-full bg-[#0a0a0a] border border-[#222] rounded-full py-1.5 pl-9 pr-3 text-xs text-white focus:outline-hidden focus:border-brand-500"
                 />
               </form>
             )}
@@ -282,7 +282,7 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
                         href={href(m.id)}
                         scroll={false}
                         aria-current={isOpen ? 'true' : undefined}
-                        className={`text-xs truncate after:absolute after:inset-0 focus-visible:outline-none ${
+                        className={`text-xs truncate after:absolute after:inset-0 focus-visible:outline-hidden ${
                           m.status === 'new' ? 'font-bold text-white' : 'text-gray-300'
                         }`}
                       >
@@ -338,7 +338,7 @@ export function InboxWorkspace({ messages, counts, filter, query, selectedId, er
         {/* ---------- Reading pane ---------- */}
         <section
           aria-label="Message"
-          className={`${selected ? 'flex' : 'hidden lg:flex'} flex-col bg-[#111111] rounded-[2rem] border border-[#222] overflow-hidden`}
+          className={`${selected ? 'flex' : 'hidden lg:flex'} flex-col bg-[#111111] rounded-4xl border border-[#222] overflow-hidden`}
         >
           {selected ? (
             <ReadingPane
@@ -467,7 +467,7 @@ function ReadingPane({
           </a>
         </header>
         <div className="rounded-2xl bg-[#0a0a0a] border border-[#1a1a1a] p-5">
-          <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap break-words">{message.message}</p>
+          <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap wrap-break-word">{message.message}</p>
         </div>
       </article>
     </>
@@ -531,7 +531,7 @@ function IconButton({
       title={label}
       onClick={onClick}
       disabled={disabled}
-      className={`p-1.5 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
+      className={`p-1.5 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 ${
         tone === 'danger' ? 'text-red-400 hover:bg-red-500/10' : 'text-gray-400 hover:text-white hover:bg-[#222]'
       }`}
     >
@@ -541,5 +541,5 @@ function IconButton({
 }
 
 const Kbd = ({ children }: { children: React.ReactNode }) => (
-  <kbd className="px-1.5 py-0.5 rounded border border-[#333] bg-[#1a1a1a] font-mono text-[10px] text-gray-300">{children}</kbd>
+  <kbd className="px-1.5 py-0.5 rounded-sm border border-[#333] bg-[#1a1a1a] font-mono text-[10px] text-gray-300">{children}</kbd>
 );

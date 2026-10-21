@@ -36,14 +36,14 @@ export default function ProjectsContent() {
     <div className="relative overflow-x-clip">
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
       <AnimateIn from="bottom">
-        <SectionHeader title={t('projects.title')} subtitle={t('projects.subtitle')} artClassName="bg-[url('/art/projects-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block" />
+        <SectionHeader title={t('projects.title')} subtitle={t('projects.subtitle')} artClassName="bg-[url('/art/projects-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block" />
       </AnimateIn>
 
       {/* --- FEATURED DEMOS --- */}
       <SectionStage art="site-svc-frontend" side="right">
       <SectionDivider id="demos" index={demos.index} total={3} title={demos.title} caption={demos.caption} countLabel={count} strip={1} className="mb-6" />
-      <GlassPanel className="p-4 md:p-8 space-y-4">
-        <Eyebrow>{t('projects.interactiveDemos')}</Eyebrow>
+      <GlassPanel className="p-4 pt-8 md:p-8 md:pt-12 space-y-4">
+        <Eyebrow className="mb-4!">{t('projects.interactiveDemos')}</Eyebrow>
 
         <AnimateIn from="bottom" delay={100}>
           <ExpandableProjectCard
@@ -208,11 +208,11 @@ export default function ProjectsContent() {
                  <div className="mt-6 pt-4 border-t border-black/5 dark:border-white/5">
                     <div className="text-xs text-gray-500 mb-2">Key Tech</div>
                     <div className="flex gap-2">
-                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded border border-green-500/20 dark:border-green-900/30">Next.js</span>
-                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded border border-green-500/20 dark:border-green-900/30">Vue</span>
-                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded border border-green-500/20 dark:border-green-900/30">Node.js</span>
-                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded border border-green-500/20 dark:border-green-900/30">Laravel</span>
-                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded border border-green-500/20 dark:border-green-900/30">Supabase</span>
+                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded-sm border border-green-500/20 dark:border-green-900/30">Next.js</span>
+                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded-sm border border-green-500/20 dark:border-green-900/30">Vue</span>
+                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded-sm border border-green-500/20 dark:border-green-900/30">Node.js</span>
+                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded-sm border border-green-500/20 dark:border-green-900/30">Laravel</span>
+                       <span className="px-2 py-1 bg-green-500/10 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] rounded-sm border border-green-500/20 dark:border-green-900/30">Supabase</span>
                     </div>
                  </div>
               </div>
@@ -311,7 +311,7 @@ export default function ProjectsContent() {
                     <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">Key Tech</div>
                     <div className="flex flex-wrap gap-2">
                        {['WordPress', 'PHP', 'JavaScript', 'WooCommerce', 'Custom Theme'].map(tag => (
-                         <span key={tag} className="px-2 py-1 bg-rose-500/10 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 text-[10px] rounded border border-rose-500/20 dark:border-rose-900/30">{tag}</span>
+                         <span key={tag} className="px-2 py-1 bg-rose-500/10 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 text-[10px] rounded-sm border border-rose-500/20 dark:border-rose-900/30">{tag}</span>
                        ))}
                     </div>
                  </div>
