@@ -234,7 +234,7 @@ test.describe('Language', () => {
     // Force start in German
     await page.goto('/de');
     await page.waitForLoadState('networkidle');
-    // Button text is "EN" and aria-label is "Switch to English"
+    // Button text is "EN" and aria-label is "EN – Switch to English"
     if (isMobile(page)) {
       await page.getByRole('button', { name: /switch to english/i }).last().click();
     } else {
