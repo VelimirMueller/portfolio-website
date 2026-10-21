@@ -42,8 +42,8 @@ export default function ProjectsContent() {
       {/* --- FEATURED DEMOS --- */}
       <SectionStage art="site-svc-frontend" side="right">
       <SectionDivider id="demos" index={demos.index} total={3} title={demos.title} caption={demos.caption} countLabel={count} strip={1} className="mb-6" />
-      <GlassPanel className="p-4 md:p-8 space-y-4">
-        <Eyebrow>{t('projects.interactiveDemos')}</Eyebrow>
+      <GlassPanel className="p-4 pt-8 md:p-8 md:pt-12 space-y-4">
+        <Eyebrow className="mb-4!">{t('projects.interactiveDemos')}</Eyebrow>
 
         <AnimateIn from="bottom" delay={100}>
           <ExpandableProjectCard
