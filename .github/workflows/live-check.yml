@@ -39,12 +39,19 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       # Only the tokens come from the deployed commit, as data, so they match
-      # what was built. Falls back to the default branch's tokens.
+      # what was built. No silent fallback: unreadable or invalid tokens fail.
       - name: Use the deployed commit's tokens
         if: github.event_name == 'deployment_status'
         env:
           DEPLOY_SHA: ${{ github.event.deployment.sha }}
-        run: git show "$DEPLOY_SHA:.figma/tokens.json" > .figma/tokens.deployed.json && mv .figma/tokens.deployed.json .figma/tokens.json || echo "::warning::tokens of $DEPLOY_SHA not readable; using the default branch's tokens"
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp)"
+          trap 'rm -f "$tmp"' EXIT
+          git show "$DEPLOY_SHA:.figma/tokens.json" > "$tmp"
+          jq -e '.collections.color and .collections.primitive' "$tmp" > /dev/null
+          mv "$tmp" .figma/tokens.json
       - uses: ./.github/actions/node-deps
       - name: Install Playwright browsers
         timeout-minutes: 26
