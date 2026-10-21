@@ -30,10 +30,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      # The test harness (config, spec, dependencies) comes from the default
+      # branch, never from the deployed commit: a preview can be built from an
+      # untrusted PR, and the job holds the bypass secret.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # The deployed commit, so the tokens match what was built.
-          ref: ${{ github.event.deployment.sha || github.sha }}
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: false
+      # Only the tokens come from the deployed commit, as data, so they match
+      # what was built. Falls back to the default branch's tokens.
+      - name: Use the deployed commit's tokens
+        if: github.event_name == 'deployment_status'
+        env:
+          DEPLOY_SHA: ${{ github.event.deployment.sha }}
+        run: git show "$DEPLOY_SHA:.figma/tokens.json" > .figma/tokens.deployed.json && mv .figma/tokens.deployed.json .figma/tokens.json || echo "::warning::tokens of $DEPLOY_SHA not readable; using the default branch's tokens"
       - uses: ./.github/actions/node-deps
       - name: Install Playwright browsers
         timeout-minutes: 26
