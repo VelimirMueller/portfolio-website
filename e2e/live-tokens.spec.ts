@@ -98,6 +98,12 @@ test.describe('live tokens', () => {
       );
       await page.emulateMedia({ colorScheme: mode, reducedMotion: 'reduce' });
       const response = await page.goto(PAGE_PATH);
+      // Deployment Protection redirects to vercel.com and answers 200 there:
+      // fail with the cause instead of a 30 s locator timeout.
+      expect(
+        new URL(page.url()).origin,
+        'left the deployment (Vercel Deployment Protection?); set VERCEL_AUTOMATION_BYPASS_SECRET',
+      ).toBe(new URL(baseURL ?? '').origin);
       expect(response?.ok(), PAGE_PATH).toBe(true);
       await expect(page.locator('html')).toHaveClass(new RegExp(`\\b${mode}\\b`));
 
