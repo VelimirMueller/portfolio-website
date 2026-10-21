@@ -12,12 +12,12 @@ runs:
       uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
     - name: Install Playwright browsers
       shell: bash
       run: |
         for try in 1 2 3; do
-          timeout 480 npx playwright install --with-deps chromium webkit && exit 0
+          timeout 480 pnpm exec playwright install --with-deps chromium webkit && exit 0
           echo "::warning::Playwright install try $try failed or hung; retrying"
           # A killed apt leaves dpkg half done and its locks held; without this the
           # next try fails at once with exit 100 (seen 2026-10-10, run on PR #49).

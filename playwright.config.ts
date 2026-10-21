@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Playwright config for end-to-end tests against the Next.js app.
- * Run with: npm run test:e2e
+ * Run with: pnpm run test:e2e
  */
 export default defineConfig({
   testDir: './e2e',
@@ -32,7 +32,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run build && npm run start',
+    command: 'pnpm run build && pnpm run start',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

@@ -31,8 +31,8 @@ export default defineConfig({
   ],
   webServer: {
     command: process.env.CI
-      ? 'npx -y http-server storybook-static -p 6006 -s'
-      : 'npm run storybook -- --ci',
+      ? 'pnpm dlx http-server storybook-static -p 6006 -s'
+      : 'pnpm run storybook --ci',
     url: 'http://localhost:6006',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

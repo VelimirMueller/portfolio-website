@@ -1,0 +1,17 @@
+# Dependencies whose install scripts may run (pnpm 11+ blocks all others).
+# allowBuilds is the pnpm 11+ key that replaced onlyBuiltDependencies. With it,
+# `pnpm install` runs these postinstalls ("@swc/core postinstall: Done") and lists
+# no ignored builds.
+allowBuilds:
+  # Native watcher for Jest; builds from source only when no prebuilt binary fits.
+  "@parcel/watcher": true
+  # SWC binary check for next-intl.
+  "@swc/core": true
+  # Native SQLite for vlm-code-context-mcp.
+  better-sqlite3: true
+  # esbuild binary check for Storybook (Vite).
+  esbuild: true
+  # Native resolver for eslint-config-next.
+  unrs-resolver: true
+  # Blocked on purpose: its postinstall only prints a setup hint.
+  vlm-code-context-mcp: false

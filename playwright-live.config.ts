@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * Playwright config for the live token check (issue #151) against a deployed
  * site. Runs after a Vercel deploy, never on a PR: LIVE_URL is the deployment
- * URL (default: production). Run with: npm run test:live
+ * URL (default: production). Run with: pnpm run test:live
  */
 const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
 

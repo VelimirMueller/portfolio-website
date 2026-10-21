@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 
 /**
  * End-to-end tests for the Next.js portfolio app.
- * Run with: npm run test:e2e
+ * Run with: pnpm run test:e2e
  */
 
 /** Returns true when the viewport is narrower than Tailwind's `md` (768px). */

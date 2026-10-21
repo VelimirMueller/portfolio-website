@@ -52,6 +52,7 @@ jobs:
           git show "$DEPLOY_SHA:.figma/tokens.json" > "$tmp"
           jq -e '.collections.color and .collections.primitive' "$tmp" > /dev/null
           mv "$tmp" .figma/tokens.json
+      # node-deps runs pnpm/action-setup, setup-node and pnpm install --frozen-lockfile.
       - uses: ./.github/actions/node-deps
       - name: Install Playwright browsers
         timeout-minutes: 26
@@ -81,7 +82,7 @@ jobs:
         env:
           LIVE_URL: ${{ steps.target.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
-        run: npm run test:live
+        run: pnpm run test:live
       - name: Upload the mismatch report
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

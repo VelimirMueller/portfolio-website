@@ -53,7 +53,7 @@ Fixed rules:
 - The public job title and positioning appear in several places (copy, metadata,
   JSON-LD). Change them together, in both languages.
 
-Checks: npm run lint, type check, Jest unit tests, Playwright e2e, Storybook visual
+Checks: pnpm run lint, type check, Jest unit tests, Playwright e2e, Storybook visual
 regression. CI runs all of them on a PR.
 
 Look:
