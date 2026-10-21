@@ -136,7 +136,7 @@ describe('loadVercelStats', () => {
     const fetchImpl = vercelFetch();
     await loadVercelStats(fetchImpl, env());
     const [url, init] = fetchImpl.mock.calls[0];
-    expect(url).toBe('https://api.vercel.com/v9/projects/portfolio-website');
+    expect(url).toBe('https://api.vercel.com/v9/projects/portfolio-website-v1.0');
     expect(init?.headers).toEqual({ Authorization: `Bearer ${TOKEN}` });
     expect(init?.next).toEqual({ revalidate: 60 });
     expect(fetchImpl.mock.calls[1][0]).toBe('https://api.vercel.com/v6/deployments?projectId=prj_portfolio&limit=20');
