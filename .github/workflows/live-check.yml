@@ -1,0 +1,71 @@
+name: Live Check
+
+# Live token check (issue #151): after Vercel reports a successful deployment
+# (preview or production), compare the colours the deployed site renders with
+# .figma/tokens.json. Not part of CI on PRs: it tests the deployment, not the code.
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Deployment URL to check (default production)
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-check-${{ github.event.deployment.id || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  live-tokens:
+    name: Live Tokens
+    # Only deployments that report a URL (Vercel does); others would fall back to
+    # production while checking out a different commit.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       (github.event.deployment_status.environment_url != '' || github.event.deployment_status.target_url != ''))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # The test harness (config, spec, dependencies) comes from the default
+      # branch, never from the deployed commit: a preview can be built from an
+      # untrusted PR, and the job holds the bypass secret.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: false
+      # Only the tokens come from the deployed commit, as data, so they match
+      # what was built. No silent fallback: unreadable or invalid tokens fail.
+      - name: Use the deployed commit's tokens
+        if: github.event_name == 'deployment_status'
+        env:
+          DEPLOY_SHA: ${{ github.event.deployment.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp)"
+          trap 'rm -f "$tmp"' EXIT
+          git show "$DEPLOY_SHA:.figma/tokens.json" > "$tmp"
+          jq -e '.collections.color and .collections.primitive' "$tmp" > /dev/null
+          mv "$tmp" .figma/tokens.json
+      - uses: ./.github/actions/node-deps
+      - name: Install Playwright browsers
+        timeout-minutes: 26
+        uses: ./.github/actions/playwright-install
+      - name: Run the live token check
+        env:
+          LIVE_URL: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url || inputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: npm run test:live
+      - name: Upload the mismatch report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: live-tokens
+          path: test-results/live-tokens.json
+          if-no-files-found: ignore
+          retention-days: 30
