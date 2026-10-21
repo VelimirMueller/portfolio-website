@@ -30,11 +30,11 @@ const stageArt: Record<ServiceId, StageArt> = {
 };
 
 const artMap: Record<ServiceId, string> = {
-  'requirements-engineering': "bg-[url('/art/svc-requirements-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
-  'ux-ui-branding': "bg-[url('/art/svc-ux-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
-  'frontend-development': "bg-[url('/art/svc-frontend-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
-  'project-delivery': "bg-[url('/art/svc-delivery-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
-  'modern-stack': "bg-[url('/art/svc-stack-v1.webp')] bg-cover bg-[position:100%_50%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block",
+  'requirements-engineering': "bg-[url('/art/svc-requirements-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'ux-ui-branding': "bg-[url('/art/svc-ux-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'frontend-development': "bg-[url('/art/svc-frontend-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'project-delivery': "bg-[url('/art/svc-delivery-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'modern-stack': "bg-[url('/art/svc-stack-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
 };
 
 export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
@@ -127,7 +127,7 @@ export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {
            </AnimateIn>
 
            <AnimateIn from="right" delay={250}>
-           <BentoCard variant="glass" className="!border-brand-500/30">
+           <BentoCard variant="glass" className="border-brand-500/30!">
               <h3 className="text-xl font-bold text-light-text dark:text-white mb-2">{t('serviceDetail.interested')}</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
                  {t('serviceDetail.interestedDesc')}

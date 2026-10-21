@@ -96,7 +96,7 @@ export const Navigation = () => {
   return (
     <>
       <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
-        <div className="bg-white/90 dark:bg-[#121214]/90 backdrop-blur-xl border border-light-border dark:border-dark-border rounded-full p-1.5 flex items-center shadow-2xl dark:shadow-none relative transition-all duration-300">
+        <div className="bg-white/90 dark:bg-dark-card/90 backdrop-blur-xl border border-light-border dark:border-dark-border rounded-full p-1.5 flex items-center shadow-2xl dark:shadow-none relative transition-all duration-300">
           <Link href="/" className="pl-4 pr-6 py-2 flex items-center gap-3 group border-r border-light-border dark:border-dark-border mr-1">
             <div className="w-8 h-8 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-bold font-mono text-xs group-hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-lg">VM</div>
             <span className="font-mono font-bold text-sm tracking-tight text-light-text dark:text-dark-text hidden sm:block group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">Velimir Müller</span>
@@ -148,7 +148,7 @@ export const Navigation = () => {
             >
               {theme === 'dark' ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
             </button>
-            <Button to="/contact" track="nav:contact" variant="brand" className="!px-5 !py-2 !text-xs !h-9 border-none shadow-lg shadow-brand-500/20 dark:shadow-white/10">
+            <Button to="/contact" track="nav:contact" variant="brand" className="px-5! py-2! text-xs! h-9! border-none shadow-lg shadow-brand-500/20 dark:shadow-white/10">
               {t('nav.contact')}
             </Button>
           </div>
@@ -171,9 +171,9 @@ export const Navigation = () => {
       </nav>
 
       {isOpen && (
-        <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('nav.menuLabel')} className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-[60] flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
+        <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('nav.menuLabel')} className="fixed inset-0 bg-light-bg dark:bg-dark-bg z-60 flex flex-col p-6 animate-in slide-in-from-bottom-10 fade-in duration-300 overflow-y-auto">
           <div className="flex justify-end mb-8">
-            <button onClick={() => setIsOpen(false)} className="p-2 bg-white dark:bg-[#121214] rounded-full text-black dark:text-white border border-light-border dark:border-dark-border" aria-label={t('nav.closeMenu')}>
+            <button onClick={() => setIsOpen(false)} className="p-2 bg-white dark:bg-dark-card rounded-full text-black dark:text-white border border-light-border dark:border-dark-border" aria-label={t('nav.closeMenu')}>
               <X size={24} aria-hidden="true" />
             </button>
           </div>

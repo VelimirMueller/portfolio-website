@@ -141,7 +141,7 @@ export function TrafficChart({
     <div>
       <div className="mb-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-gray-400">
         <span className="inline-flex items-center gap-2">
-          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm" style={{ background: color }} />
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-xs" style={{ background: color }} />
           {METRIC_LABEL[metric]} · {rangeLabel}
           <strong className="font-mono text-white">{formatCount(total)}</strong>
         </span>
@@ -170,7 +170,7 @@ export function TrafficChart({
           onKeyDown={onKeyDown}
           onFocus={() => setActive((i) => i ?? series.length - 1)}
           onBlur={() => setActive(null)}
-          className="block touch-pan-y rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className="block touch-pan-y rounded-xl focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400"
         >
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
@@ -223,18 +223,18 @@ export function TrafficChart({
         {a && (
           <div
             role="status"
-            className="pointer-events-none absolute top-0 -translate-x-1/2 rounded-xl border border-white/10 bg-black/85 px-3 py-2 text-xs shadow-xl backdrop-blur"
+            className="pointer-events-none absolute top-0 -translate-x-1/2 rounded-xl border border-white/10 bg-black/85 px-3 py-2 text-xs shadow-xl backdrop-blur-sm"
             style={{ left: tipLeft }}
           >
             <div className="mb-1 font-mono text-[10px] uppercase tracking-wider text-gray-400">{a.point.label}</div>
             <div className="flex items-center gap-2">
-              <span aria-hidden="true" className="h-0.5 w-3 rounded" style={{ background: color }} />
+              <span aria-hidden="true" className="h-0.5 w-3 rounded-sm" style={{ background: color }} />
               <strong className="font-mono text-sm text-white">{formatCount(a.value)}</strong>
               <span className="text-gray-400">{METRIC_LABEL[metric].toLowerCase()}</span>
             </div>
             {compare && (
               <div className="mt-0.5 flex items-center gap-2 text-gray-400">
-                <span aria-hidden="true" className="h-0.5 w-3 rounded" style={{ background: VIZ.previous }} />
+                <span aria-hidden="true" className="h-0.5 w-3 rounded-sm" style={{ background: VIZ.previous }} />
                 <span className="font-mono text-gray-300">{formatCount(a.prev)}</span> before
                 {a.prev > 0 && <span className="font-mono">({trendText(Math.round(((a.value - a.prev) / a.prev) * 1000) / 10)})</span>}
               </div>
@@ -245,7 +245,7 @@ export function TrafficChart({
 
       <details className="mt-3 text-xs text-gray-400">
         <summary className="cursor-pointer select-none hover:text-gray-300">Data table</summary>
-        <div className="mt-2 max-h-56 overflow-auto rounded-lg border border-white/[0.06]">
+        <div className="mt-2 max-h-56 overflow-auto rounded-lg border border-white/6">
           <table className="w-full text-left font-mono">
             <thead className="sticky top-0 bg-[#0b0b10] text-gray-400">
               <tr>
@@ -257,7 +257,7 @@ export function TrafficChart({
             </thead>
             <tbody>
               {series.map((p) => (
-                <tr key={p.start} className="border-t border-white/[0.04] text-gray-300">
+                <tr key={p.start} className="border-t border-white/4 text-gray-300">
                   <td className="px-3 py-1">{p.label}</td>
                   <td className="px-3 py-1 text-right">{p.visitors}</td>
                   <td className="px-3 py-1 text-right">{p.pageviews}</td>

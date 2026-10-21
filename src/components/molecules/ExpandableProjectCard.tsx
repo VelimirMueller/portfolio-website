@@ -95,7 +95,7 @@ export function ExpandableProjectCard({
             </div>
             <div className="flex flex-wrap gap-1.5 mt-2">
               {techStack.map(tech => (
-                <span key={tech} className="text-[10px] sm:text-[11px] font-mono text-gray-500 px-1.5 sm:px-2 py-0.5 bg-gray-100 dark:bg-[#050505] rounded border border-black/5 dark:border-white/5">
+                <span key={tech} className="text-[10px] sm:text-[11px] font-mono text-gray-500 px-1.5 sm:px-2 py-0.5 bg-gray-100 dark:bg-[#050505] rounded-sm border border-black/5 dark:border-white/5">
                   {tech}
                 </span>
               ))}

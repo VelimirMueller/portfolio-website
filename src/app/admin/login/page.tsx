@@ -8,9 +8,9 @@ export default async function AdminLoginPage(props: {
   const searchParams = await props.searchParams;
   return (
     <main className="min-h-screen flex items-center justify-center p-4 bg-[#050505]">
-      <div className="w-full max-w-sm bg-[#111111] rounded-[2rem] p-8 border border-[#222] animate-fade-in-up">
+      <div className="w-full max-w-sm bg-[#111111] rounded-4xl p-8 border border-[#222] animate-fade-in-up">
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-purple-600 flex items-center justify-center font-bold text-white">
+          <div className="w-8 h-8 rounded-lg bg-linear-to-tr from-brand-600 to-purple-600 flex items-center justify-center font-bold text-white">
             V
           </div>
           <span className="font-bold text-xl tracking-tight text-white">
@@ -41,7 +41,7 @@ export default async function AdminLoginPage(props: {
               type="email"
               required
               autoComplete="email"
-              className="w-full bg-[#0a0a0a] border border-[#222] rounded-xl py-2.5 px-4 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
+              className="w-full bg-[#0a0a0a] border border-[#222] rounded-xl py-2.5 px-4 text-sm text-white focus:outline-hidden focus:border-brand-500 transition-colors"
             />
             <SubmitButton
               pendingLabel="Sending…"

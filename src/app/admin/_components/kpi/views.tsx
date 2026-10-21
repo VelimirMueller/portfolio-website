@@ -68,12 +68,12 @@ export function KpiSection({ id, children, className = '' }: { id: KpiSectionId 
   }, [visible, generation]);
 
   return (
-    // `!hidden` too: a display utility in className (grid, flex) would beat the hidden attribute.
+    // `hidden!` too: a display utility in className (grid, flex) would beat the hidden attribute.
     <div
       ref={ref}
       hidden={!visible}
       data-kpi-section={id}
-      className={`${className} ${visible ? '' : '!hidden'}`}
+      className={`${className} ${visible ? '' : 'hidden!'}`}
       onAnimationEnd={(e) => e.target === e.currentTarget && e.currentTarget.classList.remove('motion-safe:animate-warp-in')}
     >
       {children}

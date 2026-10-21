@@ -33,7 +33,7 @@ export const GeneralTab = ({
         </button>
       </div>
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-        <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 border-4 border-[#111] relative flex-shrink-0">
+        <div className="w-20 h-20 rounded-full bg-linear-to-tr from-gray-700 to-gray-600 border-4 border-[#111] relative shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/avatar-velimir.svg" alt="Avatar" className="w-full h-full rounded-full" />
           <button className="absolute bottom-0 right-0 p-1.5 bg-blue-600 rounded-full text-white border-2 border-[#111]" aria-label="Change profile picture">
@@ -44,20 +44,20 @@ export const GeneralTab = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="settings-firstname" className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">First Name</label>
-              <input id="settings-firstname" type="text" value={profile.firstName} onChange={e => onProfileChange({ firstName: e.target.value })} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded px-3 py-2 text-sm text-gray-300 focus:outline-none transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
+              <input id="settings-firstname" type="text" value={profile.firstName} onChange={e => onProfileChange({ firstName: e.target.value })} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded-sm px-3 py-2 text-sm text-gray-300 focus:outline-hidden transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
             </div>
             <div>
               <label htmlFor="settings-lastname" className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">Last Name</label>
-              <input id="settings-lastname" type="text" value={profile.lastName} onChange={e => onProfileChange({ lastName: e.target.value })} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded px-3 py-2 text-sm text-gray-300 focus:outline-none transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
+              <input id="settings-lastname" type="text" value={profile.lastName} onChange={e => onProfileChange({ lastName: e.target.value })} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded-sm px-3 py-2 text-sm text-gray-300 focus:outline-hidden transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
             </div>
           </div>
           <div>
             <label htmlFor="settings-email" className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">Email</label>
-            <input id="settings-email" type="email" value={profile.email} onChange={e => onProfileChange({ email: e.target.value })} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded px-3 py-2 text-sm text-gray-300 focus:outline-none transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
+            <input id="settings-email" type="email" value={profile.email} onChange={e => onProfileChange({ email: e.target.value })} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded-sm px-3 py-2 text-sm text-gray-300 focus:outline-hidden transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
           </div>
           <div>
             <label htmlFor="settings-role" className="block text-[10px] text-gray-500 uppercase tracking-wider mb-1">Role</label>
-            <input id="settings-role" type="text" value={profile.role} onChange={e => onProfileChange({ role: e.target.value })} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded px-3 py-2 text-sm text-gray-300 focus:outline-none transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
+            <input id="settings-role" type="text" value={profile.role} onChange={e => onProfileChange({ role: e.target.value })} readOnly={!isEditing} className={`w-full bg-[#050505] border rounded-sm px-3 py-2 text-sm text-gray-300 focus:outline-hidden transition-colors ${isEditing ? 'border-blue-500/50 focus:border-blue-500' : 'border-[#222]'}`} />
           </div>
         </div>
       </div>

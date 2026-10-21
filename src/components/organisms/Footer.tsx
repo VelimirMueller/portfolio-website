@@ -49,7 +49,7 @@ export const Footer = () => {
         </div>
       </div>
       <div className="mt-12 hidden md:flex items-end justify-between gap-6">
-        <AsciiArt art={ASCII_VM} className="text-[8px] dark:text-white/15" />
+        <AsciiArt art={ASCII_VM} className="text-[8px]! dark:text-white/15!" />
         <AsciiArt art={'// no frameworks were harmed.\n// a few were mildly inconvenienced.'} className="text-right" />
       </div>
       <div className="mt-12 pt-8 border-t border-black/5 dark:border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 dark:text-gray-400 font-mono gap-2">

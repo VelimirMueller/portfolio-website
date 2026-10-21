@@ -45,13 +45,13 @@ export function BarList({
               aria-pressed={selected}
               onClick={() => onSelect(selected ? null : r.key)}
               title={selected ? 'Remove this filter' : 'Filter the dashboard to this'}
-              className={`group relative flex w-full items-center gap-4 overflow-hidden rounded-xl px-3 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
-                selected ? 'bg-cyan-400/[0.08] text-white' : 'text-gray-300 hover:bg-white/[0.03] hover:text-white'
+              className={`group relative flex w-full items-center gap-4 overflow-hidden rounded-xl px-3 py-2 text-left text-sm transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+                selected ? 'bg-cyan-400/8 text-white' : 'text-gray-300 hover:bg-white/3 hover:text-white'
               }`}
             >
               <span
                 aria-hidden="true"
-                className="absolute inset-y-1 left-1 rounded-lg bg-gradient-to-r from-cyan-500/20 to-cyan-500/5 transition-all duration-500 group-hover:from-cyan-500/30 motion-safe:animate-fade-in-up"
+                className="absolute inset-y-1 left-1 rounded-lg bg-linear-to-r from-cyan-500/20 to-cyan-500/5 transition-all duration-500 group-hover:from-cyan-500/30 motion-safe:animate-fade-in-up"
                 style={{ width: `calc(${(r.visitors / max) * 100}% - 0.5rem)`, animationDelay: `${i * 40}ms` }}
               />
               <span className="relative flex min-w-0 flex-1 items-center gap-2">
@@ -91,7 +91,7 @@ export function Tabs<T extends string>({
     refs.current[next]?.focus();
   };
   return (
-    <div role="tablist" aria-label={label} onKeyDown={onKeyDown} className="flex rounded-full border border-white/[0.08] bg-black/40 p-0.5">
+    <div role="tablist" aria-label={label} onKeyDown={onKeyDown} className="flex rounded-full border border-white/8 bg-black/40 p-0.5">
       {tabs.map((t) => (
         <button
           key={t.key}
@@ -103,7 +103,7 @@ export function Tabs<T extends string>({
           aria-selected={t.key === value}
           tabIndex={t.key === value ? 0 : -1}
           onClick={() => onChange(t.key)}
-          className={`rounded-full px-3 py-1 font-mono text-[11px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+          className={`rounded-full px-3 py-1 font-mono text-[11px] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400 ${
             t.key === value ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-gray-200'
           }`}
         >

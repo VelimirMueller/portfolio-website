@@ -5,7 +5,7 @@ import { ArrowUpRight, Lock } from 'lucide-react';
 export type BuildGroup = 'flagship' | 'lab' | 'ops';
 
 const groupStyle: Record<BuildGroup, { label: string; badge: string; line: string }> = {
-  flagship: { label: 'Flagship', badge: 'text-[#4f46e5] dark:text-[#818cf8] border-[#6366f1]/30 bg-[#6366f1]/10', line: 'bg-[#6366f1]' },
+  flagship: { label: 'Flagship', badge: 'text-brand-600 dark:text-brand-400 border-brand-500/30 bg-brand-500/10', line: 'bg-brand-500' },
   lab: { label: 'Lab', badge: 'text-[#7c3aed] dark:text-[#a78bfa] border-[#8b5cf6]/30 bg-[#8b5cf6]/10', line: 'bg-[#8b5cf6]' },
   ops: { label: 'Ops', badge: 'text-[#a21caf] dark:text-[#EE4FFF] border-[#EE4FFF]/30 bg-[#EE4FFF]/10', line: 'bg-[#EE4FFF]' },
 };

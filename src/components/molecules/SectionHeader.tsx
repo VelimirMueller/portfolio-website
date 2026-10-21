@@ -16,7 +16,7 @@ export const SectionHeader = ({ title, subtitle, artClassName }: SectionHeaderPr
       <div className="h-px w-6 bg-brand-500/50"></div>
       <span className="text-brand-600 dark:text-brand-400 font-mono text-xs uppercase tracking-widest">{subtitle}</span>
     </div>
-    <h1 className="relative text-4xl md:text-6xl lg:text-7xl font-mono font-bold text-black dark:text-white leading-[0.9]">
+    <h1 className="relative text-4xl md:text-6xl lg:text-7xl font-mono font-bold text-black dark:text-white leading-[0.9] md:leading-none">
       {title}
     </h1>
   </div>

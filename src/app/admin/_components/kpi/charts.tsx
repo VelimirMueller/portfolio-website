@@ -28,7 +28,7 @@ export function BarChart({
             {!compact && <span className="text-[9px] text-gray-400 font-mono">{v}</span>}
             <div className={`relative w-full bg-[#1a1a1a] overflow-hidden ${compact ? 'h-32 rounded-t-sm' : 'h-28 rounded-t-md'}`}>
               <div
-                className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-600 to-blue-400 animate-fade-in-up ${compact ? 'rounded-t-sm' : 'rounded-t-md'}`}
+                className={`absolute bottom-0 left-0 right-0 bg-linear-to-t from-blue-600 to-blue-400 animate-fade-in-up ${compact ? 'rounded-t-sm' : 'rounded-t-md'}`}
                 style={{ height: `${(v / max) * 100}%`, animationDelay: `${i * (compact ? 20 : 80)}ms` }}
               />
             </div>
@@ -58,7 +58,7 @@ export function Donut({ segments, label }: { segments: DonutSegment[]; label: st
   const ring = 'M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831';
   return (
     <div className="flex items-center gap-6">
-      <div className="relative w-28 h-28 flex-shrink-0">
+      <div className="relative w-28 h-28 shrink-0">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36" role="img" aria-label={label}>
           <path d={ring} fill="none" stroke="#222" strokeWidth="5" />
           {arcs.map(({ segment: s, offset }) => (

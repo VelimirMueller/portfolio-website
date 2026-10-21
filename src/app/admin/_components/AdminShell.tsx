@@ -41,11 +41,11 @@ export function AdminShell({
         aria-label="Admin navigation"
         className={`${
           sidebarOpen ? 'flex fixed inset-y-0 left-0 z-40 w-64' : 'hidden'
-        } md:flex md:relative md:w-64 flex-shrink-0 border-r border-[#222] flex-col justify-between p-4 bg-[#050505]`}
+        } md:flex md:relative md:w-64 shrink-0 border-r border-[#222] flex-col justify-between p-4 bg-[#050505]`}
       >
         <div>
           <div className="flex items-center gap-3 px-4 mb-12 mt-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-purple-600 flex items-center justify-center font-bold text-white">
+            <div className="w-8 h-8 rounded-lg bg-linear-to-tr from-brand-600 to-purple-600 flex items-center justify-center font-bold text-white">
               V
             </div>
             <span className="font-bold text-xl tracking-tight">
@@ -68,14 +68,14 @@ export function AdminShell({
                   href={href}
                   onClick={() => setSidebarOpen(false)}
                   aria-current={active ? 'page' : undefined}
-                  className={`flex items-center gap-4 px-4 py-3 rounded-xl w-full text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
+                  className={`flex items-center gap-4 px-4 py-3 rounded-xl w-full text-left transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 ${
                     active ? 'bg-brand-500/10 text-brand-400' : 'text-gray-500 hover:bg-[#1a1a1a] hover:text-white'
                   }`}
                 >
                   <Icon size={20} aria-hidden="true" />
                   <span className="font-medium text-sm flex-1">{label}</span>
                   {href === '/admin' && unread > 0 && (
-                    <span className="min-w-5 h-5 px-1.5 rounded bg-brand-600 text-white text-[10px] flex items-center justify-center font-bold">
+                    <span className="min-w-5 h-5 px-1.5 rounded-sm bg-brand-600 text-white text-[10px] flex items-center justify-center font-bold">
                       {unread}
                     </span>
                   )}
@@ -106,7 +106,7 @@ export function AdminShell({
       </aside>
 
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
-        <header className="h-20 border-b border-[#222] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#050505]/80 backdrop-blur z-20 shrink-0">
+        <header className="h-20 border-b border-[#222] flex items-center justify-between px-4 sm:px-6 md:px-8 bg-[#050505]/80 backdrop-blur-sm z-20 shrink-0">
           <div className="flex items-center gap-4 md:w-96">
             <button
               className="md:hidden p-2 text-gray-400"
@@ -119,7 +119,7 @@ export function AdminShell({
           </div>
 
           <div className="flex items-center gap-3 pl-6 border-l border-[#222]">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-r from-gray-700 to-gray-600 border-2 border-[#222] relative">
+            <div className="w-9 h-9 rounded-full bg-linear-to-r from-gray-700 to-gray-600 border-2 border-[#222] relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/avatar-velimir.svg"

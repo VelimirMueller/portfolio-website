@@ -70,7 +70,7 @@ export function MagicStats({ stats, error = false }: { stats: AdminDashboardStat
             </dl>
             <Link
               href="/admin/magic"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 text-white text-sm font-medium hover:bg-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 text-white text-sm font-medium hover:bg-brand-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-400"
             >
               Open Magic admin <ArrowUpRight size={14} aria-hidden="true" />
             </Link>

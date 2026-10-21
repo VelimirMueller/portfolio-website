@@ -62,7 +62,7 @@ export function Heatmap({ grid }: { grid: number[][] }) {
           setActive(null);
         }}
         onPointerLeave={() => setActive(null)}
-        className="overflow-x-auto rounded-xl p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+        className="overflow-x-auto rounded-xl p-1.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400"
       >
         <div className="grid min-w-[560px] gap-[3px]" style={{ gridTemplateColumns: '2.5rem repeat(24, minmax(0, 1fr))' }}>
           {grid.map((row, d) => (

@@ -9,7 +9,7 @@ section({ name: '00 · Cover', page: PG.F, renamePage: 'Page 1', run: async () =
     await K.t('// VELIMIR-MUELLER.DE', 'label/eyebrow', 'dark/accent-text'),
     await K.t('Design System.', 'display/xl', 'dark/text', { w: 1200 }),
     await K.t('Senior Product Engineer · Full-Stack · Infrastructure · Agent Tooling', 'heading/h4', 'dark/accent-text', { w: 1200 }),
-    await K.t('Tokens, components and page templates for velimir-mueller.de in one file. Values come from tailwind.config.ts and src/ on main. It is the base for the full UI rebuild.', 'body/lg', 'dark/sub', { w: 860 }));
+    await K.t('Tokens, components and page templates for velimir-mueller.de in one file. Values come from the @theme block in globals.css and src/ on main. It is the base for the full UI rebuild.', 'body/lg', 'dark/sub', { w: 860 }));
   h.add(b, hero);
 
   const meta = K.row(0, 'Meta'); meta.cornerRadius = 20; K.s(meta, 'dark/border'); K.f(meta, 'dark/card'); meta.clipsContent = true; h.add(b, meta); K.fixW(meta, 1440);

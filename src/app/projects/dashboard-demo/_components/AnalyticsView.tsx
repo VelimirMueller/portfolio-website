@@ -12,7 +12,7 @@ export const AnalyticsView = () => (
         <p className="text-gray-500 text-sm">Revenue metrics and growth indicators</p>
       </div>
       <div className="flex bg-[#111] p-1 rounded-xl border border-[#222] self-start sm:self-auto">
-        <button className="px-4 py-1.5 text-xs font-bold bg-[#222] text-white rounded-lg shadow">12M</button>
+        <button className="px-4 py-1.5 text-xs font-bold bg-[#222] text-white rounded-lg shadow-sm">12M</button>
         <button className="px-4 py-1.5 text-xs font-bold text-gray-500 hover:text-white transition-colors">6M</button>
         <button className="px-4 py-1.5 text-xs font-bold text-gray-500 hover:text-white transition-colors">QTD</button>
       </div>

@@ -80,7 +80,7 @@ export const NoPadding: Story = {
   args: {
     noPadding: true,
     children: (
-      <div className="bg-gradient-to-br from-brand-500/20 to-transparent h-48 flex items-center justify-center">
+      <div className="bg-linear-to-br from-brand-500/20 to-transparent h-48 flex items-center justify-center">
         <span className="text-brand-500 font-mono text-sm">
           Full-bleed content
         </span>

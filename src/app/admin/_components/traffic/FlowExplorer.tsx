@@ -56,7 +56,7 @@ function Column({
           </>
         );
         const cls = `flex h-11 w-full items-center gap-2 rounded-xl border px-3 text-left text-xs transition-all ${
-          hovered === id ? 'border-white/30 bg-white/[0.06] text-white' : 'border-white/[0.08] bg-black/30 text-gray-300'
+          hovered === id ? 'border-white/30 bg-white/6 text-white' : 'border-white/8 bg-black/30 text-gray-300'
         }`;
         return (
           <li key={id} onPointerEnter={() => onHover(id)} onPointerLeave={() => onHover(null)}>
@@ -67,7 +67,7 @@ function Column({
                 onFocus={() => onHover(id)}
                 onBlur={() => onHover(null)}
                 title={n.kind === 'page' ? `Follow the flow through ${n.key}` : `Filter to visitors from ${nodeLabel(n)}`}
-                className={`${cls} hover:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 motion-reduce:hover:translate-y-0`}
+                className={`${cls} hover:-translate-y-px focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400 motion-reduce:hover:translate-y-0`}
               >
                 {content}
               </button>
@@ -177,7 +177,7 @@ export function FlowExplorer({
           onClick={back}
           disabled={!trail.length}
           aria-label="Back to the previous page in the flow"
-          className="rounded-full border border-white/[0.08] p-1.5 text-gray-400 transition-colors hover:text-white disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className="rounded-full border border-white/8 p-1.5 text-gray-400 transition-colors hover:text-white disabled:opacity-30 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400"
         >
           <ArrowLeft size={14} aria-hidden="true" />
         </button>
@@ -188,7 +188,7 @@ export function FlowExplorer({
           id="flow-focus"
           value={flow.focus}
           onChange={(e) => go(e.target.value)}
-          className="rounded-full border border-white/[0.1] bg-black/50 px-3 py-1.5 font-mono text-xs text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className="rounded-full border border-white/10 bg-black/50 px-3 py-1.5 font-mono text-xs text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400"
         >
           {!pages.some((p) => p.key === flow.focus) && <option value={flow.focus}>{flow.focus}</option>}
           {pages.map((p) => (
@@ -220,7 +220,7 @@ export function FlowExplorer({
         <div className="md:mt-6">
           <div
             key={flow.focus}
-            className="flex h-full min-h-[7rem] md:min-h-[var(--flow-h)] flex-col items-center justify-center rounded-2xl border border-fuchsia-400/30 bg-gradient-to-b from-fuchsia-500/[0.12] to-cyan-500/[0.06] p-4 text-center shadow-[0_0_40px_rgba(217,70,239,0.12)] motion-safe:animate-scale-in"
+            className="flex h-full min-h-28 md:min-h-(--flow-h) flex-col items-center justify-center rounded-2xl border border-fuchsia-400/30 bg-linear-to-b from-fuchsia-500/12 to-cyan-500/6 p-4 text-center shadow-[0_0_40px_rgba(217,70,239,0.12)] motion-safe:animate-scale-in"
             style={{ ['--flow-h' as string]: `${height}px` }}
           >
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-fuchsia-200/70">Page</span>

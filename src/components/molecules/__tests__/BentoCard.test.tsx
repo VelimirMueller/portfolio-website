@@ -36,13 +36,13 @@ describe("BentoCard", () => {
     const { container } = render(
       <BentoCard noPadding>No pad</BentoCard>
     );
-    const contentDiv = container.querySelector(".flex-grow");
+    const contentDiv = container.querySelector(".grow");
     expect(contentDiv?.className).not.toContain("p-6");
   });
 
   it("applies padding to content area by default", () => {
     const { container } = render(<BentoCard>Padded</BentoCard>);
-    const contentDiv = container.querySelector(".flex-grow");
+    const contentDiv = container.querySelector(".grow");
     expect(contentDiv?.className).toContain("p-6");
   });
 });

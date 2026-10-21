@@ -57,7 +57,7 @@ export const SettingsView = () => {
             <button
               key={i}
               onClick={() => setActiveTab(i)}
-              className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-colors animate-fade-in-up focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${activeTab === i ? 'bg-[#222] text-white' : 'text-gray-500 hover:text-white hover:bg-[#1a1a1a]'}`}
+              className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-colors animate-fade-in-up focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 ${activeTab === i ? 'bg-[#222] text-white' : 'text-gray-500 hover:text-white hover:bg-[#1a1a1a]'}`}
               style={{ animationDelay: `${i * 60}ms` }}
             >
               {item}

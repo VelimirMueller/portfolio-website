@@ -65,7 +65,7 @@ describe('SectionSwitcher', () => {
     expect(shown('overview body')).toBe(false);
     expect(shown('messages body')).toBe(false);
     // The hidden attribute alone would lose against a display utility.
-    expect(screen.getByText('overview body').closest('[data-kpi-section]')).toHaveClass('!hidden');
+    expect(screen.getByText('overview body').closest('[data-kpi-section]')).toHaveClass('hidden!');
     expect(window.location.search).toBe('?range=24h&view=flow');
 
     fireEvent.click(screen.getByRole('radio', { name: /All/ }));

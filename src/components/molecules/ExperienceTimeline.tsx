@@ -26,7 +26,7 @@ type ExperienceTimelineProps = {
  */
 export const ExperienceTimeline = ({ entries, currentLabel, className = '' }: ExperienceTimelineProps) => (
   <ol
-    className={`relative space-y-6 sm:space-y-8 before:absolute before:inset-y-0 before:left-5 before:-translate-x-1/2 md:before:left-1/2 before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-brand-500/40 before:to-transparent ${className}`}
+    className={`relative space-y-6 sm:space-y-8 before:absolute before:inset-y-0 before:left-5 before:-translate-x-1/2 md:before:left-1/2 before:w-0.5 before:bg-linear-to-b before:from-transparent before:via-brand-500/40 before:to-transparent ${className}`}
   >
     {entries.map((entry, i) => {
       const current = i === 0;
@@ -58,7 +58,7 @@ export const ExperienceTimeline = ({ entries, currentLabel, className = '' }: Ex
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-xs font-mono text-zinc-500">{entry.tag}</span>
                 {current && (
-                  <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                  <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-sm">
                     {currentLabel}
                   </span>
                 )}

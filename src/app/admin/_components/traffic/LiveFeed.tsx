@@ -13,7 +13,7 @@ export function LiveFeed({ items }: { items: FeedItem[] }) {
   if (!items.length) return <p className="py-6 text-center text-sm text-[#7c808b]">Waiting for the first visitor…</p>;
 
   return (
-    <ol aria-label="Latest events" className="relative space-y-0.5 before:absolute before:inset-y-2 before:left-[13px] before:w-px before:bg-gradient-to-b before:from-cyan-400/40 before:to-transparent">
+    <ol aria-label="Latest events" className="relative space-y-0.5 before:absolute before:inset-y-2 before:left-[13px] before:w-px before:bg-linear-to-b before:from-cyan-400/40 before:to-transparent">
       {items.map((item, i) => {
         const Icon = item.type === 'click' ? MousePointerClick : Eye;
         const Device = DEVICE_ICON[item.device as keyof typeof DEVICE_ICON] ?? Monitor;
@@ -22,7 +22,7 @@ export function LiveFeed({ items }: { items: FeedItem[] }) {
         return (
           <li
             key={`${item.at}-${item.type}-${item.path}-${i}`}
-            className="relative flex items-center gap-3 rounded-lg py-1.5 pl-0 pr-2 text-xs motion-safe:animate-fade-in-up hover:bg-white/[0.02]"
+            className="relative flex items-center gap-3 rounded-lg py-1.5 pl-0 pr-2 text-xs motion-safe:animate-fade-in-up hover:bg-white/2"
             style={{ animationDelay: `${i * 30}ms` }}
           >
             <span

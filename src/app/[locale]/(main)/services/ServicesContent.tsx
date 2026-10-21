@@ -33,7 +33,7 @@ export default function ServicesContent() {
     <div className="relative overflow-x-clip">
     <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
       <AnimateIn from="bottom">
-        <SectionHeader title={t('services.title')} subtitle={t('services.subtitle')} artClassName="bg-[url('/art/services-v1.webp')] bg-cover bg-[position:100%_60%] [mask-image:linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] [mask-composite:intersect] -top-24 -bottom-8 hidden md:block" />
+        <SectionHeader title={t('services.title')} subtitle={t('services.subtitle')} artClassName="bg-[url('/art/services-v1.webp')] bg-cover bg-position-[100%_60%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block" />
       </AnimateIn>
 
       <SectionStage art="site-svc-requirements" side="right">
@@ -84,7 +84,7 @@ export default function ServicesContent() {
               <Eyebrow>{t('services.detailTitle')}</Eyebrow>
               <div className="relative space-y-3">
                 {SERVICES.map((service) => (
-                  <Link key={service.key} href={service.path} className={`${glassCard} flex items-center gap-4 p-3 hover:!border-brand-500/50 transition-colors group`}>
+                  <Link key={service.key} href={service.path} className={`${glassCard} flex items-center gap-4 p-3 hover:border-brand-500/50! transition-colors group`}>
                     <div className="p-2 rounded-lg bg-brand-500/10 text-brand-600 dark:text-brand-400">
                       <service.icon size={18} aria-hidden="true" />
                     </div>
@@ -103,7 +103,7 @@ export default function ServicesContent() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {SERVICES.map((s, i) => (
             <AnimateIn key={s.key} from="bottom" delay={i * 60}>
-              <Link href={s.path} className="group relative flex flex-col justify-end h-80 rounded-[1.5rem] overflow-hidden border border-light-border dark:border-[#26262b] bg-[#08080a] hover:border-brand-500/60 transition-colors">
+              <Link href={s.path} className="group relative flex flex-col justify-end h-80 rounded-3xl overflow-hidden border border-light-border dark:border-[#26262b] bg-[#08080a] hover:border-brand-500/60 transition-colors">
                 <div aria-hidden="true" className={`absolute inset-0 bg-cover bg-center group-hover:scale-[1.04] transition-transform duration-700 ${s.art}`} />
                 <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(10,10,11,0.05),rgba(10,10,11,0.35)_45%,rgba(10,10,11,0.94))]" />
                 <div className="relative p-6">

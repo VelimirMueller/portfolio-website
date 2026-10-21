@@ -35,7 +35,7 @@ type AudienceTab = 'country' | 'device' | 'browser';
 function LivePulse({ count }: { count: number }) {
   return (
     <span
-      className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/[0.08] px-3 py-1 font-mono text-xs text-emerald-200"
+      className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/8 px-3 py-1 font-mono text-xs text-emerald-200"
       title="Visitors active in the last 5 minutes"
     >
       <span className="relative flex h-2 w-2" aria-hidden="true">
@@ -157,14 +157,14 @@ export function TrafficDashboard({
       {/* Grid backdrop at ~5% — atmosphere, never competing with data. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-x-4 -top-4 h-[420px] opacity-[0.05] [mask-image:linear-gradient(to_bottom,black,transparent)]"
+        className="pointer-events-none absolute -inset-x-4 -top-4 h-[420px] opacity-[0.05] mask-[linear-gradient(to_bottom,black,transparent)]"
         style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }}
       />
 
       <div className="relative flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-cyan-300/70">First-party · cookieless</p>
-          <h2 id="kpi-traffic" className="bg-gradient-to-r from-white via-cyan-100 to-fuchsia-200 bg-clip-text text-2xl font-bold text-transparent">
+          <h2 id="kpi-traffic" className="bg-linear-to-r from-white via-cyan-100 to-fuchsia-200 bg-clip-text text-2xl font-bold text-transparent">
             Traffic
           </h2>
         </div>
@@ -178,7 +178,7 @@ export function TrafficDashboard({
             onClick={() => setLive((l) => !l)}
             aria-pressed={live}
             title={live ? 'Pause auto-refresh (every 30 s)' : 'Resume auto-refresh'}
-            className="rounded-full border border-white/[0.08] p-2 text-gray-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+            className="rounded-full border border-white/8 p-2 text-gray-400 transition-colors hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400"
           >
             {live ? <Pause size={13} aria-hidden="true" /> : <Play size={13} aria-hidden="true" />}
             <span className="sr-only">Auto-refresh</span>
@@ -187,7 +187,7 @@ export function TrafficDashboard({
             type="button"
             onClick={refresh}
             title="Refresh now (r)"
-            className="rounded-full border border-white/[0.08] p-2 text-gray-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+            className="rounded-full border border-white/8 p-2 text-gray-400 transition-colors hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400"
           >
             <RefreshCw size={13} aria-hidden="true" className={pending ? 'motion-safe:animate-spin' : ''} />
             <span className="sr-only">Refresh</span>
@@ -196,18 +196,18 @@ export function TrafficDashboard({
       </div>
 
       {/* One filter row above everything it scopes. */}
-      <div className="sticky top-[4.25rem] z-20 -mx-1 flex flex-wrap items-center gap-3 rounded-2xl border border-white/[0.06] bg-[#050505]/80 px-2 py-2 backdrop-blur-md">
+      <div className="sticky top-17 z-20 -mx-1 flex flex-wrap items-center gap-3 rounded-2xl border border-white/6 bg-[#050505]/80 px-2 py-2 backdrop-blur-md">
         <RangeControl value={filters.range} onChange={setRange} />
         <FilterChips filters={filters} onRemove={(k) => setFilter(k, null)} onClear={clearFilters} />
         <button
           type="button"
           onClick={() => setPalette(true)}
-          className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/40 px-3 py-1.5 text-xs text-gray-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ml-auto"
+          className="inline-flex items-center gap-2 rounded-full border border-white/8 bg-black/40 px-3 py-1.5 text-xs text-gray-400 transition-colors hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400 ml-auto"
         >
           <Command size={12} aria-hidden="true" />
           <span className="hidden sm:inline">Commands</span>
           <span className="sr-only sm:hidden">Commands</span>
-          <kbd className="rounded border border-white/10 px-1 font-mono text-[10px] text-gray-400">⌘K</kbd>
+          <kbd className="rounded-sm border border-white/10 px-1 font-mono text-[10px] text-gray-400">⌘K</kbd>
         </button>
       </div>
 
@@ -262,8 +262,8 @@ export function TrafficDashboard({
                   type="button"
                   aria-pressed={compare}
                   onClick={() => setCompare((c) => !c)}
-                  className={`rounded-full border px-3 py-1 font-mono text-[11px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
-                    compare ? 'border-white/20 bg-white/[0.06] text-white' : 'border-white/[0.08] text-gray-400 hover:text-white'
+                  className={`rounded-full border px-3 py-1 font-mono text-[11px] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+                    compare ? 'border-white/20 bg-white/6 text-white' : 'border-white/8 text-gray-400 hover:text-white'
                   }`}
                 >
                   Compare
@@ -288,7 +288,7 @@ export function TrafficDashboard({
                 <Heatmap grid={data.heatmap} />
               </Panel>
               <Panel id="traffic-feed" kicker="Newest first" title="Live feed">
-                <div tabIndex={0} role="region" aria-label="Live feed, scrollable" className="max-h-[17.5rem] overflow-y-auto rounded-lg pr-1 [scrollbar-width:thin] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
+                <div tabIndex={0} role="region" aria-label="Live feed, scrollable" className="max-h-70 overflow-y-auto rounded-lg pr-1 scrollbar-thin focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-400">
                   <LiveFeed items={data.feed} />
                 </div>
               </Panel>

@@ -70,7 +70,7 @@ export const DashboardView = () => (
           {ACTIVITIES.map((a, i) => (
             <div
               key={i}
-              className={`flex items-start gap-3 p-2 rounded-lg transition-colors ${i === 0 ? 'bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-transparent bg-[length:200%_100%] animate-shimmer' : 'hover:bg-[#1a1a1a]'}`}
+              className={`flex items-start gap-3 p-2 rounded-lg transition-colors ${i === 0 ? 'bg-linear-to-r from-blue-500/5 via-purple-500/5 to-transparent bg-size-[200%_100%] animate-shimmer' : 'hover:bg-[#1a1a1a]'}`}
             >
               <div className={`mt-0.5 ${a.color}`}>
                 <a.icon size={14} aria-hidden="true" />
@@ -99,7 +99,7 @@ export const DashboardView = () => (
             <div key={i} className="p-3 rounded-xl glass-demo-inner border">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">
+                  <div className="w-7 h-7 rounded-lg bg-linear-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">
                     {deal.company.charAt(0)}
                   </div>
                   <div>
@@ -138,7 +138,7 @@ export const DashboardView = () => (
                 <tr key={i} className="hover:bg-[#1a1a1a] transition-colors">
                   <td className="px-6 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">
+                      <div className="w-7 h-7 rounded-lg bg-linear-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-[10px] font-bold">
                         {deal.company.charAt(0)}
                       </div>
                       <div>
@@ -170,7 +170,7 @@ export const DashboardView = () => (
       <Card className="animate-fade-in-up" style={{ animationDelay: '700ms' }}>
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-bold text-white">Today&apos;s Actions</h3>
-          <div className="w-5 h-5 rounded bg-blue-600 text-white text-[10px] flex items-center justify-center font-bold">
+          <div className="w-5 h-5 rounded-sm bg-blue-600 text-white text-[10px] flex items-center justify-center font-bold">
             {openActionCount(TODAY_ACTIONS)}
           </div>
         </div>
@@ -180,7 +180,7 @@ export const DashboardView = () => (
               key={i}
               className={`flex items-start gap-3 p-2.5 rounded-lg border transition-colors ${task.overdue ? 'border-red-500/20 bg-red-500/5 animate-pulse-glow' : 'border-[#222] hover:border-[#333]'}`}
             >
-              <div className={`mt-0.5 w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 ${task.overdue ? 'border-red-500 text-red-500' : task.priority === 'high' ? 'border-orange-500' : 'border-[#333]'}`}>
+              <div className={`mt-0.5 w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${task.overdue ? 'border-red-500 text-red-500' : task.priority === 'high' ? 'border-orange-500' : 'border-[#333]'}`}>
                 {task.overdue && <AlertCircle size={10} aria-hidden="true" />}
               </div>
               <div className="flex-1 min-w-0">

@@ -87,7 +87,7 @@ export function CommandPalette({ open, onClose, actions }: { open: boolean; onCl
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 px-4 pt-[12vh] backdrop-blur-sm motion-safe:animate-scale-in" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 px-4 pt-[12vh] backdrop-blur-xs motion-safe:animate-scale-in" onMouseDown={onClose}>
       <div
         role="dialog"
         aria-modal="true"
@@ -96,7 +96,7 @@ export function CommandPalette({ open, onClose, actions }: { open: boolean; onCl
         onKeyDown={onKeyDown}
         className="w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b10] shadow-[0_0_80px_rgba(14,165,198,0.18)]"
       >
-        <div className="flex items-center gap-3 border-b border-white/[0.06] px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-white/6 px-4 py-3">
           <Command size={16} className="text-cyan-300" aria-hidden="true" />
           <input
             ref={inputRef}
@@ -111,9 +111,9 @@ export function CommandPalette({ open, onClose, actions }: { open: boolean; onCl
             aria-activedescendant={results[index] ? `palette-${results[index].id}` : undefined}
             aria-autocomplete="list"
             placeholder="Type a command, page or source…"
-            className="w-full bg-transparent text-sm text-white placeholder:text-[#7c808b] focus:outline-none"
+            className="w-full bg-transparent text-sm text-white placeholder:text-[#7c808b] focus:outline-hidden"
           />
-          <kbd className="rounded border border-white/10 px-1.5 font-mono text-[10px] text-gray-400">esc</kbd>
+          <kbd className="rounded-sm border border-white/10 px-1.5 font-mono text-[10px] text-gray-400">esc</kbd>
         </div>
         <ul id="palette-list" ref={listRef} role="listbox" aria-label="Commands" className="max-h-80 overflow-y-auto p-2">
           {results.map((a, i) => {
@@ -134,7 +134,7 @@ export function CommandPalette({ open, onClose, actions }: { open: boolean; onCl
                   }`}
                 >
                   <span className="truncate">{a.label}</span>
-                  {a.hint && <kbd className="shrink-0 rounded border border-white/10 px-1.5 font-mono text-[10px] text-gray-400">{a.hint}</kbd>}
+                  {a.hint && <kbd className="shrink-0 rounded-sm border border-white/10 px-1.5 font-mono text-[10px] text-gray-400">{a.hint}</kbd>}
                   {i === index && !a.hint && <CornerDownLeft size={12} className="shrink-0 text-gray-400" aria-hidden="true" />}
                 </div>
               </li>

@@ -13,7 +13,7 @@ export default async function AdminMagicDecksPage() {
     <div className="space-y-4">
       <Link
         href="/admin/magic/decks/new"
-        className="inline-block px-4 py-2 rounded-xl bg-brand-600 text-white text-sm font-medium hover:bg-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+        className="inline-block px-4 py-2 rounded-xl bg-brand-600 text-white text-sm font-medium hover:bg-brand-500 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-400"
       >
         Import deck
       </Link>

@@ -2,7 +2,7 @@ import React from 'react';
 import { sparklinePoints } from '../_lib/format';
 
 export const Card = ({ children, className = '', style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) => (
-  <div className={`glass-demo rounded-[2rem] p-6 border hover:border-white/20 transition-colors ${className}`} style={style}>
+  <div className={`glass-demo rounded-4xl p-6 border hover:border-white/20 transition-colors ${className}`} style={style}>
     {children}
   </div>
 );
@@ -11,7 +11,7 @@ export const NavItem = ({ icon: Icon, label, id, activeId, onClick }: { icon: Re
   <button
     onClick={() => onClick(id)}
     aria-current={activeId === id ? 'page' : undefined}
-    className={`flex items-center gap-4 px-4 py-3 rounded-xl w-full text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${activeId === id ? 'bg-blue-600/10 text-blue-400' : 'text-gray-500 hover:bg-[#1a1a1a] hover:text-white'}`}
+    className={`flex items-center gap-4 px-4 py-3 rounded-xl w-full text-left transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 ${activeId === id ? 'bg-blue-600/10 text-blue-400' : 'text-gray-500 hover:bg-[#1a1a1a] hover:text-white'}`}
   >
     <Icon size={20} aria-hidden="true" />
     <span className="font-medium text-sm">{label}</span>

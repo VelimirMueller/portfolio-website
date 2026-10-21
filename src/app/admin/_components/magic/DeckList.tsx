@@ -16,7 +16,7 @@ export function DeckList({ decks }: { decks: { deck: Deck; analysis: DeckAnalysi
           <li key={deck.id}>
             <Link
               href={`/admin/magic/decks/${deck.slug}`}
-              className="block rounded-[2rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+              className="block rounded-4xl focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500"
             >
               <Card className="h-full space-y-3">
                 <div className="flex items-start justify-between gap-2">

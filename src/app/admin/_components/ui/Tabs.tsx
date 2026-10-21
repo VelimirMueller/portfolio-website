@@ -56,7 +56,7 @@ export function Tabs<T extends string>({
         role="tablist"
         aria-label={label}
         onKeyDown={onKeyDown}
-        className="flex gap-1 overflow-x-auto border-b border-white/[0.08] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-1 overflow-x-auto border-b border-white/8 scrollbar-none [&::-webkit-scrollbar]:hidden"
       >
         {tabs.map((t) => {
           const selected = t.key === value;
@@ -73,7 +73,7 @@ export function Tabs<T extends string>({
               aria-controls={`${prefix}-panel-${t.key}`}
               tabIndex={selected ? 0 : -1}
               onClick={() => onChange(t.key)}
-              className={`relative shrink-0 rounded-t-lg px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${
+              className={`relative shrink-0 rounded-t-lg px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 ${
                 selected ? 'text-white' : 'text-gray-400 hover:text-gray-200'
               }`}
             >
