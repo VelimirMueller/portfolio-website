@@ -1,4 +1,5 @@
-# Dependencies whose install scripts may run (pnpm blocks all others).
+# Dependencies whose install scripts may run (pnpm 11+ blocks all others).
+# allowBuilds is the pnpm 11+ key that replaced onlyBuiltDependencies.
 allowBuilds:
   # Native watcher for Jest; builds from source only when no prebuilt binary fits.
   "@parcel/watcher": true
@@ -10,5 +11,5 @@ allowBuilds:
   esbuild: true
   # Native resolver for eslint-config-next.
   unrs-resolver: true
-  # Its postinstall only prints a setup hint.
+  # Blocked on purpose: its postinstall only prints a setup hint.
   vlm-code-context-mcp: false

@@ -52,10 +52,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # Same CLI version as the devDependency, without a full pnpm install.
-      # yq is preinstalled on the GitHub-hosted Ubuntu runners.
+      # Reads the resolved "  supabase@<version>:" key; fails when it is missing.
       - name: Read the Supabase CLI version from pnpm-lock.yaml
         id: cli
-        run: echo "version=$(yq -r '.importers["."].devDependencies.supabase.version' pnpm-lock.yaml)" >> "$GITHUB_OUTPUT"
+        run: |
+          version=$(grep -m1 -oE '^  supabase@[0-9][^:(]*' pnpm-lock.yaml | cut -d@ -f2)
+          [ -n "$version" ] || { echo "::error::no supabase entry in pnpm-lock.yaml"; exit 1; }
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
         with:
           version: ${{ steps.cli.outputs.version }}
