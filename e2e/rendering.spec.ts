@@ -80,7 +80,11 @@ test.describe('Glass panels keep their blur', () => {
     await page.locator('nav a[href$="/services"]').first().click();
     await expect(page).toHaveURL(/\/de\/services$/);
     await expect(page.locator('main h1').first()).toBeVisible();
-    await page.waitForTimeout(1000);
+    // Stop only after the page transition has finished, not after a guessed delay.
+    await page.waitForFunction(() => {
+      const wrap = document.querySelector('[data-page-warp]');
+      return !!wrap && wrap.getAnimations({ subtree: true }).every((a) => a.playState !== 'running');
+    });
 
     const violations = await page.evaluate(() => {
       const w = window as unknown as { __violations: string[]; __sampling: boolean };
