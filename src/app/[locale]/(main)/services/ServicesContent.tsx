@@ -6,7 +6,7 @@ import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { Eyebrow } from '@/components/atoms/Signature';
 import { GlassPanel, glassCard } from '@/components/molecules/GlassPanel';
-import { SectionStage } from '@/components/molecules/SectionStage';
+import { SectionStage, STAGE_ART } from '@/components/molecules/SectionStage';
 import { SectionDivider } from '@/components/molecules/SectionDivider';
 import { useTranslations } from 'next-intl';
 
@@ -14,13 +14,13 @@ import { useTranslations } from 'next-intl';
 
 type StageCopy = { index: string; title: string; caption: string };
 
-// Card art = the SectionStage renders in public/art/v2, so the page loads each image once.
+// Card art = the stage renders, so the page loads each image once.
 const SERVICES = [
-  { key: 'requirementsEngineering', icon: ClipboardList, path: '/services/requirements-engineering', art: "bg-[url('/art/v2/site-svc-requirements.webp')]" },
-  { key: 'uxUiBranding', icon: Palette, path: '/services/ux-ui-branding', art: "bg-[url('/art/v2/site-svc-ux.webp')]" },
-  { key: 'frontendDevelopment', icon: Laptop, path: '/services/frontend-development', art: "bg-[url('/art/v2/site-svc-frontend.webp')]" },
-  { key: 'projectDelivery', icon: Rocket, path: '/services/project-delivery', art: "bg-[url('/art/v2/site-svc-delivery.webp')]" },
-  { key: 'modernStack', icon: Wrench, path: '/services/modern-stack', art: "bg-[url('/art/v2/site-svc-stack.webp')]" },
+  { key: 'requirementsEngineering', icon: ClipboardList, path: '/services/requirements-engineering', art: STAGE_ART['site-svc-requirements'] },
+  { key: 'uxUiBranding', icon: Palette, path: '/services/ux-ui-branding', art: STAGE_ART['site-svc-ux'] },
+  { key: 'frontendDevelopment', icon: Laptop, path: '/services/frontend-development', art: STAGE_ART['site-svc-frontend'] },
+  { key: 'projectDelivery', icon: Rocket, path: '/services/project-delivery', art: STAGE_ART['site-svc-delivery'] },
+  { key: 'modernStack', icon: Wrench, path: '/services/modern-stack', art: STAGE_ART['site-svc-stack'] },
 ];
 
 export default function ServicesContent() {

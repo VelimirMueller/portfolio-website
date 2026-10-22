@@ -5,7 +5,7 @@ import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
 import { AsciiArt, asciiDivider } from '@/components/atoms/AsciiArt';
 import { Check, Zap, Layers, GitBranch, Laptop, Box, type LucideIcon } from 'lucide-react';
-import { SectionStage, type StageArt } from '@/components/molecules/SectionStage';
+import { SectionStage, STAGE_ART, type StageArt } from '@/components/molecules/SectionStage';
 import { useTranslations } from 'next-intl';
 
 type ServiceId = 'requirements-engineering' | 'ux-ui-branding' | 'frontend-development' | 'project-delivery' | 'modern-stack';
@@ -19,7 +19,7 @@ const iconMap: Record<ServiceId, LucideIcon> = {
 };
 
 // SectionHeader's optional artClassName prop exists since PR #61 (src/components/molecules/SectionHeader.tsx).
-// Static strings so Tailwind sees every class (no template literals in class names).
+// Static class strings so Tailwind sees every class; no class name is built from parts.
 // Large render behind the cards (glass stage, vm-brand B-48).
 const stageArt: Record<ServiceId, StageArt> = {
   'requirements-engineering': 'site-svc-requirements',
@@ -29,13 +29,13 @@ const stageArt: Record<ServiceId, StageArt> = {
   'modern-stack': 'site-svc-stack',
 };
 
-// Header art: the same public/art/v2 render as the stage below.
+// Header art: the same render as the stage below.
 const artMap: Record<ServiceId, string> = {
-  'requirements-engineering': "bg-[url('/art/v2/site-svc-requirements.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
-  'ux-ui-branding': "bg-[url('/art/v2/site-svc-ux.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
-  'frontend-development': "bg-[url('/art/v2/site-svc-frontend.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
-  'project-delivery': "bg-[url('/art/v2/site-svc-delivery.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
-  'modern-stack': "bg-[url('/art/v2/site-svc-stack.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'requirements-engineering': `${STAGE_ART['site-svc-requirements']} bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block`,
+  'ux-ui-branding': `${STAGE_ART['site-svc-ux']} bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block`,
+  'frontend-development': `${STAGE_ART['site-svc-frontend']} bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block`,
+  'project-delivery': `${STAGE_ART['site-svc-delivery']} bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block`,
+  'modern-stack': `${STAGE_ART['site-svc-stack']} bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block`,
 };
 
 export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {

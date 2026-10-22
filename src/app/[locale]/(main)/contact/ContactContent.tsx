@@ -6,6 +6,7 @@ import { GithubIcon, LinkedinIcon } from '@/components/atoms/BrandIcons';
 import { SectionHeader } from '@/components/molecules/SectionHeader';
 // ArtBackdrop: existing atom (src/components/atoms/ArtBackdrop.tsx, PR #60), also used by SectionHeader.
 import { ArtBackdrop } from '@/components/atoms/ArtBackdrop';
+import { STAGE_ART } from '@/components/molecules/SectionStage';
 import { AsciiArt, ASCII_SIGNAL } from '@/components/atoms/AsciiArt';
 import { Button } from '@/components/atoms/Button';
 import { AnimateIn } from '@/components/atoms/AnimateIn';
@@ -176,7 +177,7 @@ export default function ContactContent() {
   return (
     <div className="relative overflow-hidden">
     {/* Full-bleed art: the transmitter sits behind the header and the form; everything overlaps it. */}
-    <ArtBackdrop className="bg-[url('/art/v2/site-contact.webp')] bg-size-[auto_100%] md:bg-size-[150%_auto] bg-position-[78%_0%] md:bg-position-[85%_35%] mask-[linear-gradient(to_bottom,black_70%,transparent)]" />
+    <ArtBackdrop className={`${STAGE_ART['site-contact']} bg-size-[auto_100%] md:bg-size-[150%_auto] bg-position-[78%_0%] md:bg-position-[85%_35%] mask-[linear-gradient(to_bottom,black_70%,transparent)]`} />
     <div className="relative pt-32 pb-20 px-4 max-w-3xl mx-auto">
       <AnimateIn from="bottom">
         <div className="relative">
