@@ -18,42 +18,24 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  # Fails on critical advisories in production dependencies (issue #67).
-  # Reads pnpm-lock.yaml only, so no pnpm install. Tighten to high after M1.
-  dependency-audit:
-    name: Dependency Audit
+  # One job for the cheap checks (was three jobs with three runner start-ups):
+  # dependency audit (issue #67), shell scripts (ops-control ci.shell), lint and
+  # type check. shellcheck is preinstalled on ubuntu-latest.
+  static-checks:
+    name: Static Checks
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: 24
-      - run: pnpm audit --prod --audit-level critical
-
-  lint-and-typecheck:
-    name: Lint & Type Check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Shell scripts (bash -n)
+        run: git ls-files -z '*.sh' | xargs -0 -r -n1 bash -n
+      - name: Shell scripts (shellcheck)
+        run: git ls-files -z '*.sh' | xargs -0 -r shellcheck --severity=warning
       - uses: ./.github/actions/node-deps
+      # Fails on critical advisories in production dependencies. Tighten to high after M1.
+      - run: pnpm audit --prod --audit-level critical
       - run: pnpm run lint
       - run: pnpm run type-check
-
-  # Syntax and lint check for every tracked shell script (ops-control ci.shell).
-  # shellcheck is preinstalled on ubuntu-latest.
-  shell-scripts:
-    name: Shell Scripts
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: bash -n
-        run: git ls-files -z '*.sh' | xargs -0 -r -n1 bash -n
-      - name: shellcheck
-        run: git ls-files -z '*.sh' | xargs -0 -r shellcheck --severity=warning
 
   # Applies supabase/migrations to a fresh local database and runs the SQL tests
   # (issue #73). Postgres only, in Docker; never touches the hosted project.
@@ -101,6 +83,9 @@ jobs:
 
   storybook-and-visual-regression:
     name: Storybook & Visual Regression
+    # Pull requests only: the merged tree was already checked on the PR, so a run
+    # on push to main would repeat it. Not a required check on main.
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     # Official Playwright image (issue #215): browsers and their system libraries
