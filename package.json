@@ -16,6 +16,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test:visual": "pnpm exec playwright test --config=playwright-storybook.config.ts",
+    "test:visual:docker": "bash scripts/visual/run-in-ci-image.sh",
+    "test:visual:update": "bash scripts/visual/run-in-ci-image.sh --update-snapshots",
     "test:e2e": "pnpm exec playwright test --config=playwright.config.ts",
     "test:live": "pnpm exec playwright test --config=playwright-live.config.ts",
     "test:db": "bash scripts/db/test-migrations.sh",

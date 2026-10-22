@@ -29,6 +29,10 @@ jobs:
        (github.event.deployment_status.environment_url != '' || github.event.deployment_status.target_url != ''))
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # Same pinned Playwright image as the CI jobs (issue #215): no apt, no browser download.
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
+      options: --ipc=host
     steps:
       # The test harness (config, spec, dependencies) comes from the default
       # branch, never from the deployed commit: a preview can be built from an
@@ -47,16 +51,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # The container runs as root, the checkout belongs to the runner user.
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           tmp="$(mktemp)"
           trap 'rm -f "$tmp"' EXIT
           git show "$DEPLOY_SHA:.figma/tokens.json" > "$tmp"
-          jq -e '.collections.color and .collections.primitive' "$tmp" > /dev/null
+          # node, not jq: the Playwright image has no jq.
+          node -e 'const t = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")); if (!(t.collections?.color && t.collections?.primitive)) process.exit(1)' "$tmp"
           mv "$tmp" .figma/tokens.json
       # node-deps runs pnpm/action-setup, setup-node and pnpm install --frozen-lockfile.
       - uses: ./.github/actions/node-deps
-      - name: Install Playwright browsers
-        timeout-minutes: 26
-        uses: ./.github/actions/playwright-install
       # Vercel Deployment Protection answers every deployment URL with a 302 to
       # vercel.com/sso-api. Production is checked on the public domain (the
       # config default); a preview needs the bypass secret, else it is skipped.

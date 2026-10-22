@@ -102,15 +102,19 @@ jobs:
   storybook-and-visual-regression:
     name: Storybook & Visual Regression
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
+    # Official Playwright image (issue #215): browsers and their system libraries
+    # are preinstalled, so no apt and no browser download at run time. Pinned by
+    # tag and digest; the tag must equal the locked @playwright/test version
+    # (src/__tests__/playwright-image.test.ts). --ipc=host: Chromium needs more
+    # shared memory than the Docker default of 64 MB.
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
+      options: --ipc=host
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/node-deps
       - run: pnpm run build-storybook
-      # Cache + install with retries; the composite action explains the apt hang.
-      - name: Install Playwright browsers
-        timeout-minutes: 26
-        uses: ./.github/actions/playwright-install
       - name: Run visual regression tests
         run: pnpm run test:visual
       - name: Upload visual diff results
@@ -126,15 +130,15 @@ jobs:
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     needs: unit-tests-and-build
+    # Same pinned Playwright image as the visual job.
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
+      options: --ipc=host
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/node-deps
-      # Cache + install with retries; the composite action explains the apt hang.
-      - name: Install Playwright browsers
-        timeout-minutes: 26
-        uses: ./.github/actions/playwright-install
       - name: Run E2E tests
         run: pnpm run test:e2e
       - name: Upload test results
