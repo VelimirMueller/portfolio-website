@@ -111,6 +111,10 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
       options: --ipc=host
+      env:
+        # HOME (/github/home) belongs to the runner user, not root, so @swc/core
+        # (next-intl) refuses it as the cache for its native addon.
+        SWC_NATIVE_BINDING_CACHE: /root/.cache/swc
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/node-deps
@@ -136,6 +140,10 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
       options: --ipc=host
+      env:
+        # HOME (/github/home) belongs to the runner user, not root, so @swc/core
+        # (next-intl) refuses it as the cache for its native addon.
+        SWC_NATIVE_BINDING_CACHE: /root/.cache/swc
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/node-deps
