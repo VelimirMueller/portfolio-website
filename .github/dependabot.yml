@@ -20,6 +20,9 @@ updates:
       # One PR per week for all minor and patch bumps; majors stay separate.
       npm-minor-patch:
         update-types: [minor, patch]
+      # Majors in one PR too (fewer CI runs); split it when one major breaks.
+      npm-major:
+        update-types: [major]
     ignore:
       # Next.js and React are pinned with "~" on purpose: a major upgrade is a
       # planned migration, not a weekly bump.

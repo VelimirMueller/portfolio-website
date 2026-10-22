@@ -33,7 +33,7 @@ Development rules for velimir-mueller.de. Details live in the [README](README.md
 | `pnpm run test:db` | Applies `supabase/migrations/` to a fresh local database and runs `supabase/tests/*.sql`. Needs Docker and psql. |
 | `pnpm run db:types` | Writes `src/types/supabase.ts` from `supabase/migrations/` on a fresh local database (never the hosted project). CI fails when the file is stale. |
 
-CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and type check, database migrations and SQL tests, unit tests with coverage and build, Storybook visual regression, e2e.
+CI (`.github/workflows/ci.yml`) runs on every PR: static checks (dependency audit, shell scripts, lint, type check), database migrations and SQL tests, unit tests with coverage and build, Storybook visual regression (PRs only), e2e.
 
 ## Where things live
 
