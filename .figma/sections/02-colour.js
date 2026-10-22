@@ -37,7 +37,7 @@ section({ name: '01 · Colour', page: PG.F, run: async () => {
 
   const pm = K.col(20, 'Primitives'); h.add(pm, await K.t('PRIMITIVES · HIDDEN FROM PICKERS', 'label/eyebrow', 'dark/sub'));
   const g3 = K.wrap(1440, 16, 'Primitive swatches'); h.add(pm, g3);
-  for (const n of ['zinc/50', 'zinc/100', 'zinc/200', 'zinc/300', 'zinc/400', 'zinc/500', 'zinc/600', 'zinc/700', 'zinc/800', 'zinc/900', 'zinc/925', 'zinc/950', 'base/white', 'base/black',
+  for (const n of ['zinc/50', 'zinc/100', 'zinc/200', 'zinc/300', 'zinc/400', 'zinc/500', 'zinc/600', 'zinc/700', 'zinc/800', 'zinc/900', 'zinc/925', 'zinc/950', 'base/white', 'base/black', 'base/ink', 'base/line',
     'emerald/400', 'emerald/500', 'emerald/700', 'red/300', 'red/400', 'red/500', 'red/600', 'red/700', 'amber/300', 'amber/400', 'amber/500', 'amber/700',
     'violet/400', 'violet/500', 'violet/600', 'blue/400', 'blue/500', 'ops/500', 'ops/700'])
     h.add(g3, await sw(n, 96, 'dark'));
