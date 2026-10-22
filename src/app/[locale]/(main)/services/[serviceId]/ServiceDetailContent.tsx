@@ -29,12 +29,13 @@ const stageArt: Record<ServiceId, StageArt> = {
   'modern-stack': 'site-svc-stack',
 };
 
+// Header art: the same public/art/v2 render as the stage below.
 const artMap: Record<ServiceId, string> = {
-  'requirements-engineering': "bg-[url('/art/svc-requirements-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
-  'ux-ui-branding': "bg-[url('/art/svc-ux-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
-  'frontend-development': "bg-[url('/art/svc-frontend-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
-  'project-delivery': "bg-[url('/art/svc-delivery-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
-  'modern-stack': "bg-[url('/art/svc-stack-v1.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'requirements-engineering': "bg-[url('/art/v2/site-svc-requirements.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'ux-ui-branding': "bg-[url('/art/v2/site-svc-ux.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'frontend-development': "bg-[url('/art/v2/site-svc-frontend.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'project-delivery': "bg-[url('/art/v2/site-svc-delivery.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
+  'modern-stack': "bg-[url('/art/v2/site-svc-stack.webp')] bg-cover bg-position-[100%_50%] mask-[linear-gradient(to_right,transparent_30%,black_65%,black_85%,transparent),linear-gradient(to_bottom,black_55%,transparent)] mask-intersect -top-24 -bottom-8 hidden md:block",
 };
 
 export const ServiceDetailContent = ({ serviceId }: { serviceId: string }) => {

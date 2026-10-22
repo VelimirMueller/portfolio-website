@@ -14,12 +14,13 @@ import { useTranslations } from 'next-intl';
 
 type StageCopy = { index: string; title: string; caption: string };
 
+// Card art = the SectionStage renders in public/art/v2, so the page loads each image once.
 const SERVICES = [
-  { key: 'requirementsEngineering', icon: ClipboardList, path: '/services/requirements-engineering', art: "bg-[url('/art/svc-requirements-v1.webp')]" },
-  { key: 'uxUiBranding', icon: Palette, path: '/services/ux-ui-branding', art: "bg-[url('/art/svc-ux-v1.webp')]" },
-  { key: 'frontendDevelopment', icon: Laptop, path: '/services/frontend-development', art: "bg-[url('/art/svc-frontend-v1.webp')]" },
-  { key: 'projectDelivery', icon: Rocket, path: '/services/project-delivery', art: "bg-[url('/art/svc-delivery-v1.webp')]" },
-  { key: 'modernStack', icon: Wrench, path: '/services/modern-stack', art: "bg-[url('/art/svc-stack-v1.webp')]" },
+  { key: 'requirementsEngineering', icon: ClipboardList, path: '/services/requirements-engineering', art: "bg-[url('/art/v2/site-svc-requirements.webp')]" },
+  { key: 'uxUiBranding', icon: Palette, path: '/services/ux-ui-branding', art: "bg-[url('/art/v2/site-svc-ux.webp')]" },
+  { key: 'frontendDevelopment', icon: Laptop, path: '/services/frontend-development', art: "bg-[url('/art/v2/site-svc-frontend.webp')]" },
+  { key: 'projectDelivery', icon: Rocket, path: '/services/project-delivery', art: "bg-[url('/art/v2/site-svc-delivery.webp')]" },
+  { key: 'modernStack', icon: Wrench, path: '/services/modern-stack', art: "bg-[url('/art/v2/site-svc-stack.webp')]" },
 ];
 
 export default function ServicesContent() {

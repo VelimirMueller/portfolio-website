@@ -176,7 +176,7 @@ export default function ContactContent() {
   return (
     <div className="relative overflow-hidden">
     {/* Full-bleed art: the transmitter sits behind the header and the form; everything overlaps it. */}
-    <ArtBackdrop className="bg-[url('/art/contact-v1.webp')] bg-size-[auto_100%] md:bg-size-[150%_auto] bg-position-[78%_0%] md:bg-position-[85%_35%] mask-[linear-gradient(to_bottom,black_70%,transparent)]" />
+    <ArtBackdrop className="bg-[url('/art/v2/site-contact.webp')] bg-size-[auto_100%] md:bg-size-[150%_auto] bg-position-[78%_0%] md:bg-position-[85%_35%] mask-[linear-gradient(to_bottom,black_70%,transparent)]" />
     <div className="relative pt-32 pb-20 px-4 max-w-3xl mx-auto">
       <AnimateIn from="bottom">
         <div className="relative">
