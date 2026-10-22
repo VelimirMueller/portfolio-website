@@ -73,7 +73,7 @@ K.art = (name, mode) => (K.m(mode) === 'light' && K.LIGHT[name]) ? 'website/ligh
 K.panel = async (path, w, hh, o) => { o = o || {}; const mode = K.m(o.mode); const pad = o.pad == null ? 40 : o.pad;
   const f = h.AL(o.dir || 'VERTICAL', { name: o.name || 'Art panel', itemSpacing: o.gap == null ? 16 : o.gap }); K.pad(f, pad); K.fix(f, w, hh);
   f.primaryAxisAlignItems = o.align || 'MAX'; f.cornerRadius = o.r == null ? 24 : o.r; f.clipsContent = true;
-  const base = mode === 'light' ? '#FAFAFA' : '#09090B';
+  const base = mode === 'light' ? '#FAFAFA' : '#0A0A0B';
   const over = o.over || [h.grad([[0, base, 0.05], [0.45, base, 0.35], [1, base, 0.94]], 90)];
   // light mode without a *-light render: the site inverts the art; here it sits faint on the light background.
   const op = o.op != null ? o.op : (mode === 'light' && path.indexOf('/light/') < 0 ? 0.18 : 1);
@@ -183,7 +183,7 @@ K.set = async (parent, name, desc, axes, build, o) => { o = o || {}; const modes
     let x = PAD; const rh = Math.max(...r.line.map(c => c.height));
     r.line.forEach((c, j) => { c.x = x; c.y = y; x += colW[j] + gap; }); W = Math.max(W, x - gap + PAD); y += rh + gap; });
   const H = y - gap + PAD; set.resizeWithoutConstraints(Math.max(W, 200), H);
-  set.fills = modes.length === 2 ? [h.grad([[0, '#09090B'], [split / H, '#09090B'], [split / H, '#FAFAFA'], [1, '#FAFAFA']], 90)] : [K.c(modes[0] === 'Light' ? 'light/bg' : 'dark/bg')];
+  set.fills = modes.length === 2 ? [h.grad([[0, '#0A0A0B'], [split / H, '#0A0A0B'], [split / H, '#FAFAFA'], [1, '#FAFAFA']], 90)] : [K.c(modes[0] === 'Light' ? 'light/bg' : 'dark/bg')];
   K.s(set, 'dark/border-strong'); set.dashPattern = [6, 4]; set.cornerRadius = 16;
   K.idx[name] = set; return set; };
 

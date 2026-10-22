@@ -461,7 +461,7 @@ function ReadingPane({
           </div>
           <a
             href={replyHref(message)}
-            className="self-start flex items-center gap-2 px-4 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-500 shadow-lg shadow-brand-900/20"
+            className="self-start flex items-center gap-2 px-4 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-500 shadow-lg shadow-brand-800/20"
           >
             <Mail size={14} aria-hidden="true" /> Reply
           </a>

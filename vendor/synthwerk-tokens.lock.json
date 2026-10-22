@@ -1,0 +1,36 @@
+{
+  "name": "@synthwerk/tokens",
+  "version": "0.3.0",
+  "source": {
+    "repository": "https://github.com/VelimirMueller/synthwerk-sdk.git",
+    "commit": "ba5a55703ca9bb903886212087b482839c12d0f6",
+    "directory": "packages/tokens"
+  },
+  "files": {
+    "LICENSE": "db58c792e38ccc2964118dbdb6374a35889a37c7072226c2dbf5e6d448b977b8",
+    "README.md": "5901ab95846773f89061eb8175463740a945cec6613fd93b96ca2d3f41e06493",
+    "assets/synthwerk-favicon.svg": "cb6fd05cc279d3f1df9156d79962a7403a12e805141e6cdd950681192344849c",
+    "assets/synthwerk-logo-dark.svg": "a5b364ae579dff0145e7843c570b35f080f48018011899c70a88f56764489be5",
+    "assets/synthwerk-logo-light.svg": "ff460188eb6f7e9e5b24251274062ca74660098468e877ae8388c271fdf03c78",
+    "assets/synthwerk-mark-dark.svg": "79fd2376f615549380be8a48aa8bc1ca62dce498916fdeae288b947c2b6bbcf6",
+    "assets/synthwerk-mark-light.svg": "5471699ac9202b0fc1fdcbc41682e7374d2b6dc63b2c7c6e944e38050080f49c",
+    "assets/synthwerk-wordmark-dark.svg": "38755f12db89da7060b8182e14eba681e62de90110952fec10d4cbfeeea43de6",
+    "assets/synthwerk-wordmark-light.svg": "10c34ffd2fb5f890ae8191fc663bb59c4897918e9a33058b3db0f9f2ec7b7b63",
+    "dist/brand-groups.json": "6866928159beb66520cbe88005b11b12bdb1e2e0ce242a4c386f082dcbbfa7dd",
+    "dist/contrast.d.ts": "50ef9a8d3f6b6d626d5d7ba21621a6bb12b9120d06f04a31779d9fb760746d46",
+    "dist/contrast.js": "c6ac0abfc2cd6fa61d6235393075c391c1b571ac43e2c579ccf9dfbeeed07c95",
+    "dist/css.d.ts": "a66b33d351424db8750fa4e169fc723c74d5348dcab3c5a54816586722a5ec6a",
+    "dist/css.js": "f50bf15086bd2ec23340353ca39c68f4e5df69ce81c84357e8c343da0ddeb2f2",
+    "dist/first-paint.js": "29cbd8d832e98bc5932db91049b8ed84c47bf83913d1f05b593f0508ec474597",
+    "dist/index.d.ts": "05c04b722036ee6416615de20c63a44d74bbe5f10e7a483896fd90640b4bad83",
+    "dist/index.js": "297390529f574a43d1169e1d3e33430f70748c39a1f2ecf3383aa2245c1c8d72",
+    "dist/tailwind.css": "59b2b253f3ab529265027abe30f7ad71c0d10dc56cbdd7a77ef316e75a914d61",
+    "dist/theme.d.ts": "00acf73c2ff5dcfe2162d0e0386bbd6f888ffa858e990d8d00c1a7aa67792e60",
+    "dist/theme.js": "1169c997c2bacf20d5c439034d0fa3690426ebe905f7b949cda2bf36bce54fb2",
+    "dist/tokens.css": "c80790fa8660dc7925151c24f7df30c55b6bb21992058f141a1f52d2e34da0fb",
+    "dist/tokens.d.ts": "8ee59e31515db3471794343ed95eae602b642e9093a2f86bed6f6d0c87644edc",
+    "dist/tokens.js": "0e0f106118d04d8d62a278ecee7e272dc24a582825c782fd14401eebf6c15049",
+    "dist/tokens.json": "83df89c4d7b0592ed06033267c9a268981b0e3a4424a3cfd04e4f9757a51d710",
+    "package.json": "e29ec6ab9495bed5ea46c44c507ca0c31dceab263deccb8fbe4741cf9d1c46be"
+  }
+}

@@ -22,6 +22,7 @@ export const spaceMono = Space_Mono({
 
 /**
  * Static, build-time string — applies the persisted or system theme before
- * first paint to avoid a flash. Never receives user input.
+ * first paint to avoid a flash. Never receives user input. Sets the `dark` /
+ * `light` class (Tailwind) and `data-mode` (@synthwerk/tokens) together.
  */
-export const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.classList.remove('light','dark');document.documentElement.classList.add(t)}else if(window.matchMedia('(prefers-color-scheme:light)').matches){document.documentElement.classList.remove('dark');document.documentElement.classList.add('light')}}catch(e){}})()`;
+export const themeInitScript = `(function(){try{var d=document.documentElement,t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';d.classList.remove('light','dark');d.classList.add(t);d.setAttribute('data-mode',t)}catch(e){}})()`;

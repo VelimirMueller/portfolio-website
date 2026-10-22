@@ -69,19 +69,19 @@ export function renderContactEmail(p: { name: string; email: string; message: st
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root { color-scheme: dark; }
-  body { margin:0; padding:0; background:#09090B; }
+  body { margin:0; padding:0; background:#0A0A0B; }
   @media (max-width: 620px) { .wrap { width:100% !important; } .pad { padding-left:24px !important; padding-right:24px !important; } }
 </style>
 </head>
-<body style="margin:0;padding:0;background:#09090B;">
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#09090B;">${p.name} wrote you via the contact form.</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#09090B" style="background:#09090B;">
+<body style="margin:0;padding:0;background:#0A0A0B;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#0A0A0B;">${p.name} wrote you via the contact form.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0A0A0B" style="background:#0A0A0B;">
 <tr><td align="center" style="padding:32px 12px;">
 <table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
 
   <tr><td style="padding:0 4px 20px 4px;">
     <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-      <td width="32" height="32" align="center" valign="middle" bgcolor="#F4F4F5" style="width:32px;height:32px;border-radius:16px;background:#F4F4F5;color:#09090B;font-family:${MONO};font-size:11px;font-weight:700;">VM</td>
+      <td width="32" height="32" align="center" valign="middle" bgcolor="#F4F4F5" style="width:32px;height:32px;border-radius:16px;background:#F4F4F5;color:#0A0A0B;font-family:${MONO};font-size:11px;font-weight:700;">VM</td>
       <td style="padding-left:12px;font-family:${MONO};font-size:13px;font-weight:700;color:#F4F4F5;letter-spacing:-0.2px;">Velimir Müller</td>
     </tr></table>
   </td></tr>
@@ -103,7 +103,7 @@ export function renderContactEmail(p: { name: string; email: string; message: st
       <tr><td class="pad" style="padding:6px 48px 0 48px;">
         <p style="margin:0 0 8px 0;font-family:${MONO};font-size:12px;color:#818CF8;letter-spacing:1px;">// message</p>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-          <td bgcolor="#09090B" style="background:#09090B;border:1px solid #27272A;border-left:3px solid #6366F1;border-radius:12px;padding:18px 20px;">
+          <td bgcolor="#0A0A0B" style="background:#0A0A0B;border:1px solid #27272A;border-left:3px solid #6366F1;border-radius:12px;padding:18px 20px;">
             <p style="margin:0;font-family:${SANS};font-size:15px;line-height:1.7;color:#E4E4E7;white-space:pre-wrap;">${p.message}</p>
           </td>
         </tr></table>

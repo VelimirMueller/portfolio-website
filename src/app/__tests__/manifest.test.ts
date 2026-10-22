@@ -16,10 +16,10 @@ function pngInfo(file: string) {
 describe('manifest', () => {
   const result = manifest();
 
-  it('names the site and uses the dark favicon tile colour', () => {
+  it('names the site and uses the dark page colour (vm-brand B-54)', () => {
     expect(result.name).toBe(SITE_NAME);
-    expect(result.theme_color).toBe('#09090b');
-    expect(result.background_color).toBe('#09090b');
+    expect(result.theme_color).toBe('#0a0a0b');
+    expect(result.background_color).toBe('#0a0a0b');
   });
 
   it.each(['any', 'maskable'])('lists 192 and 512 px icons for purpose %s', (purpose) => {

@@ -49,7 +49,7 @@ T.glass = async (w, mode, cw, name, gap) => K.glass(mode, cw || T.CW(w), name, g
 T.stage = (w, gap, name) => { const s = K.col(gap == null ? 16 : gap, name || 'Stage'); K.fixW(s, T.CW(w)); return s; };
 // o.left = the stage's x in the page frame (default: the content padding).
 T.backdrop = async (stage, w, mode, art, side, o) => { const right = side !== 'left', H = Math.max(stage.height, 480), P = o && o.left != null ? o.left : T.PAD(w);
-  const c = h.hex(K.m(mode) === 'light' ? '#FAFAFA' : '#09090B');
+  const c = h.hex(K.m(mode) === 'light' ? '#FAFAFA' : '#0A0A0B');
   const fade = { type: 'GRADIENT_RADIAL', gradientTransform: [[1, 0, (right ? 0.62 : 0.38) - 0.5], [0, 1, 0]],
     gradientStops: [[0, 0], [0.45, 0], [1, 1]].map(([position, a]) => ({ position, color: Object.assign({}, c, { a }) })) };
   const r = await h.img(K.art2(art, mode), w, Math.round(H * 1.2), { name: 'Section art · ' + art }); r.fills = r.fills.concat([fade]);

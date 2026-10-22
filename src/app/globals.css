@@ -1,3 +1,14 @@
+/*
+  Brand tokens: @synthwerk/tokens (vm-brand B-52), vendored in vendor/synthwerk-tokens
+  (see scripts/tokens/sync.sh). The @layer statement names its layer first, so it is
+  the lowest in every bundler (Vite in Storybook moves the import itself to the end):
+  where the package and the Tailwind theme share a variable name (--font-sans,
+  --text-*, --radius-*), the site's Tailwind theme wins and keeps its type scale.
+  <html> carries data-group="flagship" and data-mode="dark|light" (ThemeProvider),
+  so the package resolves the flagship group for the current mode.
+*/
+@layer synthwerk-tokens;
+@import '@synthwerk/tokens/tokens.css' layer(synthwerk-tokens);
 @import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
@@ -5,6 +16,10 @@
 /*
   Colours sit in their own @theme block, without nested rules, so vfb drift
   (vm-figma-builder) can read them and compare them with .figma/tokens.json.
+  They stay hex for that reason. src/__tests__/brand-colors.test.ts pins each
+  one to its @synthwerk/tokens value (primitive or flagship group fill). Neutral
+  overrides without a package value (PLAYBOOK §2): light-text and dark-bg
+  #0a0a0b (vm-brand B-54, brand.json base), dark-border #26262b (base.dark.line).
 */
 @theme {
   --color-light-bg: #fafafa;
@@ -25,8 +40,8 @@
   --color-brand-500: #6366f1;
   --color-brand-600: #4f46e5;
   --color-brand-700: #4338ca;
-  --color-brand-900: #312e81;
-  --color-brand-glow: rgba(99, 102, 241, 0.15);
+  --color-brand-800: #3730a3;
+  --color-brand-glow: color-mix(in srgb, var(--group-fill) 15%, transparent);
 }
 
 @theme {
@@ -112,10 +127,10 @@
   @keyframes pulse-glow {
     0%,
     100% {
-      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--group-fill) 0%, transparent);
     }
     50% {
-      box-shadow: 0 0 20px 2px rgba(99, 102, 241, 0.15);
+      box-shadow: 0 0 20px 2px color-mix(in srgb, var(--group-fill) 15%, transparent);
     }
   }
   @keyframes shimmer {
@@ -295,10 +310,10 @@
   @keyframes border-glow {
     0%,
     100% {
-      border-color: rgba(99, 102, 241, 0.15);
+      border-color: color-mix(in srgb, var(--group-fill) 15%, transparent);
     }
     50% {
-      border-color: rgba(99, 102, 241, 0.4);
+      border-color: color-mix(in srgb, var(--group-fill) 40%, transparent);
     }
   }
 }
@@ -391,7 +406,7 @@ body {
   }
   .dark .bento-card:hover {
     border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 40px -10px color-mix(in srgb, var(--group-fill) 10%, transparent);
   }
   .bento-card::after {
     content: "";
@@ -508,7 +523,7 @@ body {
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, 0) 64%, rgba(99, 102, 241, 0.55));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, 0) 64%, color-mix(in srgb, var(--group-fill) 55%, transparent));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -525,7 +540,7 @@ body {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
   .dark .glass::before, .dark .glass-inner::before {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0) 62%, rgba(129, 140, 248, 0.5));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0) 62%, color-mix(in srgb, var(--accent-2-text) 50%, transparent));
   }
 }
 @media (hover: none) {

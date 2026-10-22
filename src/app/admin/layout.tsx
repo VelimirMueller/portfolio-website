@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { BRAND_GROUP } from '@/config/brand';
 import { SITE_URL } from '@/config/site';
 import { inter, spaceMono, themeInitScript } from '../shared-layout';
 import '../globals.css';
@@ -29,6 +30,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <html
       lang="en"
       className={`dark ${inter.variable} ${spaceMono.variable}`}
+      data-mode="dark"
+      data-group={BRAND_GROUP}
       suppressHydrationWarning
     >
       <head>

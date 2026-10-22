@@ -1,2 +1,3 @@
 assets/**/*.svg binary
 src/types/supabase.ts linguist-generated=true
+vendor/synthwerk-tokens/** linguist-generated=true

@@ -42,6 +42,7 @@ beforeEach(() => {
   localStorageMock.clear();
   jest.clearAllMocks();
   document.documentElement.classList.remove("dark", "light");
+  document.documentElement.removeAttribute("data-mode");
 });
 
 describe("ThemeProvider", () => {
@@ -163,7 +164,7 @@ describe("ThemeProvider", () => {
     expect(localStorageMock.setItem).not.toHaveBeenCalled();
   });
 
-  it("applies theme class to document element", async () => {
+  it("applies theme class and data-mode to document element", async () => {
     await act(async () => {
       render(
         <ThemeProvider>
@@ -178,6 +179,8 @@ describe("ThemeProvider", () => {
 
     expect(document.documentElement.classList.contains("light")).toBe(true);
     expect(document.documentElement.classList.contains("dark")).toBe(false);
+    // @synthwerk/tokens resolves its colours from data-mode, not from the class.
+    expect(document.documentElement.getAttribute("data-mode")).toBe("light");
   });
 
   it("persists theme to localStorage on toggle", async () => {
