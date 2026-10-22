@@ -20,5 +20,7 @@ export default defineConfig([
     'next-env.d.ts',
     // Figma plugin scripts (vfb design pack), not React code.
     '.figma/**',
+    // Generated build of @synthwerk/tokens (scripts/tokens/sync.sh).
+    'vendor/**',
   ]),
 ]);
