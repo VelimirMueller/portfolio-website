@@ -2,6 +2,33 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Colours sit in their own @theme block, without nested rules, so vfb drift
+  (vm-figma-builder) can read them and compare them with .figma/tokens.json.
+*/
+@theme {
+  --color-light-bg: #fafafa;
+  --color-light-card: #ffffff;
+  --color-light-border: #e4e4e7;
+  --color-light-text: #0a0a0b;
+  --color-light-sub: #52525b;
+
+  --color-dark-bg: #0a0a0b;
+  --color-dark-card: #121214;
+  --color-dark-border: #26262b;
+  --color-dark-hover: #18181b;
+  --color-dark-text: #f4f4f5;
+  --color-dark-sub: #a1a1aa;
+
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-900: #312e81;
+  --color-brand-glow: rgba(99, 102, 241, 0.15);
+}
+
 @theme {
   --font-sans: var(--font-inter), Inter, sans-serif;
   --font-mono: var(--font-space-mono), Space Mono, monospace;
@@ -19,27 +46,6 @@
   --text-2xl--line-height: 2rem;
   --text-3xl--line-height: 2.25rem;
   --text-4xl--line-height: 2.5rem;
-
-  --color-light-bg: #fafafa;
-  --color-light-card: #ffffff;
-  --color-light-border: #e4e4e7;
-  --color-light-text: #18181b;
-  --color-light-sub: #71717a;
-
-  --color-dark-bg: #09090b;
-  --color-dark-card: #121214;
-  --color-dark-border: #27272a;
-  --color-dark-hover: #18181b;
-  --color-dark-text: #f4f4f5;
-  --color-dark-sub: #a1a1aa;
-
-  --color-brand-300: #a5b4fc;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-900: #312e81;
-  --color-brand-glow: rgba(99, 102, 241, 0.15);
 
   --animate-spin-slow: spin 12s linear infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
