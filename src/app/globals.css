@@ -65,20 +65,14 @@
 
   --background-image-noise: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.05%22/%3E%3C/svg%3E');
 
+  /* Transform only. Opacity < 1 or a filter on the page wrapper makes it a backdrop root: every glass panel inside
+     would blur only the page, not the art behind it, and snap back when the animation ends (issue #208). */
   @keyframes warp-in {
     0% {
-      opacity: 0;
       transform: perspective(900px) translateZ(-120px) scaleY(1.04);
-      filter: blur(8px) brightness(1.6);
-    }
-    60% {
-      opacity: 1;
-      filter: blur(0) brightness(1.15);
     }
     100% {
-      opacity: 1;
       transform: none;
-      filter: none;
     }
   }
   @keyframes fade-in-up {
