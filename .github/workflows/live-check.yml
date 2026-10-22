@@ -77,8 +77,28 @@ jobs:
             echo "::notice::Preview $DEPLOY_URL is behind Deployment Protection and VERCEL_AUTOMATION_BYPASS_SECRET is not set; the live token check is skipped."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           fi
-      - name: Run the live token check
+      # The Vercel Firewall can answer a runner with HTTP 429 and
+      # x-vercel-mitigated: challenge (a JavaScript challenge, e.g. Attack
+      # Challenge Mode). Headless Chromium cannot pass it, so the check could
+      # never run: skip with a warning that names the cause instead of failing.
+      - name: Detect a Vercel Firewall challenge
+        id: firewall
         if: steps.target.outputs.skip != 'true'
+        env:
+          TARGET_URL: ${{ steps.target.outputs.url || 'https://www.velimir-mueller.de' }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          bypass=()
+          [ -n "$VERCEL_AUTOMATION_BYPASS_SECRET" ] && bypass=(-H "x-vercel-protection-bypass: $VERCEL_AUTOMATION_BYPASS_SECRET")
+          headers="$(curl -sS -o /dev/null -D - --max-time 30 "${bypass[@]}" "$TARGET_URL/de/projects" || true)"
+          if grep -qi '^x-vercel-mitigated: *challenge' <<< "$headers"; then
+            echo "::warning::The Vercel Firewall challenges $TARGET_URL (HTTP 429, x-vercel-mitigated: challenge); the live token check is skipped. Allow the runner in the Vercel Firewall to run it."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run the live token check
+        if: steps.target.outputs.skip != 'true' && steps.firewall.outputs.skip != 'true'
         env:
           LIVE_URL: ${{ steps.target.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}

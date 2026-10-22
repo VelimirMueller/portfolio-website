@@ -42,6 +42,19 @@ jobs:
       - run: pnpm run lint
       - run: pnpm run type-check
 
+  # Syntax and lint check for every tracked shell script (ops-control ci.shell).
+  # shellcheck is preinstalled on ubuntu-latest.
+  shell-scripts:
+    name: Shell Scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: bash -n
+        run: git ls-files -z '*.sh' | xargs -0 -r -n1 bash -n
+      - name: shellcheck
+        run: git ls-files -z '*.sh' | xargs -0 -r shellcheck --severity=warning
+
   # Applies supabase/migrations to a fresh local database and runs the SQL tests
   # (issue #73). Postgres only, in Docker; never touches the hosted project.
   # Runs on every PR (no path filter), so it can be a required check.
