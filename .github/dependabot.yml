@@ -34,10 +34,17 @@ updates:
       # Raise it together with the Node runtime (issue #169).
       - dependency-name: "@types/node"
         update-types: [version-update:semver-major]
-      # TypeScript 7 (native compiler) ships no compiler API. typescript-eslint
-      # (peer <6.1.0) and ts-jest (peer <7) need it, and so does `next build`
-      # without experimental.useTypeScriptCli. Retry when both tools support
-      # TS 7 (expected with the TS 7.1 API). TS 6 updates still come (issue #180).
+      # TypeScript 7 stays ignored on purpose (decision in issue #180, closed).
+      # TS 7 is the native Go compiler and its npm package ships no compiler
+      # API. These dependencies need that API and do not support TS 7 yet
+      # (checked 2026-10-22):
+      # - typescript-eslint 8.72 (in eslint-config-next): peer typescript >=4.8.4 <6.1.0
+      # - ts-jest 29.4.15: peer typescript >=4.3 <7
+      # - next build: needs experimental.useTypeScriptCli with TS 7
+      # A peer override would install, but lint and Jest would break.
+      # To upgrade: when `npm view typescript-eslint peerDependencies` and
+      # `npm view ts-jest peerDependencies` both allow 7 (expected with the
+      # TS 7.1 compiler API), delete this entry. TS 6 updates still come.
       - dependency-name: typescript
         versions: [">=7"]
 
