@@ -334,16 +334,16 @@
 */
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #FAFAFA;
-  color: #18181B;
+  background-color: var(--color-light-bg);
+  color: var(--color-light-text);
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 .dark body {
-  background-color: #09090B;
-  color: #F4F4F5;
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-text);
 }
 
 /* Noise overlay - disabled on mobile for GPU performance */
