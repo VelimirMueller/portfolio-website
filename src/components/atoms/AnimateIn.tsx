@@ -3,9 +3,11 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
+type From = 'bottom' | 'top' | 'left' | 'right' | 'bottom-left' | 'bottom-right';
+
 interface AnimateInProps {
   children: React.ReactNode;
-  from?: 'bottom' | 'top' | 'left' | 'right' | 'bottom-left' | 'bottom-right';
+  from?: From;
   delay?: number;
   duration?: number;
   distance?: number;
@@ -14,6 +16,21 @@ interface AnimateInProps {
   className?: string;
   as?: React.ElementType;
 }
+
+/**
+ * - static: no inline style. Server render, first paint, content already in view, reduced motion.
+ * - pending: below the fold, offset, waiting to scroll into view.
+ * - revealing: sliding back to its place; returns to static when done.
+ */
+type Phase = 'static' | 'pending' | 'revealing';
+
+const DEFAULTS = { delay: 0, duration: 600, distance: 24, threshold: 0.1 };
+
+/** A finite, non-negative number, else the fallback. Guards against NaN, Infinity and negative props. */
+const nonNegative = (value: number, fallback: number) => (Number.isFinite(value) && value >= 0 ? value : fallback);
+
+/** IntersectionObserver throws a RangeError outside [0, 1]. */
+const toThreshold = (value: number) => (Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : DEFAULTS.threshold);
 
 const getTranslate = (from: string, distance: number): string => {
   switch (from) {
@@ -53,41 +70,58 @@ function getSharedObserver(threshold: number): IntersectionObserver {
   return observerMap.get(threshold)!;
 }
 
+/**
+ * Slides a block into place when it scrolls into view.
+ *
+ * The content is always visible: the server renders it without inline styles, so the page paints before JavaScript
+ * loads, and content that is already in view on mount never moves. Only blocks below the fold get offset, and only
+ * with `transform`. Never `opacity`, `filter` or `will-change: opacity`: each makes this wrapper a backdrop root, so
+ * the glass panels inside (`backdrop-filter`) would render flat until the animation ends and then snap to blurred.
+ */
 export const AnimateIn: React.FC<AnimateInProps> = ({
   children,
   from = 'bottom',
-  delay = 0,
-  duration = 600,
-  distance = 24,
-  threshold = 0.1,
+  delay: delayProp = DEFAULTS.delay,
+  duration: durationProp = DEFAULTS.duration,
+  distance: distanceProp = DEFAULTS.distance,
+  threshold: thresholdProp = DEFAULTS.threshold,
   once = true,
   className = '',
   as: Tag = 'div',
 }) => {
   const ref = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [phase, setPhase] = useState<Phase>('static');
   const reducedMotion = useReducedMotion();
+
+  const delay = nonNegative(delayProp, DEFAULTS.delay);
+  const duration = nonNegative(durationProp, DEFAULTS.duration);
+  const distance = nonNegative(distanceProp, DEFAULTS.distance);
+  const threshold = toThreshold(thresholdProp);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || reducedMotion) {
-      setIsVisible(true);
-      setAnimationComplete(true);
+    if (!el || reducedMotion || typeof IntersectionObserver === 'undefined') {
+      setPhase('static');
       return;
+    }
+    // Already on screen (or scrolled past): it was painted in place, so moving it now would be a jump.
+    if (el.getBoundingClientRect().top < window.innerHeight) {
+      setPhase('static');
+      if (once) return;
+    } else {
+      setPhase('pending');
     }
 
     const observer = getSharedObserver(threshold);
-
     callbackMap.set(el, (isIntersecting) => {
       if (isIntersecting) {
-        setIsVisible(true);
+        setPhase((p) => (p === 'pending' ? 'revealing' : p));
         if (once) {
           observer.unobserve(el);
           callbackMap.delete(el);
         }
-      } else if (!once) {
-        setIsVisible(false);
+      } else if (!once && el.getBoundingClientRect().top >= window.innerHeight) {
+        setPhase('pending');
       }
     });
 
@@ -98,28 +132,24 @@ export const AnimateIn: React.FC<AnimateInProps> = ({
     };
   }, [threshold, once, reducedMotion]);
 
-  // Clear inline styles after animation finishes so CSS hover transforms work
+  // Drop the inline styles after the slide so CSS hover transforms work again.
   useEffect(() => {
-    if (isVisible && !reducedMotion && !animationComplete) {
-      const timer = setTimeout(() => {
-        setAnimationComplete(true);
-      }, delay + duration + 50);
-      return () => clearTimeout(timer);
-    }
-  }, [isVisible, reducedMotion, animationComplete, delay, duration]);
+    if (phase !== 'revealing') return;
+    const timer = setTimeout(() => setPhase('static'), delay + duration + 50);
+    return () => clearTimeout(timer);
+  }, [phase, delay, duration]);
 
-  const style: React.CSSProperties = useMemo(() => {
-    if (reducedMotion || animationComplete) {
-      return {};
+  const style = useMemo<React.CSSProperties | undefined>(() => {
+    if (phase === 'pending') return { transform: getTranslate(from, distance) };
+    if (phase === 'revealing') {
+      return {
+        transform: 'translate(0, 0)',
+        transition: `transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`,
+        transitionDelay: `${delay}ms`,
+      };
     }
-    return {
-      opacity: isVisible ? 1 : 0,
-      transform: isVisible ? 'translate(0, 0)' : getTranslate(from, distance),
-      transition: `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1), transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`,
-      transitionDelay: `${delay}ms`,
-      willChange: 'opacity, transform',
-    };
-  }, [isVisible, animationComplete, reducedMotion, from, distance, duration, delay]);
+    return undefined;
+  }, [phase, from, distance, duration, delay]);
 
   return (
     <Tag ref={ref} className={className} style={style}>
