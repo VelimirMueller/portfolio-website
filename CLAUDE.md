@@ -27,7 +27,8 @@ Development rules for velimir-mueller.de. Details live in the [README](README.md
 | `pnpm test` / `pnpm run test:watch` | Jest unit and integration tests. |
 | `pnpm run test:coverage` | Jest with the enforced coverage floor (CI runs this). |
 | `pnpm run storybook` / `pnpm run build-storybook` | Storybook on port 6006 / static build. |
-| `pnpm run test:visual` | Playwright screenshots of every story (`playwright-storybook.config.ts`). `--update-snapshots` writes new baselines. |
+| `pnpm run test:visual` | Playwright screenshots of every story (`playwright-storybook.config.ts`). |
+| `pnpm run test:visual:docker` / `pnpm run test:visual:update` | The visual suite in the CI Playwright image (Docker) / the same with `--update-snapshots`: the only way to write new baselines. |
 | `pnpm run test:e2e` | Playwright against the production build (`playwright.config.ts`, `e2e/*.spec.ts`). |
 | `pnpm run test:db` | Applies `supabase/migrations/` to a fresh local database and runs `supabase/tests/*.sql`. Needs Docker and psql. |
 | `pnpm run db:types` | Writes `src/types/supabase.ts` from `supabase/migrations/` on a fresh local database (never the hosted project). CI fails when the file is stale. |
@@ -69,7 +70,8 @@ CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and typ
 - Test behaviour, not implementation. Mock Supabase and network calls in unit tests.
 - Coverage ratchet: `coverageThreshold` in jest.config.js is the enforced floor (CI runs `pnpm run test:coverage`).
   Each value is the measured global number rounded down, minus 1 point. When a change raises coverage, raise the floor in the same PR. Never lower it.
-- A UI change that alters a story's look needs new visual baselines (`pnpm run test:visual --update-snapshots`). Baselines are rendered on Linux in CI.
+- A UI change that alters a story's look needs new visual baselines (`pnpm run test:visual:update`). Baselines are rendered in the pinned CI image `mcr.microsoft.com/playwright`, never on macOS.
+- **Playwright CI image.** The visual, e2e and live-check jobs run in `mcr.microsoft.com/playwright:v<version>-noble`, pinned by digest (no apt at run time, issue #215). The tag must equal the locked `@playwright/test` version; `src/__tests__/playwright-image.test.ts` fails otherwise and says how to bump it.
 - A schema change needs `pnpm run test:db` green.
 
 ## Environment variables

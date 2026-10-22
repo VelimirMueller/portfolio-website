@@ -151,7 +151,7 @@ pnpm run dev
 
 ```bash
 pnpm test                                  # all unit tests
-pnpm run test:visual --update-snapshots    # new visual baselines
+pnpm run test:visual:update                # new visual baselines (CI image, Docker)
 pnpm run test:e2e --grep "Navigation"      # one E2E group
 pnpm run storybook                         # localhost:6006
 ```

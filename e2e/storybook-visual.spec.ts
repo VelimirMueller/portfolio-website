@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
  *
  * Navigates to each story via the iframe URL and captures screenshots.
  * Run with: pnpm run test:visual
- * Generate baselines: pnpm run test:visual --update-snapshots
+ * Generate baselines: pnpm run test:visual:update (in the CI image)
  */
 
 const storyUrl = (id: string) =>
