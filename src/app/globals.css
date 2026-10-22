@@ -1,11 +1,13 @@
 /*
   Brand tokens: @synthwerk/tokens (vm-brand B-52), vendored in vendor/synthwerk-tokens
-  (see scripts/tokens/sync.sh). The import comes first, so its layer is the lowest:
+  (see scripts/tokens/sync.sh). The @layer statement names its layer first, so it is
+  the lowest in every bundler (Vite in Storybook moves the import itself to the end):
   where the package and the Tailwind theme share a variable name (--font-sans,
   --text-*, --radius-*), the site's Tailwind theme wins and keeps its type scale.
   <html> carries data-group="flagship" and data-mode="dark|light" (ThemeProvider),
   so the package resolves the flagship group for the current mode.
 */
+@layer synthwerk-tokens;
 @import '@synthwerk/tokens/tokens.css' layer(synthwerk-tokens);
 @import 'tailwindcss';
 
