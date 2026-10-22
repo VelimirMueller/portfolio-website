@@ -3,8 +3,8 @@ import React from 'react';
 /** Section renders in public/art/v2 that have a light version through the CSS filter. */
 export type StageArt = 'site-svc-requirements' | 'site-svc-delivery' | 'site-svc-ux' | 'site-svc-stack' | 'site-svc-frontend' | 'site-contact';
 
-// Static class strings: Tailwind only sees literal class names.
-const ART: Record<StageArt, string> = {
+// Static class strings: Tailwind only sees literal class names. Other components reuse them for the same render.
+export const STAGE_ART: Record<StageArt, string> = {
   'site-svc-requirements': "bg-[url('/art/v2/site-svc-requirements.webp')]",
   'site-svc-delivery': "bg-[url('/art/v2/site-svc-delivery.webp')]",
   'site-svc-ux': "bg-[url('/art/v2/site-svc-ux.webp')]",
@@ -29,7 +29,7 @@ export const SectionStage = ({ art, side = 'right', children, className = '' }: 
   const right = side === 'right';
   return (
     <div className={`relative isolate ${className}`}>
-      <div aria-hidden="true" data-testid="stage-art" className={`absolute -z-10 top-[-10%] h-[120%] w-screen max-w-[1800px] pointer-events-none bg-cover bg-center ${ART[art]} ${right ? 'right-[-30vw] mask-[radial-gradient(ellipse_at_62%_50%,black_35%,transparent_78%)]' : 'left-[-30vw] mask-[radial-gradient(ellipse_at_38%_50%,black_35%,transparent_78%)]'} invert hue-rotate-180 opacity-50 mix-blend-multiply saturate-150 dark:invert-0 dark:hue-rotate-0 dark:mix-blend-normal dark:opacity-100`} />
+      <div aria-hidden="true" data-testid="stage-art" className={`absolute -z-10 top-[-10%] h-[120%] w-screen max-w-[1800px] pointer-events-none bg-cover bg-center ${STAGE_ART[art]} ${right ? 'right-[-30vw] mask-[radial-gradient(ellipse_at_62%_50%,black_35%,transparent_78%)]' : 'left-[-30vw] mask-[radial-gradient(ellipse_at_38%_50%,black_35%,transparent_78%)]'} invert hue-rotate-180 opacity-50 mix-blend-multiply saturate-150 dark:invert-0 dark:hue-rotate-0 dark:mix-blend-normal dark:opacity-100`} />
       {/* indigo light the glass refracts */}
       <div aria-hidden="true" className={`absolute -z-10 top-[20%] h-[60%] w-[45vw] rounded-full blur-[120px] pointer-events-none bg-brand-500/25 dark:bg-brand-500/30 ${right ? 'right-[-8vw]' : 'left-[-8vw]'}`} />
       {children}
