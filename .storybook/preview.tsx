@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import type { Preview, Decorator } from '@storybook/nextjs-vite';
 import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
+import { BRAND_GROUP } from '../src/config/brand';
 import deMessages from '../src/locales/de.json';
 import enMessages from '../src/locales/en.json';
 import '../src/app/globals.css';
@@ -17,6 +18,8 @@ const withProviders: Decorator = (Story, context) => {
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(selectedTheme);
+    document.documentElement.setAttribute('data-mode', selectedTheme);
+    document.documentElement.setAttribute('data-group', BRAND_GROUP);
     localStorage.setItem('theme', selectedTheme);
   }, [selectedTheme]);
 

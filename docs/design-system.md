@@ -107,7 +107,7 @@ Public routes and both demos use the liquid-glass layer of the site rework (vm-b
 
 | Collection | Count | Content |
 |---|---|---|
-| `primitive` | 47 | Raw colours. Hidden from the pickers. Includes `legacy/*` drift values for documentation only |
+| `primitive` | 49 | Raw colours. Hidden from the pickers. Includes `legacy/*` drift values for documentation only |
 | `color` | 84 | Semantic roles `dark/*` and `light/*`, `brand/*`, `status/*`, `group/*` |
 | `space` | 43 | Spacing, radius, stroke, sizes, grid, opacity |
 | `motion` | 11 | Durations, distances, scales, easings |
@@ -120,14 +120,14 @@ Public routes and both demos use the liquid-glass layer of the site rework (vm-b
 
 | Token group | Source |
 |---|---|
-| `dark/*`, `light/*` base roles, `brand/*` | `src/app/globals.css` `@theme` (`--color-dark-*`, `--color-light-*`, `--color-brand-*`) |
+| `dark/*`, `light/*` base roles, `brand/*` | `src/app/globals.css` colour `@theme` block (`--color-dark-*`, `--color-light-*`, `--color-brand-*`), hex so `vfb drift` reads it. `src/__tests__/brand-colors.test.ts` pins each value to `@synthwerk/tokens`; `base/ink` (`#0A0A0B`) and `base/line` (`#26262B`) are neutral overrides from vm-brand `brand.json` |
 | Body colours, scrollbar, card hover shadow | `src/app/globals.css` |
 | Button, input, nav, card states | `src/components/atoms/Button.tsx`, `src/components/molecules/*`, `src/components/organisms/*`, `ContactContent.tsx` |
 | Admin roles | `src/app/admin/_components/*` (mapped from drift greys, see F-3) |
 | Fonts and text styles | `src/app/globals.css` `@theme` `--font-*` and the type classes in `src/` |
 | Radius, spacing, grid | Tailwind defaults and the classes in `src/` (`rounded-[1.5rem]`, `max-w-7xl`, `gap-4`) |
 | Motion | `src/app/globals.css` (`@theme` `--animate-*` and `@keyframes`) |
-| Group colours | `vm-brand` `brand.json` (flagship, lab, ops, venture) |
+| Group colours | `vm-brand` `brand.json` (flagship, lab, ops, venture), through `@synthwerk/tokens` (`vendor/synthwerk-tokens`) |
 
 ## Change rules
 

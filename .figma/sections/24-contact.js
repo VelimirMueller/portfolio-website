@@ -2,7 +2,7 @@
 section({ name: '24 · Contact', page: PG.T, run: async () => T.board('24 · Contact', async (w, mode) => {
   const D = T.D(w), M = T.MODE(mode); const f = T.frame('Contact · ' + w, w, mode);
   const bg = await K.panel(K.art('contact', mode), w, D ? 1480 : 1700, { name: 'Backdrop', pad: 0, gap: 0, r: 0, stroke: false, align: 'MIN', mode,
-    over: [h.grad([[0, K.m(mode) === 'light' ? '#FAFAFA' : '#09090B', 0.2], [1, K.m(mode) === 'light' ? '#FAFAFA' : '#09090B', 0.85]], 90)] });
+    over: [h.grad([[0, K.m(mode) === 'light' ? '#FAFAFA' : '#0A0A0B', 0.2], [1, K.m(mode) === 'light' ? '#FAFAFA' : '#0A0A0B', 0.85]], 90)] });
   h.add(f, bg); h.add(bg, await T.nav(w, mode, 'None'));
   const NW = D ? 768 : w - 32; const col = K.col(D ? 40 : 28, 'Column'); col.paddingTop = D ? 96 : 48; col.paddingLeft = col.paddingRight = (w - NW) / 2; K.fixW(col, w); h.add(bg, col);
   h.add(col, await T.header(w, mode, 'Get In Touch', 'CONTACT.'),

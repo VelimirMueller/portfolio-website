@@ -45,7 +45,7 @@ export default async function AdminLoginPage(props: {
             />
             <SubmitButton
               pendingLabel="Sending…"
-              className="mt-2 w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-brand-900/20 transition-colors"
+              className="mt-2 w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-brand-800/20 transition-colors"
             >
               Send login link
             </SubmitButton>

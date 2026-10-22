@@ -43,12 +43,14 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [chosen, setChosen] = useState<Theme | null>(null);
   const theme = chosen ?? startTheme;
 
-  // The no-flash script owns the class until hydration is done.
+  // The no-flash script owns the class until hydration is done. The class
+  // drives Tailwind's dark: variant, data-mode drives @synthwerk/tokens.
   useEffect(() => {
     if (!mounted) return;
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
+    root.setAttribute('data-mode', theme);
   }, [theme, mounted]);
 
   // Only an explicit user choice is persisted — system-derived defaults must

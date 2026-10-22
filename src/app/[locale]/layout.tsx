@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing';
 import { pickClientMessages } from '@/i18n/clientMessages';
 import { SiteAnalytics } from '@/components/SiteAnalytics';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { BRAND_GROUP, PAGE_COLOR } from '@/config/brand';
 import { rootMetadata } from '@/app/seo';
 import { inter, spaceMono, themeInitScript } from '../shared-layout';
 import '../globals.css';
@@ -24,8 +25,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#FAFAFA' },
-    { media: '(prefers-color-scheme: dark)', color: '#09090B' },
+    { media: '(prefers-color-scheme: light)', color: PAGE_COLOR.light },
+    { media: '(prefers-color-scheme: dark)', color: PAGE_COLOR.dark },
   ],
 };
 
@@ -55,6 +56,8 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html
       lang={locale}
       className={`dark ${inter.variable} ${spaceMono.variable}`}
+      data-mode="dark"
+      data-group={BRAND_GROUP}
       suppressHydrationWarning
     >
       <head>

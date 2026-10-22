@@ -335,7 +335,8 @@ The VM. flagship look. The Figma file and its tokens are described in [docs/desi
 | Pattern | Detail |
 | :--- | :--- |
 | Type | Inter for text, Space Mono for labels, data and eyebrows (`src/app/shared-layout.ts`) |
-| Colour | Dark by default, full light mode. Indigo brand scale (`brand-300` to `brand-900`, `brand-500` = `#6366f1`). Emerald only for status (availability, success) |
+| Colour | Dark by default, full light mode. Indigo brand scale (`brand-300` to `brand-800`; `brand-500` is the group fill `#6366f1`). Dark page `#0a0a0b` (vm-brand B-54). Emerald only for status (availability, success) |
+| Tokens | `@synthwerk/tokens` (vm-brand B-52) with `data-group="flagship"` and `data-mode` on `<html>`. Not on npm yet: vendored in `vendor/synthwerk-tokens` from one synthwerk-sdk commit (`vendor/synthwerk-tokens.lock.json`). Update with `bash scripts/tokens/sync.sh <commit>`, then `pnpm install` |
 | Surfaces | Public pages and demos: content on stages with a brand art backdrop, glass panels and cards (`SectionStage`, `ArtBackdrop`, `GlassPanel`), numbered section dividers. Admin: flat, opaque panels |
 | Layout | Card grids with large radii (`rounded-[1.5rem]`, `rounded-3xl`) |
 | Motion | Fade-in on scroll (`AnimateIn`), starfield and hyperspace effects, hover micro-animations; all respect reduced motion (`useReducedMotion`) |

@@ -1,7 +1,7 @@
 """Hyperspace header for the sign-in email: public/email/hyperspace-header.png.
 
 Same idea as src/components/effects/Starfield.tsx: white and indigo/violet stars
-on #09090B, some stretched into streaks that radiate from a vanishing point,
+on #0A0A0B, some stretched into streaks that radiate from a vanishing point,
 plus a soft brand glow, fading into the card colour. Rendered at 2x (1200x400).
 The seed is fixed, so every run gives the same image.
 
@@ -13,7 +13,7 @@ import math, random, sys
 from PIL import Image, ImageDraw, ImageFilter
 
 W, H = 1200, 400
-BG = (9, 9, 11)                       # dark.bg #09090B
+BG = (10, 10, 11)                     # dark.bg #0A0A0B (vm-brand B-54)
 random.seed(20261009)                 # same image every run
 
 img = Image.new("RGB", (W, H), BG)

@@ -8,7 +8,7 @@ Development rules for velimir-mueller.de. Details live in the [README](README.md
 
 ## Stack
 
-- Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 3.
+- Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 4.
 - `next-intl`: locales `de` (default) and `en`, both prefixed in the URL (`/de`, `/en`). Config in `src/i18n/`, copy in `src/locales/*.json`.
 - Supabase (Postgres, Auth with magic link, RLS) through `@supabase/ssr`. Clients in `src/utils/supabase/`.
 - Contact form: hCaptcha; the `send-contact-email` Edge Function sends the mail with Resend.
@@ -59,6 +59,7 @@ CI (`.github/workflows/ci.yml`) runs on every PR: dependency audit, lint and typ
 - **One `headers()` entry.** All security headers come from `headerRules` in `next.config.mjs`; `buildCsp()` builds the one CSP per response. Never add a second CSP header (two CSPs are enforced as their intersection). Same-origin framing exists only for `/demos/mcp-demo.html`.
 - **Migrations are the source.** `supabase/migrations/` is the single source of truth for the schema, also for other apps on this database. Add a new migration; never edit an applied one. Add or update a SQL test in `supabase/tests/`, and run `pnpm run db:types` so the typed Supabase clients see the change.
 - **Admin UUID in two places.** `src/config/admin.ts` and `public.is_admin()` in the migration. Change both together. Middleware, `requireAdmin()` and RLS all check it. No service-role key.
+- **Brand tokens are vendored.** `@synthwerk/tokens` comes from `vendor/synthwerk-tokens` (`file:` dependency), built from the synthwerk-sdk commit in `vendor/synthwerk-tokens.lock.json`. Never edit it by hand: run `bash scripts/tokens/sync.sh <commit>`. Accent colours come from the package; a neutral may differ only with a reason in `globals.css`.
 - **Positioning in one place.** The public job title and positioning line come from `src/config/positioning.ts`. Locale copy uses the `{jobTitle}` placeholder. Change copy in both languages.
 - **Env vars: names only.** Never write a value into a file, commit, PR or log. The names are in `.env.example` and `supabase/functions/.env.example`; values live in `.env.local`, in Vercel and in Supabase function secrets.
 - **No tags.** Releases are a `chore(release): vX.Y.Z` commit that bumps `package.json`. The owner creates the signed tag. Never create or push a tag.
