@@ -1,4 +1,6 @@
 # Dependabot (issue #67): version updates for the JavaScript dependencies and GitHub Actions.
+# Fleet standard (CI-COST-04): weekly or monthly, every group matches "*", at most 5 open PRs,
+# target develop, 7 days cooldown. Until develop exists, version updates pause.
 # Security updates come from the repo setting "Dependabot security updates"
 # and are not limited by the schedules below.
 version: 2
@@ -7,21 +9,26 @@ updates:
   # package.json and pnpm-lock.yaml and updates the pnpm lockfile.
   - package-ecosystem: npm
     directory: /
+    target-branch: develop
     schedule:
       interval: weekly
       day: monday
       time: "06:00"
       timezone: Europe/Berlin
     open-pull-requests-limit: 5
+    cooldown:
+      default-days: 7
     # Conventional commits so commitlint accepts the messages: "chore(deps): ...".
     commit-message:
       prefix: chore(deps)
     groups:
       # One PR per week for all minor and patch bumps; majors stay separate.
       npm-minor-patch:
+        patterns: ["*"]
         update-types: [minor, patch]
       # Majors in one PR too (fewer CI runs); split it when one major breaks.
       npm-major:
+        patterns: ["*"]
         update-types: [major]
     ignore:
       # Next.js and React are pinned with "~" on purpose: a major upgrade is a
@@ -55,10 +62,13 @@ updates:
     # "/" covers .github/workflows; the second entry covers the local composite
     # actions, so their action versions get the same bumps (issue #81).
     directories: ["/", "/.github/actions/*"]
+    target-branch: develop
     schedule:
       interval: monthly
       timezone: Europe/Berlin
     open-pull-requests-limit: 3
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: chore(deps)
     groups:

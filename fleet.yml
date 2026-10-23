@@ -1,0 +1,30 @@
+# fleet.yml: tier and visibility of this repo (STANDARD.md). Exceptions: docs/rollout.md.
+tier: deploys
+visibility: public
+
+# Not met yet, outside a workflow PR (fleet-standard#9):
+# - No `develop` and `stage` branches and no dev/stg/prd/gate environments. The control repo
+#   creates them when `is_enforced` flips (fleet-standard#7). Until then the pull_request
+#   trigger fires only for PRs into main, and Dependabot version updates (target develop) pause.
+# - Deploys stay on the Vercel Git integration, outside Actions: every push to main deploys
+#   production, every PR branch gets a preview. This breaks CI-COST-01, CI-DEPLOY-01 and
+#   CI-PROMOTE-05 in spirit (a push deploys), but no workflow holds that deploy, so fleet check
+#   cannot see it, and those rules allow no exception record. The path stays until a move to a
+#   dispatch deploy (Vercel CLI in deploy.yml/promote.yml) is decided; the live site must not
+#   change in a workflow PR. Until then deploy.yml and promote.yml exist for CI-PROMOTE-01 and
+#   CI-TIER-01, and scripts/fleet-deploy.sh stops with an error.
+exceptions:
+  - rule: WF-FILE-02
+    value: [live-check.yml]
+    reason: Checks the colours of a finished Vercel deployment against .figma/tokens.json (issue #151); it starts from Vercel's deployment_status event and deploys nothing.
+  - rule: WF-NAME-02
+    value:
+      ci.yml: [db, visual]
+    reason: db runs the migrations and SQL tests on a local Supabase, visual runs Storybook visual regression in the pinned Playwright image; no fleet stage covers either.
+  - rule: WF-NAME-03
+    value: [ci.yml:db]
+    reason: The job name "Database Migrations & SQL Tests" is the required status check on main; it stays until the check moves to conclusion.
+  - rule: CI-COST-15
+    value: 5
+    reason: db and visual run on pull requests next to lint, unit and build; the repo is public, so the extra job minutes are free.
+    expires: 2027-10-22
