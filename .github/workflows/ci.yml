@@ -102,6 +102,9 @@ jobs:
     with:
       stack: node
 
+  # A docs-only or draft PR skips db (CI-COST-10). GitHub reports a job skipped by its `if:` as
+  # "Success", so the required check "Database Migrations & SQL Tests" still passes and the PR
+  # can merge (GitHub docs: "Using conditions to control job execution").
   db:
     name: Database Migrations & SQL Tests
     needs: changes
