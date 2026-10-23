@@ -5,6 +5,11 @@
 # - visual: Storybook visual regression in the pinned Playwright image, on PRs only. Baselines
 #   are rendered in that image, so it cannot run on the plain runner of a stage.
 # Vercel deploys main through its Git integration, outside Actions (fleet.yml).
+# No push trigger (CI-COST-05: one commit runs the checks once). The old push run on main never
+# gated production: Vercel builds main at the same time and does not wait for Actions. A
+# pull_request run tests the merge commit of the PR head and main.
+# Branch protection on main requires only "Database Migrations & SQL Tests" (checked 2026-10-23);
+# the retired job names "Static Checks", "Unit Tests & Build" and "E2E Tests" are not required.
 name: ci
 
 on:
