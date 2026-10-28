@@ -9,6 +9,16 @@ import type { AdminDashboardStats } from '@/app/admin/_lib/dashboardStats';
 
 const fixture: AdminDashboardStats = dashboardStatsFixture();
 
+// The fixtures are dated 2026-10-10. Pin "now" next to them: formatBerlinTime shows
+// "… ago (HH:MM Berlin)" only up to 14 days, then a date, so a real clock breaks these tests.
+const FIXTURE_NOW = Date.parse('2026-10-10T12:00:00Z');
+beforeEach(() => {
+  jest.spyOn(Date, 'now').mockReturnValue(FIXTURE_NOW);
+});
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 function Dashboard({ initialTab = 'website' }: { initialTab?: ReturnType<typeof parseKpiTab> }) {
   return (
     <KpiDashboard
