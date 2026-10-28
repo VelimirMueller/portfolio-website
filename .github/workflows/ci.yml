@@ -1,93 +1,158 @@
-name: CI
+# Fleet ci.yml (fleet-standard#9). The stages call fleet-workflows with the repo's own commands.
+# Two jobs do work no stage covers, so they stay here (fleet.yml, WF-NAME-02):
+# - db: migrations and SQL tests on a fresh local Supabase. Its job name is the required status
+#   check on main, so it keeps that name until the check moves to `conclusion`.
+# - visual: Storybook visual regression in the pinned Playwright image, on PRs only. Baselines
+#   are rendered in that image, so it cannot run on the plain runner of a stage.
+# Vercel deploys main through its Git integration, outside Actions (fleet.yml).
+# No push trigger (CI-COST-05: one commit runs the checks once). The old push run on main never
+# gated production: Vercel builds main at the same time and does not wait for Actions. A
+# pull_request run tests the merge commit of the PR head and main.
+# Branch protection on main requires only "Database Migrations & SQL Tests" (checked 2026-10-23);
+# the retired job names "Static Checks", "Unit Tests & Build" and "E2E Tests" are not required.
+name: ci
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    branches: [develop, main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      e2e:
+        description: Run the e2e stage
+        type: boolean
+        default: false
 
-# Least privilege (issue #188): every job only reads the repo. Actions are pinned
-# to a full commit SHA with the version as a comment; Dependabot (github-actions)
-# bumps the SHA and the comment together.
-permissions:
-  contents: read
+permissions: {}
 
-# A new push to a PR cancels its older run. Runs on main always finish.
+defaults:
+  run:
+    shell: bash
+
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: ci-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  # One job for the cheap checks (was three jobs with three runner start-ups):
-  # dependency audit (issue #67), shell scripts (ops-control ci.shell), lint and
-  # type check. shellcheck is preinstalled on ubuntu-latest.
-  static-checks:
-    name: Static Checks
+  changes:
+    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ github.event_name != 'pull_request' || steps.filter.outputs.code == 'true' }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Shell scripts (bash -n)
-        run: git ls-files -z '*.sh' | xargs -0 -r -n1 bash -n
-      - name: Shell scripts (shellcheck)
-        run: git ls-files -z '*.sh' | xargs -0 -r shellcheck --severity=warning
-      - uses: ./.github/actions/node-deps
-      # Fails on critical advisories in production dependencies. Tighten to high after M1.
-      - run: pnpm audit --prod --audit-level critical
-      - run: pnpm run lint
-      - run: pnpm run type-check
+      # Only negated patterns, so predicate-quantifier must be `every`: paths-filter applies it per
+      # file. A file is code when it matches every pattern (it is not docs); code=true when any
+      # changed file is code. A .ts-only PR gives code=true, a README-only PR gives code=false.
+      - name: Detect code changes
+        id: filter
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        with:
+          predicate-quantifier: every
+          filters: |
+            code:
+              - '!**/*.md'
+              - '!docs/**'
+              - '!LICENSE'
+              - '!.github/ISSUE_TEMPLATE/**'
 
-  # Applies supabase/migrations to a fresh local database and runs the SQL tests
-  # (issue #73). Postgres only, in Docker; never touches the hosted project.
-  # Runs on every PR (no path filter), so it can be a required check.
-  db-migrations:
+  lint:
+    needs: changes
+    if: ${{ !failure() && !cancelled() && needs.changes.outputs.code == 'true' }}
+    permissions:
+      contents: read
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-lint.yml@v0.0.2
+    with:
+      stack: node
+      # Shell scripts (bash -n, shellcheck), the dependency audit, ESLint and the type check.
+      # Joined with && so the first failing part stops the stage.
+      command: >-
+        git ls-files -z '*.sh' | xargs -0 -r -n1 bash -n &&
+        git ls-files -z '*.sh' | xargs -0 -r shellcheck --severity=warning &&
+        pnpm audit --prod --audit-level critical &&
+        pnpm run lint &&
+        pnpm run type-check
+
+  unit:
+    needs: [changes, lint]
+    if: ${{ !failure() && !cancelled() && needs.changes.outputs.code == 'true' }}
+    permissions:
+      contents: read
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-unit.yml@v0.0.2
+    with:
+      stack: node
+      # Jest; jest.config.js holds the real floor (lines 92) and writes coverage/lcov.info.
+      command: pnpm run test:coverage
+
+  e2e:
+    needs: [changes, unit]
+    if: ${{ !failure() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.e2e }}
+    permissions:
+      contents: read
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-e2e.yml@v0.0.2
+    with:
+      stack: node
+      # playwright.config.ts builds and starts the site; the suite also runs Mobile Safari (WebKit).
+      command: >-
+        pnpm exec playwright install --with-deps webkit &&
+        pnpm run test:e2e --reporter=list,junit
+
+  build:
+    needs: [changes, e2e]
+    if: ${{ !failure() && !cancelled() && needs.changes.outputs.code == 'true' }}
+    permissions:
+      contents: read
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-build.yml@v0.0.2
+    with:
+      stack: node
+
+  # A docs-only or draft PR skips db (CI-COST-10). GitHub reports a job skipped by its `if:` as
+  # "Success", so the required check "Database Migrations & SQL Tests" still passes and the PR
+  # can merge (GitHub docs: "Using conditions to control job execution").
+  db:
     name: Database Migrations & SQL Tests
+    needs: changes
+    if: ${{ !failure() && !cancelled() && needs.changes.outputs.code == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check out the source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       # Same CLI version as the devDependency, without a full pnpm install.
       # Reads the resolved "  supabase@<version>:" key; fails when it is missing.
-      - name: Read the Supabase CLI version from pnpm-lock.yaml
+      - name: Read the Supabase CLI version from the pnpm lockfile
         id: cli
         run: |
           version=$(grep -m1 -oE '^  supabase@[0-9][^:(]*' pnpm-lock.yaml | cut -d@ -f2)
           [ -n "$version" ] || { echo "::error::no supabase entry in pnpm-lock.yaml"; exit 1; }
           echo "version=$version" >> "$GITHUB_OUTPUT"
-      - uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
+      - name: Install the Supabase CLI
+        uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
         with:
           version: ${{ steps.cli.outputs.version }}
-      - run: bash scripts/db/test-migrations.sh
+      - name: Apply the migrations and run the SQL tests
         env:
           KEEP_DB: "1"
+        run: bash scripts/db/test-migrations.sh
       # src/types/supabase.ts must match supabase/migrations (issue #187).
       - name: Check the generated Supabase types
         run: bash scripts/db/gen-types.sh --check
 
-  unit-tests-and-build:
-    name: Unit Tests & Build
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: ./.github/actions/node-deps
-      - run: pnpm run test:coverage
-      - name: Upload coverage report
-        if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: coverage-report
-          path: coverage/
-          retention-days: 7
-      - run: pnpm run build
-
-  storybook-and-visual-regression:
-    name: Storybook & Visual Regression
-    # Pull requests only: the merged tree was already checked on the PR, so a run
-    # on push to main would repeat it. Not a required check on main.
-    if: github.event_name == 'pull_request'
+  visual:
+    needs: changes
+    if: ${{ !failure() && !cancelled() && github.event_name == 'pull_request' && needs.changes.outputs.code == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
     # Official Playwright image (issue #215): browsers and their system libraries
     # are preinstalled, so no apt and no browser download at run time. Pinned by
     # tag and digest; the tag must equal the locked @playwright/test version
@@ -101,45 +166,52 @@ jobs:
         # (next-intl) refuses it as the cache for its native addon.
         SWC_NATIVE_BINDING_CACHE: /root/.cache/swc
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: ./.github/actions/node-deps
-      - run: pnpm run build-storybook
-      - name: Run visual regression tests
+      - name: Check out the source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Node and the dependencies
+        uses: ./.github/actions/node-deps # zizmor: ignore[self-repository] same checkout as this run
+      - name: Build Storybook
+        run: pnpm run build-storybook
+      - name: Run the visual regression tests
         run: pnpm run test:visual
-      - name: Upload visual diff results
+      - name: Upload the visual diff results
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: visual-regression-results
+          name: visual-regression-pr-${{ github.sha }}
           path: |
             test-results/
             playwright-report/
           retention-days: 7
 
-  e2e:
-    name: E2E Tests
+  conclusion:
+    needs: [changes, lint, unit, e2e, build, db, visual]
+    if: always()
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    needs: unit-tests-and-build
-    # Same pinned Playwright image as the visual job.
-    container:
-      image: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
-      options: --ipc=host
-      env:
-        # HOME (/github/home) belongs to the runner user, not root, so @swc/core
-        # (next-intl) refuses it as the cache for its native addon.
-        SWC_NATIVE_BINDING_CACHE: /root/.cache/swc
+    timeout-minutes: 5
+    permissions: {}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: ./.github/actions/node-deps
-      - name: Run E2E tests
-        run: pnpm run test:e2e
-      - name: Upload test results
-        if: failure()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: e2e-results
-          path: |
-            test-results/
-            playwright-report/
-          retention-days: 7
+      - name: Fail when a job failed or a required stage was skipped
+        env:
+          CODE: ${{ needs.changes.outputs.code }}
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+          LINT: ${{ needs.lint.result }}
+          UNIT: ${{ needs.unit.result }}
+          BUILD: ${{ needs.build.result }}
+          DB: ${{ needs.db.result }}
+          VISUAL: ${{ needs.visual.result }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          for r in $RESULTS; do
+            case "$r" in success|skipped) ;; *) echo "::error::a job ended as $r"; exit 1 ;; esac
+          done
+          if [ "$CODE" = "true" ]; then
+            for r in "$LINT" "$UNIT" "$BUILD" "$DB"; do
+              [ "$r" = "success" ] || { echo "::error::a required stage did not run"; exit 1; }
+            done
+            if [ "$EVENT" = "pull_request" ] && [ "$VISUAL" != "success" ]; then
+              echo "::error::the visual regression job did not run"; exit 1
+            fi
+          fi

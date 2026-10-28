@@ -3,6 +3,16 @@ import { summarizeDeployments } from '@/app/admin/_lib/vercelStats';
 import { vercelStatsFixture } from '@/app/admin/_lib/vercelStatsFixtures';
 import { VercelPanel } from '../VercelPanel';
 
+// The fixtures are dated 2026-10-10. Pin "now" next to them: formatBerlinTime shows
+// "… ago (HH:MM Berlin)" only up to 14 days, then a date, so a real clock breaks these tests.
+const FIXTURE_NOW = Date.parse('2026-10-10T12:00:00Z');
+beforeEach(() => {
+  jest.spyOn(Date, 'now').mockReturnValue(FIXTURE_NOW);
+});
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 describe('VercelPanel — unconfigured', () => {
   it('explains where to set the token, without a table', () => {
     render(<VercelPanel stats={{ status: 'unconfigured' }} />);
