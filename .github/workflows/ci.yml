@@ -44,6 +44,9 @@ jobs:
     outputs:
       code: ${{ github.event_name != 'pull_request' || steps.filter.outputs.code == 'true' }}
     steps:
+      # Only negated patterns, so predicate-quantifier must be `every`: paths-filter applies it per
+      # file. A file is code when it matches every pattern (it is not docs); code=true when any
+      # changed file is code. A .ts-only PR gives code=true, a README-only PR gives code=false.
       - name: Detect code changes
         id: filter
         if: github.event_name == 'pull_request'
