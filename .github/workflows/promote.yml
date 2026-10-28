@@ -51,7 +51,7 @@ jobs:
     permissions:
       contents: read
       actions: read
-    uses: VelimirMueller/fleet-workflows/.github/workflows/_promote-preflight.yml@v0.0.1
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_promote-preflight.yml@v0.0.2
     with:
       target: ${{ inputs.target }}
 
@@ -61,7 +61,7 @@ jobs:
     if: inputs.target == 'stg'
     permissions:
       contents: read
-    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-e2e.yml@v0.0.1
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-e2e.yml@v0.0.2
     with:
       stack: node
       command: >-
@@ -99,7 +99,7 @@ jobs:
       contents: read
       id-token: write
       actions: read
-    uses: VelimirMueller/fleet-workflows/.github/workflows/_deploy-run.yml@v0.0.1
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_deploy-run.yml@v0.0.2
     with:
       environment: ${{ needs.setup.outputs.env }}
       sha: ${{ needs.preflight.outputs.sha }}
@@ -118,7 +118,7 @@ jobs:
       contents: read
       id-token: write
       actions: read
-    uses: VelimirMueller/fleet-workflows/.github/workflows/_deploy-run.yml@v0.0.1
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_deploy-run.yml@v0.0.2
     with:
       environment: ${{ needs.setup.outputs.env }}
       sha: ${{ needs.preflight.outputs.sha }}

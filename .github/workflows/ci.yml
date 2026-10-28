@@ -62,11 +62,11 @@ jobs:
     if: ${{ !failure() && !cancelled() && needs.changes.outputs.code == 'true' }}
     permissions:
       contents: read
-    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-lint.yml@v0.0.1
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-lint.yml@v0.0.2
     with:
       stack: node
       # Shell scripts (bash -n, shellcheck), the dependency audit, ESLint and the type check.
-      # The stage runs the command with errexit off, so the parts are joined with &&.
+      # Joined with && so the first failing part stops the stage.
       command: >-
         git ls-files -z '*.sh' | xargs -0 -r -n1 bash -n &&
         git ls-files -z '*.sh' | xargs -0 -r shellcheck --severity=warning &&
@@ -79,7 +79,7 @@ jobs:
     if: ${{ !failure() && !cancelled() && needs.changes.outputs.code == 'true' }}
     permissions:
       contents: read
-    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-unit.yml@v0.0.1
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-unit.yml@v0.0.2
     with:
       stack: node
       # Jest; jest.config.js holds the real floor (lines 92) and writes coverage/lcov.info.
@@ -90,7 +90,7 @@ jobs:
     if: ${{ !failure() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.e2e }}
     permissions:
       contents: read
-    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-e2e.yml@v0.0.1
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-e2e.yml@v0.0.2
     with:
       stack: node
       # playwright.config.ts builds and starts the site; the suite also runs Mobile Safari (WebKit).
@@ -103,7 +103,7 @@ jobs:
     if: ${{ !failure() && !cancelled() && needs.changes.outputs.code == 'true' }}
     permissions:
       contents: read
-    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-build.yml@v0.0.1
+    uses: VelimirMueller/fleet-workflows/.github/workflows/_ci-build.yml@v0.0.2
     with:
       stack: node
 
