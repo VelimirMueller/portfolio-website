@@ -1,1 +1,3 @@
-out/
+# Run output stays local. The token export is committed: `vfb drift` (and a daily job) reads Figma's state from it.
+out/*
+!out/tokens.export.json
