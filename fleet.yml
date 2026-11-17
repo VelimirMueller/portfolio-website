@@ -3,9 +3,6 @@ tier: deploys
 visibility: public
 
 # Not met yet, outside a workflow PR (fleet-standard#9):
-# - No `develop` and `stage` branches and no dev/stg/prd/gate environments. The control repo
-#   creates them when `is_enforced` flips (fleet-standard#7). Until then the pull_request
-#   trigger fires only for PRs into main, and Dependabot version updates (target develop) pause.
 # - Deploys stay on the Vercel Git integration, outside Actions: every push to main deploys
 #   production, every PR branch gets a preview. This breaks CI-COST-01, CI-DEPLOY-01 and
 #   CI-PROMOTE-05 in spirit (a push deploys), but no workflow holds that deploy, so fleet check
